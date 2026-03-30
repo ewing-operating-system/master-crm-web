@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Overview — Next Chapter M&A Advisory</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0d1117;
+      --bg2: #161b22;
+      --bg3: #1c2128;
+      --bg4: #21262d;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --text2: #8b949e;
+      --heading: #f0f6fc;
+      --accent: #58a6ff;
+      --accent-hover: #79b8ff;
+      --green: #3fb950;
+      --orange: #d29922;
+      --red: #f85149;
+      --purple: #bc8cff;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    /* ── TOP NAV ── */
+    .top-nav {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      height: 56px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .top-nav .brand {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--heading);
+      margin-right: 32px;
+      letter-spacing: -0.3px;
+    }
+    .top-nav a {
+      color: var(--text2);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 16px 12px;
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s ease;
+    }
+    .top-nav a:hover { color: var(--heading); }
+    .top-nav a.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ── LAYOUT ── */
+    .page-wrap {
+      display: flex;
+      max-width: 1400px;
+      margin: 0 auto;
+      min-height: calc(100vh - 56px);
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: 220px;
+      min-width: 220px;
+      padding: 24px 16px;
+      border-right: 1px solid var(--border);
+      position: sticky;
+      top: 56px;
+      height: calc(100vh - 56px);
+      overflow-y: auto;
+    }
+    .sidebar .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text2);
+      margin-bottom: 8px;
+      margin-top: 20px;
+    }
+    .sidebar .section-label:first-child { margin-top: 0; }
+    .sidebar a {
+      display: block;
+      color: var(--text2);
+      text-decoration: none;
+      font-size: 13px;
+      padding: 6px 12px;
+      border-left: 2px solid transparent;
+      border-radius: 0 4px 4px 0;
+      transition: all 0.15s ease;
+      margin-bottom: 2px;
+    }
+    .sidebar a:hover { color: var(--heading); background: var(--bg2); }
+    .sidebar a.active { color: var(--accent); border-left-color: var(--accent); background: rgba(88,166,255,0.06); }
+
+    /* ── MAIN CONTENT ── */
+    .main {
+      flex: 1;
+      padding: 32px 40px;
+      max-width: 1100px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--bg2) 0%, var(--bg) 50%, var(--bg2) 100%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 40px;
+      margin-bottom: 36px;
+    }
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--heading);
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+    .hero .subtitle {
+      font-size: 15px;
+      color: var(--text2);
+      margin-bottom: 20px;
+    }
+    .hero-badges {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid;
+    }
+    .badge.green { color: var(--green); border-color: rgba(63,185,80,0.3); background: rgba(63,185,80,0.08); }
+    .badge.blue { color: var(--accent); border-color: rgba(88,166,255,0.3); background: rgba(88,166,255,0.08); }
+    .badge.orange { color: var(--orange); border-color: rgba(210,153,34,0.3); background: rgba(210,153,34,0.08); }
+    .badge.purple { color: var(--purple); border-color: rgba(188,140,255,0.3); background: rgba(188,140,255,0.08); }
+
+    /* ── SECTIONS ── */
+    .section { margin-bottom: 40px; }
+    .section h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--heading);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--heading);
+      margin: 20px 0 10px;
+    }
+    .section p { margin-bottom: 12px; }
+
+    /* ── FLOW DIAGRAM ── */
+    .flow {
+      display: flex;
+      gap: 0;
+      align-items: stretch;
+      margin: 24px 0;
+      overflow-x: auto;
+    }
+    .flow-step {
+      flex: 1;
+      min-width: 140px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 16px;
+      text-align: center;
+      position: relative;
+    }
+    .flow-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: -16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0; height: 0;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      border-left: 12px solid var(--accent);
+      z-index: 2;
+    }
+    .flow-step:not(:last-child) { margin-right: 28px; }
+    .flow-step .step-icon { font-size: 28px; margin-bottom: 8px; }
+    .flow-step .step-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--heading);
+      margin-bottom: 4px;
+    }
+    .flow-step .step-desc {
+      font-size: 11px;
+      color: var(--text2);
+      line-height: 1.5;
+    }
+    .flow-step .step-target {
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--heading);
+      margin-bottom: 6px;
+    }
+    .card-desc {
+      font-size: 13px;
+      color: var(--text2);
+    }
+
+    /* ── TABLES ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 13px;
+    }
+    th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text2);
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg2);
+    }
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(48,54,61,0.5);
+      vertical-align: top;
+    }
+    tr:hover td { background: rgba(88,166,255,0.03); }
+    .mono { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; color: var(--accent); }
+
+    /* ── GRID ── */
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+    /* ── ARCHITECTURE DIAGRAM ── */
+    .arch-diagram {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 28px;
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+    .arch-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+      align-items: stretch;
+    }
+    .arch-row:last-child { margin-bottom: 0; }
+    .arch-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      flex: 1;
+    }
+    .arch-box.highlight { border-color: var(--accent); }
+    .arch-box .box-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text2);
+      margin-bottom: 8px;
+    }
+    .arch-box .box-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--heading);
+      margin-bottom: 6px;
+    }
+    .arch-item {
+      font-size: 12px;
+      color: var(--text2);
+      padding: 3px 0;
+    }
+    .arch-item .dot {
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      margin-right: 6px;
+    }
+    .dot.green { background: var(--green); }
+    .dot.blue { background: var(--accent); }
+    .dot.orange { background: var(--orange); }
+    .dot.red { background: var(--red); }
+    .dot.purple { background: var(--purple); }
+
+    .arch-arrow {
+      text-align: center;
+      color: var(--text2);
+      font-size: 20px;
+      padding: 4px 0;
+    }
+
+    /* ── PIPELINE VIZ ── */
+    .pipeline {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      margin: 16px 0;
+      flex-wrap: wrap;
+    }
+    .pipeline-node {
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .pipeline-arrow { color: var(--text2); font-size: 16px; padding: 0 2px; }
+
+    /* ── STATUS INDICATOR ── */
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .status::before {
+      content: '';
+      width: 7px; height: 7px;
+      border-radius: 50%;
+    }
+    .status.live::before { background: var(--green); }
+    .status.ready::before { background: var(--accent); }
+    .status.pending::before { background: var(--orange); }
+    .status.off::before { background: var(--red); }
+
+    /* ── CALLOUT ── */
+    .callout {
+      border-left: 3px solid var(--accent);
+      background: rgba(88,166,255,0.06);
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+      font-size: 13px;
+    }
+    .callout.governor {
+      border-left-color: var(--orange);
+      background: rgba(210,153,34,0.06);
+    }
+    .callout strong { color: var(--heading); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main { padding: 20px 16px; }
+      .top-nav { padding: 0 16px; overflow-x: auto; }
+      .flow { flex-direction: column; }
+      .flow-step:not(:last-child) { margin-right: 0; margin-bottom: 16px; }
+      .flow-step:not(:last-child)::after { display: none; }
+      .grid2, .grid3 { grid-template-columns: 1fr; }
+      .arch-row { flex-direction: column; }
+      .hero { padding: 24px 20px; }
+      .hero h1 { font-size: 22px; }
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      body { background: #fff; color: #111; font-size: 11px; }
+      .top-nav, .sidebar { display: none; }
+      .main { max-width: 100%; padding: 0; }
+      .hero { background: #f5f5f5; border-color: #ddd; padding: 20px; }
+      .hero h1 { color: #111; }
+      .card, .arch-box, .arch-diagram { background: #fafafa; border-color: #ddd; }
+      .section h2 { color: #111; border-color: #ddd; }
+      th { background: #f0f0f0; color: #333; }
+      td { border-color: #e0e0e0; }
+      .badge { border-color: #ccc; }
+      * { color: #222 !important; }
+      .flow-step::after { border-left-color: #666 !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <span class="brand">Next Chapter M&A</span>
+  <a href="system-overview.html" class="active">System Overview</a>
+</nav>
+
+<div class="page-wrap">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="section-label">Overview</div>
+  <a href="#business-flow" class="active">Business Flow</a>
+  <a href="#architecture">Architecture Map</a>
+
+  <div class="section-label">Engines</div>
+  <a href="#letter-engine">Letter Engine</a>
+  <a href="#meeting-engine">Meeting Engine</a>
+  <a href="#campaign-manager">Campaign Manager</a>
+  <a href="#regeneration">Page Regeneration</a>
+  <a href="#lob-client">Lob Mail Client</a>
+  <a href="#salesfinity">Salesfinity Dialer</a>
+
+  <div class="section-label">Agents</div>
+  <a href="#claude-agents">Claude Code Agents</a>
+  <a href="#openclaw-agents">OpenClaw Fleet</a>
+  <a href="#cron-jobs">Scheduled Routines</a>
+
+  <div class="section-label">Data</div>
+  <a href="#database">Database Schema</a>
+  <a href="#pipeline">Pipeline States</a>
+  <a href="#enrichment">Enrichment Sources</a>
+  <a href="#business-rules">Business Rules</a>
+
+  <div class="section-label">Operations</div>
+  <a href="#cost-model">Cost Model</a>
+  <a href="#infrastructure">Infrastructure</a>
+  <a href="#decisions">Key Decisions</a>
+  <a href="#status">Current Status</a>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- HERO -->
+  <div class="hero" id="top">
+    <h1>System Architecture Overview</h1>
+    <p class="subtitle">Always-on prospecting to proposal engine — research targets, generate letters, mail via API, dial via Salesfinity, share a single URL that closes deals.</p>
+    <div class="hero-badges">
+      <span class="badge green">317 Pages Live</span>
+      <span class="badge blue">10 AI Agents</span>
+      <span class="badge purple">7 LLM Models</span>
+      <span class="badge orange">250/150 Governor</span>
+    </div>
+  </div>
+
+  <!-- BUSINESS FLOW -->
+  <div class="section" id="business-flow">
+    <h2>Business Flow</h2>
+    <p>Every prospect moves through five stages. Each stage is automated. The 250/150 governor prevents the next batch until the current batch is fully worked.</p>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-icon">&#x1F50D;</div>
+        <div class="step-title">RESEARCH</div>
+        <div class="step-desc">Find targets, qualify, score. 10-query acquisition check. Story intelligence layer.</div>
+        <div class="step-target">Supabase targets table</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-icon">&#x1F4C4;</div>
+        <div class="step-title">GENERATE</div>
+        <div class="step-desc">Build hub page, letter, proposal, company story page from Supabase data.</div>
+        <div class="step-target">Vercel &middot; 317 pages</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-icon">&#x2709;&#xFE0F;</div>
+        <div class="step-title">MAIL</div>
+        <div class="step-desc">Print and mail physical letters via Lob API. Max 250 per batch.</div>
+        <div class="step-target">Lob API &middot; letter_campaigns</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-icon">&#x1F4DE;</div>
+        <div class="step-title">CALL</div>
+        <div class="step-desc">Parallel dial via Salesfinity. Track until 150 contacts hit 5 calls each.</div>
+        <div class="step-target">Salesfinity &middot; call_outcomes</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-icon">&#x1F3AF;</div>
+        <div class="step-title">CLOSE</div>
+        <div class="step-desc">Share single personalized URL on phone call. Prospect sees their story.</div>
+        <div class="step-target">One URL per prospect</div>
+      </div>
+    </div>
+
+    <div class="callout governor">
+      <strong>250/150 Governor:</strong> Send a max of 250 letters per batch. HARD STOP. Monitor until 150 of those contacts have been called 5 times each. Only then unlock the next batch. Enforced at three layers: Python logic, database CHECK constraints, and a UNIQUE INDEX that prevents two active batches simultaneously.
+    </div>
+  </div>
+
+  <!-- ARCHITECTURE MAP -->
+  <div class="section" id="architecture">
+    <h2>Architecture Map</h2>
+    <p>Three layers: Claude Code (where humans build), OpenClaw (where agents run), Supabase + Vercel (where data lives and pages deploy).</p>
+
+    <div class="arch-diagram">
+      <!-- Layer 1: Mac Mini -->
+      <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--text2); margin-bottom:12px;">Mac Mini (Always On)</div>
+      <div class="arch-row">
+        <div class="arch-box highlight">
+          <div class="box-label">Development</div>
+          <div class="box-title">Claude Code</div>
+          <div class="arch-item"><span class="dot green"></span> Opus Architect (strategy)</div>
+          <div class="arch-item"><span class="dot blue"></span> Sonnet Builder (features)</div>
+          <div class="arch-item"><span class="dot purple"></span> Haiku Executor (bulk ops)</div>
+          <div style="margin-top:10px; font-size:11px; color:var(--text2);">
+            MCP: Exa, Fireflies, Gmail, Slack, Calendar, Drive, Chrome
+          </div>
+        </div>
+        <div class="arch-box">
+          <div class="box-label">Orchestration</div>
+          <div class="box-title">OpenClaw Gateway :18789</div>
+          <div class="arch-item"><span class="dot blue"></span> 10 Specialized Agents</div>
+          <div class="arch-item"><span class="dot orange"></span> 8 Cron Jobs (paused)</div>
+          <div class="arch-item"><span class="dot green"></span> Telegram Bot</div>
+          <div style="margin-top:10px; font-size:11px; color:var(--text2);">
+            Models: DeepSeek, Gemini, GPT-4o Mini, Ollama
+          </div>
+        </div>
+        <div class="arch-box">
+          <div class="box-label">Local Services</div>
+          <div class="box-title">ML + Networking</div>
+          <div class="arch-item"><span class="dot green"></span> Ollama :11434 (embeddings)</div>
+          <div class="arch-item"><span class="dot green"></span> ChromaDB (vector store)</div>
+          <div class="arch-item"><span class="dot green"></span> Tailscale (100.112.160.48)</div>
+        </div>
+      </div>
+
+      <div class="arch-arrow">&#x2193; &#x2193; &#x2193;</div>
+
+      <!-- Layer 2: Cloud -->
+      <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--text2); margin-bottom:12px;">Cloud Services</div>
+      <div class="arch-row">
+        <div class="arch-box">
+          <div class="box-label">Database</div>
+          <div class="box-title">Supabase (PostgreSQL)</div>
+          <div class="arch-item"><span class="dot green"></span> targets (201+ rows)</div>
+          <div class="arch-item"><span class="dot green"></span> companies, contacts</div>
+          <div class="arch-item"><span class="dot green"></span> pipeline_log, call_log</div>
+          <div class="arch-item"><span class="dot blue"></span> meeting_notes</div>
+          <div class="arch-item"><span class="dot blue"></span> campaign_batches, letter_campaigns</div>
+        </div>
+        <div class="arch-box">
+          <div class="box-label">Hosting</div>
+          <div class="box-title">Vercel</div>
+          <div class="arch-item"><span class="dot green"></span> 317 static HTML pages</div>
+          <div class="arch-item"><span class="dot green"></span> /api/letters/ (serverless)</div>
+          <div class="arch-item"><span class="dot green"></span> /api/webhooks/lob.js</div>
+          <div class="arch-item" style="margin-top:8px; font-size:11px;">Auto-deploys on git push</div>
+        </div>
+        <div class="arch-box">
+          <div class="box-label">External APIs</div>
+          <div class="box-title">Integrations</div>
+          <div class="arch-item"><span class="dot green"></span> Lob (physical mail)</div>
+          <div class="arch-item"><span class="dot blue"></span> Salesfinity (dialer)</div>
+          <div class="arch-item"><span class="dot green"></span> Telegram (notifications)</div>
+          <div class="arch-item"><span class="dot green"></span> Exa (semantic search)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENGINES -->
+  <div class="section" id="letter-engine">
+    <h2>Engines</h2>
+
+    <h3>Letter Engine <span class="mono">lib/letter_engine.py</span></h3>
+    <div class="card">
+      <div class="card-desc">
+        Renders physical letters for Lob mail API from Supabase company data and vertical-specific EBITDA benchmarks. Supports three touch variants per prospect. Jinja2 templating with 24 variables. Print-ready HTML at 8.5&times;11, Georgia serif, no color.
+      </div>
+      <table>
+        <tr><th style="width:120px">Input</th><td>Company ID + variant (touch_1, touch_2, touch_3)</td></tr>
+        <tr><th>Output</th><td>Lob-ready HTML string</td></tr>
+        <tr><th>Data Sources</th><td>Supabase companies &amp; contacts tables + 7 vertical EBITDA benchmarks (water treatment, HVAC, plumbing, roofing, pest control, concrete, flooring)</td></tr>
+        <tr><th>Key Functions</th><td><span class="mono">render()</span> <span class="mono">render_all_variants()</span> <span class="mono">_build_ebitda_narrative()</span></td></tr>
+      </table>
+      <div class="callout">
+        <strong>Tone rule:</strong> Operator narrative, not PE finance speak. "I know what it's like to build something with your hands and wonder what happens to the team when you're ready to step back."
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="meeting-engine">
+    <h3>Meeting Engine v2 <span class="mono">lib/meeting_engine_v2.py</span></h3>
+    <div class="card">
+      <div class="card-desc">
+        Interactive meeting prep pages with three meeting types: Discovery, Financial Review, Engagement. Auto-saves to Supabase with 600ms debounce. Completeness tracking unlocks downstream documents as fields are filled.
+      </div>
+      <table>
+        <tr><th style="width:120px">Tabs</th><td>Pre-Meeting &middot; During-Meeting &middot; Post-Meeting</td></tr>
+        <tr><th>During-Meeting</th><td>Owner profiles, emotional temperature slider, revenue mix, margin grid (gross/EBITDA/SDE), key employees table, deal breakers, verbatim quotes</td></tr>
+        <tr><th>Unlock Tracker</th><td>Letter at 3 fields &rarr; Buyer targeting at 5 &rarr; Proposal at 6 &rarr; Full pipeline at 10</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="section" id="campaign-manager">
+    <h3>Campaign Manager <span class="mono">lib/campaign_manager.py</span></h3>
+    <div class="card">
+      <div class="card-desc">
+        Governs the 250/150 letter-to-call pipeline. Three enforcement layers prevent batch overflow.
+      </div>
+      <table>
+        <tr><th style="width:120px">Layer 1</th><td><strong>Python logic</strong> &mdash; <span class="mono">send_batch()</span> checks count, <span class="mono">check_threshold()</span> gates next batch</td></tr>
+        <tr><th>Layer 2</th><td><strong>DB constraint</strong> &mdash; <span class="mono">CHECK (letter_count &lt;= 250)</span> on campaign_batches</td></tr>
+        <tr><th>Layer 3</th><td><strong>Unique index</strong> &mdash; Only one active batch per entity at any time</td></tr>
+        <tr><th>Notification</th><td>Telegram alert on batch milestone (complete, threshold met, hard stop)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="section" id="regeneration">
+    <h3>Page Regeneration <span class="mono">scripts/regenerate.py</span></h3>
+    <div class="card">
+      <div class="card-desc">Incremental and full-rebuild modes for hub pages. Git push after generation triggers Vercel auto-deploy.</div>
+      <div class="grid2" style="margin-top:12px">
+        <div class="card" style="margin:0">
+          <div class="card-title">Incremental</div>
+          <div class="card-desc">Only rebuilds pages for companies with new/stale research (RESEARCHED status + no report_generated_at).</div>
+        </div>
+        <div class="card" style="margin:0">
+          <div class="card-title">Full Rebuild</div>
+          <div class="card-desc">All 171+ non-disqualified targets. Run when templates change. Supports <span class="mono">--entity</span> filter.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="lob-client">
+    <h3>Lob Mail Client <span class="mono">lib/lob_client.py</span></h3>
+    <div class="card">
+      <div class="card-desc">HTTP wrapper for Lob physical mail API. Sends print-ready letters, tracks delivery status via webhooks.</div>
+      <table>
+        <tr><th style="width:120px">Send</th><td><span class="mono">send_letter(html, to_address, from_address)</span> &rarr; letter_id, tracking_url, expected_delivery_date</td></tr>
+        <tr><th>Track</th><td><span class="mono">get_letter_status(letter_id)</span> + webhook at <span class="mono">/api/webhooks/lob.js</span></td></tr>
+        <tr><th>Status</th><td><span class="status live">API Verified (Live Key)</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="section" id="salesfinity">
+    <h3>Salesfinity Dialer <span class="mono">lib/salesfinity_client.py</span></h3>
+    <div class="card">
+      <div class="card-desc">AI parallel dialer integration. Pushes contacts for calling, fetches outcomes, syncs back to Supabase.</div>
+      <table>
+        <tr><th style="width:120px">Push</th><td><span class="mono">create_dialer_list(contacts)</span> &rarr; list_id</td></tr>
+        <tr><th>Fetch</th><td><span class="mono">get_call_outcomes(list_id)</span> &rarr; connected, voicemail, no answer, interested, etc.</td></tr>
+        <tr><th>Sync</th><td><span class="mono">sync_outcomes_to_supabase()</span> writes call_log records with outcome, duration, timestamp</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- AGENTS -->
+  <div class="section" id="claude-agents">
+    <h2>Claude Code Sub-Agents</h2>
+    <p>Three specialized agents auto-route by task complexity. Defined in <span class="mono">~/.claude/agents/</span>.</p>
+
+    <div class="grid3">
+      <div class="card">
+        <div class="card-title" style="color:var(--purple)">Haiku Executor</div>
+        <div class="card-desc">
+          <div style="margin-bottom:8px">Fast, no-frills execution. No reasoning.</div>
+          <div><strong>Model:</strong> Claude Haiku 4.5</div>
+          <div><strong>Cost:</strong> ~$0.05/task</div>
+          <div><strong>Tools:</strong> Bash, Read, Glob</div>
+          <div style="margin-top:8px; font-size:11px; color:var(--text2)">Git ops, file moves, health checks, ls, status commands</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:var(--accent)">Sonnet Builder</div>
+        <div class="card-desc">
+          <div style="margin-bottom:8px">Balanced execution + moderate reasoning.</div>
+          <div><strong>Model:</strong> Claude Sonnet 4.6</div>
+          <div><strong>Cost:</strong> ~$0.50/task</div>
+          <div><strong>Tools:</strong> Bash, Read, Write, Edit, Glob, Grep</div>
+          <div style="margin-top:8px; font-size:11px; color:var(--text2)">Config edits, JSON, hooks, integrations, bug fixes</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:var(--orange)">Opus Architect</div>
+        <div class="card-desc">
+          <div style="margin-bottom:8px">Strategic design. High reasoning.</div>
+          <div><strong>Model:</strong> Claude Opus 4.6</div>
+          <div><strong>Cost:</strong> ~$2.00/task</div>
+          <div><strong>Tools:</strong> All tools</div>
+          <div style="margin-top:8px; font-size:11px; color:var(--text2)">Architecture, trade-offs, system design, debugging</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="openclaw-agents">
+    <h2>OpenClaw Agent Fleet</h2>
+    <p>10 specialized agents running on cheap LLMs for high-volume autonomous work. Multi-model strategy: expensive models build, cheap models research.</p>
+
+    <table>
+      <tr><th>Agent</th><th>Model</th><th>Role</th><th>Cost Tier</th></tr>
+      <tr><td class="mono">main</td><td>DeepSeek Chat</td><td>Primary orchestration and routing</td><td>$0.27/M in</td></tr>
+      <tr><td class="mono">researcher</td><td>Gemini 2.5 Flash Lite</td><td>Web research, target qualification</td><td>Free/minimal</td></tr>
+      <tr><td class="mono">executor</td><td>GPT-4o Mini</td><td>Task execution, command running</td><td>$0.15/M in</td></tr>
+      <tr><td class="mono">validator</td><td>DeepSeek V3</td><td>Research quality checks</td><td>$0.27/M in</td></tr>
+      <tr><td class="mono">auditor</td><td>DeepSeek V3</td><td>Pipeline health, compliance audits</td><td>$0.27/M in</td></tr>
+      <tr><td class="mono">classifier</td><td>DeepSeek V3</td><td>Company and data classification</td><td>$0.27/M in</td></tr>
+      <tr><td class="mono">controller</td><td>DeepSeek Chat</td><td>Pipeline flow control and gating</td><td>$0.27/M in</td></tr>
+      <tr><td class="mono">listener</td><td>Gemini 2.5 Flash Lite</td><td>Channel monitoring (Telegram, email)</td><td>Free/minimal</td></tr>
+      <tr><td class="mono">certifier</td><td>DeepSeek V3</td><td>Data quality certification</td><td>$0.27/M in</td></tr>
+      <tr><td class="mono">nurturer</td><td>GPT-4o Mini</td><td>Outreach relationship management</td><td>$0.15/M in</td></tr>
+    </table>
+  </div>
+
+  <div class="section" id="cron-jobs">
+    <h2>Scheduled Routines</h2>
+    <p>8 autonomous routines designed for the pipeline. Currently paused pending credential sync and agent instruction files.</p>
+
+    <table>
+      <tr><th>Routine</th><th>Frequency</th><th>What It Does</th><th>Status</th></tr>
+      <tr><td class="mono">batch-pull</td><td>Every 2h</td><td>Pull NEW targets from Supabase, set to RESEARCHING</td><td><span class="status pending">Paused</span></td></tr>
+      <tr><td class="mono">research-loop</td><td>Every 30m</td><td>Run 5-step research sequence on RESEARCHING targets</td><td><span class="status pending">Paused</span></td></tr>
+      <tr><td class="mono">quality-review</td><td>Every 30m</td><td>Review against $5K consulting report quality bar</td><td><span class="status pending">Paused</span></td></tr>
+      <tr><td class="mono">morning-brief</td><td>Every 4h</td><td>Pipeline counts, errors, cost tracking summary</td><td><span class="status pending">Paused</span></td></tr>
+      <tr><td class="mono">publish-and-send</td><td>Every 1h</td><td>Generate reports for approved targets, queue outreach</td><td><span class="status pending">Paused</span></td></tr>
+      <tr><td class="mono">dialer-update</td><td>Every 2h</td><td>Push REPORT_LIVE contacts to Salesfinity with call scripts</td><td><span class="status pending">Paused</span></td></tr>
+      <tr><td class="mono">heartbeat</td><td>Every 15m</td><td>Health check: stuck targets, errors, pipeline counts</td><td><span class="status pending">Paused</span></td></tr>
+      <tr><td class="mono">weekly-maint</td><td>Weekly</td><td>Memory flush, error patterns, cost tracking vs $1.50 cap</td><td><span class="status pending">Paused</span></td></tr>
+    </table>
+  </div>
+
+  <!-- DATA -->
+  <div class="section" id="database">
+    <h2>Database Schema</h2>
+    <table>
+      <tr><th>Table</th><th>Purpose</th><th>Key Fields</th><th>Status</th></tr>
+      <tr><td class="mono">targets</td><td>Master acquisition target list</td><td>company_name, pipeline_status, vertical, acquisition_status</td><td><span class="status live">Live (201+ rows)</span></td></tr>
+      <tr><td class="mono">companies</td><td>Enriched company profiles</td><td>name, city, state, revenue, personalized_url</td><td><span class="status live">Live</span></td></tr>
+      <tr><td class="mono">contacts</td><td>Owner/decision-maker contacts</td><td>first_name, last_name, phone, email, role</td><td><span class="status live">Live</span></td></tr>
+      <tr><td class="mono">pipeline_log</td><td>Audit trail for all agent actions</td><td>agent, action, details, timestamp</td><td><span class="status live">Live</span></td></tr>
+      <tr><td class="mono">call_log</td><td>Salesfinity call outcomes</td><td>contact_id, outcome, duration, called_at</td><td><span class="status live">Live</span></td></tr>
+      <tr><td class="mono">deal_research</td><td>Deep research notes per deal</td><td>target_id, research_data</td><td><span class="status live">Live (expanding)</span></td></tr>
+      <tr><td class="mono">meeting_notes</td><td>Per-field meeting data capture</td><td>meeting_id, field_name, field_value</td><td><span class="status ready">Migration ready</span></td></tr>
+      <tr><td class="mono">campaign_batches</td><td>250/150 governor state</td><td>batch_number, letter_count, calls_completed</td><td><span class="status ready">Migration ready</span></td></tr>
+      <tr><td class="mono">letter_campaigns</td><td>Lob letter tracking</td><td>lob_letter_id, variant, status, delivered_at</td><td><span class="status ready">Migration ready</span></td></tr>
+      <tr><td class="mono">call_outcomes</td><td>Per-call attempt tracking (max 5)</td><td>target_id, attempt_number, outcome</td><td><span class="status ready">Migration ready</span></td></tr>
+    </table>
+  </div>
+
+  <div class="section" id="pipeline">
+    <h2>Pipeline States</h2>
+    <div class="pipeline">
+      <span class="pipeline-node" style="background:rgba(88,166,255,0.15); color:var(--accent); border:1px solid rgba(88,166,255,0.3)">NEW</span>
+      <span class="pipeline-arrow">&rarr;</span>
+      <span class="pipeline-node" style="background:rgba(188,140,255,0.15); color:var(--purple); border:1px solid rgba(188,140,255,0.3)">RESEARCHING</span>
+      <span class="pipeline-arrow">&rarr;</span>
+      <span class="pipeline-node" style="background:rgba(210,153,34,0.15); color:var(--orange); border:1px solid rgba(210,153,34,0.3)">RESEARCHED</span>
+      <span class="pipeline-arrow">&rarr;</span>
+      <span class="pipeline-node" style="background:rgba(248,81,73,0.15); color:var(--red); border:1px solid rgba(248,81,73,0.3)">NEEDS_REVIEW</span>
+      <span class="pipeline-arrow">&rarr;</span>
+      <span class="pipeline-node" style="background:rgba(63,185,80,0.15); color:var(--green); border:1px solid rgba(63,185,80,0.3)">REPORT_LIVE</span>
+    </div>
+    <div class="callout">
+      <strong>Quality gate:</strong> Every target must meet the "$5,000 consulting report" standard before advancing past NEEDS_REVIEW. Every status transition is logged to <span class="mono">pipeline_log</span> with agent name, action, and reasoning.
+    </div>
+  </div>
+
+  <div class="section" id="enrichment">
+    <h2>Enrichment Sources</h2>
+    <table>
+      <tr><th>Source</th><th>What It Provides</th><th>Integration</th></tr>
+      <tr><td><strong>Exa</strong></td><td>Semantic web search, company discovery, contact enrichment</td><td>MCP (web_search_exa, crawling_exa)</td></tr>
+      <tr><td><strong>Google Search API</strong></td><td>Broad web discovery, news, press releases</td><td>Gemini provider via OpenClaw</td></tr>
+      <tr><td><strong>Fireflies</strong></td><td>Meeting transcripts, summaries, action items</td><td>MCP (fireflies_get_transcript)</td></tr>
+      <tr><td><strong>Gmail</strong></td><td>Email threads, contact history</td><td>MCP (gmail_search_messages)</td></tr>
+      <tr><td><strong>Slack</strong></td><td>Team discussions, deal context</td><td>MCP (slack_search_public)</td></tr>
+      <tr><td><strong>Google Calendar</strong></td><td>Meeting schedules, availability</td><td>MCP (gcal_list_events)</td></tr>
+      <tr><td><strong>Google Drive</strong></td><td>Shared documents, presentations</td><td>MCP (google_drive_search)</td></tr>
+      <tr><td><strong>Ollama</strong></td><td>Vector embeddings (nomic-embed-text, 137M params)</td><td>Local API :11434</td></tr>
+      <tr><td><strong>ChromaDB</strong></td><td>Semantic search across all ingested data</td><td>Local Python API</td></tr>
+    </table>
+
+    <h3>Story Intelligence Layer</h3>
+    <p>Beyond financial data, the system hunts for human stories about each founder: YouTube interviews, podcast appearances, local news features, Google reviews mentioning the owner by name, trade publication profiles, BBB complaint responses. These feed the Company Story Template — a storyboard page with photos, pull quotes, generational narrative, and a "What Happens to the Team" section.</p>
+  </div>
+
+  <div class="section" id="business-rules">
+    <h2>Business Rules Engine</h2>
+    <p>Rules are stored at multiple levels to prevent any single point of override.</p>
+    <table>
+      <tr><th>Rule Type</th><th>Where Stored</th><th>Example</th></tr>
+      <tr><td>Pipeline gates</td><td>Python code (campaign_manager.py)</td><td>250 letter max, 150/5x call threshold</td></tr>
+      <tr><td>Database constraints</td><td>Supabase CHECK + UNIQUE INDEX</td><td>Only one active batch per entity</td></tr>
+      <tr><td>Quality standards</td><td>SOUL.md (agent instructions)</td><td>"$5,000 consulting report" quality bar</td></tr>
+      <tr><td>Scoring rubrics</td><td>letter_engine.py vertical benchmarks</td><td>EBITDA floors/ceilings/medians per vertical</td></tr>
+      <tr><td>Classification rules</td><td>Acquisition status check (SOUL.md)</td><td>10-query detection protocol</td></tr>
+      <tr><td>Tone rules</td><td>Letter template + prompt files</td><td>Operator narrative, not PE finance speak</td></tr>
+      <tr><td>Cost caps</td><td>Campaign manager + cron config</td><td>$1.50 per target research cost limit</td></tr>
+      <tr><td>Retry logic</td><td>Self-repair protocol</td><td>Exponential backoff: 30s / 60s / 120s / SKIP</td></tr>
+    </table>
+  </div>
+
+  <!-- OPERATIONS -->
+  <div class="section" id="cost-model">
+    <h2>Cost Model</h2>
+    <table>
+      <tr><th>Component</th><th>Cost Per Unit</th><th>Usage</th></tr>
+      <tr><td>Claude Opus 4.6 (architect)</td><td>~$15/M in, $75/M out</td><td>Strategic design only</td></tr>
+      <tr><td>Claude Sonnet 4.6 (builder)</td><td>~$3/M in, $15/M out</td><td>Feature building, ~$0.50/session</td></tr>
+      <tr><td>Claude Haiku 4.5 (executor)</td><td>~$0.25/M in, $1.25/M out</td><td>Bulk execution</td></tr>
+      <tr><td>DeepSeek Chat (agents)</td><td>$0.27/M in, $1.10/M out</td><td>Autonomous agent work</td></tr>
+      <tr><td>Gemini Flash Lite (research)</td><td>Free tier / minimal</td><td>Research agent, listener</td></tr>
+      <tr><td>GPT-4o Mini (execution)</td><td>$0.15/M in, $0.60/M out</td><td>Executor + nurturer agents</td></tr>
+      <tr><td>Ollama (embeddings)</td><td>$0.00</td><td>Local nomic-embed-text</td></tr>
+      <tr><td>Lob (physical mail)</td><td>~$1.50/letter</td><td>Per letter mailed</td></tr>
+      <tr><td>Supabase</td><td>Free tier</td><td>Database + auth</td></tr>
+      <tr><td>Vercel</td><td>Free tier</td><td>Static hosting + serverless</td></tr>
+    </table>
+    <div class="callout">
+      <strong>Target all-in cost per prospect:</strong> Under $5.00 (research + letter + tracking). Research agent uses DeepSeek/Gemini at &lt;$0.30/M tokens. Expensive Claude models reserved for human-facing development only.
+    </div>
+  </div>
+
+  <div class="section" id="infrastructure">
+    <h2>Infrastructure</h2>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">Mac Mini (Always-On Host)</div>
+        <div class="card-desc">
+          <div>Claude Code development environment</div>
+          <div>OpenClaw gateway on :18789</div>
+          <div>Ollama ML server on :11434</div>
+          <div>ChromaDB vector database</div>
+          <div>Tailscale mesh: 100.112.160.48</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Cloud Stack</div>
+        <div class="card-desc">
+          <div>Supabase &mdash; PostgreSQL + REST API</div>
+          <div>Vercel &mdash; Static hosting + serverless functions</div>
+          <div>GitHub &mdash; Source control, auto-deploy trigger</div>
+          <div>Lob &mdash; Physical letter mailing</div>
+          <div>Salesfinity &mdash; AI parallel dialer</div>
+        </div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-top:12px">
+      <div class="card">
+        <div class="card-title">Communication</div>
+        <div class="card-desc">
+          <div>Telegram @MacMiniEwingBot &mdash; primary control channel</div>
+          <div>Decisions only, no noise, links not paths</div>
+          <div>Slack &mdash; team collaboration (MCP integrated)</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Overnight Batch Runner</div>
+        <div class="card-desc">
+          <div>Bash script runs 9 sequential headless Claude Sonnet sessions</div>
+          <div>Each session builds a specific feature from prompt files</div>
+          <div>Runs while operator sleeps &mdash; logs to overnight-logs/</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="decisions">
+    <h2>Key Design Decisions</h2>
+
+    <div class="card">
+      <table>
+        <tr><th style="width:40%">Decision</th><th>Rationale</th></tr>
+        <tr><td><strong>Operator narrative over PE finance speak</strong></td><td>Letters sound like someone who built a business, not someone who buys them. Trust builds faster.</td></tr>
+        <tr><td><strong>OpenClaw agents over custom Agent SDK</strong></td><td>Single orchestration platform. Don't build a framework when one exists.</td></tr>
+        <tr><td><strong>Cheap models for volume, expensive for strategy</strong></td><td>DeepSeek/Gemini at &lt;$0.30/M for research. Claude Opus only for architecture decisions.</td></tr>
+        <tr><td><strong>Local embeddings (Ollama) over cloud</strong></td><td>Zero marginal cost for vector search across transcripts and emails.</td></tr>
+        <tr><td><strong>Hard governor (250/150) over soft limits</strong></td><td>Database constraints enforce discipline. No config toggle can override.</td></tr>
+        <tr><td><strong>Single URL as the closer</strong></td><td>Every prospect gets one page that tells their story better than they could. That URL is the product.</td></tr>
+        <tr><td><strong>Hybrid file + database bridge</strong></td><td>Speed of local file reads with durability of Supabase persistence.</td></tr>
+        <tr><td><strong>Telegram as primary control channel</strong></td><td>Operator controls everything from phone. Decisions only, no noise.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="section" id="status">
+    <h2>Current Status</h2>
+    <h3>Live Now</h3>
+    <div class="grid2">
+      <div class="card"><div class="card-title"><span class="status live">317 HTML pages on Vercel</span></div></div>
+      <div class="card"><div class="card-title"><span class="status live">Letter engine + templates</span></div></div>
+      <div class="card"><div class="card-title"><span class="status live">Meeting engine v2</span></div></div>
+      <div class="card"><div class="card-title"><span class="status live">Lob API (live key verified)</span></div></div>
+      <div class="card"><div class="card-title"><span class="status live">Telegram bot operational</span></div></div>
+      <div class="card"><div class="card-title"><span class="status live">Regeneration scripts</span></div></div>
+      <div class="card"><div class="card-title"><span class="status live">Claude Code sub-agents</span></div></div>
+      <div class="card"><div class="card-title"><span class="status live">Tailscale + Ollama + ChromaDB</span></div></div>
+    </div>
+
+    <h3 style="margin-top:20px">Next to Activate</h3>
+    <div class="grid2">
+      <div class="card"><div class="card-title"><span class="status pending">Supabase credential sync</span></div></div>
+      <div class="card"><div class="card-title"><span class="status pending">Missing database tables (SQL written)</span></div></div>
+      <div class="card"><div class="card-title"><span class="status pending">Agent SOUL.md instruction files</span></div></div>
+      <div class="card"><div class="card-title"><span class="status pending">Cron scheduler activation</span></div></div>
+      <div class="card"><div class="card-title"><span class="status pending">Salesfinity API wiring</span></div></div>
+      <div class="card"><div class="card-title"><span class="status pending">ChromaDB ingestion pipeline</span></div></div>
+      <div class="card"><div class="card-title"><span class="status pending">Campaign manager E2E test</span></div></div>
+      <div class="card"><div class="card-title"><span class="status pending">Bot token rotation</span></div></div>
+    </div>
+  </div>
+
+  <div style="text-align:center; padding:40px 0 60px; color:var(--text2); font-size:12px;">
+    Built by Ewing Gillaspy with Claude Code (Anthropic) &middot; OpenClaw v2026.3.28 &middot; March 30, 2026
+  </div>
+
+</main>
+</div>
+
+<!-- Sidebar active link tracking -->
+<script>
+(function() {
+  var links = document.querySelectorAll('.sidebar a');
+  var sections = [];
+  links.forEach(function(link) {
+    var id = link.getAttribute('href');
+    if (id && id.startsWith('#')) {
+      var el = document.querySelector(id);
+      if (el) sections.push({ link: link, el: el });
+    }
+  });
+  window.addEventListener('scroll', function() {
+    var scrollY = window.scrollY + 120;
+    var active = sections[0];
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i].el.offsetTop <= scrollY) active = sections[i];
+    }
+    links.forEach(function(l) { l.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+  });
+})();
+</script>
+
+</body>
+</html>
