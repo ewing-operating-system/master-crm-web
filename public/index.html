@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Next Chapter — Master CRM</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#c9d1d9}
+.header{background:linear-gradient(135deg,#161b22,#1a5276);padding:25px 30px;text-align:center}
+.header h1{color:#58a6ff;font-size:28px;margin:0}
+.header .sub{color:#8b949e;margin-top:8px;font-size:13px}
+.top-nav{display:flex;justify-content:center;gap:5px;padding:12px 20px;background:#161b22;border-bottom:1px solid #30363d;flex-wrap:wrap}
+.top-nav a{color:#c9d1d9;text-decoration:none;font-size:12px;padding:6px 14px;border-radius:6px;background:#21262d;border:1px solid #30363d;transition:all 0.2s}
+.top-nav a:hover{border-color:#58a6ff;color:#58a6ff}
+.top-nav a.highlight{background:#1a3a5c;border-color:#58a6ff;color:#58a6ff}
+.grid{max-width:1100px;margin:20px auto;padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.company-card{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:18px;transition:border-color 0.2s}
+.company-card:hover{border-color:#58a6ff}
+.card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+.name{font-size:17px;font-weight:bold;color:#f0f6fc}
+.badges{display:flex;gap:4px;flex-wrap:wrap}
+.badge{padding:2px 8px;border-radius:10px;font-size:10px;color:white;font-weight:600}
+.badge.blue{background:#388bfd}
+.badge.purple{background:#8b5cf6}
+.meta{font-size:12px;color:#8b949e;margin-bottom:10px}
+.quick-links{display:flex;gap:6px;flex-wrap:wrap}
+.quick-link{display:inline-block;padding:5px 10px;font-size:11px;color:#c9d1d9;text-decoration:none;background:#21262d;border:1px solid #30363d;border-radius:6px;transition:all 0.2s}
+.quick-link:hover{border-color:#58a6ff;color:#58a6ff}
+.quick-link.accent{background:#1a3a5c;border-color:#58a6ff;color:#58a6ff}
+.footer{text-align:center;padding:20px;color:#484f58;font-size:11px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.top-nav{gap:3px}.top-nav a{font-size:11px;padding:5px 10px}}
+</style>
+</head>
+<body>
+<div class="header">
+    <h1>Next Chapter — Master CRM</h1>
+    <div class="sub">6 active deals | $5.2M fee potential | $914K weighted pipeline</div>
+</div>
+<div class="top-nav">
+    <a href="dashboard.html" class="highlight">📊 Revenue Dashboard</a>
+    <a href="ebitda-levers.html">💰 EBITDA Levers</a>
+    <a href="feature-roadmap.html">🗺️ Feature Roadmap</a>
+    <a href="version-history.html">🕐 Version History</a>
+    <a href="interactive-aquascience.html">🎯 AquaScience Proposal</a>
+    <a href="interactive-air-control.html">🎯 Air Control Proposal</a>
+    <a href="interactive-hrcom-ltd.html">🎯 HR.com Proposal</a>
+    <a href="interactive-springer-floor.html">🎯 Springer Proposal</a>
+    <a href="interactive-wieser-concrete.html">🎯 Wieser (Buy-Side)</a>
+    <a href="interactive-design-precast.html">🎯 Design Precast (Buy-Side)</a>
+</div>
+<div class="grid">
+    <div class="company-card">
+        <div class="card-header">
+            <div class="name">HR.com Ltd</div>
+            <div class="badges">
+                <span class="badge" style="background:#3fb950">SELL</span>
+                <span class="badge blue">Q:90</span>
+                <span class="badge purple">68 buyers</span>
+            </div>
+        </div>
+        <div class="meta">Debbie McGrath | HR Technology & Media | Grimsby, Ontario</div>
+        <div class="quick-links"><a href="hrcom-ltd-hub.html" class="quick-link">📋 Hub</a><a href="interactive-hrcom-ltd.html" class="quick-link accent">🎯 Interactive Proposal</a><a href="dataroom-hrcom-ltd.html" class="quick-link">🔒 Data Room</a><a href="meeting-hrcom-ltd_2026-03-29_discovery.html" class="quick-link">📅 Meeting Prep</a></div>
+    </div>
+    <div class="company-card">
+        <div class="card-header">
+            <div class="name">AquaScience</div>
+            <div class="badges">
+                <span class="badge" style="background:#3fb950">SELL</span>
+                <span class="badge blue">Q:88</span>
+                <span class="badge purple">35 buyers</span>
+            </div>
+        </div>
+        <div class="meta">Lawrence "Larry" Casey | Water Treatment / eCommerce | Wyoming, RI</div>
+        <div class="quick-links"><a href="aquascience-hub.html" class="quick-link">📋 Hub</a><a href="interactive-aquascience.html" class="quick-link accent">🎯 Interactive Proposal</a><a href="dataroom-aquascience.html" class="quick-link">🔒 Data Room</a><a href="meeting-aquascience_2026-03-29_discovery.html" class="quick-link">📅 Meeting Prep</a></div>
+    </div>
+    <div class="company-card">
+        <div class="card-header">
+            <div class="name">Springer Floor</div>
+            <div class="badges">
+                <span class="badge" style="background:#3fb950">SELL</span>
+                <span class="badge blue">Q:82</span>
+                <span class="badge purple">35 buyers</span>
+            </div>
+        </div>
+        <div class="meta">Terri Holman | Floor Care / Carpet Cleaning | Des Moines, IA</div>
+        <div class="quick-links"><a href="springer-floor-hub.html" class="quick-link">📋 Hub</a><a href="interactive-springer-floor.html" class="quick-link accent">🎯 Interactive Proposal</a><a href="dataroom-springer-floor.html" class="quick-link">🔒 Data Room</a><a href="meeting-springer-floor_2026-03-29_discovery.html" class="quick-link">📅 Meeting Prep</a></div>
+    </div>
+    <div class="company-card">
+        <div class="card-header">
+            <div class="name">Air Control</div>
+            <div class="badges">
+                <span class="badge" style="background:#3fb950">SELL</span>
+                <span class="badge blue">Q:82</span>
+                <span class="badge purple">35 buyers</span>
+            </div>
+        </div>
+        <div class="meta">Fred Lowry | HVAC | McLean, VA</div>
+        <div class="quick-links"><a href="air-control-hub.html" class="quick-link">📋 Hub</a><a href="interactive-air-control.html" class="quick-link accent">🎯 Interactive Proposal</a><a href="dataroom-air-control.html" class="quick-link">🔒 Data Room</a><a href="meeting-air-control_2026-03-29_discovery.html" class="quick-link">📅 Meeting Prep</a></div>
+    </div>
+    <div class="company-card">
+        <div class="card-header">
+            <div class="name">Design Precast & Pipe, Inc.</div>
+            <div class="badges">
+                <span class="badge" style="background:#f0883e">BUY</span>
+                <span class="badge blue">Q:82</span>
+                <span class="badge purple">10 buyers</span>
+            </div>
+        </div>
+        <div class="meta">Pat Fore III (Founder/President/Owner) | Precast Concrete & Pipe Manufacturing | Gulfport, MS</div>
+        <div class="quick-links"><a href="design-precast-and-pipe-inc-hub.html" class="quick-link">📋 Hub</a><a href="interactive-design-precast.html" class="quick-link accent">🎯 Interactive Proposal</a><a href="dataroom-design-precast-and-pipe-inc.html" class="quick-link">🔒 Data Room</a><a href="meeting-design-precast-and-pipe-inc_2026-03-29_discovery.html" class="quick-link">📅 Meeting Prep</a></div>
+    </div>
+    <div class="company-card">
+        <div class="card-header">
+            <div class="name">Wieser Concrete Products, Inc.</div>
+            <div class="badges">
+                <span class="badge" style="background:#f0883e">BUY</span>
+                <span class="badge blue">Q:82</span>
+                <span class="badge purple">10 buyers</span>
+            </div>
+        </div>
+        <div class="meta">Andy Wieser (President/CEO) | Precast Concrete Manufacturing | Maiden Rock, WI</div>
+        <div class="quick-links"><a href="wieser-concrete-products-inc-hub.html" class="quick-link">📋 Hub</a><a href="interactive-wieser-concrete.html" class="quick-link accent">🎯 Interactive Proposal</a><a href="dataroom-wieser-concrete-products-inc.html" class="quick-link">🔒 Data Room</a><a href="meeting-wieser-concrete-products-inc_2026-03-29_discovery.html" class="quick-link">📅 Meeting Prep</a></div>
+    </div></div>
+<div class="footer">Next Chapter M&A Advisory | 110+ pages | 193 buyers | 169 decisions documented</div>
+<script src="comment-widget.js"></script>
+</body>
+</html>
