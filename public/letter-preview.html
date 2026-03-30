@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Letter Preview — Next Chapter Master CRM</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#c9d1d9}
+.header{background:linear-gradient(135deg,#161b22,#1a5276);padding:30px;text-align:center}
+.header h1{color:#58a6ff;font-size:28px}
+.header .sub{color:#8b949e;margin-top:8px;font-size:14px}
+.stats{display:flex;justify-content:center;gap:30px;margin-top:15px;flex-wrap:wrap}
+.stat{text-align:center}
+.stat .num{font-size:36px;font-weight:bold;color:#f0f6fc}
+.stat .label{font-size:11px;color:#8b949e;text-transform:uppercase}
+.stat.green .num{color:#27ae60}
+.stat.orange .num{color:#f39c12}
+.nav{text-align:center;padding:10px;background:#161b22;border-bottom:1px solid #30363d}
+.nav a{color:#58a6ff;margin:0 12px;text-decoration:none;font-size:13px}
+.container{max-width:1200px;margin:20px auto;padding:0 20px}
+.card{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:20px;margin-bottom:20px}
+.card h2{font-size:16px;color:#58a6ff;margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid #30363d}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:10px 8px;color:#8b949e;border-bottom:1px solid #30363d}
+td{padding:10px 8px;border-bottom:1px solid #21262d;vertical-align:middle}
+.badge{font-size:11px;padding:3px 8px;border-radius:10px;font-weight:600;white-space:nowrap}
+.badge-pending{background:#2d2000;color:#f39c12;border:1px solid #f39c12}
+.badge-approved{background:#0d2818;color:#27ae60;border:1px solid #27ae60}
+.badge-rejected{background:#2d0d0d;color:#e74c3c;border:1px solid #e74c3c}
+.badge-draft{background:#1a1a2d;color:#8b949e;border:1px solid #30363d}
+.score-bar{background:#21262d;border-radius:4px;height:7px;overflow:hidden;width:70px;display:inline-block;vertical-align:middle;margin-left:5px}
+.score-fill{height:100%;border-radius:4px}
+.btn{padding:5px 12px;border-radius:6px;border:none;cursor:pointer;font-size:12px;font-weight:600;transition:opacity 0.2s}
+.btn:hover{opacity:0.8}
+.btn-approve{background:#27ae60;color:#fff}
+.btn-reject{background:#e74c3c;color:#fff}
+.btn-edit{background:#58a6ff;color:#0d1117}
+.btn-preview{background:#30363d;color:#c9d1d9}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);z-index:1000;overflow-y:auto}
+.modal-content{background:#161b22;border:1px solid #30363d;border-radius:10px;max-width:720px;margin:40px auto;padding:30px}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.modal-close{background:none;border:none;color:#8b949e;font-size:22px;cursor:pointer;line-height:1}
+.letter-body{background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:20px;font-size:13px;line-height:1.8;white-space:pre-wrap;min-height:280px;max-height:450px;overflow-y:auto}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:15px}
+.score-item{background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:12px;text-align:center}
+.score-item .val{font-size:24px;font-weight:bold;color:#58a6ff}
+.score-item .lbl{font-size:11px;color:#8b949e;margin-top:4px}
+.filters{display:flex;gap:8px;margin-bottom:15px;flex-wrap:wrap}
+.filter-btn{padding:5px 14px;border-radius:20px;border:1px solid #30363d;background:#21262d;color:#c9d1d9;cursor:pointer;font-size:12px;transition:all 0.2s}
+.filter-btn.active{border-color:#58a6ff;color:#58a6ff;background:#1a2744}
+.loading{text-align:center;padding:40px;color:#8b949e}
+.empty{text-align:center;padding:40px;color:#8b949e;font-size:13px}
+.footer{text-align:center;padding:20px;color:#484f58;font-size:11px}
+textarea{width:100%;background:#0d1117;border:1px solid #30363d;border-radius:8px;color:#c9d1d9;padding:12px;font-size:13px;font-family:inherit;line-height:1.8;resize:vertical;min-height:320px}
+.edit-actions{display:flex;gap:10px;margin-top:12px;justify-content:flex-end}
+tr:hover td{background:#1c2333}
+</style>
+</head>
+<body>
+
+<div style="background:#161b22;padding:8px 20px;border-bottom:1px solid #30363d">
+  <a href="index.html" style="color:#58a6ff;text-decoration:none;font-size:13px">← Home</a>
+  <a href="dashboard.html" style="color:#8b949e;text-decoration:none;font-size:13px;margin-left:15px">Dashboard</a>
+  <a href="ebitda-levers.html" style="color:#8b949e;text-decoration:none;font-size:13px;margin-left:15px">EBITDA Levers</a>
+  <a href="feature-roadmap.html" style="color:#8b949e;text-decoration:none;font-size:13px;margin-left:15px">Roadmap</a>
+</div>
+
+<div class="header">
+  <h1>Letter Preview (#62)</h1>
+  <div class="sub">Review, approve, reject, or edit generated letters before sending</div>
+  <div class="stats">
+    <div class="stat"><div class="num" id="statTotal">—</div><div class="label">Total</div></div>
+    <div class="stat orange"><div class="num" id="statPending">—</div><div class="label">Pending</div></div>
+    <div class="stat green"><div class="num" id="statApproved">—</div><div class="label">Approved</div></div>
+    <div class="stat"><div class="num" id="statRejected">—</div><div class="label">Rejected</div></div>
+    <div class="stat"><div class="num" id="statAvgScore">—</div><div class="label">Avg Score</div></div>
+  </div>
+</div>
+
+<div class="nav">
+  <a href="letter-preview.html">✉️ Preview</a>
+  <a href="letter-send.html">📬 Send</a>
+  <a href="campaign-manager.html">📊 Campaign</a>
+</div>
+
+<div class="container">
+  <div class="card">
+    <h2>Letter Queue</h2>
+    <div class="filters">
+      <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+      <button class="filter-btn" onclick="setFilter('pending',this)">Pending Review</button>
+      <button class="filter-btn" onclick="setFilter('approved',this)">Approved</button>
+      <button class="filter-btn" onclick="setFilter('rejected',this)">Rejected</button>
+      <button class="filter-btn" onclick="setFilter('draft',this)">Draft</button>
+    </div>
+    <div id="tableArea"><div class="loading">Loading letters from Supabase…</div></div>
+  </div>
+</div>
+
+<!-- Preview Modal -->
+<div class="modal" id="previewModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 style="color:#58a6ff" id="modalTitle">Letter Preview</h3>
+      <button class="modal-close" onclick="closeModal('previewModal')">✕</button>
+    </div>
+    <div class="score-grid" id="modalScores"></div>
+    <div class="letter-body" id="modalBody"></div>
+    <div style="display:flex;gap:10px;margin-top:15px;justify-content:flex-end">
+      <button class="btn btn-reject" onclick="updateStatus('rejected')">✗ Reject</button>
+      <button class="btn btn-edit" onclick="switchToEdit()">✎ Edit</button>
+      <button class="btn btn-approve" onclick="updateStatus('approved')">✓ Approve</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal" id="editModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 style="color:#f39c12" id="editTitle">Edit Letter</h3>
+      <button class="modal-close" onclick="closeModal('editModal')">✕</button>
+    </div>
+    <textarea id="editBody"></textarea>
+    <div class="edit-actions">
+      <button class="btn btn-preview" onclick="closeModal('editModal')">Cancel</button>
+      <button class="btn btn-approve" onclick="saveEdit()">Save & Approve</button>
+    </div>
+  </div>
+</div>
+
+<div class="footer">Next Chapter Master CRM — Letter Preview</div>
+
+<script>
+const SB_URL = 'https://dwrnfpjcvydhmhnvyzov.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NTcyOTAsImV4cCI6MjA5MDMzMzI5MH0.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY';
+const HEADERS = { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY, 'Content-Type': 'application/json' };
+
+let allLetters = [];
+let currentFilter = 'all';
+let currentLetterId = null;
+let currentTable = 'letters';
+
+async function sbGet(table, query='') {
+  const r = await fetch(`${SB_URL}/rest/v1/${table}?${query}`, { headers: HEADERS });
+  if (!r.ok) throw new Error(r.status);
+  return r.json();
+}
+
+async function sbPatch(table, id, body) {
+  const r = await fetch(`${SB_URL}/rest/v1/${table}?id=eq.${id}`, {
+    method: 'PATCH',
+    headers: { ...HEADERS, Prefer: 'return=representation' },
+    body: JSON.stringify(body)
+  });
+  if (!r.ok) throw new Error(r.status);
+  return r.json();
+}
+
+async function load() {
+  const tables = ['letters', 'letter_drafts', 'outbound_letters'];
+  for (const t of tables) {
+    try {
+      const data = await sbGet(t, 'select=*&order=created_at.desc&limit=300');
+      allLetters = data;
+      currentTable = t;
+      updateStats();
+      render();
+      return;
+    } catch(e) { /* try next */ }
+  }
+  document.getElementById('tableArea').innerHTML = `<div class="empty">No letter table found in Supabase.<br><span style="color:#484f58;font-size:11px">Checked: letters, letter_drafts, outbound_letters</span></div>`;
+}
+
+function updateStats() {
+  document.getElementById('statTotal').textContent = allLetters.length;
+  document.getElementById('statPending').textContent = allLetters.filter(l=>(l.status||'pending')==='pending').length;
+  document.getElementById('statApproved').textContent = allLetters.filter(l=>l.status==='approved').length;
+  document.getElementById('statRejected').textContent = allLetters.filter(l=>l.status==='rejected').length;
+  const scored = allLetters.filter(l=>l.personalization_score!=null);
+  document.getElementById('statAvgScore').textContent = scored.length ? Math.round(scored.reduce((s,l)=>s+(+l.personalization_score||0),0)/scored.length) : '—';
+}
+
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function render() {
+  const filtered = currentFilter==='all' ? allLetters : allLetters.filter(l=>(l.status||'pending')===currentFilter);
+  if (!filtered.length) { document.getElementById('tableArea').innerHTML='<div class="empty">No letters match this filter.</div>'; return; }
+  let html = '<table><tr><th>Company</th><th>Recipient</th><th>Status</th><th>Score</th><th>Entity</th><th>Date</th><th>Actions</th></tr>';
+  filtered.forEach(l => {
+    const status = l.status || 'pending';
+    const score = l.personalization_score != null ? +l.personalization_score : null;
+    const scoreColor = score!=null ? (score>=70?'#27ae60':score>=40?'#f39c12':'#e74c3c') : '#484f58';
+    const scoreHtml = score!=null
+      ? `<span style="color:${scoreColor};font-weight:600">${score}</span><div class="score-bar"><div class="score-fill" style="width:${Math.min(score,100)}%;background:${scoreColor}"></div></div>`
+      : '<span style="color:#484f58">—</span>';
+    html += `<tr>
+      <td><strong style="color:#f0f6fc">${esc(l.company_name||l.company||'Unknown')}</strong></td>
+      <td>${esc(l.recipient_name||l.contact_name||l.owner_name||'—')}</td>
+      <td><span class="badge badge-${status}">${status.toUpperCase()}</span></td>
+      <td>${scoreHtml}</td>
+      <td><span style="color:#8b949e;font-size:11px">${esc(l.entity||'—')}</span></td>
+      <td style="color:#8b949e;font-size:11px">${(l.created_at||'').slice(0,10)}</td>
+      <td style="white-space:nowrap">
+        <button class="btn btn-preview" onclick="openPreview('${l.id}')">View</button>
+        ${status==='pending'?`<button class="btn btn-approve" style="margin-left:4px" onclick="quickApprove('${l.id}')">✓</button><button class="btn btn-reject" style="margin-left:4px" onclick="quickReject('${l.id}')">✗</button>`:''}
+      </td>
+    </tr>`;
+  });
+  html += '</table>';
+  document.getElementById('tableArea').innerHTML = html;
+}
+
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function openPreview(id) {
+  const l = allLetters.find(x=>String(x.id)===String(id));
+  if (!l) return;
+  currentLetterId = id;
+  document.getElementById('modalTitle').textContent = (l.company_name||l.company||'Letter') + (l.recipient_name?' — '+l.recipient_name:'');
+  const s = l.personalization_score!=null ? +l.personalization_score : null;
+  const sc = s!=null?(s>=70?'#27ae60':s>=40?'#f39c12':'#e74c3c'):'#8b949e';
+  document.getElementById('modalScores').innerHTML = `
+    <div class="score-item"><div class="val" style="color:${sc}">${s??'—'}/100</div><div class="lbl">Personalization Score</div></div>
+    <div class="score-item"><div class="val" style="font-size:16px">${esc(l.entity||'—')}</div><div class="lbl">Entity</div></div>
+    <div class="score-item"><div class="val" style="font-size:16px;color:${l.status==='approved'?'#27ae60':l.status==='rejected'?'#e74c3c':'#f39c12'}">${esc(l.status||'pending')}</div><div class="lbl">Status</div></div>
+  `;
+  document.getElementById('modalBody').textContent = l.body||l.letter_body||l.content||l.text||'(No letter body found)';
+  document.getElementById('previewModal').style.display = 'block';
+}
+
+function switchToEdit() {
+  const l = allLetters.find(x=>String(x.id)===String(currentLetterId));
+  if (!l) return;
+  document.getElementById('editTitle').textContent = 'Edit — ' + (l.company_name||l.company||'Letter');
+  document.getElementById('editBody').value = l.body||l.letter_body||l.content||l.text||'';
+  closeModal('previewModal');
+  document.getElementById('editModal').style.display = 'block';
+}
+
+async function saveEdit() {
+  const body = document.getElementById('editBody').value;
+  try {
+    await sbPatch(currentTable, currentLetterId, { body, status:'approved', updated_at:new Date().toISOString() });
+    const idx = allLetters.findIndex(x=>String(x.id)===String(currentLetterId));
+    if (idx>=0){ allLetters[idx].body=body; allLetters[idx].status='approved'; }
+    closeModal('editModal'); updateStats(); render();
+  } catch(e) { alert('Save failed: '+e.message); }
+}
+
+async function updateStatus(status) {
+  try {
+    await sbPatch(currentTable, currentLetterId, { status, updated_at:new Date().toISOString() });
+    const idx = allLetters.findIndex(x=>String(x.id)===String(currentLetterId));
+    if (idx>=0) allLetters[idx].status = status;
+    closeModal('previewModal'); updateStats(); render();
+  } catch(e) { alert('Update failed: '+e.message); }
+}
+
+async function quickApprove(id){ currentLetterId=id; await updateStatus('approved'); }
+async function quickReject(id){ currentLetterId=id; await updateStatus('rejected'); }
+function closeModal(id){ document.getElementById(id).style.display='none'; }
+window.onclick = e => { if(e.target.classList.contains('modal')) e.target.style.display='none'; };
+load();
+</script>
+</body>
+</html>

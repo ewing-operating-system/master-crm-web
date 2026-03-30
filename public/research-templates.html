@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research Templates — Master CRM</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#c9d1d9}
+.header{background:linear-gradient(135deg,#161b22,#1a5276);padding:25px 30px}
+.header h1{color:#58a6ff;font-size:24px}
+.header .meta{color:#8b949e;font-size:13px;margin-top:5px}
+.nav{background:#161b22;padding:8px 20px;border-bottom:1px solid #30363d;display:flex;gap:4px;flex-wrap:wrap}
+.nav a{color:#c9d1d9;text-decoration:none;font-size:12px;padding:5px 12px;border-radius:6px;background:#21262d;border:1px solid #30363d;transition:all 0.2s}
+.nav a:hover,.nav a.active{border-color:#58a6ff;color:#58a6ff}
+.container{max-width:1400px;margin:20px auto;padding:0 20px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:20px}
+.kpi{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:18px;text-align:center}
+.kpi .num{font-size:28px;font-weight:bold;color:#f0f6fc}
+.kpi .label{font-size:11px;color:#8b949e;text-transform:uppercase;margin-top:4px}
+.kpi.green .num{color:#27ae60}
+.kpi.blue .num{color:#58a6ff}
+.kpi.purple .num{color:#8b5cf6}
+.kpi.orange .num{color:#f39c12}
+.filters{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.filter-btn{padding:6px 16px;border-radius:6px;border:1px solid #30363d;background:#21262d;color:#c9d1d9;cursor:pointer;font-size:12px;transition:all 0.2s}
+.filter-btn:hover,.filter-btn.active{border-color:#58a6ff;color:#58a6ff;background:#1a3a5c}
+.filter-btn.nc.active{border-color:#27ae60;color:#27ae60;background:#1a3a1a}
+.filter-btn.and.active{border-color:#8b5cf6;color:#8b5cf6;background:#1a1a3a}
+.filter-btn.ru.active{border-color:#f39c12;color:#f39c12;background:#2a1a00}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:20px}
+.template-card{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:18px;cursor:pointer;transition:all 0.2s}
+.template-card:hover{border-color:#58a6ff}
+.template-card.selected{border-color:#58a6ff;background:#1a2a3a}
+.tc-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.tc-name{font-size:14px;font-weight:600}
+.tc-meta{font-size:11px;color:#8b949e;margin-bottom:10px}
+.tc-stats{display:flex;gap:12px;font-size:11px;color:#8b949e}
+.tc-stat span{color:#f0f6fc;font-weight:600}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600}
+.badge.nc{background:#1a3a1a;color:#27ae60}
+.badge.and{background:#1a1a3a;color:#8b5cf6}
+.badge.ru{background:#2a1a1a;color:#f39c12}
+.detail-panel{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:20px;margin-bottom:20px}
+.detail-panel h2{font-size:15px;color:#58a6ff;margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid #30363d}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.section h3{font-size:12px;color:#8b949e;text-transform:uppercase;margin-bottom:10px;letter-spacing:0.5px}
+.goal-item{display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:1px solid #21262d;font-size:12px}
+.goal-item:last-child{border-bottom:none}
+.goal-dot{width:5px;height:5px;border-radius:50%;background:#58a6ff;margin-top:5px;flex-shrink:0}
+.query-item{font-family:monospace;font-size:11px;padding:6px 10px;background:#0d1117;border-radius:4px;margin-bottom:4px;color:#79c0ff;word-break:break-all}
+.hook-item{padding:8px;border-left:2px solid #58a6ff;margin-bottom:8px;font-size:12px;color:#c9d1d9;background:#161b22;border-radius:0 4px 4px 0}
+.empty-detail{color:#484f58;font-size:13px;text-align:center;padding:40px}
+.footer{text-align:center;padding:20px;color:#484f58;font-size:11px}
+@media(max-width:1000px){.grid3{grid-template-columns:repeat(2,1fr)}.detail-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.grid3{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a href="index.html">Home</a>
+  <a href="dashboard.html">Pipeline</a>
+  <a href="campaign-manager.html">Campaigns</a>
+  <a href="salesfinity-dashboard.html">Salesfinity</a>
+  <a href="listener-dashboard.html">Listener</a>
+  <a href="research-templates.html" class="active">Research</a>
+  <a href="feature-roadmap.html">Roadmap</a>
+</div>
+
+<div class="header">
+  <h1>Research Templates by Entity</h1>
+  <div class="meta" id="header-meta">Browse Exa query templates and narrative hooks by entity and vertical</div>
+</div>
+
+<div class="container">
+
+  <div class="kpis">
+    <div class="kpi green">
+      <div class="num">10</div>
+      <div class="label">Verticals</div>
+    </div>
+    <div class="kpi blue">
+      <div class="num" id="kpi-queries">—</div>
+      <div class="label">Total Queries</div>
+    </div>
+    <div class="kpi purple">
+      <div class="num" id="kpi-hooks">—</div>
+      <div class="label">Story Hooks</div>
+    </div>
+    <div class="kpi orange">
+      <div class="num">3</div>
+      <div class="label">Entities</div>
+    </div>
+  </div>
+
+  <!-- Entity filters -->
+  <div class="filters">
+    <span style="font-size:12px;color:#8b949e;line-height:30px;margin-right:4px">Filter:</span>
+    <button class="filter-btn active" onclick="setFilter('all')">All Entities</button>
+    <button class="filter-btn nc" onclick="setFilter('next_chapter')">Next Chapter (NC)</button>
+    <button class="filter-btn and" onclick="setFilter('and_capital')">AND Capital</button>
+    <button class="filter-btn ru" onclick="setFilter('revsup')">RevsUp</button>
+  </div>
+
+  <!-- Template Cards -->
+  <div class="grid3" id="template-grid">
+    <!-- populated by JS -->
+  </div>
+
+  <!-- Detail Panel -->
+  <div class="detail-panel" id="detail-panel">
+    <h2 id="detail-title">Select a template above to preview</h2>
+    <div id="detail-content">
+      <div class="empty-detail">Click any template card to view Exa queries, research goals, and story hooks.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer" id="footer-time">Master CRM — Research Templates</div>
+
+<script>
+// ── Template data (mirrors research_templates.py) ─────────────────────────
+
+const TEMPLATES = [
+  {
+    entity: 'next_chapter', vertical: 'water_treatment',
+    label: 'Water Treatment',
+    description: 'NSF certs, recurring filter routes, residential vs commercial split',
+    goals: [
+      'Owner story: years in business, how they started, family involvement',
+      'Revenue signals: size indicators from reviews, truck fleet, employee count',
+      'Recurring revenue: filter replacement routes, salt delivery, service agreements',
+      'NSF/ANSI certifications (42, 44, 53, 58)',
+      'Commercial vs residential split',
+      'Equipment: RO systems, water softeners, whole-home filtration',
+      'Regulatory compliance: state water quality board',
+      'Exit readiness: retirement, succession, sale mentions',
+    ],
+    queries: [
+      '{company_name} {city} {state} owner founder history',
+      '{company_name} {city} employees technicians fleet size',
+      '{company_name} reviews BBB rating Google 4 5 stars',
+      '{company_name} service agreement maintenance contract recurring',
+      '{company_name} water softener RO filtration residential commercial',
+      '{company_name} NSF certified water treatment',
+      'water treatment company {city} {state} sold acquired roll-up 2024 2025',
+    ],
+    hooks: [
+      'The water treatment business you built solves a problem every family in {city} faces — clean, safe water. That kind of essential service attracts serious buyers.',
+      'A recurring revenue base of filter replacements and service agreements is exactly what today\'s acquirers pay a premium for in water treatment.',
+      'Regional operators who built their routes from scratch are becoming the most sought-after acquisition targets in the water space right now.',
+    ],
+  },
+  {
+    entity: 'next_chapter', vertical: 'hvac',
+    label: 'HVAC',
+    description: 'NATE certs, maintenance agreement books, equipment brand affiliations',
+    goals: [
+      'Owner story: years in business, how they started',
+      'NATE-certified technician count',
+      'Service area radius (miles from base)',
+      'Equipment brands: Carrier, Trane, Lennox, Daikin authorized dealer',
+      'Recurring revenue: maintenance agreements, service contracts',
+      'Commercial vs residential mix',
+      'Seasonal revenue patterns and off-season revenue',
+      'Local reputation: BBB, Google reviews',
+    ],
+    queries: [
+      '{company_name} {city} {state} owner founder history',
+      '{company_name} NATE certified HVAC technicians',
+      '{company_name} Carrier Trane Lennox authorized dealer',
+      '{company_name} maintenance agreement service contract recurring',
+      '{company_name} reviews BBB rating Google',
+      'HVAC company {city} {state} acquisition sold PE roll-up 2024 2025',
+    ],
+    hooks: [
+      'HVAC businesses with strong maintenance agreement books are trading at the highest multiples in the trades right now — because buyers see the recurring revenue.',
+      'The HVAC market in {state} is consolidating fast. Owner-operators who know their territory are exactly what PE-backed platforms are paying premium prices to acquire.',
+      'After {years_in_business} years building a reputation in {city}, your customer list is an asset that strategic buyers are willing to pay for.',
+    ],
+  },
+  {
+    entity: 'next_chapter', vertical: 'plumbing',
+    label: 'Plumbing',
+    description: 'Master plumber license, commercial accounts, route density',
+    goals: [
+      'Master plumber license status by state',
+      'Emergency/24-hour service capacity',
+      'Commercial plumbing vs residential split',
+      'Specialty: hydro-jetting, trenchless, backflow prevention',
+      'Employee count and licensed journeyman count',
+      'Recurring commercial maintenance contracts',
+    ],
+    queries: [
+      '{company_name} {city} {state} owner founder history',
+      '{company_name} master plumber licensed {state}',
+      '{company_name} commercial residential plumbing',
+      '{company_name} reviews BBB rating',
+      'plumbing company {city} {state} acquisition sold 2024 2025',
+    ],
+    hooks: [
+      'Plumbing businesses with trained crews and commercial relationships are in high demand from buyers who want to add a trade alongside their HVAC platform.',
+      'The consolidation happening in plumbing right now is creating real exits for owners who spent decades building route density and licensed crews.',
+    ],
+  },
+  {
+    entity: 'next_chapter', vertical: 'roofing',
+    label: 'Roofing',
+    description: 'GAF/CertainTeed certs, storm restoration, insurance claim mix',
+    goals: [
+      'GAF/CertainTeed/Owens Corning certified installer status',
+      'Storm restoration vs replacement revenue mix',
+      'Insurance claim work percentage',
+      'Crew size and subcontractor use',
+      'Geographic territory and licensing',
+    ],
+    queries: [
+      '{company_name} GAF certified roofing installer',
+      '{company_name} storm restoration insurance claims',
+      '{company_name} {city} {state} employees reviews',
+      'roofing company {city} {state} acquisition sold PE 2024 2025',
+    ],
+    hooks: [
+      'Storm restoration revenue is attractive to buyers because it proves your team can scale fast — exactly the capability PE platforms want.',
+      'Certified installer status with a major manufacturer is a durable competitive advantage that sophisticated buyers factor into their offers.',
+    ],
+  },
+  {
+    entity: 'next_chapter', vertical: 'pest_control',
+    label: 'Pest Control',
+    description: 'Recurring quarterly routes, termite warranties, route density',
+    goals: [
+      'State pesticide applicator license',
+      'Recurring contract base: quarterly/monthly customers',
+      'Termite warranty portfolio value',
+      'Route density (stops per day per tech)',
+      'Specialty: termite, rodent, bed bug, wildlife',
+    ],
+    queries: [
+      '{company_name} termite warranty quarterly pest control',
+      '{company_name} pest control routes recurring contracts',
+      '{company_name} {city} {state} reviews BBB',
+      'pest control company {city} {state} acquisition sold Rollins Rentokil 2024 2025',
+    ],
+    hooks: [
+      'A recurring quarterly pest control book is one of the most predictable revenue streams in all of home services — buyers know it and price it accordingly.',
+      'The termite warranty portfolio you\'ve built represents years of customer trust that rolls into a new owner at closing.',
+    ],
+  },
+  {
+    entity: 'next_chapter', vertical: 'concrete_precast',
+    label: 'Concrete / Precast',
+    description: 'NPCA plant certification, DOT contracts, product mix, capacity',
+    goals: [
+      'NPCA plant certification status',
+      'Product mix: pipe, box culvert, manholes, architectural, structural',
+      'Geographic delivery radius',
+      'DOT/municipal contract history',
+      'Plant capacity vs current utilization',
+    ],
+    queries: [
+      '{company_name} NPCA certified precast concrete plant',
+      '{company_name} DOT municipal precast pipe culvert',
+      '{company_name} {state} capacity utilization employees',
+      'precast concrete company {state} acquisition sold 2024 2025',
+    ],
+    hooks: [
+      'NPCA-certified precast plants with established DOT relationships are rare assets — buyers in the infrastructure space know it.',
+      'The capital equipment and certifications you\'ve accumulated represent a barrier to entry that acquirers value highly.',
+    ],
+  },
+  {
+    entity: 'next_chapter', vertical: 'flooring',
+    label: 'Flooring',
+    description: 'Commercial vs residential mix, builder relationships, installation crew',
+    goals: [
+      'Commercial vs residential split',
+      'Floor types: hardwood, LVP, tile, carpet, epoxy',
+      'Installation crew vs subcontract ratio',
+      'Builder/GC relationships',
+      'Recurring commercial maintenance contracts',
+    ],
+    queries: [
+      '{company_name} commercial residential flooring installation',
+      '{company_name} flooring builder contractor relationships',
+      '{company_name} {city} {state} reviews employees',
+      'flooring company {city} {state} acquisition sold 2024 2025',
+    ],
+    hooks: [
+      'A commercial flooring business with builder relationships is a platform asset — buyers see the recurring project flow as a core part of the value.',
+    ],
+  },
+  {
+    entity: 'and_capital', vertical: 'healthcare',
+    label: 'Healthcare (AND)',
+    description: 'Fund thesis, payer mix, portfolio companies, LP alignment',
+    goals: [
+      'Fund thesis and investment criteria',
+      'Portfolio companies: sectors, deal sizes, vintage',
+      'Return history: exits, realized IRR, DPI',
+      'Healthcare sub-sector: physician practice, med-tech, behavioral health',
+      'LP base composition: family offices, endowments, HNW',
+      'Regulatory environment understanding',
+    ],
+    queries: [
+      '{company_name} fund thesis investment criteria portfolio',
+      '{company_name} healthcare investment physician practice med-tech',
+      '{company_name} limited partners family office endowment',
+      '{company_name} {contact_name} managing partner background',
+      'healthcare PE firm {state} fund raise close 2024 2025',
+    ],
+    hooks: [
+      'The consolidation happening in healthcare is creating significant opportunities for operators with the right capital structure and sector expertise.',
+      'Family office and institutional LPs are increasingly allocating to healthcare because the demographics make the thesis durable across market cycles.',
+    ],
+  },
+  {
+    entity: 'and_capital', vertical: 'energy',
+    label: 'Energy (AND)',
+    description: 'Infrastructure thesis, PPA contracts, clean energy positioning',
+    goals: [
+      'Clean energy vs traditional energy thesis',
+      'Infrastructure vs operating company focus',
+      'Asset type: generation, transmission, distribution, storage',
+      'Contract tenor: PPA length, offtake agreements',
+      'ESG commitment and reporting',
+    ],
+    queries: [
+      '{company_name} energy infrastructure investment clean renewable',
+      '{company_name} PPA offtake agreement contract',
+      '{company_name} {contact_name} background fund thesis',
+      'energy PE fund raise close {state} 2024 2025',
+    ],
+    hooks: [
+      'The infrastructure buildout required for clean energy transition is creating multi-decade investment opportunities that sophisticated LPs are positioning for now.',
+      'Energy assets with contracted cash flows represent the kind of yield-plus-growth profile that family offices have historically found in real estate — but with better risk-adjusted returns.',
+    ],
+  },
+  {
+    entity: 'revsup', vertical: 'saas',
+    label: 'SaaS (RevsUp)',
+    description: 'ARR signals, GTM motion, open revenue roles, comp benchmarks',
+    goals: [
+      'ARR/MRR indicators from job postings, press releases',
+      'Tech stack from job listings (engineering roles)',
+      'Funding history: seed, series A/B, bootstrapped',
+      'Open revenue roles: AE, SDR, VP Sales, CRO, CSM, RevOps',
+      'PLG vs sales-led vs hybrid GTM motion',
+      'ACV range and deal cycle length',
+      'Comp benchmarks for revenue roles in their market',
+    ],
+    queries: [
+      '{company_name} jobs hiring sales account executive SDR',
+      '{company_name} SaaS ARR revenue growth customers',
+      '{company_name} funding series investment Crunchbase',
+      '{company_name} Glassdoor reviews culture compensation',
+      '{company_name} PLG sales-led growth GTM motion',
+      'SaaS revenue roles compensation benchmark 2025',
+    ],
+    hooks: [
+      'The companies growing fastest right now share one trait: they hired the right first VP of Sales before they needed one.',
+      'Revenue hiring is the highest-leverage investment a Series B company makes — the wrong hire costs two years of runway, the right hire compounds.',
+    ],
+  },
+];
+
+// ── State ──────────────────────────────────────────────────────────────────
+
+let selectedTemplate = null;
+let activeFilter = 'all';
+
+// ── Render ─────────────────────────────────────────────────────────────────
+
+function entityBadge(entity) {
+  const map = { next_chapter: 'nc', and_capital: 'and', revsup: 'ru' };
+  const short = { next_chapter: 'NC', and_capital: 'AND', revsup: 'RU' };
+  return `<span class="badge ${map[entity]||'nc'}">${short[entity]||entity}</span>`;
+}
+
+function setFilter(filter) {
+  activeFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderGrid();
+}
+
+function renderGrid() {
+  const grid = document.getElementById('template-grid');
+  const filtered = activeFilter === 'all'
+    ? TEMPLATES
+    : TEMPLATES.filter(t => t.entity === activeFilter);
+
+  if (!filtered.length) {
+    grid.innerHTML = '<div style="color:#484f58;padding:20px;grid-column:1/-1">No templates found.</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map((t, i) => `
+    <div class="template-card${selectedTemplate && selectedTemplate.entity===t.entity && selectedTemplate.vertical===t.vertical ? ' selected' : ''}"
+         onclick="selectTemplate('${t.entity}', '${t.vertical}')">
+      <div class="tc-header">
+        <div class="tc-name">${t.label}</div>
+        ${entityBadge(t.entity)}
+      </div>
+      <div class="tc-meta">${t.description}</div>
+      <div class="tc-stats">
+        <span><span>${t.goals.length}</span> goals</span>
+        <span><span>${t.queries.length}</span> queries</span>
+        <span><span>${t.hooks.length}</span> hooks</span>
+      </div>
+    </div>
+  `).join('');
+
+  // Update totals KPIs
+  const allFiltered = activeFilter === 'all' ? TEMPLATES : filtered;
+  const totalQueries = allFiltered.reduce((s, t) => s + t.queries.length, 0);
+  const totalHooks = allFiltered.reduce((s, t) => s + t.hooks.length, 0);
+  document.getElementById('kpi-queries').textContent = totalQueries;
+  document.getElementById('kpi-hooks').textContent = totalHooks;
+}
+
+function selectTemplate(entity, vertical) {
+  const t = TEMPLATES.find(x => x.entity === entity && x.vertical === vertical);
+  if (!t) return;
+  selectedTemplate = t;
+  renderGrid(); // re-render to update selected state
+
+  const panel = document.getElementById('detail-panel');
+  document.getElementById('detail-title').textContent =
+    `${t.label} — ${t.entity.replace('_', ' ')} research template`;
+
+  const goalsHtml = t.goals.map(g =>
+    `<div class="goal-item"><div class="goal-dot"></div><div>${g}</div></div>`
+  ).join('');
+
+  const queriesHtml = t.queries.map(q =>
+    `<div class="query-item">${q}</div>`
+  ).join('');
+
+  const hooksHtml = t.hooks.map(h =>
+    `<div class="hook-item">${h}</div>`
+  ).join('');
+
+  document.getElementById('detail-content').innerHTML = `
+    <div class="detail-grid">
+      <div class="section">
+        <h3>Research Goals (${t.goals.length})</h3>
+        ${goalsHtml}
+      </div>
+      <div>
+        <div class="section" style="margin-bottom:20px">
+          <h3>Exa Query Prompts (${t.queries.length})</h3>
+          <div style="margin-bottom:4px;font-size:11px;color:#484f58">Variables: {company_name} {city} {state} {owner_name} {vertical} {years_in_business}</div>
+          ${queriesHtml}
+        </div>
+        <div class="section">
+          <h3>Story Hooks for Letters (${t.hooks.length})</h3>
+          ${hooksHtml}
+        </div>
+      </div>
+    </div>
+  `;
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function init() {
+  const now = new Date();
+  document.getElementById('header-meta').textContent =
+    `${TEMPLATES.length} templates across 3 entities and 10 verticals — ` +
+    now.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' });
+  document.getElementById('footer-time').textContent =
+    `Master CRM — Research Templates | ${now.toLocaleString()}`;
+  renderGrid();
+}
+
+init();
+</script>
+</body>
+</html>

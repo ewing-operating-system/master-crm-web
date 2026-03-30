@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Letter Send — Next Chapter M&A</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0d1117; color: #c9d1d9; line-height: 1.6; min-height: 100vh; }
+  .top-nav { background: #161b22; padding: 8px 20px; border-bottom: 1px solid #30363d; }
+  .top-nav a { color: #58a6ff; text-decoration: none; font-size: 13px; }
+  .top-nav a + a { color: #8b949e; margin-left: 15px; }
+  .header { background: #161b22; border-bottom: 1px solid #30363d; padding: 20px 32px; }
+  .header h1 { font-size: 20px; font-weight: 700; color: #f0f6fc; }
+  .header p { font-size: 13px; color: #8b949e; margin-top: 3px; }
+  .main { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
+  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+  .stat-card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px 20px; }
+  .stat-card .label { font-size: 12px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; }
+  .stat-card .value { font-size: 26px; font-weight: 700; color: #f0f6fc; margin-top: 4px; }
+  .stat-card .sub { font-size: 12px; color: #8b949e; margin-top: 2px; }
+  .section-title { font-size: 15px; font-weight: 600; color: #f0f6fc; margin-bottom: 14px; }
+  table { width: 100%; border-collapse: collapse; background: #161b22; border: 1px solid #30363d; border-radius: 8px; overflow: hidden; }
+  th { background: #0d1117; color: #8b949e; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 16px; text-align: left; border-bottom: 1px solid #30363d; }
+  td { padding: 12px 16px; font-size: 13px; border-bottom: 1px solid #21262d; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #1c2128; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .badge-approved { background: #1a3a1a; color: #27ae60; }
+  .badge-sent { background: #1a2a3a; color: #58a6ff; }
+  .badge-delivered { background: #2a1a3a; color: #a78bfa; }
+  .badge-pending { background: #3a2a10; color: #f39c12; }
+  .btn { padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 600; border: none; cursor: pointer; transition: opacity 0.15s; }
+  .btn:hover { opacity: 0.8; }
+  .btn-send { background: #27ae60; color: #fff; }
+  .btn-track { background: #1c2128; color: #58a6ff; border: 1px solid #30363d; }
+  .cost-tag { color: #f39c12; font-size: 12px; }
+  .loading { color: #8b949e; font-size: 13px; padding: 24px; text-align: center; }
+  .empty { color: #8b949e; font-size: 13px; padding: 32px; text-align: center; background: #161b22; border: 1px solid #30363d; border-radius: 8px; }
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <a href="index.html">← Home</a>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="feature-roadmap.html">Roadmap</a>
+</div>
+<div class="header">
+  <h1>Letter Send</h1>
+  <p>Approved letters ready for physical mail — $1.75 per send</p>
+</div>
+<div class="main">
+  <div class="stats-row" id="statsRow">
+    <div class="stat-card"><div class="label">Approved</div><div class="value" id="statApproved">—</div><div class="sub">ready to send</div></div>
+    <div class="stat-card"><div class="label">Sent Today</div><div class="value" id="statSent">—</div><div class="sub">in transit</div></div>
+    <div class="stat-card"><div class="label">Delivered</div><div class="value" id="statDelivered">—</div><div class="sub">confirmed</div></div>
+    <div class="stat-card"><div class="label">Cost Today</div><div class="value" id="statCost">—</div><div class="sub">@ $1.75/letter</div></div>
+  </div>
+  <div class="section-title">Approved Letters Queue</div>
+  <div id="tableWrap"><div class="loading">Loading letters...</div></div>
+</div>
+<script>
+const SB = 'https://dwrnfpjcvydhmhnvyzov.supabase.co';
+const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NTcyOTAsImV4cCI6MjA5MDMzMzI5MH0.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY';
+
+async function load() {
+  const res = await fetch(`${SB}/rest/v1/letters?select=*&order=created_at.desc&limit=100`, { headers: { apikey: KEY, Authorization: `Bearer ${KEY}` } });
+  const rows = res.ok ? await res.json() : [];
+  const approved = rows.filter(r => r.status === 'approved');
+  const sent = rows.filter(r => r.status === 'sent');
+  const delivered = rows.filter(r => r.status === 'delivered');
+  document.getElementById('statApproved').textContent = approved.length;
+  document.getElementById('statSent').textContent = sent.length;
+  document.getElementById('statDelivered').textContent = delivered.length;
+  document.getElementById('statCost').textContent = `$${(sent.length * 1.75).toFixed(2)}`;
+  const display = rows.length ? rows : [];
+  if (!display.length) { document.getElementById('tableWrap').innerHTML = '<div class="empty">No letters found. Approve letters in Letter Preview to populate this queue.</div>'; return; }
+  const badgeMap = { approved: 'badge-approved', sent: 'badge-sent', delivered: 'badge-delivered', pending: 'badge-pending' };
+  document.getElementById('tableWrap').innerHTML = `<table>
+    <thead><tr><th>Company</th><th>Recipient</th><th>Address</th><th>Status</th><th>Cost</th><th>Action</th></tr></thead>
+    <tbody>${display.map(r => `<tr>
+      <td>${r.company_name || r.entity_id || '—'}</td>
+      <td>${r.recipient_name || '—'}</td>
+      <td>${r.mailing_address || r.address || '—'}</td>
+      <td><span class="badge ${badgeMap[r.status] || 'badge-pending'}">${r.status || 'pending'}</span></td>
+      <td class="cost-tag">$1.75</td>
+      <td>${r.status === 'approved' ? `<button class="btn btn-send" onclick="sendLetter('${r.id}')">Send</button>` : `<button class="btn btn-track">Track</button>`}</td>
+    </tr>`).join('')}</tbody>
+  </table>`;
+}
+
+async function sendLetter(id) {
+  await fetch(`${SB}/rest/v1/letters?id=eq.${id}`, { method: 'PATCH', headers: { apikey: KEY, Authorization: `Bearer ${KEY}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' }, body: JSON.stringify({ status: 'sent', sent_at: new Date().toISOString() }) });
+  load();
+}
+load();
+</script>
+</body>
+</html>
