@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auto-Trust Dashboard — Next Chapter M&A</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0d1117; color: #c9d1d9; line-height: 1.6; min-height: 100vh; }
+  .top-nav { background: #161b22; padding: 8px 20px; border-bottom: 1px solid #30363d; }
+  .top-nav a { color: #58a6ff; text-decoration: none; font-size: 13px; }
+  .top-nav a + a { color: #8b949e; margin-left: 15px; }
+  .header { background: #161b22; border-bottom: 1px solid #30363d; padding: 20px 32px; }
+  .header h1 { font-size: 20px; font-weight: 700; color: #f0f6fc; }
+  .header p { font-size: 13px; color: #8b949e; margin-top: 3px; }
+  .main { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .section { margin-bottom: 28px; }
+  .section-title { font-size: 14px; font-weight: 600; color: #f0f6fc; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+  table { width: 100%; border-collapse: collapse; background: #161b22; border: 1px solid #30363d; border-radius: 8px; overflow: hidden; }
+  th { background: #0d1117; color: #8b949e; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; padding: 9px 14px; text-align: left; border-bottom: 1px solid #30363d; }
+  td { padding: 10px 14px; font-size: 13px; border-bottom: 1px solid #21262d; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #1c2128; }
+  .trust-bar { height: 6px; border-radius: 3px; background: #21262d; margin-top: 4px; overflow: hidden; }
+  .trust-fill { height: 100%; border-radius: 3px; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .badge-auto { background: #1a3a1a; color: #27ae60; }
+  .badge-pending { background: #3a2a10; color: #f39c12; }
+  .badge-manual { background: #1a2a3a; color: #58a6ff; }
+  .badge-blocked { background: #3a1a1a; color: #e74c3c; }
+  .btn { padding: 5px 12px; border-radius: 5px; font-size: 12px; font-weight: 600; border: none; cursor: pointer; }
+  .btn-cancel { background: #3a1a1a; color: #e74c3c; }
+  .btn-cancel:hover { background: #e74c3c; color: #fff; }
+  .loading { color: #8b949e; font-size: 13px; padding: 32px; text-align: center; }
+  .empty { color: #8b949e; font-size: 13px; padding: 24px; text-align: center; }
+  .progress-label { font-size: 11px; color: #8b949e; }
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <a href="index.html">← Home</a>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="feature-roadmap.html">Roadmap</a>
+</div>
+<div class="header">
+  <h1>Auto-Trust Dashboard</h1>
+  <p>10 approvals required for full auto-trust — track trust levels by entity and action type</p>
+</div>
+<div class="main">
+  <div class="two-col">
+    <div class="section">
+      <div class="section-title">Trust Levels by Entity</div>
+      <div id="trustTable"><div class="loading">Loading trust data...</div></div>
+    </div>
+    <div class="section">
+      <div class="section-title">Pending Approvals <span id="pendingCount" style="font-size:12px;color:#f39c12;font-weight:400"></span></div>
+      <div id="pendingTable"><div class="loading">Loading pending...</div></div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-title">Approval History</div>
+    <div id="historyTable"><div class="loading">Loading history...</div></div>
+  </div>
+</div>
+<script>
+const SB = 'https://dwrnfpjcvydhmhnvyzov.supabase.co';
+const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJhdCI6MTc3NDc1NzI5MCwiZXhwIjoyMDkwMzMzMjkwfQ.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY';
+const KEY2 = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NTcyOTAsImV4cCI6MjA5MDMzMzI5MH0.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY';
+
+function trustColor(n) { if (n >= 10) return '#27ae60'; if (n >= 5) return '#f39c12'; return '#e74c3c'; }
+function trustBadge(n) { if (n >= 10) return 'badge-auto'; if (n >= 5) return 'badge-pending'; return 'badge-blocked'; }
+function trustLabel(n) { if (n >= 10) return 'Auto-Trust'; if (n >= 5) return 'Partial'; return 'Manual Only'; }
+
+async function load() {
+  const [tRes, pRes, hRes] = await Promise.all([
+    fetch(`${SB}/rest/v1/trust_levels?select=*&order=approval_count.desc&limit=50`, { headers: { apikey: KEY2, Authorization: `Bearer ${KEY2}` } }),
+    fetch(`${SB}/rest/v1/trust_approvals?select=*&status=eq.pending&order=created_at.desc&limit=30`, { headers: { apikey: KEY2, Authorization: `Bearer ${KEY2}` } }),
+    fetch(`${SB}/rest/v1/trust_approvals?select=*&order=created_at.desc&limit=50`, { headers: { apikey: KEY2, Authorization: `Bearer ${KEY2}` } })
+  ]);
+  const trust = tRes.ok ? await tRes.json() : [];
+  const pending = pRes.ok ? await pRes.json() : [];
+  const history = hRes.ok ? await hRes.json() : [];
+
+  if (!trust.length) {
+    document.getElementById('trustTable').innerHTML = '<div class="empty">No trust data yet. Approvals build trust scores over time.</div>';
+  } else {
+    document.getElementById('trustTable').innerHTML = `<table><thead><tr><th>Entity</th><th>Action Type</th><th>Approvals</th><th>Status</th></tr></thead><tbody>
+    ${trust.map(r => `<tr><td>${r.entity_name || r.entity_id || '—'}</td><td>${r.action_type || '—'}</td>
+    <td><span style="font-weight:700;color:${trustColor(r.approval_count||0)}">${r.approval_count||0}/10</span>
+    <div class="trust-bar"><div class="trust-fill" style="width:${Math.min((r.approval_count||0)/10*100,100)}%;background:${trustColor(r.approval_count||0)}"></div></div></td>
+    <td><span class="badge ${trustBadge(r.approval_count||0)}">${trustLabel(r.approval_count||0)}</span></td></tr>`).join('')}
+    </tbody></table>`;
+  }
+
+  document.getElementById('pendingCount').textContent = pending.length ? `${pending.length} pending` : '';
+  if (!pending.length) {
+    document.getElementById('pendingTable').innerHTML = '<div class="empty">No pending approvals.</div>';
+  } else {
+    document.getElementById('pendingTable').innerHTML = `<table><thead><tr><th>Entity</th><th>Action</th><th>Requested</th><th></th></tr></thead><tbody>
+    ${pending.map(r => `<tr><td>${r.entity_name || r.entity_id || '—'}</td><td>${r.action_type || r.action || '—'}</td>
+    <td style="color:#8b949e;font-size:12px">${new Date(r.created_at).toLocaleDateString()}</td>
+    <td><button class="btn btn-cancel" onclick="cancelApproval('${r.id}')">Cancel</button></td></tr>`).join('')}
+    </tbody></table>`;
+  }
+
+  if (!history.length) {
+    document.getElementById('historyTable').innerHTML = '<div class="empty">No approval history yet.</div>';
+  } else {
+    document.getElementById('historyTable').innerHTML = `<table><thead><tr><th>Entity</th><th>Action</th><th>Status</th><th>By</th><th>Date</th></tr></thead><tbody>
+    ${history.map(r => `<tr><td>${r.entity_name || r.entity_id || '—'}</td><td>${r.action_type || r.action || '—'}</td>
+    <td><span class="badge ${r.status === 'approved' ? 'badge-auto' : r.status === 'pending' ? 'badge-pending' : 'badge-blocked'}">${r.status || '—'}</span></td>
+    <td>${r.approved_by || '—'}</td>
+    <td style="color:#8b949e;font-size:12px">${new Date(r.created_at).toLocaleDateString()}</td></tr>`).join('')}
+    </tbody></table>`;
+  }
+}
+
+async function cancelApproval(id) {
+  await fetch(`${SB}/rest/v1/trust_approvals?id=eq.${id}`, { method: 'PATCH', headers: { apikey: KEY2, Authorization: `Bearer ${KEY2}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' }, body: JSON.stringify({ status: 'cancelled' }) });
+  load();
+}
+load();
+</script>
+</body>
+</html>

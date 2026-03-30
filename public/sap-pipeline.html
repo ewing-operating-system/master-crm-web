@@ -3,110 +3,202 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAP Pipeline — Next Chapter M&A</title>
+<title>SAP Pipeline — Next Chapter Master CRM</title>
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0d1117; color: #c9d1d9; line-height: 1.5; min-height: 100vh; }
-  .top-nav { background: #161b22; padding: 8px 20px; border-bottom: 1px solid #30363d; }
-  .top-nav a { color: #58a6ff; text-decoration: none; font-size: 13px; }
-  .top-nav a + a { color: #8b949e; margin-left: 15px; }
-  .header { background: #161b22; border-bottom: 1px solid #30363d; padding: 20px 32px; display: flex; justify-content: space-between; align-items: center; }
-  .header h1 { font-size: 20px; font-weight: 700; color: #f0f6fc; }
-  .header p { font-size: 13px; color: #8b949e; margin-top: 3px; }
-  .filters { padding: 16px 32px; background: #0d1117; border-bottom: 1px solid #21262d; display: flex; gap: 12px; }
-  select, input { background: #161b22; border: 1px solid #30363d; color: #c9d1d9; padding: 6px 12px; border-radius: 6px; font-size: 13px; }
-  .main { padding: 24px 32px; overflow-x: auto; }
-  .grid-wrap { min-width: 1100px; }
-  .buyer-row { background: #161b22; border: 1px solid #30363d; border-radius: 8px; margin-bottom: 12px; overflow: hidden; }
-  .buyer-header { display: grid; grid-template-columns: 180px repeat(7, 1fr); background: #0d1117; border-bottom: 1px solid #30363d; }
-  .buyer-header div { padding: 8px 10px; font-size: 11px; font-weight: 600; color: #8b949e; text-transform: uppercase; letter-spacing: 0.4px; }
-  .buyer-data { display: grid; grid-template-columns: 180px repeat(7, 1fr); }
-  .cell { padding: 12px 10px; font-size: 12px; border-right: 1px solid #21262d; vertical-align: top; }
-  .cell:last-child { border-right: none; }
-  .cell-name { font-weight: 700; color: #f0f6fc; font-size: 13px; }
-  .dot-green { color: #27ae60; }
-  .dot-red { color: #e74c3c; }
-  .dot-orange { color: #f39c12; }
-  .score { display: inline-block; padding: 1px 6px; border-radius: 4px; font-size: 11px; font-weight: 700; }
-  .score-high { background: #1a3a1a; color: #27ae60; }
-  .score-mid { background: #3a2a10; color: #f39c12; }
-  .score-low { background: #3a1a1a; color: #e74c3c; }
-  .loading { color: #8b949e; font-size: 13px; padding: 40px; text-align: center; }
-  .empty { color: #8b949e; font-size: 13px; padding: 32px; text-align: center; }
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#c9d1d9}
+.header{background:linear-gradient(135deg,#161b22,#1a5276);padding:30px;text-align:center}
+.header h1{color:#58a6ff;font-size:28px}
+.header .sub{color:#8b949e;margin-top:8px;font-size:14px}
+.stats{display:flex;justify-content:center;gap:30px;margin-top:15px;flex-wrap:wrap}
+.stat{text-align:center}
+.stat .num{font-size:36px;font-weight:bold;color:#f0f6fc}
+.stat .label{font-size:11px;color:#8b949e;text-transform:uppercase}
+.stat.green .num{color:#27ae60}
+.stat.orange .num{color:#f39c12}
+.nav{text-align:center;padding:10px;background:#161b22;border-bottom:1px solid #30363d}
+.nav a{color:#58a6ff;margin:0 12px;text-decoration:none;font-size:13px}
+.container{max-width:1400px;margin:20px auto;padding:0 20px}
+.card{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:20px;margin-bottom:20px}
+.card h2{font-size:16px;color:#58a6ff;margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid #30363d}
+.filters{display:flex;gap:8px;margin-bottom:15px;flex-wrap:wrap;align-items:center}
+.filter-btn{padding:5px 14px;border-radius:20px;border:1px solid #30363d;background:#21262d;color:#c9d1d9;cursor:pointer;font-size:12px;transition:all 0.2s}
+.filter-btn.active{border-color:#58a6ff;color:#58a6ff;background:#1a2744}
+select{background:#21262d;border:1px solid #30363d;color:#c9d1d9;padding:5px 10px;border-radius:6px;font-size:12px}
+.grid-table{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px;min-width:900px}
+th{text-align:left;padding:10px 8px;color:#8b949e;border-bottom:1px solid #30363d;white-space:nowrap;background:#161b22;position:sticky;top:0}
+td{padding:8px;border-bottom:1px solid #21262d;vertical-align:middle}
+tr:hover td{background:#1c2333}
+.section-check{width:20px;height:20px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;font-size:11px}
+.sec-done{background:#0d2818;color:#27ae60;border:1px solid #27ae60}
+.sec-missing{background:#21262d;color:#484f58;border:1px solid #30363d}
+.sec-partial{background:#2d2000;color:#f39c12;border:1px solid #f39c12}
+.progress-mini{background:#21262d;border-radius:3px;height:6px;overflow:hidden;margin-top:3px}
+.progress-mini-fill{height:100%;border-radius:3px}
+.pct{font-size:10px;color:#8b949e;margin-top:2px}
+.badge{font-size:10px;padding:2px 6px;border-radius:8px;font-weight:600}
+.loading{text-align:center;padding:40px;color:#8b949e}
+.footer{text-align:center;padding:20px;color:#484f58;font-size:11px}
 </style>
 </head>
 <body>
-<div class="top-nav">
-  <a href="index.html">← Home</a>
-  <a href="dashboard.html">Dashboard</a>
-  <a href="feature-roadmap.html">Roadmap</a>
-</div>
-<div class="header">
-  <div>
-    <h1>SAP Pipeline</h1>
-    <p>Strategic Acquirer Profiles — 7-column analysis grid</p>
-  </div>
-  <select id="entityFilter" onchange="load()"><option value="">All Entities</option></select>
-</div>
-<div class="main">
-  <div class="grid-wrap">
-    <div class="buyer-header">
-      <div>Buyer</div>
-      <div>Company Overview</div>
-      <div>Acquisition History</div>
-      <div>Strategic Rationale</div>
-      <div>Financial Capacity</div>
-      <div>Decision Makers</div>
-      <div>Recent News</div>
-      <div>Approach Strategy</div>
-    </div>
-    <div id="rows"><div class="loading">Loading SAP data...</div></div>
-  </div>
-</div>
-<script>
-const SB = 'https://dwrnfpjcvydhmhnvyzov.supabase.co';
-const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NTcyOTAsImV4cCI6MjA5MDMzMzI5MH0.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY';
 
-function score(val) {
-  if (!val) return '<span class="dot-red">✗</span>';
-  const len = String(val).length;
-  if (len > 80) return `<span class="score score-high">Strong</span>`;
-  if (len > 30) return `<span class="score score-mid">Partial</span>`;
-  return `<span class="score score-low">Thin</span>`;
+<div style="background:#161b22;padding:8px 20px;border-bottom:1px solid #30363d">
+  <a href="index.html" style="color:#58a6ff;text-decoration:none;font-size:13px">← Home</a>
+  <a href="dashboard.html" style="color:#8b949e;text-decoration:none;font-size:13px;margin-left:15px">Dashboard</a>
+  <a href="ebitda-levers.html" style="color:#8b949e;text-decoration:none;font-size:13px;margin-left:15px">EBITDA Levers</a>
+  <a href="feature-roadmap.html" style="color:#8b949e;text-decoration:none;font-size:13px;margin-left:15px">Roadmap</a>
+</div>
+
+<div class="header">
+  <h1>SAP Pipeline (#42)</h1>
+  <div class="sub">7-section completion grid per buyer — filter by proposal status or vertical</div>
+  <div class="stats">
+    <div class="stat"><div class="num" id="statBuyers">—</div><div class="label">Total Buyers</div></div>
+    <div class="stat green"><div class="num" id="statComplete">—</div><div class="label">Full SAP</div></div>
+    <div class="stat orange"><div class="num" id="statPartial">—</div><div class="label">Partial</div></div>
+    <div class="stat"><div class="num" id="statAvgPct">—%</div><div class="label">Avg Completion</div></div>
+  </div>
+</div>
+
+<div class="nav">
+  <a href="sap-pipeline.html">🗂 SAP Pipeline</a>
+  <a href="source-attribution.html">🔗 Sources</a>
+  <a href="research-templates.html">🔬 Templates</a>
+</div>
+
+<div class="container">
+  <div class="card">
+    <h2>SAP Section Completion Grid</h2>
+    <div class="filters">
+      <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+      <button class="filter-btn" onclick="setFilter('buy',this)">Buy-Side</button>
+      <button class="filter-btn" onclick="setFilter('sell',this)">Sell-Side</button>
+      <select id="verticalFilter" onchange="render()">
+        <option value="">All Verticals</option>
+        <option>HVAC</option><option>Plumbing</option><option>Healthcare</option>
+        <option>SaaS</option><option>Manufacturing</option><option>Water</option>
+      </select>
+      <select id="completionFilter" onchange="render()">
+        <option value="">All Completion</option>
+        <option value="100">100% Complete</option>
+        <option value="50">50%+ Complete</option>
+        <option value="0">Incomplete</option>
+      </select>
+    </div>
+    <div class="grid-table" id="gridArea"><div class="loading">Loading SAP data from Supabase…</div></div>
+  </div>
+</div>
+
+<div class="footer">Next Chapter Master CRM — SAP Pipeline</div>
+
+<script>
+const SB_URL = 'https://dwrnfpjcvydhmhnvyzov.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NTcyOTAsImV4cCI6MjA5MDMzMzI5MH0.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY';
+const H = { apikey:SB_KEY, Authorization:'Bearer '+SB_KEY };
+
+const SAP_SECTIONS = ['Overview','Thesis','Acquisition','Value Creation','Management','Exit','Risk'];
+let buyers = [];
+let currentFilter = 'all';
+
+async function sbGet(t,q='') {
+  const r = await fetch(`${SB_URL}/rest/v1/${t}?${q}`,{headers:H});
+  if (!r.ok) throw new Error(r.status);
+  return r.json();
 }
 
 async function load() {
-  const entity = document.getElementById('entityFilter').value;
-  let url = `${SB}/rest/v1/strategic_acquirer_profiles?select=*&order=company_name.asc&limit=50`;
-  if (entity) url += `&entity_id=eq.${entity}`;
-  const res = await fetch(url, { headers: { apikey: KEY, Authorization: `Bearer ${KEY}` } });
-  const rows = res.ok ? await res.json() : [];
-  if (!rows.length) { document.getElementById('rows').innerHTML = '<div class="empty">No SAP records found for this entity.</div>'; return; }
-  document.getElementById('rows').innerHTML = rows.map(r => `
-    <div class="buyer-row">
-      <div class="buyer-data">
-        <div class="cell cell-name">${r.company_name || r.buyer_name || '—'}<br><small style="color:#8b949e;font-weight:400">${r.entity_id || ''}</small></div>
-        <div class="cell">${score(r.company_overview)}</div>
-        <div class="cell">${score(r.acquisition_history)}</div>
-        <div class="cell">${score(r.strategic_rationale)}</div>
-        <div class="cell">${score(r.financial_capacity)}</div>
-        <div class="cell">${score(r.decision_makers)}</div>
-        <div class="cell">${score(r.recent_news)}</div>
-        <div class="cell">${score(r.approach_strategy)}</div>
-      </div>
-    </div>`).join('');
+  const tables = ['buyers','buyer_profiles','sap_research','companies'];
+  for (const t of tables) {
+    try {
+      const data = await sbGet(t,'select=*&limit=500');
+      if (data.length) { buyers = data; renderStats(); render(); return; }
+    } catch(e){}
+  }
+  document.getElementById('gridArea').innerHTML = '<div style="text-align:center;padding:40px;color:#8b949e">No buyer data found in Supabase.<br><span style="font-size:11px;color:#484f58">Checked: buyers, buyer_profiles, sap_research, companies</span></div>';
 }
 
-async function init() {
-  const res = await fetch(`${SB}/rest/v1/entities?select=id,name&order=name.asc`, { headers: { apikey: KEY, Authorization: `Bearer ${KEY}` } });
-  if (res.ok) {
-    const entities = await res.json();
-    const sel = document.getElementById('entityFilter');
-    entities.forEach(e => { const o = document.createElement('option'); o.value = e.id; o.textContent = e.name; sel.appendChild(o); });
-  }
-  load();
+function calcCompletion(b) {
+  let done = 0;
+  SAP_SECTIONS.forEach(s => {
+    const key = s.toLowerCase();
+    if (b[key]||b[key+'_content']||b[key+'_text']||b['sap_'+key]||b['has_'+key]) done++;
+  });
+  // Also check generic fields
+  const fields = ['overview','thesis','acquisition','value_creation','management','exit_strategy','risk_factors','investment_thesis','buy_and_build','management_assessment'];
+  const present = fields.filter(f => b[f] && String(b[f]).length > 10).length;
+  return Math.max(done, Math.min(present, SAP_SECTIONS.length));
 }
-init();
+
+function getSectionStatus(b, section) {
+  const key = section.toLowerCase().replace(/\s+/g,'_');
+  const aliases = [key, 'sap_'+key, 'has_'+key, key+'_content', key+'_text'];
+  for (const a of aliases) {
+    if (b[a] && String(b[a]).length > 5) return 'done';
+  }
+  // special cases
+  if (section==='Value Creation' && (b.value_creation||b.value_creation_plan)) return 'done';
+  if (section==='Exit' && (b.exit_strategy||b.exit_plan||b.exit_multiple)) return 'done';
+  if (section==='Risk' && (b.risk_factors||b.risks||b.key_risks)) return 'done';
+  return 'missing';
+}
+
+function renderStats() {
+  document.getElementById('statBuyers').textContent = buyers.length;
+  const completions = buyers.map(b => calcCompletion(b)/SAP_SECTIONS.length*100);
+  document.getElementById('statComplete').textContent = completions.filter(p=>p>=100).length;
+  document.getElementById('statPartial').textContent = completions.filter(p=>p>0&&p<100).length;
+  document.getElementById('statAvgPct').textContent = Math.round(completions.reduce((s,p)=>s+p,0)/completions.length||0)+'%';
+}
+
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function render() {
+  const vertFilter = document.getElementById('verticalFilter').value.toLowerCase();
+  const compFilter = document.getElementById('completionFilter').value;
+
+  let filtered = buyers.filter(b => {
+    if (currentFilter==='buy' && !['buy','buyer','buy-side','and','ru'].includes((b.deal_side||b.entity||'').toLowerCase())) return false;
+    if (currentFilter==='sell' && !['sell','seller','sell-side','nc'].includes((b.deal_side||b.entity||'').toLowerCase())) return false;
+    if (vertFilter && !(b.vertical||b.industry||'').toLowerCase().includes(vertFilter)) return false;
+    const pct = calcCompletion(b)/SAP_SECTIONS.length*100;
+    if (compFilter==='100' && pct<100) return false;
+    if (compFilter==='50' && pct<50) return false;
+    if (compFilter==='0' && pct>=50) return false;
+    return true;
+  });
+
+  if (!filtered.length) { document.getElementById('gridArea').innerHTML='<div style="text-align:center;padding:30px;color:#8b949e">No buyers match this filter.</div>'; return; }
+
+  let html = '<table><tr><th>Buyer</th><th>Entity</th><th>Vertical</th>';
+  SAP_SECTIONS.forEach(s => html += `<th style="text-align:center">${s}</th>`);
+  html += '<th>Progress</th></tr>';
+
+  filtered.slice(0,100).forEach(b => {
+    const name = esc(b.company_name||b.name||b.buyer_name||'Unknown');
+    const done = SAP_SECTIONS.filter(s=>getSectionStatus(b,s)==='done').length;
+    const pct = Math.round((done/SAP_SECTIONS.length)*100);
+    const pctColor = pct>=80?'#27ae60':pct>=50?'#f39c12':'#e74c3c';
+    html += `<tr><td><strong style="color:#f0f6fc">${name}</strong></td><td style="font-size:11px;color:#8b949e">${esc(b.entity||'—')}</td><td style="font-size:11px;color:#8b949e">${esc(b.vertical||b.industry||'—')}</td>`;
+    SAP_SECTIONS.forEach(s => {
+      const status = getSectionStatus(b,s);
+      html += `<td style="text-align:center"><span class="section-check sec-${status}">${status==='done'?'✓':'·'}</span></td>`;
+    });
+    html += `<td><div style="min-width:80px"><div style="font-size:12px;font-weight:bold;color:${pctColor}">${pct}%</div><div class="progress-mini"><div class="progress-mini-fill" style="width:${pct}%;background:${pctColor}"></div></div><div class="pct">${done}/${SAP_SECTIONS.length}</div></div></td></tr>`;
+  });
+  html += '</table>';
+  if (filtered.length>100) html += `<div style="text-align:center;padding:12px;color:#8b949e;font-size:12px">Showing 100 of ${filtered.length} buyers</div>`;
+  document.getElementById('gridArea').innerHTML = html;
+}
+
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+load();
 </script>
 </body>
 </html>

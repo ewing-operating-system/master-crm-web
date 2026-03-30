@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinkedIn Automation — Next Chapter M&A</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0d1117; color: #c9d1d9; line-height: 1.6; min-height: 100vh; }
+  .top-nav { background: #161b22; padding: 8px 20px; border-bottom: 1px solid #30363d; }
+  .top-nav a { color: #58a6ff; text-decoration: none; font-size: 13px; }
+  .top-nav a + a { color: #8b949e; margin-left: 15px; }
+  .header { background: #161b22; border-bottom: 1px solid #30363d; padding: 20px 32px; }
+  .header h1 { font-size: 20px; font-weight: 700; color: #f0f6fc; }
+  .header p { font-size: 13px; color: #8b949e; margin-top: 3px; }
+  .main { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
+  .limit-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
+  .limit-card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 14px 18px; }
+  .limit-card .label { font-size: 11px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; }
+  .limit-card .val { font-size: 24px; font-weight: 700; color: #f0f6fc; }
+  .limit-card .cap { font-size: 11px; color: #8b949e; }
+  .progress { height: 4px; background: #21262d; border-radius: 2px; margin-top: 6px; }
+  .progress-fill { height: 100%; border-radius: 2px; background: #27ae60; }
+  .section-title { font-size: 14px; font-weight: 600; color: #f0f6fc; margin-bottom: 12px; }
+  table { width: 100%; border-collapse: collapse; background: #161b22; border: 1px solid #30363d; border-radius: 8px; overflow: hidden; margin-bottom: 24px; }
+  th { background: #0d1117; color: #8b949e; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; padding: 9px 14px; text-align: left; border-bottom: 1px solid #30363d; }
+  td { padding: 10px 14px; font-size: 13px; border-bottom: 1px solid #21262d; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #1c2128; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .badge-active { background: #1a3a1a; color: #27ae60; }
+  .badge-paused { background: #3a2a10; color: #f39c12; }
+  .badge-complete { background: #1a2a3a; color: #58a6ff; }
+  .badge-pending { background: #21262d; color: #8b949e; }
+  .btn { padding: 5px 12px; border-radius: 5px; font-size: 12px; font-weight: 600; border: none; cursor: pointer; }
+  .btn-pause { background: #3a2a10; color: #f39c12; }
+  .btn-resume { background: #1a3a1a; color: #27ae60; }
+  .loading { color: #8b949e; font-size: 13px; padding: 32px; text-align: center; }
+  .empty { color: #8b949e; font-size: 13px; padding: 24px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <a href="index.html">← Home</a>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="feature-roadmap.html">Roadmap</a>
+</div>
+<div class="header">
+  <h1>LinkedIn Automation</h1>
+  <p>Active sequences, pending actions, and daily limits</p>
+</div>
+<div class="main">
+  <div class="limit-cards">
+    <div class="limit-card"><div class="label">Connections Today</div><div class="val" id="connToday">—</div><div class="cap">of 20 daily limit</div><div class="progress"><div class="progress-fill" id="connProg" style="width:0%"></div></div></div>
+    <div class="limit-card"><div class="label">Messages Today</div><div class="val" id="msgToday">—</div><div class="cap">of 50 daily limit</div><div class="progress"><div class="progress-fill" id="msgProg" style="width:0%"></div></div></div>
+    <div class="limit-card"><div class="label">Profile Views</div><div class="val" id="viewToday">—</div><div class="cap">of 80 daily limit</div><div class="progress"><div class="progress-fill" id="viewProg" style="width:0%;background:#58a6ff"></div></div></div>
+    <div class="limit-card"><div class="label">Active Sequences</div><div class="val" id="seqCount">—</div><div class="cap">across all accounts</div></div>
+  </div>
+  <div class="section-title">Active Sequences</div>
+  <div id="seqTable"><div class="loading">Loading sequences...</div></div>
+  <div class="section-title">Pending Actions Today</div>
+  <div id="actionTable"><div class="loading">Loading actions...</div></div>
+</div>
+<script>
+const SB = 'https://dwrnfpjcvydhmhnvyzov.supabase.co';
+const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NTcyOTAsImV4cCI6MjA5MDMzMzI5MH0.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY';
+
+async function load() {
+  const today = new Date().toISOString().split('T')[0];
+  const [seqRes, actRes] = await Promise.all([
+    fetch(`${SB}/rest/v1/linkedin_sequences?select=*&order=created_at.desc&limit=50`, { headers: { apikey: KEY, Authorization: `Bearer ${KEY}` } }),
+    fetch(`${SB}/rest/v1/linkedin_actions?select=*&status=eq.pending&order=scheduled_at.asc&limit=50`, { headers: { apikey: KEY, Authorization: `Bearer ${KEY}` } })
+  ]);
+  const seqs = seqRes.ok ? await seqRes.json() : [];
+  const acts = actRes.ok ? await actRes.json() : [];
+
+  const activeSeqs = seqs.filter(s => s.status === 'active');
+  const todayActs = acts.filter(a => (a.scheduled_at || '').startsWith(today));
+  const conns = todayActs.filter(a => a.action_type === 'connection').length;
+  const msgs = todayActs.filter(a => a.action_type === 'message').length;
+  const views = todayActs.filter(a => a.action_type === 'profile_view').length;
+
+  document.getElementById('connToday').textContent = conns;
+  document.getElementById('msgToday').textContent = msgs;
+  document.getElementById('viewToday').textContent = views;
+  document.getElementById('seqCount').textContent = activeSeqs.length;
+  document.getElementById('connProg').style.width = Math.min(conns/20*100, 100) + '%';
+  document.getElementById('msgProg').style.width = Math.min(msgs/50*100, 100) + '%';
+  document.getElementById('viewProg').style.width = Math.min(views/80*100, 100) + '%';
+
+  if (!seqs.length) {
+    document.getElementById('seqTable').innerHTML = '<div class="empty">No sequences configured. LinkedIn automation sequences appear here.</div>';
+  } else {
+    document.getElementById('seqTable').innerHTML = `<table><thead><tr><th>Sequence</th><th>Entity</th><th>Step</th><th>Enrolled</th><th>Replied</th><th>Status</th><th></th></tr></thead><tbody>
+    ${seqs.map(s => `<tr><td>${s.name || s.sequence_name || '—'}</td><td>${s.entity_id || '—'}</td>
+    <td>${s.current_step || 1}/${s.total_steps || 5}</td>
+    <td>${s.enrolled_count || 0}</td><td>${s.reply_count || 0}</td>
+    <td><span class="badge badge-${s.status||'pending'}">${s.status || 'pending'}</span></td>
+    <td>${s.status === 'active' ? `<button class="btn btn-pause" onclick="toggleSeq('${s.id}','paused')">Pause</button>` : `<button class="btn btn-resume" onclick="toggleSeq('${s.id}','active')">Resume</button>`}</td>
+    </tr>`).join('')}</tbody></table>`;
+  }
+
+  if (!acts.length) {
+    document.getElementById('actionTable').innerHTML = '<div class="empty">No pending actions queued for today.</div>';
+  } else {
+    document.getElementById('actionTable').innerHTML = `<table><thead><tr><th>Type</th><th>Target</th><th>Sequence</th><th>Scheduled</th><th>Status</th></tr></thead><tbody>
+    ${acts.map(a => `<tr><td>${a.action_type || '—'}</td><td>${a.target_name || a.profile_name || '—'}</td>
+    <td>${a.sequence_name || '—'}</td>
+    <td style="color:#8b949e;font-size:12px">${a.scheduled_at ? new Date(a.scheduled_at).toLocaleTimeString() : '—'}</td>
+    <td><span class="badge badge-${a.status||'pending'}">${a.status || 'pending'}</span></td></tr>`).join('')}
+    </tbody></table>`;
+  }
+}
+
+async function toggleSeq(id, status) {
+  await fetch(`${SB}/rest/v1/linkedin_sequences?id=eq.${id}`, { method: 'PATCH', headers: { apikey: KEY, Authorization: `Bearer ${KEY}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' }, body: JSON.stringify({ status }) });
+  load();
+}
+load();
+</script>
+</body>
+</html>

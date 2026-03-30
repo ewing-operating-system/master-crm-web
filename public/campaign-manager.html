@@ -3,560 +3,258 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Campaign Manager — Next Chapter</title>
+<title>Campaign Manager — Next Chapter Master CRM</title>
 <style>
-/* ── Base ── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  background: #0d1117;
-  color: #c9d1d9;
-  min-height: 100vh;
-}
-
-/* ── Nav ── */
-.cm-nav {
-  background: #161b22;
-  padding: 8px 20px;
-  border-bottom: 1px solid #30363d;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-.cm-nav a {
-  color: #58a6ff;
-  text-decoration: none;
-  font-size: 13px;
-}
-.cm-nav a.muted { color: #8b949e; }
-.cm-nav a:hover { color: #79c0ff; }
-
-/* ── Header ── */
-.cm-header {
-  background: linear-gradient(135deg, #161b22, #1a3a52);
-  padding: 28px 30px 22px;
-  border-bottom: 1px solid #30363d;
-}
-.cm-header h1 { color: #58a6ff; font-size: 22px; font-weight: 700; }
-.cm-header .cm-header-meta {
-  color: #8b949e; font-size: 12px; margin-top: 6px;
-  display: flex; align-items: center; gap: 12px;
-}
-.cm-rule-badge {
-  background: #1f3d5c;
-  color: #58a6ff;
-  border: 1px solid #2d5a8a;
-  border-radius: 20px;
-  padding: 3px 12px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-/* ── Layout ── */
-.cm-main {
-  max-width: 1200px;
-  margin: 24px auto;
-  padding: 0 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* ── Card ── */
-.cm-card {
-  background: #161b22;
-  border: 1px solid #30363d;
-  border-radius: 10px;
-  padding: 22px 24px;
-}
-.cm-card-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: #58a6ff;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  margin-bottom: 18px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #30363d;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.cm-card-title .cm-card-subtitle {
-  font-size: 11px;
-  color: #8b949e;
-  text-transform: none;
-  letter-spacing: 0;
-  font-weight: 400;
-}
-
-/* ── Status Card ── */
-.cm-batch-header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 12px;
-}
-.cm-batch-title {
-  font-size: 26px;
-  font-weight: 800;
-  color: #f0f6fc;
-}
-.cm-check {
-  width: 28px; height: 28px;
-  background: #1a5c33;
-  border: 1px solid #2ea043;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  color: #2ea043; font-size: 14px; font-weight: 700;
-}
-.cm-batch-stat {
-  font-size: 15px;
-  color: #c9d1d9;
-  margin-bottom: 16px;
-  line-height: 1.5;
-}
-.cm-batch-stat strong { color: #f0f6fc; }
-
-/* Progress bar */
-.cm-progress-wrap {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-.cm-progress-bar {
-  flex: 1;
-  height: 10px;
-  background: #21262d;
-  border-radius: 6px;
-  overflow: hidden;
-}
-.cm-progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #1f6feb, #58a6ff);
-  border-radius: 6px;
-  transition: width 0.6s ease;
-}
-.cm-progress-fill.cm-progress-done {
-  background: linear-gradient(90deg, #196c2e, #2ea043);
-}
-.cm-progress-label {
-  font-size: 13px;
-  color: #8b949e;
-  min-width: 36px;
-  text-align: right;
-}
-
-/* Sublines */
-.cm-subline {
-  font-size: 13px;
-  padding: 8px 12px;
-  border-radius: 6px;
-  margin-bottom: 10px;
-}
-.cm-subline-warn {
-  background: #2d1f00;
-  border: 1px solid #6e4c00;
-  color: #e3b341;
-}
-.cm-subline-success {
-  background: #0d2d1a;
-  border: 1px solid #196c2e;
-  color: #2ea043;
-}
-.cm-sync-note {
-  font-size: 11px;
-  color: #484f58;
-  margin-top: 6px;
-}
-
-/* No batch / Error */
-.cm-no-batch {
-  display: flex; align-items: center; gap: 14px; padding: 8px 0;
-}
-.cm-no-batch-icon { font-size: 32px; }
-.cm-no-batch-text { color: #8b949e; font-size: 14px; }
-.cm-error {
-  color: #f85149;
-  font-size: 13px;
-  background: #2d0f0f;
-  border: 1px solid #5a1d1d;
-  padding: 12px;
-  border-radius: 6px;
-}
-
-/* ── Status badges ── */
-.cm-badge {
-  display: inline-block;
-  padding: 3px 10px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-.status-active  { background: #1a3d1f; border: 1px solid #2ea043; color: #2ea043; }
-.status-paused  { background: #2d1f00; border: 1px solid #6e4c00; color: #e3b341; }
-.status-completed { background: #0d1f38; border: 1px solid #1f6feb; color: #58a6ff; }
-
-/* ── Controls ── */
-#cm-controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  transition: opacity 0.2s;
-}
-.cm-btn {
-  padding: 9px 18px;
-  border-radius: 7px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  border: 1px solid transparent;
-  transition: all 0.15s;
-}
-.cm-btn-primary {
-  background: #1f6feb; color: #fff; border-color: #1f6feb;
-}
-.cm-btn-primary:hover { background: #388bfd; border-color: #388bfd; }
-.cm-btn-success {
-  background: #196c2e; color: #2ea043; border-color: #2ea043;
-}
-.cm-btn-success:hover { background: #1d7d34; }
-.cm-btn-warning {
-  background: #2d1f00; color: #e3b341; border-color: #6e4c00;
-}
-.cm-btn-warning:hover { background: #3d2a00; }
-.cm-btn-outline {
-  background: transparent; color: #8b949e; border-color: #30363d;
-}
-.cm-btn-outline:hover { background: #21262d; color: #c9d1d9; }
-.cm-btn-ghost {
-  background: transparent; color: #8b949e; border-color: #30363d;
-}
-.cm-btn-ghost:hover { background: #21262d; }
-.cm-btn-disabled {
-  background: #161b22; color: #484f58; border-color: #21262d; cursor: not-allowed;
-}
-
-/* ── Table ── */
-.cm-table-wrap { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-th {
-  text-align: left;
-  padding: 10px 10px;
-  color: #8b949e;
-  border-bottom: 1px solid #30363d;
-  font-weight: 600;
-  white-space: nowrap;
-}
-th.cm-th-sort {
-  cursor: pointer;
-  user-select: none;
-}
-th.cm-th-sort:hover { color: #c9d1d9; }
-th.cm-th-sort.sort-active { color: #58a6ff; }
-th.cm-th-sort::after {
-  content: ' ↕';
-  color: #484f58;
-  font-size: 10px;
-}
-th.cm-th-sort.sort-active[data-sort-dir="asc"]::after  { content: ' ↑'; color: #58a6ff; }
-th.cm-th-sort.sort-active[data-sort-dir="desc"]::after { content: ' ↓'; color: #58a6ff; }
-
-td {
-  padding: 11px 10px;
-  border-bottom: 1px solid #21262d;
-  vertical-align: middle;
-}
-tr:hover td { background: #1c2128; }
-.cm-empty {
-  text-align: center;
-  color: #484f58;
-  padding: 32px;
-}
-
-/* Mini progress in table */
-.cm-mini-progress {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.cm-mini-progress span { font-size: 12px; color: #c9d1d9; }
-.cm-mini-bar {
-  width: 100px;
-  height: 5px;
-  background: #21262d;
-  border-radius: 3px;
-  overflow: hidden;
-}
-.cm-mini-fill {
-  height: 100%;
-  background: #1f6feb;
-  border-radius: 3px;
-  transition: width 0.4s;
-}
-.cm-mini-fill.cm-mini-done { background: #2ea043; }
-
-/* Table actions */
-.cm-actions-cell { white-space: nowrap; }
-.cm-action {
-  padding: 4px 10px;
-  border-radius: 5px;
-  font-size: 11px;
-  font-weight: 600;
-  cursor: pointer;
-  border: 1px solid transparent;
-  margin-right: 5px;
-  transition: all 0.15s;
-}
-.cm-action-ok   { background: #0d2d1a; color: #2ea043; border-color: #196c2e; }
-.cm-action-ok:hover { background: #1d4d2a; }
-.cm-action-warn { background: #2d1f00; color: #e3b341; border-color: #6e4c00; }
-.cm-action-warn:hover { background: #3d2a00; }
-.cm-action-ghost { background: transparent; color: #8b949e; border-color: #30363d; }
-.cm-action-ghost:hover { background: #21262d; }
-.cm-action-disabled { background: #161b22; color: #484f58; border-color: #21262d; cursor: not-allowed; }
-
-/* ── Cost Summary ── */
-.cm-cost-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-.cm-cost-item {
-  background: #0d1117;
-  border: 1px solid #21262d;
-  border-radius: 8px;
-  padding: 16px 18px;
-  text-align: center;
-}
-.cm-cost-num {
-  font-size: 28px;
-  font-weight: 800;
-  color: #f0f6fc;
-  margin-bottom: 4px;
-}
-.cm-cost-label {
-  font-size: 11px;
-  color: #8b949e;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  margin-bottom: 4px;
-}
-.cm-cost-sub {
-  font-size: 11px;
-  color: #484f58;
-}
-
-/* ── 250/150 Rule explainer ── */
-.cm-rule-box {
-  background: #0d1f38;
-  border: 1px solid #1f4070;
-  border-radius: 8px;
-  padding: 16px 20px;
-  display: flex;
-  gap: 24px;
-  align-items: flex-start;
-}
-.cm-rule-step {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
-  text-align: center;
-  gap: 6px;
-}
-.cm-rule-step .cm-rule-num {
-  width: 36px; height: 36px;
-  background: #1f3d5c;
-  border: 2px solid #2d6a9f;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 16px; font-weight: 800; color: #58a6ff;
-}
-.cm-rule-step .cm-rule-desc {
-  font-size: 12px; color: #8b949e; line-height: 1.4;
-}
-.cm-rule-step .cm-rule-val {
-  font-size: 20px; font-weight: 800; color: #f0f6fc;
-}
-.cm-rule-arrow {
-  color: #30363d; font-size: 20px; padding-top: 10px;
-}
-
-/* ── Toast ── */
-.cm-toast {
-  padding: 12px 18px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 500;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: all 0.25s;
-  pointer-events: none;
-  max-width: 300px;
-}
-.cm-toast.cm-toast-show { opacity: 1; transform: translateY(0); }
-.cm-toast-success { background: #196c2e; color: #2ea043; border: 1px solid #2ea043; }
-.cm-toast-error   { background: #4d1919; color: #f85149; border: 1px solid #f85149; }
-.cm-toast-info    { background: #1f3d5c; color: #58a6ff; border: 1px solid #1f6feb; }
-.cm-toast-warn    { background: #2d1f00; color: #e3b341; border: 1px solid #6e4c00; }
-
-/* ── Footer ── */
-.cm-footer {
-  text-align: center;
-  padding: 24px;
-  color: #484f58;
-  font-size: 11px;
-}
-
-/* ── Responsive ── */
-@media (max-width: 700px) {
-  .cm-cost-grid { grid-template-columns: 1fr; }
-  .cm-rule-box { flex-direction: column; gap: 12px; }
-  .cm-rule-arrow { display: none; }
-  .cm-main { padding: 0 14px; }
-}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#c9d1d9}
+.header{background:linear-gradient(135deg,#161b22,#1a5276);padding:30px;text-align:center}
+.header h1{color:#58a6ff;font-size:28px}
+.header .sub{color:#8b949e;margin-top:8px;font-size:14px}
+.stats{display:flex;justify-content:center;gap:30px;margin-top:15px;flex-wrap:wrap}
+.stat{text-align:center}
+.stat .num{font-size:36px;font-weight:bold;color:#f0f6fc}
+.stat .label{font-size:11px;color:#8b949e;text-transform:uppercase}
+.stat.green .num{color:#27ae60}
+.stat.orange .num{color:#f39c12}
+.nav{text-align:center;padding:10px;background:#161b22;border-bottom:1px solid #30363d}
+.nav a{color:#58a6ff;margin:0 12px;text-decoration:none;font-size:13px}
+.container{max-width:1200px;margin:20px auto;padding:0 20px}
+.card{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:20px;margin-bottom:20px}
+.card h2{font-size:16px;color:#58a6ff;margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid #30363d}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:10px 8px;color:#8b949e;border-bottom:1px solid #30363d}
+td{padding:10px 8px;border-bottom:1px solid #21262d;vertical-align:middle}
+.badge{font-size:11px;padding:3px 8px;border-radius:10px;font-weight:600}
+.badge-active{background:#0d2818;color:#27ae60;border:1px solid #27ae60}
+.badge-paused{background:#2d2000;color:#f39c12;border:1px solid #f39c12}
+.badge-draft{background:#21262d;color:#8b949e;border:1px solid #30363d}
+.rule-box{background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:15px;text-align:center}
+.rule-box .num{font-size:32px;font-weight:bold}
+.rule-box .sep{font-size:18px;color:#8b949e;margin:4px 0}
+.rule-box .lbl{font-size:11px;color:#8b949e}
+.progress-bar{background:#21262d;border-radius:6px;height:14px;overflow:hidden;margin:4px 0}
+.progress-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,#27ae60,#2ecc71)}
+.cadence-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #21262d}
+.cadence-row label{font-size:12px;color:#8b949e;min-width:140px}
+input[type=range]{flex:1;accent-color:#58a6ff}
+.cadence-val{font-size:13px;font-weight:bold;color:#58a6ff;min-width:60px}
+.btn{padding:6px 14px;border-radius:6px;border:none;cursor:pointer;font-size:12px;font-weight:600;transition:opacity 0.2s}
+.btn:hover{opacity:0.8}
+.btn-primary{background:#58a6ff;color:#0d1117}
+.btn-success{background:#27ae60;color:#fff}
+.btn-warn{background:#f39c12;color:#0d1117}
+.entity-bar{display:flex;align-items:center;gap:10px;margin:6px 0;font-size:13px}
+.entity-bar .name{min-width:80px;color:#8b949e}
+.entity-bar .bar{flex:1;background:#21262d;border-radius:4px;height:10px;overflow:hidden}
+.entity-bar .fill{height:100%;border-radius:4px}
+.entity-bar .count{min-width:30px;text-align:right;font-weight:600}
+.loading{text-align:center;padding:40px;color:#8b949e}
+.footer{text-align:center;padding:20px;color:#484f58;font-size:11px}
+@media(max-width:800px){.grid2,.grid3{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<!-- NAV:START -->
-<div class="nc-nav" style="background:#f6f8fa;border-bottom:1px solid #d0d7de;padding:8px 20px;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:999">
-  <span style="font-weight:700;color:#0d1117;margin-right:8px">Next Chapter M&amp;A</span>
-  <span style="color:#d0d7de">|</span>
-  <style>.nc-nav a{color:#0969da;text-decoration:none;font-weight:500}.nc-nav a:hover{text-decoration:underline}</style>
-  <a href="index.html">Home</a>
-      <a href="system-overview.html">System Overview</a>
-</div>
-<!-- NAV:END -->
 
-
-
-
-<!-- Nav -->
-<div class="cm-nav">
-  <a href="index.html">← Home</a>
-  <a href="dashboard.html" class="muted">Dashboard</a>
-  <a href="feature-roadmap.html" class="muted">Roadmap</a>
-  <span style="margin-left:auto;font-size:11px;color:#484f58">Campaign Manager</span>
+<div style="background:#161b22;padding:8px 20px;border-bottom:1px solid #30363d">
+  <a href="index.html" style="color:#58a6ff;text-decoration:none;font-size:13px">← Home</a>
+  <a href="dashboard.html" style="color:#8b949e;text-decoration:none;font-size:13px;margin-left:15px">Dashboard</a>
+  <a href="ebitda-levers.html" style="color:#8b949e;text-decoration:none;font-size:13px;margin-left:15px">EBITDA Levers</a>
+  <a href="feature-roadmap.html" style="color:#8b949e;text-decoration:none;font-size:13px;margin-left:15px">Roadmap</a>
 </div>
 
-<!-- Header -->
-<div class="cm-header">
-  <h1>Campaign Manager</h1>
-  <div class="cm-header-meta">
-    <span class="cm-rule-badge">250 / 150 Rule</span>
-    <span id="cm-header-time">Loading...</span>
+<div class="header">
+  <h1>Campaign Manager (#64)</h1>
+  <div class="sub">Central control panel — queue depth, send cadence, delivery dashboard</div>
+  <div class="stats">
+    <div class="stat"><div class="num" id="statQueue">—</div><div class="label">In Queue</div></div>
+    <div class="stat green"><div class="num" id="statSentToday">—</div><div class="label">Sent Today</div></div>
+    <div class="stat orange"><div class="num" id="statPending">—</div><div class="label">Pending</div></div>
+    <div class="stat"><div class="num" id="statCost">—</div><div class="label">Total Cost</div></div>
+    <div class="stat green"><div class="num" id="statDelivered">—</div><div class="label">Delivered</div></div>
   </div>
 </div>
 
-<div class="cm-main">
+<div class="nav">
+  <a href="letter-preview.html">✉️ Preview</a>
+  <a href="letter-send.html">📬 Send</a>
+  <a href="campaign-manager.html">📊 Campaign</a>
+</div>
 
-  <!-- 250/150 Rule explainer -->
-  <div class="cm-card">
-    <div class="cm-card-title">
-      How the 250/150 Rule Works
+<div class="container">
+
+  <div class="grid2">
+    <div class="card">
+      <h2>250/150 Rule Visualization</h2>
+      <p style="font-size:12px;color:#8b949e;margin-bottom:15px">Max 250 letters/week total, 150 per entity. Protects deliverability.</p>
+      <div id="ruleViz"><div class="loading">Loading…</div></div>
     </div>
-    <div class="cm-rule-box">
-      <div class="cm-rule-step">
-        <div class="cm-rule-num">1</div>
-        <div class="cm-rule-val">250</div>
-        <div class="cm-rule-desc">Send a batch of 250 letters to prospects</div>
-      </div>
-      <div class="cm-rule-arrow">→</div>
-      <div class="cm-rule-step">
-        <div class="cm-rule-num">2</div>
-        <div class="cm-rule-val">Pause</div>
-        <div class="cm-rule-desc">Hold new sends until 150 prospects have been called 5× each</div>
-      </div>
-      <div class="cm-rule-arrow">→</div>
-      <div class="cm-rule-step">
-        <div class="cm-rule-num">3</div>
-        <div class="cm-rule-val">150</div>
-        <div class="cm-rule-desc">150 prospects hit 5 calls → resume next batch</div>
-      </div>
+    <div class="card">
+      <h2>Queue Depth by Entity</h2>
+      <div id="entityQueue"><div class="loading">Loading…</div></div>
     </div>
   </div>
 
-  <!-- Current Batch Status -->
-  <div class="cm-card">
-    <div class="cm-card-title">
-      Current Batch Status
-      <span class="cm-card-subtitle">Auto-refreshes every 30 seconds</span>
-    </div>
-    <div id="cm-status-card">
-      <div style="color:#484f58;font-size:13px">Loading batch status...</div>
-    </div>
-  </div>
-
-  <!-- Controls -->
-  <div class="cm-card">
-    <div class="cm-card-title">Batch Controls</div>
-    <div id="cm-controls">
-      <div style="color:#484f58;font-size:13px">Loading...</div>
+  <div class="card">
+    <h2>Send Cadence Controls</h2>
+    <p style="font-size:12px;color:#8b949e;margin-bottom:15px">Adjust send rates per entity. Changes apply to next scheduled batch.</p>
+    <div id="cadenceControls"><div class="loading">Loading…</div></div>
+    <div style="margin-top:15px;display:flex;gap:10px">
+      <button class="btn btn-success" onclick="saveCadence()">Save Cadence</button>
+      <button class="btn btn-warn" onclick="pauseAll()">Pause All</button>
+      <button class="btn btn-primary" onclick="resumeAll()">Resume All</button>
     </div>
   </div>
 
-  <!-- Batch History -->
-  <div class="cm-card">
-    <div class="cm-card-title">
-      Batch History
-      <span class="cm-card-subtitle">Click column headers to sort</span>
+  <div class="grid2">
+    <div class="card">
+      <h2>Delivery Breakdown</h2>
+      <div id="deliveryBreakdown"><div class="loading">Loading…</div></div>
     </div>
-    <div class="cm-table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th class="cm-th-sort" data-sort-key="batch_number" onclick="cmSort('batch_number')">Batch</th>
-            <th class="cm-th-sort" data-sort-key="total_letters_sent" onclick="cmSort('total_letters_sent')">Sent</th>
-            <th>Called 5x</th>
-            <th class="cm-th-sort" data-sort-key="status" onclick="cmSort('status')">Status</th>
-            <th class="cm-th-sort" data-sort-key="created_at" onclick="cmSort('created_at')">Created</th>
-            <th class="cm-th-sort" data-sort-key="completed_at" onclick="cmSort('completed_at')">Completed</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="cm-table-body">
-          <tr><td colspan="7" class="cm-empty">Loading...</td></tr>
-        </tbody>
-      </table>
+    <div class="card">
+      <h2>Cost Tracking</h2>
+      <div id="costTracking"><div class="loading">Loading…</div></div>
     </div>
   </div>
 
-  <!-- Cost Summary -->
-  <div class="cm-card">
-    <div class="cm-card-title">
-      Cost Summary
-      <span class="cm-card-subtitle">$1.75 avg cost per letter</span>
-    </div>
-    <div id="cm-cost-summary">
-      <div style="color:#484f58;font-size:13px">Loading...</div>
-    </div>
+  <div class="card">
+    <h2>Recent Activity</h2>
+    <div id="recentActivity"><div class="loading">Loading…</div></div>
   </div>
 
 </div>
 
-<div class="cm-footer">
-  Next Chapter M&A Advisory &nbsp;·&nbsp; Campaign Manager &nbsp;·&nbsp;
-  <span id="cm-footer-sync">—</span>
-</div>
+<div class="footer">Next Chapter Master CRM — Campaign Manager</div>
 
-<script src="campaign-manager.js"></script>
 <script>
-  // Update header timestamp
-  function updateTimestamp() {
-    const now = new Date();
-    const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric',
-                   hour:'2-digit', minute:'2-digit' };
-    const el = document.getElementById('cm-header-time');
-    if (el) el.textContent = now.toLocaleDateString('en-US', opts);
-    const f = document.getElementById('cm-footer-sync');
-    if (f) f.textContent = 'Last loaded: ' + now.toLocaleTimeString();
+const SB_URL = 'https://dwrnfpjcvydhmhnvyzov.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NTcyOTAsImV4cCI6MjA5MDMzMzI5MH0.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY';
+const H = { apikey:SB_KEY, Authorization:'Bearer '+SB_KEY, 'Content-Type':'application/json' };
+
+const ENTITIES = ['NC','RU','AND','AIR_CONTROL','AQUASCIENCE'];
+const ENTITY_COLORS = {'NC':'#58a6ff','RU':'#27ae60','AND':'#f39c12','AIR_CONTROL':'#e74c3c','AQUASCIENCE':'#9b59b6'};
+const MAX_WEEK = 250, MAX_ENTITY = 150;
+
+let letters = [];
+let cadence = {};
+
+async function sbGet(t, q='') {
+  const r = await fetch(`${SB_URL}/rest/v1/${t}?${q}`, {headers:H});
+  if (!r.ok) throw new Error(r.status);
+  return r.json();
+}
+
+async function load() {
+  const tables = ['letters','letter_drafts','outbound_letters'];
+  for (const t of tables) {
+    try { letters = await sbGet(t,'select=*&limit=1000'); break; } catch(e) {}
   }
-  updateTimestamp();
-  setInterval(updateTimestamp, 60000);
+  renderAll();
+}
+
+function renderAll() {
+  const byEntity = {};
+  ENTITIES.forEach(e => byEntity[e] = {queue:0,sent:0,delivered:0,pending:0});
+
+  letters.forEach(l => {
+    const e = (l.entity||'NC').toUpperCase().replace(/[^A-Z_]/g,'_');
+    const key = ENTITIES.includes(e)?e:'NC';
+    const s = l.status||'pending';
+    if (!byEntity[key]) byEntity[key] = {queue:0,sent:0,delivered:0,pending:0};
+    if (s==='approved') byEntity[key].queue++;
+    else if (s==='sent'||s==='in-transit') byEntity[key].sent++;
+    else if (s==='delivered') byEntity[key].delivered++;
+    else byEntity[key].pending++;
+  });
+
+  const totalQueue = Object.values(byEntity).reduce((s,v)=>s+v.queue,0);
+  const totalSent = Object.values(byEntity).reduce((s,v)=>s+v.sent,0);
+  const totalDelivered = Object.values(byEntity).reduce((s,v)=>s+v.delivered,0);
+  const totalPending = Object.values(byEntity).reduce((s,v)=>s+v.pending,0);
+
+  document.getElementById('statQueue').textContent = totalQueue;
+  document.getElementById('statSentToday').textContent = totalSent;
+  document.getElementById('statPending').textContent = totalPending;
+  document.getElementById('statCost').textContent = '$'+ ((totalSent+totalDelivered)*1.75).toFixed(0);
+  document.getElementById('statDelivered').textContent = totalDelivered;
+
+  // Rule viz
+  const weekPct = Math.min((totalQueue/MAX_WEEK)*100,100);
+  let ruleHtml = `<div class="rule-box"><div class="num" style="color:${totalQueue>MAX_WEEK?'#e74c3c':'#27ae60'}">${totalQueue}</div><div class="sep">/ ${MAX_WEEK}</div><div class="lbl">Weekly Limit</div></div>`;
+  ruleHtml += `<div style="margin-top:15px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>Weekly usage</span><span>${totalQueue}/${MAX_WEEK}</span></div><div class="progress-bar"><div class="progress-fill" style="width:${weekPct}%;background:${weekPct>90?'#e74c3c':weekPct>70?'#f39c12':'#27ae60'}"></div></div></div>`;
+  ENTITIES.forEach(e => {
+    const v = byEntity[e]||{queue:0};
+    const pct = Math.min((v.queue/MAX_ENTITY)*100,100);
+    ruleHtml += `<div style="margin-top:8px"><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:2px"><span style="color:#8b949e">${e}</span><span>${v.queue}/${MAX_ENTITY}</span></div><div class="progress-bar" style="height:8px"><div class="progress-fill" style="width:${pct}%;background:${ENTITY_COLORS[e]||'#58a6ff'}"></div></div></div>`;
+  });
+  document.getElementById('ruleViz').innerHTML = ruleHtml;
+
+  // Entity queue
+  let eqHtml = '';
+  ENTITIES.forEach(e => {
+    const v = byEntity[e]||{queue:0,sent:0,delivered:0};
+    const total = v.queue+v.sent+v.delivered;
+    eqHtml += `<div class="entity-bar"><div class="name">${e}</div><div class="bar"><div class="fill" style="width:${total>0?Math.min((v.queue/(total||1))*100,100):0}%;background:${ENTITY_COLORS[e]||'#58a6ff'}"></div></div><div class="count" style="color:${ENTITY_COLORS[e]||'#58a6ff'}">${v.queue}</div></div>`;
+  });
+  document.getElementById('entityQueue').innerHTML = eqHtml || '<div style="color:#8b949e;font-size:13px">No queue data</div>';
+
+  // Cadence controls
+  let cHtml = '';
+  ENTITIES.forEach(e => {
+    const val = cadence[e] || 30;
+    cHtml += `<div class="cadence-row"><label>${e} (per week)</label><input type="range" min="0" max="150" value="${val}" id="cad_${e}" oninput="document.getElementById('cval_${e}').textContent=this.value"><span class="cadence-val" id="cval_${e}">${val}</span></div>`;
+  });
+  document.getElementById('cadenceControls').innerHTML = cHtml;
+
+  // Delivery breakdown
+  const breakdown = [
+    {label:'Approved/Ready', val:totalQueue, color:'#58a6ff'},
+    {label:'In Transit', val:totalSent, color:'#f39c12'},
+    {label:'Delivered', val:totalDelivered, color:'#27ae60'},
+    {label:'Pending Review', val:totalPending, color:'#8b949e'},
+  ];
+  const bTotal = breakdown.reduce((s,b)=>s+b.val,0)||1;
+  let dbHtml = '';
+  breakdown.forEach(b => {
+    const pct = Math.round((b.val/bTotal)*100);
+    dbHtml += `<div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span style="color:${b.color}">${b.label}</span><span>${b.val} (${pct}%)</span></div><div class="progress-bar"><div class="progress-fill" style="width:${pct}%;background:${b.color}"></div></div></div>`;
+  });
+  document.getElementById('deliveryBreakdown').innerHTML = dbHtml;
+
+  // Cost tracking
+  const totalLetters = totalSent + totalDelivered;
+  const totalCost = totalLetters * 1.75;
+  document.getElementById('costTracking').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="rule-box"><div class="num" style="color:#27ae60">$${totalCost.toFixed(2)}</div><div class="lbl">Total Spent</div></div>
+      <div class="rule-box"><div class="num">$1.75</div><div class="lbl">Cost Per Letter</div></div>
+      <div class="rule-box"><div class="num">${totalLetters}</div><div class="lbl">Letters Mailed</div></div>
+      <div class="rule-box"><div class="num" style="color:#f39c12">$${(totalQueue*1.75).toFixed(2)}</div><div class="lbl">Est. Next Batch</div></div>
+    </div>`;
+
+  // Recent activity
+  const recent = letters.slice(0,10);
+  if (!recent.length) { document.getElementById('recentActivity').innerHTML='<div style="color:#8b949e;font-size:13px">No activity yet.</div>'; return; }
+  let raHtml = '<table><tr><th>Company</th><th>Status</th><th>Entity</th><th>Date</th></tr>';
+  recent.forEach(l => {
+    const s = l.status||'pending';
+    raHtml += `<tr><td><strong style="color:#f0f6fc">${esc(l.company_name||l.company||'—')}</strong></td><td><span class="badge badge-${s==='approved'?'active':s==='sent'||s==='delivered'?'active':'draft'}">${s.toUpperCase()}</span></td><td style="font-size:11px;color:#8b949e">${esc(l.entity||'—')}</td><td style="font-size:11px;color:#8b949e">${(l.updated_at||l.created_at||'').slice(0,10)}</td></tr>`;
+  });
+  raHtml += '</table>';
+  document.getElementById('recentActivity').innerHTML = raHtml;
+}
+
+function saveCadence() {
+  ENTITIES.forEach(e => { cadence[e] = +document.getElementById('cad_'+e).value; });
+  alert('Cadence saved (local). To persist, connect to agent_config table.');
+}
+
+function pauseAll() { ENTITIES.forEach(e => { const el=document.getElementById('cad_'+e); if(el){el.value=0;document.getElementById('cval_'+e).textContent='0';} }); }
+function resumeAll() { ENTITIES.forEach(e => { const el=document.getElementById('cad_'+e); if(el){el.value=30;document.getElementById('cval_'+e).textContent='30';} }); }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+load();
 </script>
 </body>
 </html>

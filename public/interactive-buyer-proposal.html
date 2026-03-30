@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Buyer Proposal — Next Chapter M&A</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0d1117; color: #c9d1d9; line-height: 1.6; min-height: 100vh; }
+  .top-nav { background: #161b22; padding: 8px 20px; border-bottom: 1px solid #30363d; }
+  .top-nav a { color: #58a6ff; text-decoration: none; font-size: 13px; }
+  .top-nav a + a { color: #8b949e; margin-left: 15px; }
+  .header { background: #161b22; border-bottom: 1px solid #30363d; padding: 20px 32px; display: flex; justify-content: space-between; align-items: center; }
+  .header h1 { font-size: 20px; font-weight: 700; color: #f0f6fc; }
+  .header p { font-size: 13px; color: #8b949e; margin-top: 3px; }
+  .selector-bar { padding: 16px 32px; border-bottom: 1px solid #21262d; display: flex; gap: 12px; align-items: center; }
+  select { background: #161b22; border: 1px solid #30363d; color: #c9d1d9; padding: 6px 12px; border-radius: 6px; font-size: 13px; }
+  .btn { padding: 7px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; border: none; cursor: pointer; background: #58a6ff; color: #0d1117; transition: opacity 0.15s; }
+  .btn:hover { opacity: 0.85; }
+  .btn-outline { background: #161b22; color: #58a6ff; border: 1px solid #30363d; }
+  #app { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
+  .loading { color: #8b949e; font-size: 13px; padding: 60px; text-align: center; }
+  .proposal-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 28px 32px; margin-bottom: 20px; }
+  .proposal-card h2 { font-size: 18px; color: #f0f6fc; margin-bottom: 6px; }
+  .proposal-card .meta { font-size: 12px; color: #8b949e; margin-bottom: 20px; }
+  .section-group { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .prop-section { background: #0d1117; border: 1px solid #21262d; border-radius: 7px; padding: 16px; }
+  .prop-section h4 { font-size: 12px; color: #58a6ff; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .prop-section p { font-size: 13px; color: #c9d1d9; }
+  .empty-state { text-align: center; padding: 60px; color: #8b949e; }
+  .empty-state h3 { font-size: 16px; color: #c9d1d9; margin-bottom: 8px; }
+  .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .tag { background: #1a2a3a; color: #58a6ff; padding: 3px 10px; border-radius: 12px; font-size: 11px; }
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <a href="index.html">← Home</a>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="feature-roadmap.html">Roadmap</a>
+</div>
+<div class="header">
+  <div>
+    <h1>Interactive Buyer Proposal</h1>
+    <p>Dynamic proposal builder — select a buyer to load their profile</p>
+  </div>
+</div>
+<div class="selector-bar">
+  <select id="entitySel" onchange="loadEntity()"><option value="">Select entity...</option></select>
+  <select id="buyerSel" onchange="loadProposal()"><option value="">Select buyer...</option></select>
+  <button class="btn btn-outline" onclick="window.print()">Print / Export</button>
+</div>
+<div id="app"><div class="loading">Select an entity and buyer above to load proposal.</div></div>
+<script src="interactive-proposal-template.js" onerror="console.log('Template JS not loaded')"></script>
+<script>
+const SB = 'https://dwrnfpjcvydhmhnvyzov.supabase.co';
+const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NTcyOTAsImV4cCI6MjA5MDMzMzI5MH0.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY';
+let allBuyers = [];
+
+async function loadEntity() {
+  const entity = document.getElementById('entitySel').value;
+  const buyerSel = document.getElementById('buyerSel');
+  buyerSel.innerHTML = '<option value="">Select buyer...</option>';
+  document.getElementById('app').innerHTML = '<div class="loading">Loading buyers...</div>';
+  if (!entity) { document.getElementById('app').innerHTML = '<div class="loading">Select an entity above.</div>'; return; }
+  const res = await fetch(`${SB}/rest/v1/strategic_acquirer_profiles?select=*&entity_id=eq.${entity}&order=company_name.asc`, { headers: { apikey: KEY, Authorization: `Bearer ${KEY}` } });
+  allBuyers = res.ok ? await res.json() : [];
+  if (!allBuyers.length) { document.getElementById('app').innerHTML = '<div class="empty-state"><h3>No buyer profiles for this entity</h3><p>Run SAP research to populate buyer profiles.</p></div>'; return; }
+  allBuyers.forEach(b => { const o = document.createElement('option'); o.value = b.id; o.textContent = b.company_name || b.buyer_name; buyerSel.appendChild(o); });
+  document.getElementById('app').innerHTML = '<div class="loading">Select a buyer to load their proposal.</div>';
+}
+
+function loadProposal() {
+  const id = document.getElementById('buyerSel').value;
+  if (!id) return;
+  const b = allBuyers.find(x => String(x.id) === String(id));
+  if (!b) return;
+  document.getElementById('app').innerHTML = `
+    <div class="proposal-card">
+      <h2>${b.company_name || b.buyer_name || 'Buyer Profile'}</h2>
+      <div class="meta">Entity: ${b.entity_id || '—'} &nbsp;|&nbsp; Updated: ${b.updated_at ? new Date(b.updated_at).toLocaleDateString() : '—'}</div>
+      <div class="section-group">
+        <div class="prop-section"><h4>Company Overview</h4><p>${b.company_overview || '<span style="color:#8b949e">Not yet researched</span>'}</p></div>
+        <div class="prop-section"><h4>Acquisition History</h4><p>${b.acquisition_history || '<span style="color:#8b949e">Not yet researched</span>'}</p></div>
+        <div class="prop-section"><h4>Strategic Rationale</h4><p>${b.strategic_rationale || '<span style="color:#8b949e">Not yet researched</span>'}</p></div>
+        <div class="prop-section"><h4>Financial Capacity</h4><p>${b.financial_capacity || '<span style="color:#8b949e">Not yet researched</span>'}</p></div>
+        <div class="prop-section"><h4>Decision Makers</h4><p>${b.decision_makers || '<span style="color:#8b949e">Not yet researched</span>'}</p></div>
+        <div class="prop-section"><h4>Recent News</h4><p>${b.recent_news || '<span style="color:#8b949e">Not yet researched</span>'}</p></div>
+        <div class="prop-section"><h4>Approach Strategy</h4><p>${b.approach_strategy || '<span style="color:#8b949e">Not yet researched</span>'}</p></div>
+        <div class="prop-section"><h4>Fit Score</h4><p style="font-size:24px;font-weight:700;color:${(b.fit_score||0) >= 70 ? '#27ae60' : (b.fit_score||0) >= 40 ? '#f39c12' : '#e74c3c'}">${b.fit_score || '—'}<span style="font-size:14px;color:#8b949e">/100</span></p>
+        <div class="tag-row">${(b.tags || []).map(t => `<span class="tag">${t}</span>`).join('')}</div></div>
+      </div>
+    </div>`;
+}
+
+async function init() {
+  const res = await fetch(`${SB}/rest/v1/entities?select=id,name&order=name.asc`, { headers: { apikey: KEY, Authorization: `Bearer ${KEY}` } });
+  if (res.ok) {
+    const ents = await res.json();
+    const sel = document.getElementById('entitySel');
+    ents.forEach(e => { const o = document.createElement('option'); o.value = e.id; o.textContent = e.name; sel.appendChild(o); });
+  }
+}
+init();
+</script>
+</body>
+</html>

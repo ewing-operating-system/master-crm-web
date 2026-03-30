@@ -490,16 +490,48 @@ class LetterTemplateEngine {
 }
 
 // ---------------------------------------------------------------------------
+// Preview loader
+// ---------------------------------------------------------------------------
+
+/**
+ * Load a generated letter from Supabase and display it in the letter-preview page.
+ * Navigates to letter-preview.html with the appropriate query param.
+ *
+ * @param {string} targetId — UUID of the target row in the `targets` table
+ * @param {Object} [opts]
+ * @param {string} [opts.proposalId] — If you already know the proposal ID, pass it directly
+ * @param {string} [opts.baseUrl]    — Override the preview page URL (default: /letter-preview.html)
+ */
+async function previewLetter(targetId, opts = {}) {
+  const baseUrl = opts.baseUrl || '/letter-preview.html';
+
+  if (opts.proposalId) {
+    // Fast path — navigate directly with proposal ID
+    window.location.href = `${baseUrl}?proposal_id=${encodeURIComponent(opts.proposalId)}`;
+    return;
+  }
+
+  if (!targetId) {
+    console.error('previewLetter: targetId is required');
+    return;
+  }
+
+  // Navigate with target ID; the preview page will look up the proposal
+  window.location.href = `${baseUrl}?target_id=${encodeURIComponent(targetId)}`;
+}
+
+// ---------------------------------------------------------------------------
 // Module export + global init
 // ---------------------------------------------------------------------------
 
 // CommonJS / Node (for serverless function)
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { LetterTemplateEngine };
+  module.exports = { LetterTemplateEngine, previewLetter };
 }
 
 // Browser global
 if (typeof window !== 'undefined') {
   window.LetterTemplateEngine = LetterTemplateEngine;
   window.letterEngine = new LetterTemplateEngine();
+  window.previewLetter = previewLetter;
 }

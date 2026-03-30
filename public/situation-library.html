@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Situation Library — Next Chapter M&A</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0d1117; color: #c9d1d9; line-height: 1.6; min-height: 100vh; }
+  .top-nav { background: #161b22; padding: 8px 20px; border-bottom: 1px solid #30363d; }
+  .top-nav a { color: #58a6ff; text-decoration: none; font-size: 13px; }
+  .top-nav a + a { color: #8b949e; margin-left: 15px; }
+  .header { background: #161b22; border-bottom: 1px solid #30363d; padding: 20px 32px; }
+  .header h1 { font-size: 20px; font-weight: 700; color: #f0f6fc; }
+  .header p { font-size: 13px; color: #8b949e; margin-top: 3px; }
+  .main { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 18px 20px; transition: border-color 0.15s; cursor: pointer; }
+  .card:hover { border-color: #58a6ff; }
+  .card-num { font-size: 11px; color: #8b949e; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .card h3 { font-size: 15px; font-weight: 700; color: #f0f6fc; margin-bottom: 8px; }
+  .card p { font-size: 12px; color: #8b949e; margin-bottom: 12px; }
+  .play-list { list-style: none; }
+  .play-list li { font-size: 12px; color: #c9d1d9; padding: 3px 0; border-bottom: 1px solid #21262d; display: flex; align-items: center; gap: 6px; }
+  .play-list li:last-child { border-bottom: none; }
+  .play-list li::before { content: '▸'; color: #58a6ff; font-size: 10px; flex-shrink: 0; }
+  .category-tag { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 10px; font-weight: 600; margin-top: 8px; }
+  .cat-sell { background: #1a3a1a; color: #27ae60; }
+  .cat-buy { background: #1a2a3a; color: #58a6ff; }
+  .cat-distress { background: #3a1a1a; color: #e74c3c; }
+  .cat-growth { background: #3a2a10; color: #f39c12; }
+  .search-bar { margin-bottom: 20px; }
+  input[type=text] { width: 320px; background: #161b22; border: 1px solid #30363d; color: #c9d1d9; padding: 8px 14px; border-radius: 6px; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <a href="index.html">← Home</a>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="feature-roadmap.html">Roadmap</a>
+</div>
+<div class="header">
+  <h1>Situation Library</h1>
+  <p>16 situation types with matched play templates</p>
+</div>
+<div class="main">
+  <div class="search-bar"><input type="text" id="search" placeholder="Search situations..." oninput="render()"></div>
+  <div class="grid" id="grid"></div>
+</div>
+<script>
+const SITUATIONS = [
+  { num: 1, title: 'Founder Ready to Exit', category: 'sell', desc: 'Owner has built a great business and is mentally ready to move on.', plays: ['Personalized outreach letter', 'Legacy narrative framing', 'Valuation range conversation', 'Buyer shortlist with fit scoring'] },
+  { num: 2, 'title': 'Succession Gap', category: 'sell', desc: 'No family member or internal successor is ready or willing to take over.', plays: ['Succession urgency letter', 'Management continuity plan', 'Employee-first buyer filter', 'ESOP vs. strategic comparison'] },
+  { num: 3, title: 'Health or Life Event', category: 'distress', desc: 'Owner illness, divorce, or death forcing an accelerated decision.', plays: ['Confidential fast-track process', 'Estate attorney coordination', 'All-cash buyer prioritization', 'Asset protection memo'] },
+  { num: 4, title: 'Partner Dispute', category: 'distress', desc: 'Co-owners at an impasse; one or more want out.', plays: ['Neutral advisor positioning', 'Buyout vs. full sale modeling', 'Confidential dual-party letter', 'Mediator referral network'] },
+  { num: 5, title: 'Competitive Pressure', category: 'sell', desc: 'Market consolidating; owner fears being squeezed out.', plays: ['Competitive threat letter', 'Join-vs-sell framing', 'Rollover equity option', 'Platform buyer outreach'] },
+  { num: 6, title: 'Capital Needed for Growth', category: 'growth', desc: 'Business is growing but needs capital the owner cannot self-fund.', plays: ['Minority recap outreach', 'Growth equity buyer filter', 'Revenue-based financing memo', 'Partial liquidity letter'] },
+  { num: 7, title: 'Tired but Profitable', category: 'sell', desc: 'Owner is operationally burned out but business is performing well.', plays: ['Lifestyle transition letter', 'Management buyout option', 'Absentee owner buyer screen', 'Earnout structure pitch'] },
+  { num: 8, title: 'PE Platform Add-On', category: 'buy', desc: 'Backed platform seeking tuck-in acquisitions in specific geography or vertical.', plays: ['Target identification scan', 'Proactive seller outreach', 'Fit scoring model', 'LOI template prep'] },
+  { num: 9, title: 'Strategic Acquirer Hunting', category: 'buy', desc: 'Corporate buyer seeking specific capabilities, customers, or geography.', plays: ['SAP research run', 'CEO-to-CEO letter', 'Synergy memo', 'Exclusivity framing'] },
+  { num: 10, title: 'Distressed / Turnaround', category: 'distress', desc: 'Business in financial difficulty; owner needs a fast exit or restructure.', plays: ['Asset sale vs. business sale analysis', 'Distressed buyer filter', 'Creditor coordination', 'Fast-close letter'] },
+  { num: 11, title: 'Roll-Up Candidate', category: 'buy', desc: 'Owner is a strong candidate to join a consolidation platform.', plays: ['Roll-up thesis explanation letter', 'Equity roll modeling', 'Retention bonus structure', 'Platform comparison matrix'] },
+  { num: 12, title: 'Real Estate Heavy', category: 'sell', desc: 'Business owns significant real estate that complicates valuation and sale.', plays: ['Sale-leaseback analysis', 'RE-heavy buyer screen', 'Dual-close structure memo', 'Property appraisal referral'] },
+  { num: 13, title: 'Key Man Risk', category: 'sell', desc: 'Business is heavily dependent on one person (usually the owner).', plays: ['Key man mitigation plan', 'Transition employment structure', 'Earnout tied to knowledge transfer', 'Management depth letter'] },
+  { num: 14, title: 'Geographic Expansion Target', category: 'buy', desc: 'Buyer wants to enter a specific market via acquisition.', plays: ['Regional target scan', 'Geo-specific outreach letter', 'Market entry memo', 'Exclusivity pitch'] },
+  { num: 15, title: 'Tech / IP Acquisition', category: 'buy', desc: 'Buyer is after proprietary technology, patents, or digital assets.', plays: ['IP valuation framing', 'Tech buyer shortlist', 'Asset purchase vs. stock memo', 'NDR prep checklist'] },
+  { num: 16, title: 'Minority Liquidity Event', category: 'growth', desc: 'Owner wants partial liquidity without losing control.', plays: ['Recap structure options', 'Minority investor screen', 'Control retention analysis', 'Partial sale letter'] }
+];
+
+const catClass = { sell: 'cat-sell', buy: 'cat-buy', distress: 'cat-distress', growth: 'cat-growth' };
+const catLabel = { sell: 'Sell-Side', buy: 'Buy-Side', distress: 'Distress', growth: 'Growth' };
+
+function render() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const filtered = SITUATIONS.filter(s => !q || s.title.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q) || s.plays.some(p => p.toLowerCase().includes(q)));
+  document.getElementById('grid').innerHTML = filtered.map(s => `
+    <div class="card">
+      <div class="card-num">Situation ${s.num}</div>
+      <h3>${s.title}</h3>
+      <p>${s.desc}</p>
+      <ul class="play-list">${s.plays.map(p => `<li>${p}</li>`).join('')}</ul>
+      <span class="category-tag ${catClass[s.category]}">${catLabel[s.category]}</span>
+    </div>`).join('');
+}
+render();
+</script>
+</body>
+</html>
