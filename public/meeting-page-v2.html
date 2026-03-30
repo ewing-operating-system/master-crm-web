@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Page v2 — Data Collection Engine</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Segoe UI', system-ui, sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
+            line-height: 1.6;
+        }
+        .header {
+            background: linear-gradient(135deg, #161b22, #1a5276);
+            padding: 25px 30px;
+            text-align: center;
+            border-bottom: 1px solid #30363d;
+        }
+        .header h1 {
+            color: #58a6ff;
+            font-size: 24px;
+            margin: 0 0 8px 0;
+        }
+        .header .sub {
+            color: #8b949e;
+            font-size: 13px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .progress-section {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #21262d;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid #30363d;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #79c0ff, #58a6ff);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .progress-fill.complete {
+            background: linear-gradient(90deg, #3fb950, #2da44e);
+        }
+        .form-section {
+            margin-bottom: 20px;
+        }
+        .form-section h2 {
+            color: #c9d1d9;
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #30363d;
+        }
+        .card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .card-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #f0f6fc;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-size: 13px;
+            color: #8b949e;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+        label.required::after {
+            content: " *";
+            color: #f85149;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="datetime-local"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            color: #c9d1d9;
+            font-size: 13px;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="datetime-local"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #58a6ff;
+            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+        }
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .slider-group {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        input[type="range"] {
+            flex: 1;
+            height: 6px;
+            cursor: pointer;
+            accent-color: #58a6ff;
+        }
+        .slider-value {
+            width: 40px;
+            text-align: right;
+            font-weight: 600;
+            color: #58a6ff;
+        }
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+        }
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .auto-calculated {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 13px;
+            color: #58a6ff;
+            font-weight: 600;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: #238636;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #2ea043;
+        }
+        .btn-primary:disabled {
+            background: #21262d;
+            color: #6e7681;
+            cursor: not-allowed;
+        }
+        .btn-secondary {
+            background: #21262d;
+            color: #c9d1d9;
+            border: 1px solid #30363d;
+        }
+        .btn-secondary:hover {
+            border-color: #58a6ff;
+            color: #58a6ff;
+        }
+        .summary-section {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .summary-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #f0f6fc;
+            margin-bottom: 12px;
+        }
+        .summary-content {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 15px;
+            font-size: 13px;
+            line-height: 1.8;
+            color: #c9d1d9;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .checklist {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+        .checklist-icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .checklist-item.complete .checklist-icon {
+            background: #238636;
+            border-color: #2ea043;
+            color: white;
+        }
+        .action-items {
+            background: #0d1117;
+            border-left: 3px solid #58a6ff;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 12px;
+            font-size: 13px;
+        }
+        .action-items ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .action-items li {
+            margin-bottom: 8px;
+            color: #c9d1d9;
+        }
+        .loading {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid #30363d;
+            border-top-color: #58a6ff;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        @media (max-width: 700px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+            .checklist {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 20px;
+            }
+            .card {
+                padding: 15px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="section-controls.css">
+</head>
+<body>
+    <div class="header">
+        <h1>📋 Meeting Data Capture</h1>
+        <div class="sub">Live note-taking with structured intelligence capture</div>
+    </div>
+
+    <div class="container">
+        <!-- Progress Bar -->
+        <div class="progress-section">
+            <div class="progress-label">
+                <span>Data Completeness</span>
+                <span id="completeness-score">0/12 (0%)</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- Section 1: Meeting Setup -->
+        <div class="form-section">
+            <h2>Meeting Details</h2>
+            <div class="card">
+                <div class="two-column">
+                    <div class="form-group">
+                        <label for="company-name">Company Name (Read-Only)</label>
+                        <input type="text" id="company-name" readonly value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="rep-name">Rep Name (Read-Only)</label>
+                        <input type="text" id="rep-name" readonly value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="meeting-date">Meeting Date & Time</label>
+                        <input type="datetime-local" id="meeting-date">
+                    </div>
+                    <div class="form-group">
+                        <label for="duration">Scheduled Duration (minutes)</label>
+                        <input type="number" id="duration" value="30" min="15" max="240">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Pre-Meeting Notes</label>
+                    <textarea id="notes" placeholder="Any preparation notes..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: During-Meeting Form -->
+        <div class="form-section">
+            <h2>During-Meeting Capture</h2>
+
+            <!-- Card 1: Owner Motivation -->
+            <div class="card" data-field="owner_motivation">
+                <div class="card-title">Why is the owner considering a transaction?</div>
+                <div class="form-group">
+                    <label for="motivation-type" class="required">Motivation Type</label>
+                    <select id="motivation-type">
+                        <option value="">-- Select --</option>
+                        <option value="exit_cashout">Looking to exit / cash out</option>
+                        <option value="exploring">Exploring options / "curious"</option>
+                        <option value="capital">Growing fast, need capital</option>
+                        <option value="burnout">Burn out, want to sell</option>
+                        <option value="family">Partner/family situation</option>
+                        <option value="tax">Tax planning</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="motivation-quote">Verbatim Quote</label>
+                    <textarea id="motivation-quote" placeholder="What did they literally say about why?"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Confidence Level (1-10)</label>
+                    <div class="slider-group">
+                        <input type="range" id="motivation-confidence" min="1" max="10" value="5">
+                        <span class="slider-value"><span id="motivation-confidence-value">5</span>/10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Timeline -->
+            <div class="card" data-field="timeline">
+                <div class="card-title">Timeline for Transaction</div>
+                <div class="form-group">
+                    <label for="timeline-type" class="required">Timeline</label>
+                    <select id="timeline-type">
+                        <option value="">-- Select --</option>
+                        <option value="3months">3 months (ASAP)</option>
+                        <option value="6months">6 months</option>
+                        <option value="12months">12 months</option>
+                        <option value="18months">18+ months</option>
+                        <option value="none">No timeline / testing waters</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Confidence Level (1-10)</label>
+                    <div class="slider-group">
+                        <input type="range" id="timeline-confidence" min="1" max="10" value="5">
+                        <span class="slider-value"><span id="timeline-confidence-value">5</span>/10</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="timeline-notes">Real Timeline Notes</label>
+                    <textarea id="timeline-notes" placeholder="Life events, retirement date, urgency drivers?"></textarea>
+                </div>
+            </div>
+
+            <!-- Card 3: Revenue & Growth -->
+            <div class="card" data-field="revenue">
+                <div class="card-title">Business Size & Growth Profile</div>
+                <div class="two-column">
+                    <div class="form-group">
+                        <label for="annual-revenue" class="required">Annual Revenue (est.)</label>
+                        <input type="number" id="annual-revenue" placeholder="e.g., 1200000" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Growth Rate YoY (%)</label>
+                        <input type="number" id="growth-rate" placeholder="e.g., 15" min="0" max="100">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Service vs. New Install Split</label>
+                    <div style="margin-bottom: 8px; font-size: 12px; color: #8b949e;">
+                        Service: <span id="service-pct-label">60</span>% | New Install: <span id="install-pct-label">40</span>%
+                    </div>
+                    <input type="range" id="service-split" min="0" max="100" value="60">
+                </div>
+                <div class="form-group">
+                    <label>Recurring Revenue (%)</label>
+                    <div style="margin-bottom: 8px; font-size: 12px; color: #8b949e;">
+                        <span id="recurring-pct-label">35</span>%
+                    </div>
+                    <input type="range" id="recurring-revenue" min="0" max="100" value="35">
+                </div>
+                <div class="form-group">
+                    <label for="growth-notes">Growth Driver Notes</label>
+                    <textarea id="growth-notes" placeholder="Organic growth, acquisition, market expansion, team scaling?"></textarea>
+                </div>
+            </div>
+
+            <!-- Card 4: Margin Profile -->
+            <div class="card" data-field="margins">
+                <div class="card-title">Profitability & Owner Perks</div>
+                <div class="two-column">
+                    <div class="form-group">
+                        <label for="estimated-ebitda">Estimated Annual EBITDA</label>
+                        <input type="number" id="estimated-ebitda" placeholder="e.g., 320000" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>EBITDA Margin (%)</label>
+                        <div style="margin-bottom: 8px; font-size: 12px; color: #8b949e;">
+                            <span id="ebitda-margin-pct">27</span>%
+                        </div>
+                        <input type="range" id="ebitda-margin" min="0" max="100" value="27">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="font-weight: 600; margin-bottom: 12px;">Owner Perks (Add-backs)</label>
+                    <div class="two-column">
+                        <div class="form-group">
+                            <label for="vehicle-allowance" style="color: #c9d1d9;">Vehicle Allowance</label>
+                            <input type="number" id="vehicle-allowance" placeholder="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="family-salary" style="color: #c9d1d9;">Family Member Salary</label>
+                            <input type="number" id="family-salary" placeholder="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="travel-entertainment" style="color: #c9d1d9;">Travel / Entertainment</label>
+                            <input type="number" id="travel-entertainment" placeholder="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="insurance-benefits" style="color: #c9d1d9;">Insurance / Benefits Overages</label>
+                            <input type="number" id="insurance-benefits" placeholder="0" min="0">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="font-weight: 600; margin-bottom: 6px;">Calculations</label>
+                    <div class="form-group">
+                        <label style="color: #8b949e;">Total Add-backs</label>
+                        <div class="auto-calculated" id="total-addbacks">$0</div>
+                    </div>
+                    <div class="form-group">
+                        <label style="color: #8b949e;">Adjusted EBITDA</label>
+                        <div class="auto-calculated" id="adjusted-ebitda">$0</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="margins-notes">Margin Profile Notes</label>
+                    <textarea id="margins-notes" placeholder="Unusual expenses or perks not listed?"></textarea>
+                </div>
+            </div>
+
+            <!-- Card 5: Key People & Retention -->
+            <div class="card" data-field="key_people">
+                <div class="card-title">Team Depth & Dependency</div>
+
+                <div style="margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #30363d;">
+                    <label style="font-weight: 600; display: block; margin-bottom: 10px;">Technical Leader / Operations</label>
+                    <div class="two-column">
+                        <div class="form-group">
+                            <label style="color: #8b949e;">Name</label>
+                            <input type="text" class="tech-leader-name" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label style="color: #8b949e;">Years with Company</label>
+                            <input type="number" class="tech-leader-years" placeholder="" min="0">
+                        </div>
+                    </div>
+                    <div class="two-column">
+                        <div class="form-group">
+                            <label style="color: #8b949e;">Can Stay Post-Sale?</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" name="tech-stay" id="tech-stay-yes" value="yes">
+                                    <label for="tech-stay-yes" style="margin: 0;">Yes</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" name="tech-stay" id="tech-stay-no" value="no">
+                                    <label for="tech-stay-no" style="margin: 0;">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="tech-criticality" style="color: #8b949e;">Criticality</label>
+                            <select id="tech-criticality">
+                                <option value="">-- Select --</option>
+                                <option value="essential">Essential</option>
+                                <option value="important">Important</option>
+                                <option value="helpful">Helpful</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #30363d;">
+                    <label style="font-weight: 600; display: block; margin-bottom: 10px;">Sales/Business Development Lead</label>
+                    <div class="two-column">
+                        <div class="form-group">
+                            <label style="color: #8b949e;">Name</label>
+                            <input type="text" class="sales-leader-name" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label style="color: #8b949e;">Years with Company</label>
+                            <input type="number" class="sales-leader-years" placeholder="" min="0">
+                        </div>
+                    </div>
+                    <div class="two-column">
+                        <div class="form-group">
+                            <label style="color: #8b949e;">Can Stay Post-Sale?</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" name="sales-stay" id="sales-stay-yes" value="yes">
+                                    <label for="sales-stay-yes" style="margin: 0;">Yes</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" name="sales-stay" id="sales-stay-no" value="no">
+                                    <label for="sales-stay-no" style="margin: 0;">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="sales-criticality" style="color: #8b949e;">Criticality</label>
+                            <select id="sales-criticality">
+                                <option value="">-- Select --</option>
+                                <option value="essential">Essential</option>
+                                <option value="important">Important</option>
+                                <option value="helpful">Helpful</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="font-weight: 600; display: block; margin-bottom: 10px;">Other Key Employee</label>
+                    <div class="two-column">
+                        <div class="form-group">
+                            <label style="color: #8b949e;">Name</label>
+                            <input type="text" class="other-emp-name" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label style="color: #8b949e;">Role</label>
+                            <input type="text" class="other-emp-role" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label style="color: #8b949e;">Years with Company</label>
+                            <input type="number" class="other-emp-years" placeholder="" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label style="color: #8b949e;">Can Stay Post-Sale?</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" name="other-stay" id="other-stay-yes" value="yes">
+                                    <label for="other-stay-yes" style="margin: 0;">Yes</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" name="other-stay" id="other-stay-no" value="no">
+                                    <label for="other-stay-no" style="margin: 0;">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="other-criticality" style="color: #8b949e;">Criticality</label>
+                        <select id="other-criticality">
+                            <option value="">-- Select --</option>
+                            <option value="essential">Essential</option>
+                            <option value="important">Important</option>
+                            <option value="helpful">Helpful</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Owner Dependency (1-10)</label>
+                    <div class="slider-group">
+                        <input type="range" id="owner-dependency" min="1" max="10" value="5">
+                        <span class="slider-value"><span id="owner-dependency-value">5</span>/10</span>
+                    </div>
+                    <div style="font-size: 12px; color: #8b949e; margin-top: 4px;">1 = business runs itself, 10 = owner in everything</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="team-readiness">Owner Transition Readiness</label>
+                    <textarea id="team-readiness" placeholder="Can owner step back? Is there depth below them?"></textarea>
+                </div>
+            </div>
+
+            <!-- Card 6: Deal Breakers -->
+            <div class="card" data-field="deal_breakers">
+                <div class="card-title">Non-Negotiables & Hidden Objections</div>
+                <div class="form-group">
+                    <label style="font-weight: 600; margin-bottom: 10px;">What must happen?</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="db-whole-company" value="whole-company">
+                            <label for="db-whole-company" style="margin: 0;">Acquire the whole company (not just assets)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="db-customer-list" value="customer-list">
+                            <label for="db-customer-list" style="margin: 0;">Don't buy my customer list separately</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="db-stay-operator" value="stay-operator">
+                            <label for="db-stay-operator" style="margin: 0;">Need me to stay as operator / not be replaced</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="db-full-proceeds" value="full-proceeds">
+                            <label for="db-full-proceeds" style="margin: 0;">Need all proceeds upfront (no earnout)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="db-keep-employees" value="keep-employees">
+                            <label for="db-keep-employees" style="margin: 0;">Must keep employees on payroll</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="db-location" value="location">
+                            <label for="db-location" style="margin: 0;">Must maintain current location</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="deal-killer">Deal Killer Questions</label>
+                    <textarea id="deal-killer" placeholder="What would make them walk away?"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="hidden-concerns">Hidden Concerns Not Yet Stated</label>
+                    <textarea id="hidden-concerns" placeholder="What are they not saying but you sense?"></textarea>
+                </div>
+            </div>
+
+            <!-- Card 7: Emotional Temperature -->
+            <div class="card" data-field="emotional">
+                <div class="card-title">Owner Mindset & Personality Type</div>
+                <div class="form-group">
+                    <label>How Ready Are They? (1-10)</label>
+                    <div style="margin-bottom: 8px; font-size: 12px; color: #8b949e;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>1: Desperate to sell</span>
+                            <span id="readiness-value">5</span>
+                            <span>10: Suspicious, defensive</span>
+                        </div>
+                    </div>
+                    <input type="range" id="readiness-scale" min="1" max="10" value="5">
+                </div>
+                <div class="form-group">
+                    <label style="font-weight: 600; margin-bottom: 10px;">Personality Type</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="pers-analytical" value="analytical">
+                            <label for="pers-analytical" style="margin: 0;">Analytical (wants spreadsheets, data, proof)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="pers-gut" value="gut-trusting">
+                            <label for="pers-gut" style="margin: 0;">Gut-trusting (wants story, relationship, feeling)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="pers-data" value="data-driven">
+                            <label for="pers-data" style="margin: 0;">Data-driven (wants comparisons, benchmarks, history)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="pers-story" value="story-driven">
+                            <label for="pers-story" style="margin: 0;">Story-driven (wants narrative, context, meaning)</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="emotional-notes">Emotional Vibe Notes</label>
+                    <textarea id="emotional-notes" placeholder="How did they seem? Excited? Anxious? Confident?"></textarea>
+                </div>
+            </div>
+
+            <!-- Card 8: Story Elements -->
+            <div class="card" data-field="story">
+                <div class="card-title">Their Company Origin & Culture</div>
+                <div class="form-group">
+                    <label for="story-origin">Why did they start this business?</label>
+                    <textarea id="story-origin" placeholder="What's the founder story?"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="story-challenge">Biggest Challenge They've Overcome</label>
+                    <textarea id="story-challenge" placeholder="What near-death experience or pivot changed them?"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="story-community">Community/Local Impact</label>
+                    <textarea id="story-community" placeholder="Sponsorships? Volunteer work? Awards? Local reputation?"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="story-culture">Team Culture & Workplace</label>
+                    <textarea id="story-culture" placeholder="How do employees talk about this company? Why do they stay?"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="story-quirky">Quirky/Memorable Details</label>
+                    <textarea id="story-quirky" placeholder="Anything unique about the company? Unusual service? Memorable name story?"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="story-personal">Personal Facts About Owner</label>
+                    <textarea id="story-personal" placeholder="Background, values, what drives them beyond money?"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Post-Meeting Output -->
+        <div class="form-section">
+            <h2>Post-Meeting Output</h2>
+
+            <!-- Auto-Generated Summary -->
+            <div class="summary-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <div class="summary-title">🤖 AI-Generated Meeting Summary</div>
+                    <button id="generate-summary-btn" class="btn-primary">Generate Summary</button>
+                </div>
+                <div id="summary-loading" style="display: none; padding: 20px; text-align: center;">
+                    <span class="loading"></span> Generating summary...
+                </div>
+                <div id="summary-content" class="summary-content" style="display: none; min-height: 200px;"></div>
+                <div id="summary-empty" style="color: #8b949e; font-size: 13px; padding: 20px; text-align: center;">
+                    Click "Generate Summary" after capturing all meeting data to create an AI-generated 3-paragraph summary.
+                </div>
+            </div>
+
+            <!-- Data Completeness Scorecard -->
+            <div class="summary-section">
+                <div class="summary-title">📊 Data Completeness Scorecard</div>
+                <div class="checklist" id="completeness-checklist">
+                    <div class="checklist-item" data-field="owner_motivation">
+                        <div class="checklist-icon">○</div>
+                        <span>Owner Motivation: Captured</span>
+                    </div>
+                    <div class="checklist-item" data-field="timeline">
+                        <div class="checklist-icon">○</div>
+                        <span>Timeline: Captured</span>
+                    </div>
+                    <div class="checklist-item" data-field="revenue">
+                        <div class="checklist-icon">○</div>
+                        <span>Revenue & Growth: Captured</span>
+                    </div>
+                    <div class="checklist-item" data-field="margins">
+                        <div class="checklist-icon">○</div>
+                        <span>Margin Profile: Captured</span>
+                    </div>
+                    <div class="checklist-item" data-field="key_people">
+                        <div class="checklist-icon">○</div>
+                        <span>Key People: Captured</span>
+                    </div>
+                    <div class="checklist-item" data-field="deal_breakers">
+                        <div class="checklist-icon">○</div>
+                        <span>Deal Breakers: Captured</span>
+                    </div>
+                    <div class="checklist-item" data-field="emotional">
+                        <div class="checklist-icon">○</div>
+                        <span>Emotional Temperature: Captured</span>
+                    </div>
+                    <div class="checklist-item" data-field="story">
+                        <div class="checklist-icon">○</div>
+                        <span>Story Elements: Captured</span>
+                    </div>
+                </div>
+                <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #30363d;">
+                    <div class="summary-title" style="margin-bottom: 12px;">What This Unlocks</div>
+                    <ul style="margin: 0; padding-left: 20px; font-size: 13px;">
+                        <li style="margin-bottom: 8px;">✓ Personalized Letter Generation — Use this data to write operator-friendly letter</li>
+                        <li style="margin-bottom: 8px;">✓ Interactive Proposal — Auto-populate valuation, timeline, buyer profile</li>
+                        <li style="margin-bottom: 8px;">✓ Ideal Buyer Profile — Match characteristics to buyer priorities</li>
+                        <li>✓ Next Action Recommendations</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Next Steps & Action Items -->
+            <div class="summary-section">
+                <div class="summary-title">📋 Recommended Next Steps</div>
+                <div class="action-items" id="action-items" style="display: none;">
+                    <ol id="action-list"></ol>
+                </div>
+                <div id="action-empty" style="color: #8b949e; font-size: 13px; padding: 20px; text-align: center;">
+                    Action items will appear here after you generate the summary.
+                </div>
+                <div class="button-group" style="margin-top: 20px;">
+                    <button id="generate-letter-btn" class="btn-secondary" disabled>Generate Personalized Letter</button>
+                    <button id="create-proposal-btn" class="btn-secondary" disabled>Create Interactive Proposal</button>
+                    <button id="identify-buyers-btn" class="btn-secondary" disabled>Identify Ideal Buyers</button>
+                    <button id="schedule-followup-btn" class="btn-secondary" disabled>Schedule Follow-up</button>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; padding: 30px; color: #6e7681; font-size: 12px;">
+            Data auto-saves to your browser. Summary and downstream actions require Supabase connectivity.
+        </div>
+    </div>
+
+    <script src="section-controls.js"></script>
+<script src="buyer-feedback.js"></script>
+    <script src="inline-editing.js"></script>
+    <script src="meeting-form.js"></script>
+</body>
+</html>

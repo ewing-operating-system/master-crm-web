@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proposal Auto-Generator — Next Chapter Partners</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #1a365d;
+      --blue: #2b6cb0;
+      --blue-light: #ebf4ff;
+      --green: #276749;
+      --green-light: #f0fff4;
+      --gold: #b7791f;
+      --gray: #718096;
+      --gray-light: #f7fafc;
+      --border: #e2e8f0;
+      --text: #2d3748;
+      --text-sm: #4a5568;
+      --shadow: 0 2px 12px rgba(0,0,0,0.07);
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #0d1117;
+      color: #c9d1d9;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .topnav {
+      background: #161b22;
+      padding: 8px 24px;
+      border-bottom: 1px solid #30363d;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .topnav a { color: #58a6ff; text-decoration: none; font-size: 13px; }
+    .topnav a.dim { color: #8b949e; }
+
+    .header {
+      background: linear-gradient(135deg, #161b22, #1a3a5c);
+      padding: 40px 30px;
+      text-align: center;
+      border-bottom: 1px solid #30363d;
+    }
+    .header h1 { color: #58a6ff; font-size: 28px; margin-bottom: 8px; }
+    .header .sub { color: #8b949e; font-size: 14px; }
+    .header .badge {
+      display: inline-block;
+      background: #238636;
+      color: white;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 12px;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+
+    /* ── Tabs ── */
+    .tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 2px solid #30363d;
+      margin-bottom: 28px;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      color: #8b949e;
+      padding: 12px 24px;
+      font-size: 14px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.2s;
+      font-family: system-ui, sans-serif;
+    }
+    .tab-btn:hover { color: #c9d1d9; }
+    .tab-btn.active { color: #58a6ff; border-bottom-color: #58a6ff; font-weight: 600; }
+
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* ── Card ── */
+    .card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #f0f6fc;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #30363d;
+    }
+
+    /* ── Form controls ── */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-group { margin-bottom: 14px; }
+    label {
+      display: block;
+      font-size: 12px;
+      color: #8b949e;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 9px 12px;
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      color: #c9d1d9;
+      font-size: 14px;
+      font-family: system-ui, sans-serif;
+      transition: border-color 0.2s;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #58a6ff;
+      box-shadow: 0 0 0 3px rgba(88,166,255,0.1);
+    }
+    textarea { resize: vertical; min-height: 70px; }
+
+    .slider-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    input[type="range"] {
+      flex: 1;
+      accent-color: #58a6ff;
+      cursor: pointer;
+    }
+    .slider-val {
+      width: 40px;
+      text-align: right;
+      font-weight: 700;
+      color: #58a6ff;
+      font-size: 14px;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #c9d1d9;
+      cursor: pointer;
+    }
+    .checkbox-row input[type="checkbox"] { cursor: pointer; accent-color: #58a6ff; }
+
+    /* ── Auto-calc display ── */
+    .auto-calc {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #58a6ff;
+    }
+
+    /* ── Buttons ── */
+    .btn-primary {
+      background: #238636;
+      color: white;
+      border: none;
+      border-radius: 7px;
+      padding: 14px 32px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: system-ui, sans-serif;
+    }
+    .btn-primary:hover { background: #2ea043; transform: translateY(-1px); }
+    .btn-primary:active { transform: none; }
+    .btn-primary:disabled { background: #21262d; color: #6e7681; cursor: not-allowed; transform: none; }
+
+    .btn-secondary {
+      background: #21262d;
+      color: #c9d1d9;
+      border: 1px solid #30363d;
+      border-radius: 7px;
+      padding: 10px 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: system-ui, sans-serif;
+    }
+    .btn-secondary:hover { border-color: #58a6ff; color: #58a6ff; }
+
+    /* ── Generate section ── */
+    .generate-bar {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .generate-bar .gl {
+      flex: 1;
+    }
+    .generate-bar .g-title { font-size: 16px; font-weight: 700; color: #f0f6fc; margin-bottom: 4px; }
+    .generate-bar .g-sub { font-size: 13px; color: #8b949e; }
+
+    /* ── Status / progress ── */
+    .status-bar {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 10px 16px;
+      font-size: 13px;
+      color: #8b949e;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .status-bar.generating { border-color: #58a6ff; color: #58a6ff; }
+    .status-bar.done { border-color: #2ea043; color: #2ea043; }
+    .status-bar.error { border-color: #f85149; color: #f85149; }
+
+    .spinner {
+      width: 14px; height: 14px;
+      border: 2px solid #30363d;
+      border-top-color: #58a6ff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      flex-shrink: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Preview pane ── */
+    #preview-frame-wrap {
+      background: white;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      overflow: hidden;
+      min-height: 600px;
+    }
+    #preview-frame {
+      width: 100%;
+      min-height: 700px;
+      border: none;
+      display: block;
+    }
+
+    /* ── Completeness ── */
+    .completeness-bar {
+      background: #21262d;
+      border-radius: 4px;
+      height: 6px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+    .completeness-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3fb950, #2ea043);
+      transition: width 0.3s;
+    }
+
+    /* ── Score cards ── */
+    .score-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .score-chip {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 12px 16px;
+      text-align: center;
+      flex: 1;
+      min-width: 120px;
+    }
+    .score-chip .sv { font-size: 22px; font-weight: 800; color: #58a6ff; }
+    .score-chip .sl { font-size: 11px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+
+    /* ── Sample data banner ── */
+    .sample-banner {
+      background: #1c2128;
+      border: 1px solid #388bfd;
+      border-radius: 8px;
+      padding: 12px 18px;
+      font-size: 13px;
+      color: #79c0ff;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    /* ── Action bar below preview ── */
+    .preview-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 640px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .generate-bar { flex-direction: column; }
+      .score-row { flex-wrap: wrap; }
+      .header h1 { font-size: 22px; }
+      .tabs { overflow-x: auto; }
+      .tab-btn { white-space: nowrap; padding: 10px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="topnav">
+  <a href="index.html">← Home</a>
+  <a href="meeting-page-v2.html" class="dim">Meeting Page</a>
+  <a href="dashboard.html" class="dim">Dashboard</a>
+</div>
+
+<div class="header">
+  <h1>Proposal Auto-Generator</h1>
+  <div class="sub">Meeting data → personalized interactive proposal in &lt;5 seconds</div>
+  <div class="badge">Live Engine</div>
+</div>
+
+<div class="container">
+
+  <!-- Score bar -->
+  <div class="score-row" id="score-row">
+    <div class="score-chip">
+      <div class="sv" id="chip-completeness">0%</div>
+      <div class="sl">Data Completeness</div>
+    </div>
+    <div class="score-chip">
+      <div class="sv" id="chip-personalization">—</div>
+      <div class="sl">Personalization Score</div>
+    </div>
+    <div class="score-chip">
+      <div class="sv" id="chip-valuation">—</div>
+      <div class="sl">Est. Valuation (Mid)</div>
+    </div>
+    <div class="score-chip">
+      <div class="sv" id="chip-fee">—</div>
+      <div class="sl">Est. Fee</div>
+    </div>
+  </div>
+
+  <!-- Generate bar -->
+  <div class="generate-bar">
+    <div class="gl">
+      <div class="g-title">Ready to Generate</div>
+      <div class="g-sub">Fill in meeting data below, then click Generate. All fields update the proposal in real time.</div>
+      <div class="completeness-bar" style="max-width:300px;margin-top:8px">
+        <div class="completeness-fill" id="completeness-fill" style="width:0%"></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn-secondary" id="btn-load-sample">Load Sample Data</button>
+      <button class="btn-secondary" id="btn-clear">Clear</button>
+      <button class="btn-primary" id="btn-generate">Generate Proposal</button>
+    </div>
+  </div>
+
+  <div class="status-bar" id="status-bar">
+    <span id="status-text">Enter meeting data and click Generate.</span>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="tab-input">Meeting Data</button>
+    <button class="tab-btn" data-tab="tab-preview">Preview</button>
+    <button class="tab-btn" data-tab="tab-api">API / Integration</button>
+  </div>
+
+  <!-- ══ TAB: Meeting Data ══ -->
+  <div class="tab-pane active" id="tab-input">
+
+    <!-- Core Identity -->
+    <div class="card">
+      <div class="card-title">Company Identity</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Company Name *</label>
+          <input type="text" id="f-company_name" placeholder="e.g., Apex Air Conditioning" data-field="company_name">
+        </div>
+        <div class="form-group">
+          <label>Industry</label>
+          <select id="f-industry" data-field="industry">
+            <option value="">Select industry...</option>
+            <option value="HVAC">HVAC</option>
+            <option value="Plumbing">Plumbing</option>
+            <option value="Electrical">Electrical</option>
+            <option value="Roofing">Roofing</option>
+            <option value="Pest Control">Pest Control</option>
+            <option value="Lawn Care">Lawn Care</option>
+            <option value="Garage Doors">Garage Doors</option>
+            <option value="Home Services">Home Services</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Revenue & Growth -->
+    <div class="card">
+      <div class="card-title">Revenue &amp; Growth Profile</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Annual Revenue ($) *</label>
+          <input type="number" id="f-annual_revenue" placeholder="e.g., 2500000" data-field="annual_revenue">
+        </div>
+        <div class="form-group">
+          <label>YoY Growth Rate (%)</label>
+          <input type="number" id="f-growth_rate" placeholder="e.g., 18" min="0" max="200" data-field="growth_rate">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Service vs. New Install Split</label>
+        <div style="font-size:12px;color:#8b949e;margin-bottom:4px">Service: <span id="service-pct-lbl">60</span>% &nbsp;|&nbsp; New Install: <span id="install-pct-lbl">40</span>%</div>
+        <input type="range" id="f-service_split" min="0" max="100" value="60" data-field="service_split">
+      </div>
+      <div class="form-group">
+        <label>Recurring Revenue (%)</label>
+        <div style="font-size:12px;color:#8b949e;margin-bottom:4px"><span id="recurring-pct-lbl">35</span>%</div>
+        <input type="range" id="f-recurring_revenue" min="0" max="100" value="35" data-field="recurring_revenue">
+      </div>
+      <div class="form-group">
+        <label>Growth Driver Notes</label>
+        <textarea id="f-growth_notes" placeholder="What's driving revenue growth?" data-field="growth_notes"></textarea>
+      </div>
+    </div>
+
+    <!-- Profitability -->
+    <div class="card">
+      <div class="card-title">Profitability &amp; Owner Add-backs</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Estimated Annual EBITDA ($) *</label>
+          <input type="number" id="f-estimated_ebitda" placeholder="e.g., 450000" data-field="estimated_ebitda">
+        </div>
+        <div class="form-group">
+          <label>EBITDA Margin (%)</label>
+          <div class="slider-group">
+            <input type="range" id="f-ebitda_margin" min="0" max="60" value="20" data-field="ebitda_margin">
+            <div class="slider-val"><span id="ebitda-margin-lbl">20</span>%</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-grid" style="margin-top:12px">
+        <div class="form-group">
+          <label>Vehicle Allowance ($)</label>
+          <input type="number" id="f-vehicle_allowance" placeholder="0" min="0" data-field="vehicle_allowance">
+        </div>
+        <div class="form-group">
+          <label>Family Member Salary ($)</label>
+          <input type="number" id="f-family_salary" placeholder="0" min="0" data-field="family_salary">
+        </div>
+        <div class="form-group">
+          <label>Travel / Entertainment ($)</label>
+          <input type="number" id="f-travel_entertainment" placeholder="0" min="0" data-field="travel_entertainment">
+        </div>
+        <div class="form-group">
+          <label>Insurance / Benefits ($)</label>
+          <input type="number" id="f-insurance_benefits" placeholder="0" min="0" data-field="insurance_benefits">
+        </div>
+      </div>
+      <div class="form-grid" style="margin-top:8px">
+        <div class="form-group">
+          <label>Total Add-backs</label>
+          <div class="auto-calc" id="display-addbacks">$0</div>
+        </div>
+        <div class="form-group">
+          <label>Adjusted EBITDA</label>
+          <div class="auto-calc" id="display-adj-ebitda">$0</div>
+        </div>
+      </div>
+      <div class="form-group" style="margin-top:12px">
+        <label>Margin Profile Notes</label>
+        <textarea id="f-margins_notes" placeholder="Unusual expenses, owner perks not listed above?" data-field="margins_notes"></textarea>
+      </div>
+    </div>
+
+    <!-- Timeline & Motivation -->
+    <div class="card">
+      <div class="card-title">Owner Timeline &amp; Motivation</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Motivation Type</label>
+          <select id="f-motivation_type" data-field="motivation_type">
+            <option value="">Select...</option>
+            <option value="exit_cashout">Looking to exit / cash out</option>
+            <option value="exploring">Exploring options</option>
+            <option value="capital">Need growth capital</option>
+            <option value="burnout">Ready to step back</option>
+            <option value="family">Family / partner situation</option>
+            <option value="tax">Tax planning</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Transaction Timeline</label>
+          <select id="f-timeline_type" data-field="timeline_type">
+            <option value="">Select...</option>
+            <option value="3months">3 months (urgent)</option>
+            <option value="6months">6 months</option>
+            <option value="12months">12 months</option>
+            <option value="18months">18+ months</option>
+            <option value="none">No timeline / testing waters</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Verbatim Owner Quote</label>
+        <textarea id="f-motivation_quote" placeholder="What did they literally say about why they're considering this?" data-field="motivation_quote"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Timeline Context Notes</label>
+        <textarea id="f-timeline_notes" placeholder="Life events, retirement date, urgency drivers?" data-field="timeline_notes"></textarea>
+      </div>
+    </div>
+
+    <!-- Deal Breakers -->
+    <div class="card">
+      <div class="card-title">Deal Breakers &amp; Non-Negotiables</div>
+      <div style="margin-bottom:14px">
+        <label style="margin-bottom:10px;display:block">What must happen?</label>
+        <label class="checkbox-row"><input type="checkbox" value="full-proceeds" class="f-deal_breakers"> Need all proceeds upfront — no earnout</label>
+        <label class="checkbox-row"><input type="checkbox" value="stay-operator" class="f-deal_breakers"> Stay on as operator after sale</label>
+        <label class="checkbox-row"><input type="checkbox" value="keep-employees" class="f-deal_breakers"> Keep all employees on payroll</label>
+        <label class="checkbox-row"><input type="checkbox" value="whole-company" class="f-deal_breakers"> Must acquire whole company (not just assets)</label>
+        <label class="checkbox-row"><input type="checkbox" value="earnout" class="f-deal_breakers"> Open to earnout for higher total proceeds</label>
+        <label class="checkbox-row"><input type="checkbox" value="location" class="f-deal_breakers"> Must maintain current location</label>
+      </div>
+      <div class="form-group">
+        <label>Deal Killer Notes</label>
+        <textarea id="f-deal_killer" placeholder="What would make them walk away from the table?" data-field="deal_killer"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Unstated / Hidden Concerns</label>
+        <textarea id="f-hidden_concerns" placeholder="What are they not saying but you sense is there?" data-field="hidden_concerns"></textarea>
+      </div>
+    </div>
+
+    <!-- Story & People -->
+    <div class="card">
+      <div class="card-title">Company Story &amp; Key People</div>
+      <div class="form-group">
+        <label>Why did they start this business?</label>
+        <textarea id="f-story_origin" placeholder="The founder's origin story..." data-field="story_origin"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Biggest Challenge Overcome</label>
+        <textarea id="f-story_challenge" placeholder="What near-death experience or pivot changed them?" data-field="story_challenge"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Team Transition Readiness</label>
+        <textarea id="f-team_readiness" placeholder="Can owner step back? Is there depth below them?" data-field="team_readiness"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Key People (JSON or comma-separated names)</label>
+        <textarea id="f-key_people" placeholder='e.g., [{"name":"Mike Torres","role":"Ops Manager","years":8}] or just "Mike Torres, Sarah Chen"' data-field="key_people" style="min-height:56px"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Owner Dependency (1=runs itself, 10=owner in everything)</label>
+        <div class="slider-group">
+          <input type="range" id="f-owner_dependency" min="1" max="10" value="5" data-field="owner_dependency">
+          <div class="slider-val"><span id="owner-dep-lbl">5</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;padding:10px 0 30px">
+      <button class="btn-primary" id="btn-generate-bottom" style="padding:16px 48px;font-size:16px">
+        Generate Interactive Proposal
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ══ TAB: Preview ══ -->
+  <div class="tab-pane" id="tab-preview">
+    <div id="preview-empty" style="text-align:center;padding:60px 20px;color:#8b949e">
+      <div style="font-size:40px;margin-bottom:16px">📄</div>
+      <p style="font-size:16px;margin-bottom:8px;color:#c9d1d9">No proposal generated yet</p>
+      <p style="font-size:14px">Fill in meeting data and click <strong style="color:#58a6ff">Generate Proposal</strong></p>
+    </div>
+    <div id="preview-content" style="display:none">
+      <div class="preview-actions">
+        <button class="btn-secondary" id="btn-open-new-tab">Open in New Tab</button>
+        <button class="btn-secondary" id="btn-copy-html">Copy HTML</button>
+        <button class="btn-secondary" id="btn-print">Print / PDF</button>
+        <button class="btn-secondary" id="btn-regenerate">Regenerate</button>
+      </div>
+      <div id="preview-frame-wrap" style="margin-top:16px">
+        <iframe id="preview-frame" title="Proposal Preview"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB: API ══ -->
+  <div class="tab-pane" id="tab-api">
+    <div class="card">
+      <div class="card-title">API Endpoint</div>
+      <p style="font-size:14px;color:#8b949e;margin-bottom:16px">
+        POST to <code style="background:#0d1117;padding:2px 6px;border-radius:4px;color:#79c0ff">/api/proposals/generate</code> with meeting data to receive a full HTML proposal + metadata.
+      </p>
+      <div style="background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:16px;font-size:13px;color:#79c0ff;font-family:monospace;line-height:1.8;overflow-x:auto">
+        <div style="color:#8b949e">// POST /api/proposals/generate</div>
+        <div style="color:#8b949e">// Content-Type: application/json</div>
+        <div style="margin-top:8px;color:#c9d1d9">{</div>
+        <div style="padding-left:20px;color:#a5d6ff">"company_name": "Apex HVAC Services",</div>
+        <div style="padding-left:20px;color:#a5d6ff">"industry": "HVAC",</div>
+        <div style="padding-left:20px;color:#a5d6ff">"annual_revenue": 3200000,</div>
+        <div style="padding-left:20px;color:#a5d6ff">"estimated_ebitda": 640000,</div>
+        <div style="padding-left:20px;color:#a5d6ff">"ebitda_margin": 20,</div>
+        <div style="padding-left:20px;color:#a5d6ff">"growth_rate": 22,</div>
+        <div style="padding-left:20px;color:#a5d6ff">"service_split": 65,</div>
+        <div style="padding-left:20px;color:#a5d6ff">"vehicle_allowance": 18000,</div>
+        <div style="padding-left:20px;color:#a5d6ff">"family_salary": 85000,</div>
+        <div style="padding-left:20px;color:#a5d6ff">"travel_entertainment": 12000,</div>
+        <div style="padding-left:20px;color:#a5d6ff">"timeline_type": "6months",</div>
+        <div style="padding-left:20px;color:#a5d6ff">"motivation_type": "exit_cashout",</div>
+        <div style="padding-left:20px;color:#a5d6ff">"deal_breakers": "full-proceeds,keep-employees",</div>
+        <div style="padding-left:20px;color:#a5d6ff">"story_origin": "Started in a garage in 2003...",</div>
+        <div style="padding-left:20px;color:#a5d6ff">"key_people": "[{\"name\":\"Mike Torres\",\"role\":\"Ops Manager\",\"years\":8}]"</div>
+        <div style="color:#c9d1d9">}</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Response Format</div>
+      <div style="background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:16px;font-size:13px;color:#79c0ff;font-family:monospace;line-height:1.8;overflow-x:auto">
+        <div style="color:#c9d1d9">{</div>
+        <div style="padding-left:20px;color:#a5d6ff">"html": "&lt;!DOCTYPE html&gt;...",</div>
+        <div style="padding-left:20px;color:#a5d6ff">"metadata": {</div>
+        <div style="padding-left:40px;color:#c9d1d9">"company": "Apex HVAC Services",</div>
+        <div style="padding-left:40px;color:#c9d1d9">"generation_ms": 12,</div>
+        <div style="padding-left:40px;color:#c9d1d9">"personalization_score": 0.92,</div>
+        <div style="padding-left:40px;color:#c9d1d9">"valuation_mid": 3850000,</div>
+        <div style="padding-left:40px;color:#c9d1d9">"adj_ebitda": 770000,</div>
+        <div style="padding-left:40px;color:#c9d1d9">"fee_estimate": 38500,</div>
+        <div style="padding-left:40px;color:#c9d1d9">"created_at": "2026-03-30T..."</div>
+        <div style="padding-left:20px;color:#a5d6ff">}</div>
+        <div style="color:#c9d1d9">}</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">URL Param Integration (Meeting Page v2)</div>
+      <p style="font-size:14px;color:#8b949e;margin-bottom:14px">From Meeting Page v2, pass data as a URL param to auto-generate on load:</p>
+      <div style="background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:16px;font-size:13px;color:#79c0ff;font-family:monospace;overflow-x:auto">
+        /interactive-proposal-auto.html?meeting_data=<span style="color:#8b949e">%7B%22company_name%22%3A...%7D</span>
+      </div>
+      <div style="margin-top:16px">
+        <div class="card-title" style="font-size:14px;margin-bottom:10px">Generate from current form data</div>
+        <button class="btn-secondary" id="btn-copy-url" style="margin-right:8px">Copy Shareable URL</button>
+        <span id="url-copy-feedback" style="font-size:13px;color:#2ea043;display:none">Copied!</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Live Test — Current Form Data</div>
+      <p style="font-size:14px;color:#8b949e;margin-bottom:12px">JSON output from current form state:</p>
+      <div style="background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:16px;font-size:12px;color:#79c0ff;font-family:monospace;max-height:300px;overflow-y:auto;white-space:pre-wrap;word-break:break-all" id="api-json-preview">{}</div>
+    </div>
+  </div>
+
+</div>
+
+<script src="proposal-auto-generator.js"></script>
+<script>
+(function () {
+  // ── State ──
+  let generatedHTML = '';
+  let lastMetadata = null;
+
+  // ── Tab switching ──
+  document.querySelectorAll('.tab-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+      document.querySelectorAll('.tab-pane').forEach(function (p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+      if (btn.dataset.tab === 'tab-api') updateApiPreview();
+    });
+  });
+
+  // ── Slider sync ──
+  function bindSlider(id, labelId, suffix) {
+    var el = document.getElementById(id);
+    var lbl = document.getElementById(labelId);
+    if (!el || !lbl) return;
+    el.addEventListener('input', function () {
+      lbl.textContent = el.value;
+      if (id === 'f-service_split') {
+        document.getElementById('service-pct-lbl').textContent = el.value;
+        document.getElementById('install-pct-lbl').textContent = 100 - parseInt(el.value);
+      }
+      if (id === 'f-recurring_revenue') {
+        document.getElementById('recurring-pct-lbl').textContent = el.value;
+      }
+      updateCalcs();
+      updateScoreRow();
+    });
+  }
+
+  bindSlider('f-ebitda_margin', 'ebitda-margin-lbl', '%');
+  bindSlider('f-owner_dependency', 'owner-dep-lbl', '');
+  bindSlider('f-service_split', 'service-pct-lbl', '%');
+  bindSlider('f-recurring_revenue', 'recurring-pct-lbl', '%');
+
+  // ── Auto-calc (add-backs + adj EBITDA) ──
+  function fmt(n) {
+    n = parseFloat(n) || 0;
+    if (n >= 1000000) return '$' + (n / 1000000).toFixed(2).replace(/\.?0+$/, '') + 'M';
+    if (n >= 1000) return '$' + Math.round(n / 1000) + 'K';
+    return '$' + Math.round(n).toLocaleString();
+  }
+
+  function updateCalcs() {
+    var va = parseFloat(document.getElementById('f-vehicle_allowance').value) || 0;
+    var fs = parseFloat(document.getElementById('f-family_salary').value) || 0;
+    var te = parseFloat(document.getElementById('f-travel_entertainment').value) || 0;
+    var ib = parseFloat(document.getElementById('f-insurance_benefits').value) || 0;
+    var ebitda = parseFloat(document.getElementById('f-estimated_ebitda').value) || 0;
+    var addbacks = va + fs + te + ib;
+    var adj = ebitda + addbacks;
+    document.getElementById('display-addbacks').textContent = fmt(addbacks);
+    document.getElementById('display-adj-ebitda').textContent = fmt(adj);
+  }
+
+  // ── Completeness ──
+  var REQUIRED_FIELDS = [
+    'f-company_name', 'f-annual_revenue', 'f-estimated_ebitda', 'f-growth_rate',
+    'f-timeline_type', 'f-motivation_type', 'f-story_origin', 'f-key_people',
+    'f-growth_notes', 'f-ebitda_margin', 'f-industry', 'f-team_readiness'
+  ];
+
+  function calcCompleteness() {
+    var filled = REQUIRED_FIELDS.filter(function (id) {
+      var el = document.getElementById(id);
+      return el && String(el.value).trim().length > 0;
+    }).length;
+    return Math.round((filled / REQUIRED_FIELDS.length) * 100);
+  }
+
+  function updateScoreRow() {
+    var pct = calcCompleteness();
+    document.getElementById('chip-completeness').textContent = pct + '%';
+    document.getElementById('completeness-fill').style.width = pct + '%';
+
+    var ebitda = parseFloat(document.getElementById('f-estimated_ebitda').value) || 0;
+    var va = parseFloat(document.getElementById('f-vehicle_allowance').value) || 0;
+    var fs = parseFloat(document.getElementById('f-family_salary').value) || 0;
+    var te = parseFloat(document.getElementById('f-travel_entertainment').value) || 0;
+    var ib = parseFloat(document.getElementById('f-insurance_benefits').value) || 0;
+    var adj = ebitda + va + fs + te + ib;
+    var mid = adj * 5;
+    var fee = mid <= 5000000 ? mid * 0.01 : 50000 + (mid - 5000000) * 0.0075;
+
+    document.getElementById('chip-personalization').textContent = pct >= 50 ? (0.5 + pct / 200).toFixed(2) : '—';
+    document.getElementById('chip-valuation').textContent = adj > 0 ? fmt(mid) : '—';
+    document.getElementById('chip-fee').textContent = adj > 0 ? fmt(fee) : '—';
+  }
+
+  // Bind all form inputs for live updates
+  document.querySelectorAll('input[data-field], textarea[data-field], select[data-field]').forEach(function (el) {
+    el.addEventListener('input', function () {
+      updateCalcs();
+      updateScoreRow();
+    });
+    el.addEventListener('change', function () {
+      updateCalcs();
+      updateScoreRow();
+    });
+  });
+
+  // ── Collect form data ──
+  function collectFormData() {
+    var data = {};
+    document.querySelectorAll('[data-field]').forEach(function (el) {
+      data[el.dataset.field] = el.value;
+    });
+    // deal_breakers
+    var checked = [];
+    document.querySelectorAll('.f-deal_breakers:checked').forEach(function (cb) {
+      checked.push(cb.value);
+    });
+    data.deal_breakers = checked.join(',');
+    return data;
+  }
+
+  // ── Generate ──
+  function generate() {
+    var data = collectFormData();
+
+    setStatus('generating', 'Generating proposal...');
+    document.getElementById('btn-generate').disabled = true;
+    document.getElementById('btn-generate-bottom').disabled = true;
+
+    // Small async yield so spinner renders
+    setTimeout(function () {
+      try {
+        var gen = new ProposalAutoGenerator();
+        var result = gen.generate(data);
+        generatedHTML = result.html;
+        lastMetadata = result.metadata;
+
+        // Switch to preview
+        document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+        document.querySelectorAll('.tab-pane').forEach(function (p) { p.classList.remove('active'); });
+        document.querySelector('[data-tab="tab-preview"]').classList.add('active');
+        document.getElementById('tab-preview').classList.add('active');
+
+        // Write to iframe
+        document.getElementById('preview-empty').style.display = 'none';
+        document.getElementById('preview-content').style.display = 'block';
+        var frame = document.getElementById('preview-frame');
+        frame.srcdoc = generatedHTML;
+        frame.style.height = '800px';
+
+        var ms = result.metadata.generation_ms;
+        var score = Math.round(result.metadata.personalization_score * 100);
+        setStatus('done', 'Generated in ' + ms + 'ms · Personalization: ' + score + '% · ' + (score >= 85 ? 'Meets target (≥85%)' : 'Below target — fill more fields'));
+
+        updateScoreRow();
+        document.getElementById('chip-personalization').textContent = result.metadata.personalization_score.toFixed(2);
+        document.getElementById('chip-valuation').textContent = fmt(result.metadata.valuation_mid);
+        document.getElementById('chip-fee').textContent = fmt(result.metadata.fee_estimate);
+
+      } catch (e) {
+        setStatus('error', 'Generation failed: ' + e.message);
+        console.error(e);
+      }
+
+      document.getElementById('btn-generate').disabled = false;
+      document.getElementById('btn-generate-bottom').disabled = false;
+    }, 10);
+  }
+
+  document.getElementById('btn-generate').addEventListener('click', generate);
+  document.getElementById('btn-generate-bottom').addEventListener('click', generate);
+
+  // ── Status bar ──
+  function setStatus(type, msg) {
+    var bar = document.getElementById('status-bar');
+    bar.className = 'status-bar ' + type;
+    var html = type === 'generating'
+      ? '<div class="spinner"></div><span>' + msg + '</span>'
+      : '<span>' + msg + '</span>';
+    bar.innerHTML = html;
+  }
+
+  // ── Preview actions ──
+  document.getElementById('btn-open-new-tab').addEventListener('click', function () {
+    if (!generatedHTML) return;
+    var blob = new Blob([generatedHTML], { type: 'text/html' });
+    var url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+  });
+
+  document.getElementById('btn-copy-html').addEventListener('click', function () {
+    if (!generatedHTML) return;
+    navigator.clipboard.writeText(generatedHTML).then(function () {
+      document.getElementById('btn-copy-html').textContent = 'Copied!';
+      setTimeout(function () { document.getElementById('btn-copy-html').textContent = 'Copy HTML'; }, 2000);
+    });
+  });
+
+  document.getElementById('btn-print').addEventListener('click', function () {
+    var frame = document.getElementById('preview-frame');
+    if (frame && frame.contentWindow) {
+      frame.contentWindow.print();
+    }
+  });
+
+  document.getElementById('btn-regenerate').addEventListener('click', function () {
+    document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+    document.querySelectorAll('.tab-pane').forEach(function (p) { p.classList.remove('active'); });
+    document.querySelector('[data-tab="tab-input"]').classList.add('active');
+    document.getElementById('tab-input').classList.add('active');
+  });
+
+  // ── Copy URL ──
+  document.getElementById('btn-copy-url').addEventListener('click', function () {
+    var data = collectFormData();
+    var encoded = encodeURIComponent(JSON.stringify(data));
+    var url = window.location.origin + '/interactive-proposal-auto.html?meeting_data=' + encoded;
+    navigator.clipboard.writeText(url).then(function () {
+      var fb = document.getElementById('url-copy-feedback');
+      fb.style.display = 'inline';
+      setTimeout(function () { fb.style.display = 'none'; }, 2000);
+    });
+  });
+
+  // ── API JSON preview ──
+  function updateApiPreview() {
+    var data = collectFormData();
+    document.getElementById('api-json-preview').textContent = JSON.stringify(data, null, 2);
+  }
+
+  // ── Load sample data ──
+  document.getElementById('btn-load-sample').addEventListener('click', function () {
+    var sample = {
+      company_name: 'Apex Air Conditioning & Heating',
+      industry: 'HVAC',
+      annual_revenue: '3200000',
+      growth_rate: '22',
+      service_split: '65',
+      recurring_revenue: '40',
+      growth_notes: 'Organic growth through referrals, added 2 techs last year. Expanding into commercial service contracts.',
+      estimated_ebitda: '640000',
+      ebitda_margin: '20',
+      vehicle_allowance: '18000',
+      family_salary: '85000',
+      travel_entertainment: '12000',
+      insurance_benefits: '9000',
+      margins_notes: 'Owner takes a generous insurance package. Family truck in company name.',
+      motivation_type: 'exit_cashout',
+      timeline_type: '6months',
+      motivation_quote: "I've built this thing for 18 years and my kids aren't interested. I want to find someone who'll take care of my guys.",
+      timeline_notes: 'Wife wants to retire. Looking at December as a target close date.',
+      deal_breakers_arr: ['full-proceeds', 'keep-employees'],
+      deal_killer: 'Will not accept buyer who lays off field technicians.',
+      hidden_concerns: 'Worried about what happens to his 12 techs. Legacy matters more than price.',
+      story_origin: 'Started in 2005 out of his truck after being laid off from a big HVAC company. Grew by word of mouth in the first 5 years.',
+      story_challenge: 'Survived 2008-2009 recession by pivoting to commercial emergency service. Never laid anyone off.',
+      team_readiness: 'Ops manager Mike Torres has been there 8 years and can run the business independently.',
+      key_people: '[{"name":"Mike Torres","role":"Ops Manager","years":8},{"name":"Sarah Chen","role":"Dispatch","years":5}]',
+      owner_dependency: '4'
+    };
+
+    // Populate fields
+    Object.keys(sample).forEach(function (k) {
+      if (k === 'deal_breakers_arr') return;
+      var el = document.getElementById('f-' + k);
+      if (el) el.value = sample[k];
+    });
+
+    // Set sliders
+    ['f-service_split','f-recurring_revenue','f-ebitda_margin','f-owner_dependency'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.dispatchEvent(new Event('input'));
+    });
+
+    // Set deal breakers
+    document.querySelectorAll('.f-deal_breakers').forEach(function (cb) {
+      cb.checked = sample.deal_breakers_arr.includes(cb.value);
+    });
+
+    updateCalcs();
+    updateScoreRow();
+    setStatus('', 'Sample data loaded. Click Generate Proposal to preview.');
+  });
+
+  // ── Clear ──
+  document.getElementById('btn-clear').addEventListener('click', function () {
+    document.querySelectorAll('[data-field]').forEach(function (el) {
+      if (el.tagName === 'SELECT') el.selectedIndex = 0;
+      else if (el.type === 'range') el.value = el.defaultValue || 0;
+      else el.value = '';
+    });
+    document.querySelectorAll('.f-deal_breakers').forEach(function (cb) { cb.checked = false; });
+    // Reset sliders
+    document.getElementById('f-service_split').value = 60;
+    document.getElementById('f-recurring_revenue').value = 35;
+    document.getElementById('f-ebitda_margin').value = 20;
+    document.getElementById('f-owner_dependency').value = 5;
+    document.getElementById('service-pct-lbl').textContent = '60';
+    document.getElementById('install-pct-lbl').textContent = '40';
+    document.getElementById('recurring-pct-lbl').textContent = '35';
+    document.getElementById('ebitda-margin-lbl').textContent = '20';
+    document.getElementById('owner-dep-lbl').textContent = '5';
+    updateCalcs();
+    updateScoreRow();
+    setStatus('', 'Cleared.');
+  });
+
+  // ── URL param: auto-load meeting_data ──
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    if (params.has('meeting_data')) {
+      try {
+        var raw = JSON.parse(decodeURIComponent(params.get('meeting_data')));
+        Object.keys(raw).forEach(function (k) {
+          var el = document.getElementById('f-' + k);
+          if (el) el.value = raw[k];
+        });
+        if (raw.deal_breakers) {
+          var vals = raw.deal_breakers.split(',');
+          document.querySelectorAll('.f-deal_breakers').forEach(function (cb) {
+            cb.checked = vals.includes(cb.value);
+          });
+        }
+        // Trigger slider syncs
+        ['f-service_split','f-recurring_revenue','f-ebitda_margin','f-owner_dependency'].forEach(function(id) {
+          var el = document.getElementById(id);
+          if (el) el.dispatchEvent(new Event('input'));
+        });
+        updateCalcs();
+        updateScoreRow();
+        // Auto-generate
+        setTimeout(generate, 100);
+      } catch (e) {
+        console.warn('[ProposalAutoGenerator] Could not parse URL meeting_data:', e);
+      }
+    }
+  })();
+
+  // ── Init ──
+  updateCalcs();
+  updateScoreRow();
+
+})();
+</script>
+
+</body>
+</html>

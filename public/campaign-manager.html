@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campaign Manager — Next Chapter</title>
+<style>
+/* ── Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: #0d1117;
+  color: #c9d1d9;
+  min-height: 100vh;
+}
+
+/* ── Nav ── */
+.cm-nav {
+  background: #161b22;
+  padding: 8px 20px;
+  border-bottom: 1px solid #30363d;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.cm-nav a {
+  color: #58a6ff;
+  text-decoration: none;
+  font-size: 13px;
+}
+.cm-nav a.muted { color: #8b949e; }
+.cm-nav a:hover { color: #79c0ff; }
+
+/* ── Header ── */
+.cm-header {
+  background: linear-gradient(135deg, #161b22, #1a3a52);
+  padding: 28px 30px 22px;
+  border-bottom: 1px solid #30363d;
+}
+.cm-header h1 { color: #58a6ff; font-size: 22px; font-weight: 700; }
+.cm-header .cm-header-meta {
+  color: #8b949e; font-size: 12px; margin-top: 6px;
+  display: flex; align-items: center; gap: 12px;
+}
+.cm-rule-badge {
+  background: #1f3d5c;
+  color: #58a6ff;
+  border: 1px solid #2d5a8a;
+  border-radius: 20px;
+  padding: 3px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* ── Layout ── */
+.cm-main {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── Card ── */
+.cm-card {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 10px;
+  padding: 22px 24px;
+}
+.cm-card-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #58a6ff;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 18px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #30363d;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cm-card-title .cm-card-subtitle {
+  font-size: 11px;
+  color: #8b949e;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+/* ── Status Card ── */
+.cm-batch-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+.cm-batch-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #f0f6fc;
+}
+.cm-check {
+  width: 28px; height: 28px;
+  background: #1a5c33;
+  border: 1px solid #2ea043;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #2ea043; font-size: 14px; font-weight: 700;
+}
+.cm-batch-stat {
+  font-size: 15px;
+  color: #c9d1d9;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+.cm-batch-stat strong { color: #f0f6fc; }
+
+/* Progress bar */
+.cm-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.cm-progress-bar {
+  flex: 1;
+  height: 10px;
+  background: #21262d;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.cm-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #1f6feb, #58a6ff);
+  border-radius: 6px;
+  transition: width 0.6s ease;
+}
+.cm-progress-fill.cm-progress-done {
+  background: linear-gradient(90deg, #196c2e, #2ea043);
+}
+.cm-progress-label {
+  font-size: 13px;
+  color: #8b949e;
+  min-width: 36px;
+  text-align: right;
+}
+
+/* Sublines */
+.cm-subline {
+  font-size: 13px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+.cm-subline-warn {
+  background: #2d1f00;
+  border: 1px solid #6e4c00;
+  color: #e3b341;
+}
+.cm-subline-success {
+  background: #0d2d1a;
+  border: 1px solid #196c2e;
+  color: #2ea043;
+}
+.cm-sync-note {
+  font-size: 11px;
+  color: #484f58;
+  margin-top: 6px;
+}
+
+/* No batch / Error */
+.cm-no-batch {
+  display: flex; align-items: center; gap: 14px; padding: 8px 0;
+}
+.cm-no-batch-icon { font-size: 32px; }
+.cm-no-batch-text { color: #8b949e; font-size: 14px; }
+.cm-error {
+  color: #f85149;
+  font-size: 13px;
+  background: #2d0f0f;
+  border: 1px solid #5a1d1d;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+/* ── Status badges ── */
+.cm-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.status-active  { background: #1a3d1f; border: 1px solid #2ea043; color: #2ea043; }
+.status-paused  { background: #2d1f00; border: 1px solid #6e4c00; color: #e3b341; }
+.status-completed { background: #0d1f38; border: 1px solid #1f6feb; color: #58a6ff; }
+
+/* ── Controls ── */
+#cm-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  transition: opacity 0.2s;
+}
+.cm-btn {
+  padding: 9px 18px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+}
+.cm-btn-primary {
+  background: #1f6feb; color: #fff; border-color: #1f6feb;
+}
+.cm-btn-primary:hover { background: #388bfd; border-color: #388bfd; }
+.cm-btn-success {
+  background: #196c2e; color: #2ea043; border-color: #2ea043;
+}
+.cm-btn-success:hover { background: #1d7d34; }
+.cm-btn-warning {
+  background: #2d1f00; color: #e3b341; border-color: #6e4c00;
+}
+.cm-btn-warning:hover { background: #3d2a00; }
+.cm-btn-outline {
+  background: transparent; color: #8b949e; border-color: #30363d;
+}
+.cm-btn-outline:hover { background: #21262d; color: #c9d1d9; }
+.cm-btn-ghost {
+  background: transparent; color: #8b949e; border-color: #30363d;
+}
+.cm-btn-ghost:hover { background: #21262d; }
+.cm-btn-disabled {
+  background: #161b22; color: #484f58; border-color: #21262d; cursor: not-allowed;
+}
+
+/* ── Table ── */
+.cm-table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th {
+  text-align: left;
+  padding: 10px 10px;
+  color: #8b949e;
+  border-bottom: 1px solid #30363d;
+  font-weight: 600;
+  white-space: nowrap;
+}
+th.cm-th-sort {
+  cursor: pointer;
+  user-select: none;
+}
+th.cm-th-sort:hover { color: #c9d1d9; }
+th.cm-th-sort.sort-active { color: #58a6ff; }
+th.cm-th-sort::after {
+  content: ' ↕';
+  color: #484f58;
+  font-size: 10px;
+}
+th.cm-th-sort.sort-active[data-sort-dir="asc"]::after  { content: ' ↑'; color: #58a6ff; }
+th.cm-th-sort.sort-active[data-sort-dir="desc"]::after { content: ' ↓'; color: #58a6ff; }
+
+td {
+  padding: 11px 10px;
+  border-bottom: 1px solid #21262d;
+  vertical-align: middle;
+}
+tr:hover td { background: #1c2128; }
+.cm-empty {
+  text-align: center;
+  color: #484f58;
+  padding: 32px;
+}
+
+/* Mini progress in table */
+.cm-mini-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.cm-mini-progress span { font-size: 12px; color: #c9d1d9; }
+.cm-mini-bar {
+  width: 100px;
+  height: 5px;
+  background: #21262d;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.cm-mini-fill {
+  height: 100%;
+  background: #1f6feb;
+  border-radius: 3px;
+  transition: width 0.4s;
+}
+.cm-mini-fill.cm-mini-done { background: #2ea043; }
+
+/* Table actions */
+.cm-actions-cell { white-space: nowrap; }
+.cm-action {
+  padding: 4px 10px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  margin-right: 5px;
+  transition: all 0.15s;
+}
+.cm-action-ok   { background: #0d2d1a; color: #2ea043; border-color: #196c2e; }
+.cm-action-ok:hover { background: #1d4d2a; }
+.cm-action-warn { background: #2d1f00; color: #e3b341; border-color: #6e4c00; }
+.cm-action-warn:hover { background: #3d2a00; }
+.cm-action-ghost { background: transparent; color: #8b949e; border-color: #30363d; }
+.cm-action-ghost:hover { background: #21262d; }
+.cm-action-disabled { background: #161b22; color: #484f58; border-color: #21262d; cursor: not-allowed; }
+
+/* ── Cost Summary ── */
+.cm-cost-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.cm-cost-item {
+  background: #0d1117;
+  border: 1px solid #21262d;
+  border-radius: 8px;
+  padding: 16px 18px;
+  text-align: center;
+}
+.cm-cost-num {
+  font-size: 28px;
+  font-weight: 800;
+  color: #f0f6fc;
+  margin-bottom: 4px;
+}
+.cm-cost-label {
+  font-size: 11px;
+  color: #8b949e;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 4px;
+}
+.cm-cost-sub {
+  font-size: 11px;
+  color: #484f58;
+}
+
+/* ── 250/150 Rule explainer ── */
+.cm-rule-box {
+  background: #0d1f38;
+  border: 1px solid #1f4070;
+  border-radius: 8px;
+  padding: 16px 20px;
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+.cm-rule-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  text-align: center;
+  gap: 6px;
+}
+.cm-rule-step .cm-rule-num {
+  width: 36px; height: 36px;
+  background: #1f3d5c;
+  border: 2px solid #2d6a9f;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 800; color: #58a6ff;
+}
+.cm-rule-step .cm-rule-desc {
+  font-size: 12px; color: #8b949e; line-height: 1.4;
+}
+.cm-rule-step .cm-rule-val {
+  font-size: 20px; font-weight: 800; color: #f0f6fc;
+}
+.cm-rule-arrow {
+  color: #30363d; font-size: 20px; padding-top: 10px;
+}
+
+/* ── Toast ── */
+.cm-toast {
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.25s;
+  pointer-events: none;
+  max-width: 300px;
+}
+.cm-toast.cm-toast-show { opacity: 1; transform: translateY(0); }
+.cm-toast-success { background: #196c2e; color: #2ea043; border: 1px solid #2ea043; }
+.cm-toast-error   { background: #4d1919; color: #f85149; border: 1px solid #f85149; }
+.cm-toast-info    { background: #1f3d5c; color: #58a6ff; border: 1px solid #1f6feb; }
+.cm-toast-warn    { background: #2d1f00; color: #e3b341; border: 1px solid #6e4c00; }
+
+/* ── Footer ── */
+.cm-footer {
+  text-align: center;
+  padding: 24px;
+  color: #484f58;
+  font-size: 11px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+  .cm-cost-grid { grid-template-columns: 1fr; }
+  .cm-rule-box { flex-direction: column; gap: 12px; }
+  .cm-rule-arrow { display: none; }
+  .cm-main { padding: 0 14px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<div class="cm-nav">
+  <a href="index.html">← Home</a>
+  <a href="dashboard.html" class="muted">Dashboard</a>
+  <a href="feature-roadmap.html" class="muted">Roadmap</a>
+  <span style="margin-left:auto;font-size:11px;color:#484f58">Campaign Manager</span>
+</div>
+
+<!-- Header -->
+<div class="cm-header">
+  <h1>Campaign Manager</h1>
+  <div class="cm-header-meta">
+    <span class="cm-rule-badge">250 / 150 Rule</span>
+    <span id="cm-header-time">Loading...</span>
+  </div>
+</div>
+
+<div class="cm-main">
+
+  <!-- 250/150 Rule explainer -->
+  <div class="cm-card">
+    <div class="cm-card-title">
+      How the 250/150 Rule Works
+    </div>
+    <div class="cm-rule-box">
+      <div class="cm-rule-step">
+        <div class="cm-rule-num">1</div>
+        <div class="cm-rule-val">250</div>
+        <div class="cm-rule-desc">Send a batch of 250 letters to prospects</div>
+      </div>
+      <div class="cm-rule-arrow">→</div>
+      <div class="cm-rule-step">
+        <div class="cm-rule-num">2</div>
+        <div class="cm-rule-val">Pause</div>
+        <div class="cm-rule-desc">Hold new sends until 150 prospects have been called 5× each</div>
+      </div>
+      <div class="cm-rule-arrow">→</div>
+      <div class="cm-rule-step">
+        <div class="cm-rule-num">3</div>
+        <div class="cm-rule-val">150</div>
+        <div class="cm-rule-desc">150 prospects hit 5 calls → resume next batch</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Current Batch Status -->
+  <div class="cm-card">
+    <div class="cm-card-title">
+      Current Batch Status
+      <span class="cm-card-subtitle">Auto-refreshes every 30 seconds</span>
+    </div>
+    <div id="cm-status-card">
+      <div style="color:#484f58;font-size:13px">Loading batch status...</div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="cm-card">
+    <div class="cm-card-title">Batch Controls</div>
+    <div id="cm-controls">
+      <div style="color:#484f58;font-size:13px">Loading...</div>
+    </div>
+  </div>
+
+  <!-- Batch History -->
+  <div class="cm-card">
+    <div class="cm-card-title">
+      Batch History
+      <span class="cm-card-subtitle">Click column headers to sort</span>
+    </div>
+    <div class="cm-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="cm-th-sort" data-sort-key="batch_number" onclick="cmSort('batch_number')">Batch</th>
+            <th class="cm-th-sort" data-sort-key="total_letters_sent" onclick="cmSort('total_letters_sent')">Sent</th>
+            <th>Called 5x</th>
+            <th class="cm-th-sort" data-sort-key="status" onclick="cmSort('status')">Status</th>
+            <th class="cm-th-sort" data-sort-key="created_at" onclick="cmSort('created_at')">Created</th>
+            <th class="cm-th-sort" data-sort-key="completed_at" onclick="cmSort('completed_at')">Completed</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="cm-table-body">
+          <tr><td colspan="7" class="cm-empty">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Cost Summary -->
+  <div class="cm-card">
+    <div class="cm-card-title">
+      Cost Summary
+      <span class="cm-card-subtitle">$1.75 avg cost per letter</span>
+    </div>
+    <div id="cm-cost-summary">
+      <div style="color:#484f58;font-size:13px">Loading...</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="cm-footer">
+  Next Chapter M&A Advisory &nbsp;·&nbsp; Campaign Manager &nbsp;·&nbsp;
+  <span id="cm-footer-sync">—</span>
+</div>
+
+<script src="campaign-manager.js"></script>
+<script>
+  // Update header timestamp
+  function updateTimestamp() {
+    const now = new Date();
+    const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric',
+                   hour:'2-digit', minute:'2-digit' };
+    const el = document.getElementById('cm-header-time');
+    if (el) el.textContent = now.toLocaleDateString('en-US', opts);
+    const f = document.getElementById('cm-footer-sync');
+    if (f) f.textContent = 'Last loaded: ' + now.toLocaleTimeString();
+  }
+  updateTimestamp();
+  setInterval(updateTimestamp, 60000);
+</script>
+</body>
+</html>

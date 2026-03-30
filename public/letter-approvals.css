@@ -1,0 +1,462 @@
+/**
+ * Letter Approval Queue — Styles
+ * Approval banner states: pending (amber), approved (green), rejected (red)
+ */
+
+/* ── Banner container ─────────────────────────────────────────────────────── */
+.letter-approval-queue {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  margin: 0 0 24px 0;
+}
+
+.letter-approval-queue:empty {
+  display: none;
+}
+
+/* ── Individual approval card ─────────────────────────────────────────────── */
+.approval-card {
+  border-radius: 10px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: box-shadow 0.2s;
+}
+
+.approval-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+/* ── Status: pending ─────────────────────────────────────────────────────── */
+.approval-card.status-pending {
+  border: 1.5px solid #f59e0b;
+  background: #fffbeb;
+}
+
+.approval-card.status-pending .approval-header {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+}
+
+/* ── Status: approved ────────────────────────────────────────────────────── */
+.approval-card.status-approved {
+  border: 1.5px solid #10b981;
+  background: #f0fdf4;
+}
+
+.approval-card.status-approved .approval-header {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+}
+
+/* ── Status: rejected ────────────────────────────────────────────────────── */
+.approval-card.status-rejected {
+  border: 1.5px solid #ef4444;
+  background: #fef2f2;
+}
+
+.approval-card.status-rejected .approval-header {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+/* ── Header bar ───────────────────────────────────────────────────────────── */
+.approval-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.approval-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.approval-status-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.approval-meta {
+  font-size: 11px;
+  opacity: 0.85;
+  font-weight: 400;
+}
+
+.approval-score-badge {
+  background: rgba(255,255,255,0.25);
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ── Letter body preview ──────────────────────────────────────────────────── */
+.approval-body {
+  padding: 16px;
+}
+
+.letter-preview {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 14px 18px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #374151;
+  white-space: pre-wrap;
+  max-height: 220px;
+  overflow-y: auto;
+  margin-bottom: 12px;
+  font-family: Georgia, 'Times New Roman', serif;
+  scrollbar-width: thin;
+}
+
+.letter-preview::-webkit-scrollbar {
+  width: 4px;
+}
+.letter-preview::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 2px;
+}
+
+/* ── Expand/collapse toggle ───────────────────────────────────────────────── */
+.preview-toggle {
+  font-size: 12px;
+  color: #6b7280;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+  margin-bottom: 12px;
+  display: block;
+}
+.preview-toggle:hover { color: #374151; }
+
+.letter-preview.expanded {
+  max-height: none;
+}
+
+/* ── Rejected reason display ──────────────────────────────────────────────── */
+.rejection-reason-display {
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #991b1b;
+  margin-bottom: 12px;
+}
+
+.rejection-reason-display strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ── Notes input ──────────────────────────────────────────────────────────── */
+.approval-notes {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #374151;
+  resize: vertical;
+  min-height: 52px;
+  margin-bottom: 12px;
+  font-family: inherit;
+  transition: border-color 0.15s;
+}
+.approval-notes:focus {
+  outline: none;
+  border-color: #f59e0b;
+}
+
+/* ── Rejection reason textarea ────────────────────────────────────────────── */
+.rejection-reason-wrap {
+  display: none;
+  margin-bottom: 12px;
+}
+.rejection-reason-wrap.visible {
+  display: block;
+}
+.rejection-reason-input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1.5px solid #ef4444;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #374151;
+  resize: vertical;
+  min-height: 64px;
+  font-family: inherit;
+  transition: border-color 0.15s;
+}
+.rejection-reason-input:focus {
+  outline: none;
+  border-color: #dc2626;
+}
+.rejection-reason-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #dc2626;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* ── Action buttons ───────────────────────────────────────────────────────── */
+.approval-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.btn-approve {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: opacity 0.15s, transform 0.1s;
+}
+.btn-approve:hover { opacity: 0.9; transform: translateY(-1px); }
+.btn-approve:active { transform: translateY(0); }
+
+.btn-edit {
+  background: white;
+  color: #374151;
+  border: 1.5px solid #d1d5db;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: border-color 0.15s, transform 0.1s;
+}
+.btn-edit:hover { border-color: #9ca3af; transform: translateY(-1px); }
+
+.btn-reject {
+  background: white;
+  color: #ef4444;
+  border: 1.5px solid #fca5a5;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.15s, transform 0.1s;
+}
+.btn-reject:hover { background: #fef2f2; transform: translateY(-1px); }
+
+.btn-confirm-reject {
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.btn-confirm-reject:hover { opacity: 0.85; }
+
+.btn-cancel-reject {
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px 8px;
+  text-decoration: underline;
+}
+.btn-cancel-reject:hover { color: #374151; }
+
+/* ── Spinner / loading state ──────────────────────────────────────────────── */
+.approval-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.btn-approve:disabled,
+.btn-edit:disabled,
+.btn-reject:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ── Header pending count badge ───────────────────────────────────────────── */
+.letter-pending-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #f59e0b;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 50%;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.letter-pending-count.hidden {
+  display: none;
+}
+
+/* ── Empty / no-pending state ─────────────────────────────────────────────── */
+.approval-queue-empty {
+  font-size: 13px;
+  color: #9ca3af;
+  padding: 8px 0;
+  font-style: italic;
+}
+
+/* ── Approved confirmation overlay ───────────────────────────────────────── */
+.approved-confirmation {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #059669;
+  font-weight: 600;
+}
+
+/* ── Edit modal overlay ───────────────────────────────────────────────────── */
+.letter-edit-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.letter-edit-modal {
+  background: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.letter-edit-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.letter-edit-modal-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.letter-edit-modal-close {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #6b7280;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+}
+.letter-edit-modal-close:hover { color: #111827; }
+
+.letter-edit-modal-body {
+  padding: 20px;
+}
+
+.letter-edit-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 340px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #374151;
+  font-family: Georgia, 'Times New Roman', serif;
+  resize: vertical;
+}
+.letter-edit-textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.letter-edit-modal-footer {
+  padding: 16px 20px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn-save-edit {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 9px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.btn-save-edit:hover { opacity: 0.9; }
+
+.btn-cancel-edit {
+  background: white;
+  color: #374151;
+  border: 1.5px solid #d1d5db;
+  border-radius: 6px;
+  padding: 9px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-cancel-edit:hover { border-color: #9ca3af; }

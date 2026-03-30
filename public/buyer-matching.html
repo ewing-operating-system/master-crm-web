@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyer Matching — Next Chapter M&A</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
+            line-height: 1.6;
+        }
+        .header {
+            background: linear-gradient(135deg, #161b22, #1a5276);
+            padding: 25px 30px;
+            text-align: center;
+            border-bottom: 1px solid #30363d;
+        }
+        .header h1 { color: #58a6ff; font-size: 22px; margin: 0 0 6px 0; }
+        .header .sub { color: #8b949e; font-size: 13px; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .card-title {
+            font-size: 15px; font-weight: 600; color: #f0f6fc;
+            margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #30363d;
+        }
+        .company-info {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px; margin-bottom: 15px;
+        }
+        .info-item {
+            background: #0d1117; border: 1px solid #30363d; border-radius: 6px;
+            padding: 10px; font-size: 12px;
+        }
+        .info-item .label { color: #8b949e; margin-bottom: 4px; }
+        .info-item .value { color: #58a6ff; font-weight: 600; font-size: 14px; }
+        .buyer-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        .buyer-card {
+            background: #0d1117; border: 1px solid #30363d; border-radius: 10px;
+            padding: 18px; transition: all 0.2s; cursor: pointer; position: relative;
+        }
+        .buyer-card:hover {
+            border-color: #58a6ff; transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(88, 166, 255, 0.1);
+        }
+        .buyer-rank {
+            position: absolute; top: 12px; right: 14px;
+            background: #21262d; border: 1px solid #30363d; border-radius: 12px;
+            padding: 2px 10px; font-size: 11px; font-weight: 700; color: #8b949e;
+        }
+        .buyer-rank.top3 { background: #238636; color: #fff; border-color: #238636; }
+        .buyer-name {
+            font-size: 16px; font-weight: 700; color: #f0f6fc; margin-bottom: 6px;
+            padding-right: 50px;
+        }
+        .buyer-type {
+            font-size: 12px; color: #8b949e; margin-bottom: 10px;
+            text-transform: uppercase; letter-spacing: 0.03em;
+        }
+        .buyer-score-bar {
+            display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+        }
+        .buyer-score-track {
+            flex: 1; height: 6px; background: #21262d; border-radius: 3px; overflow: hidden;
+        }
+        .buyer-score-fill {
+            height: 100%; border-radius: 3px;
+        }
+        .buyer-score-fill.high { background: #3fb950; }
+        .buyer-score-fill.mid { background: #d29922; }
+        .buyer-score-fill.low { background: #f85149; }
+        .buyer-score-label {
+            font-size: 12px; font-weight: 600; min-width: 35px; text-align: right;
+        }
+        .buyer-detail { font-size: 13px; color: #c9d1d9; margin-bottom: 8px; }
+        .buyer-detail-label { color: #8b949e; font-size: 12px; }
+        .buyer-tags {
+            display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;
+        }
+        .buyer-tag {
+            background: #21262d; border: 1px solid #30363d; border-radius: 12px;
+            padding: 2px 10px; font-size: 11px; color: #8b949e;
+        }
+        .empty-state {
+            text-align: center; padding: 40px 20px; color: #8b949e; font-size: 14px;
+        }
+        .loading-state {
+            text-align: center; padding: 40px 20px; color: #8b949e;
+        }
+        .loading-spinner {
+            display: inline-block; width: 20px; height: 20px;
+            border: 2px solid #30363d; border-top-color: #58a6ff;
+            border-radius: 50%; animation: spin 0.6s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .btn-back {
+            padding: 10px 18px; border: 1px solid #30363d; border-radius: 6px;
+            background: #21262d; color: #c9d1d9; cursor: pointer;
+            font-size: 13px; font-weight: 600; transition: all 0.2s;
+        }
+        .btn-back:hover { border-color: #58a6ff; color: #58a6ff; }
+        .results-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 15px;
+        }
+        .results-count { font-size: 13px; color: #8b949e; }
+        @media (max-width: 700px) {
+            .buyer-grid { grid-template-columns: 1fr; }
+            .company-info { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Ideal Buyer Matching</h1>
+        <div class="sub">Ranked buyer profiles matched to company characteristics</div>
+    </div>
+
+    <div class="container">
+        <!-- Company Summary -->
+        <div class="card">
+            <div class="card-title">Target Company</div>
+            <div class="company-info" id="company-info">
+                <div class="info-item">
+                    <div class="label">Company</div>
+                    <div class="value" id="info-company">--</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">Vertical</div>
+                    <div class="value" id="info-vertical">--</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">Revenue</div>
+                    <div class="value" id="info-revenue">--</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">State</div>
+                    <div class="value" id="info-state">--</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">Employees</div>
+                    <div class="value" id="info-employees">--</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Buyer Results -->
+        <div class="card">
+            <div class="results-header">
+                <div class="card-title" style="margin:0;padding:0;border:none;">Matched Buyers</div>
+                <div class="results-count" id="results-count"></div>
+            </div>
+
+            <div id="buyer-loading" class="loading-state">
+                <div class="loading-spinner"></div>
+                <p style="margin-top: 10px;">Searching for matched buyers...</p>
+            </div>
+
+            <div id="buyer-empty" class="empty-state" style="display:none;">
+                <p style="font-size: 18px; margin-bottom: 8px;">No buyers found</p>
+                <p>This company may not have a proposal with matched buyers yet. Run the buyer matching engine first.</p>
+            </div>
+
+            <div class="buyer-grid" id="buyer-grid" style="display:none;"></div>
+        </div>
+
+        <div style="margin-top: 15px;">
+            <button class="btn-back" onclick="history.back()">Back to Meeting Form</button>
+        </div>
+    </div>
+
+    <script src="/comment-widget.js"></script>
+    <script src="/notification-bell.js"></script>
+    <script src="/buyer-feedback.js"></script>
+    <script>
+    (function() {
+        'use strict';
+
+        const SUPABASE_URL = 'https://dwrnfpjcvydhmhnvyzov.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NTcyOTAsImV4cCI6MjA5MDMzMzI5MH0.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY';
+        const SB_HEADERS = {
+            'apikey': SUPABASE_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_KEY,
+            'Content-Type': 'application/json'
+        };
+
+        // ---- Parse URL params ----
+        const params = new URLSearchParams(window.location.search);
+        const companyName = params.get('company') || '';
+        const companyId = params.get('company_id') || '';
+        const proposalId = params.get('proposal_id') || '';
+
+        let meetingData = {};
+        if (params.get('data')) {
+            try { meetingData = JSON.parse(params.get('data')); } catch(e) {}
+        }
+
+        // ---- Populate company info ----
+        document.getElementById('info-company').textContent = companyName || meetingData.company_name || '--';
+        document.getElementById('info-vertical').textContent = (meetingData.vertical || params.get('vertical') || '--').replace(/_/g, ' ');
+        document.getElementById('info-state').textContent = params.get('state') || meetingData.state || '--';
+        document.getElementById('info-employees').textContent = params.get('employees') || meetingData.employee_count || '--';
+
+        const revenue = meetingData.annual_revenue || parseFloat(params.get('revenue')) || 0;
+        document.getElementById('info-revenue').textContent = revenue > 0 ? formatDollar(revenue) : '--';
+
+        // ---- Fetch buyers ----
+        async function loadBuyers() {
+            const loadingEl = document.getElementById('buyer-loading');
+            const emptyEl = document.getElementById('buyer-empty');
+            const gridEl = document.getElementById('buyer-grid');
+            const countEl = document.getElementById('results-count');
+
+            try {
+                let pId = proposalId;
+
+                // If no proposal_id, find it by searching proposals by company name
+                if (!pId && companyName) {
+                    const searchRes = await fetch(
+                        SUPABASE_URL + '/rest/v1/proposals?company_name=ilike.*' +
+                        encodeURIComponent(companyName.replace(/[^a-zA-Z0-9 ]/g, '')) +
+                        '*&select=id,company_name&limit=5',
+                        { headers: SB_HEADERS }
+                    );
+                    if (searchRes.ok) {
+                        const proposals = await searchRes.json();
+                        if (proposals.length > 0) {
+                            pId = proposals[0].id;
+                        }
+                    }
+                }
+
+                // Also try company_id if provided
+                if (!pId && companyId) {
+                    pId = companyId;
+                }
+
+                if (!pId) {
+                    loadingEl.style.display = 'none';
+                    emptyEl.style.display = 'block';
+                    return;
+                }
+
+                // Fetch buyers for this proposal
+                const buyerRes = await fetch(
+                    SUPABASE_URL + '/rest/v1/engagement_buyers?proposal_id=eq.' +
+                    encodeURIComponent(pId) +
+                    '&order=fit_score.desc&select=*',
+                    { headers: SB_HEADERS }
+                );
+
+                if (!buyerRes.ok) {
+                    throw new Error('Failed to fetch buyers: ' + buyerRes.status);
+                }
+
+                const buyers = await buyerRes.json();
+
+                loadingEl.style.display = 'none';
+
+                if (buyers.length === 0) {
+                    emptyEl.style.display = 'block';
+                    return;
+                }
+
+                countEl.textContent = buyers.length + ' buyers matched';
+                gridEl.style.display = 'grid';
+
+                buyers.forEach(function(buyer, index) {
+                    gridEl.appendChild(buildBuyerCard(buyer, index));
+                });
+
+            } catch(e) {
+                console.error('Buyer loading error:', e);
+                loadingEl.style.display = 'none';
+                emptyEl.style.display = 'block';
+                emptyEl.querySelector('p:last-child').textContent = 'Error: ' + e.message;
+            }
+        }
+
+        function buildBuyerCard(buyer, index) {
+            const card = document.createElement('div');
+            card.className = 'buyer-card';
+            if (buyer.id) card.dataset.buyerId = buyer.id;
+
+            const fitScore = parseFloat(buyer.fit_score) || 0;
+            const scorePct = Math.round(fitScore * 100);
+            const scoreClass = scorePct >= 80 ? 'high' : scorePct >= 60 ? 'mid' : 'low';
+            const isTop3 = index < 3;
+
+            // Try to find the 1-pager link
+            const slug = (companyName || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+            const buyerSlug = (buyer.company_name || buyer.buyer_name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+            const onePagerUrl = slug && buyerSlug ? '/' + slug + '_' + buyerSlug + '.html' : null;
+
+            const buyerType = buyer.buyer_type || buyer.approach_type || 'Strategic';
+            const approachStrategy = buyer.approach_strategy || buyer.strategic_rationale || '';
+            const acqHistory = buyer.acquisition_history || '';
+
+            card.innerHTML =
+                '<div class="buyer-rank' + (isTop3 ? ' top3' : '') + '">#' + (index + 1) + '</div>' +
+                '<div class="buyer-name">' + escapeHtml(buyer.company_name || buyer.buyer_name || 'Unknown') + '</div>' +
+                '<div class="buyer-type">' + escapeHtml(buyerType) + '</div>' +
+                '<div class="buyer-score-bar">' +
+                    '<div class="buyer-score-track"><div class="buyer-score-fill ' + scoreClass + '" style="width:' + scorePct + '%"></div></div>' +
+                    '<div class="buyer-score-label" style="color:' + (scoreClass === 'high' ? '#3fb950' : scoreClass === 'mid' ? '#d29922' : '#f85149') + '">' + scorePct + '%</div>' +
+                '</div>' +
+                (approachStrategy ? '<div class="buyer-detail"><div class="buyer-detail-label">Approach Strategy</div>' + escapeHtml(truncate(approachStrategy, 150)) + '</div>' : '') +
+                (acqHistory ? '<div class="buyer-detail"><div class="buyer-detail-label">Acquisition History</div>' + escapeHtml(truncate(acqHistory, 120)) + '</div>' : '') +
+                '<div class="buyer-tags">' +
+                    (buyer.city ? '<span class="buyer-tag">' + escapeHtml(buyer.city) + '</span>' : '') +
+                    (buyer.state ? '<span class="buyer-tag">' + escapeHtml(buyer.state) + '</span>' : '') +
+                '</div>';
+
+            // Click handler to open 1-pager if available
+            if (onePagerUrl) {
+                card.addEventListener('click', function() {
+                    window.open(onePagerUrl, '_blank');
+                });
+                card.title = 'Click to open buyer 1-pager';
+            }
+
+            return card;
+        }
+
+        function escapeHtml(s) {
+            if (!s) return '';
+            return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function truncate(s, max) {
+            if (!s) return '';
+            return s.length > max ? s.substring(0, max) + '...' : s;
+        }
+
+        function formatDollar(n) {
+            if (!n || isNaN(n)) return '--';
+            if (n >= 1000000) return '$' + (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+            if (n >= 1000) return '$' + Math.round(n / 1000) + 'K';
+            return '$' + n.toLocaleString();
+        }
+
+        // Start loading
+        loadBuyers();
+    })();
+    </script>
+</body>
+</html>

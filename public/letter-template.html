@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter Template — Next Chapter M&A</title>
+    <link rel="stylesheet" href="/letter-approvals.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
+            line-height: 1.6;
+        }
+        .header {
+            background: linear-gradient(135deg, #161b22, #1a5276);
+            padding: 25px 30px;
+            text-align: center;
+            border-bottom: 1px solid #30363d;
+        }
+        .header h1 { color: #58a6ff; font-size: 22px; margin: 0 0 6px 0; }
+        .header .sub { color: #8b949e; font-size: 13px; }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .card-title {
+            font-size: 15px; font-weight: 600; color: #f0f6fc;
+            margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #30363d;
+        }
+        .score-bar-wrap {
+            display: flex; align-items: center; gap: 12px; margin-bottom: 15px;
+        }
+        .score-bar {
+            flex: 1; height: 8px; background: #21262d; border-radius: 4px;
+            overflow: hidden; border: 1px solid #30363d;
+        }
+        .score-fill {
+            height: 100%; transition: width 0.4s ease;
+        }
+        .score-fill.high { background: linear-gradient(90deg, #3fb950, #2da44e); }
+        .score-fill.mid  { background: linear-gradient(90deg, #d29922, #e3b341); }
+        .score-fill.low  { background: linear-gradient(90deg, #f85149, #da3633); }
+        .score-label {
+            font-size: 13px; font-weight: 600; min-width: 80px; text-align: right;
+        }
+        .score-badge {
+            display: inline-block; padding: 3px 10px; border-radius: 12px;
+            font-size: 12px; font-weight: 700;
+        }
+        .score-badge.high { background: #238636; color: #fff; }
+        .score-badge.mid  { background: #9e6a03; color: #fff; }
+        .score-badge.low  { background: #da3633; color: #fff; }
+        .letter-container {
+            background: #fff; color: #1f2937; border-radius: 8px; padding: 30px 35px;
+            font-family: Georgia, 'Times New Roman', serif; font-size: 14px;
+            line-height: 1.8; min-height: 300px; white-space: pre-wrap;
+        }
+        .letter-container p { margin-bottom: 14px; }
+        .letter-editable {
+            border: 2px dashed transparent; padding: 2px; border-radius: 4px;
+            transition: border-color 0.2s;
+        }
+        .letter-editable:focus {
+            outline: none; border-color: #58a6ff;
+        }
+        .meta-grid {
+            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 15px;
+        }
+        .meta-item {
+            background: #0d1117; border: 1px solid #30363d; border-radius: 6px;
+            padding: 10px; font-size: 12px;
+        }
+        .meta-item .label { color: #8b949e; margin-bottom: 4px; }
+        .meta-item .value { color: #58a6ff; font-weight: 600; font-size: 14px; }
+        .btn-group { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+        button {
+            padding: 12px 20px; border: none; border-radius: 6px;
+            cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s;
+        }
+        .btn-approve {
+            background: #238636; color: white;
+        }
+        .btn-approve:hover { background: #2ea043; }
+        .btn-approve:disabled { background: #21262d; color: #6e7681; cursor: not-allowed; }
+        .btn-reject {
+            background: #21262d; color: #f85149; border: 1px solid #f85149;
+        }
+        .btn-reject:hover { background: #f851491a; }
+        .btn-edit-toggle {
+            background: #21262d; color: #c9d1d9; border: 1px solid #30363d;
+        }
+        .btn-edit-toggle:hover { border-color: #58a6ff; color: #58a6ff; }
+        .btn-back {
+            background: #21262d; color: #c9d1d9; border: 1px solid #30363d;
+        }
+        .btn-back:hover { border-color: #58a6ff; color: #58a6ff; }
+        .status-banner {
+            padding: 15px 20px; border-radius: 8px; margin-bottom: 15px;
+            font-size: 14px; font-weight: 600; text-align: center;
+        }
+        .status-banner.pending { background: #9e6a031a; border: 1px solid #d29922; color: #e3b341; }
+        .status-banner.approved { background: #2386361a; border: 1px solid #238636; color: #3fb950; }
+        .status-banner.rejected { background: #da36331a; border: 1px solid #da3633; color: #f85149; }
+        .breakdown-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px;
+        }
+        .breakdown-item {
+            display: flex; justify-content: space-between; font-size: 12px;
+            padding: 4px 8px; background: #0d1117; border-radius: 4px;
+        }
+        .breakdown-item .bk-label { color: #8b949e; }
+        .breakdown-item .bk-val { color: #58a6ff; font-weight: 600; }
+        .toast {
+            position: fixed; bottom: 20px; right: 20px; padding: 12px 20px;
+            border-radius: 8px; font-size: 13px; font-weight: 600; z-index: 9999;
+            display: none; animation: slideIn 0.3s ease;
+        }
+        .toast.success { background: #238636; color: #fff; display: block; }
+        .toast.error { background: #da3633; color: #fff; display: block; }
+        @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @media (max-width: 700px) {
+            .meta-grid { grid-template-columns: 1fr; }
+            .breakdown-grid { grid-template-columns: 1fr; }
+            .letter-container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Personalized Letter Generator</h1>
+        <div class="sub">NC-SELL-LETTER Campaign — Meeting Data to Letter Pipeline</div>
+    </div>
+
+    <div class="container">
+        <!-- Status Banner -->
+        <div class="status-banner pending" id="status-banner">
+            Pending Review — Letter generated from meeting data
+        </div>
+
+        <!-- Company & Score Info -->
+        <div class="card">
+            <div class="card-title">Letter Metadata</div>
+            <div class="meta-grid">
+                <div class="meta-item">
+                    <div class="label">Company</div>
+                    <div class="value" id="meta-company">--</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Owner</div>
+                    <div class="value" id="meta-owner">--</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Tone Signal</div>
+                    <div class="value" id="meta-tone">--</div>
+                </div>
+            </div>
+            <div class="meta-grid">
+                <div class="meta-item">
+                    <div class="label">Motivation</div>
+                    <div class="value" id="meta-motivation">--</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Timeline</div>
+                    <div class="value" id="meta-timeline">--</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Valuation Range</div>
+                    <div class="value" id="meta-valuation">--</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Personalization Score -->
+        <div class="card">
+            <div class="card-title">Personalization Score</div>
+            <div class="score-bar-wrap">
+                <div class="score-bar">
+                    <div class="score-fill" id="score-fill" style="width: 0%"></div>
+                </div>
+                <div class="score-label" id="score-pct">0%</div>
+                <span class="score-badge" id="score-badge">--</span>
+            </div>
+            <div class="breakdown-grid" id="score-breakdown"></div>
+        </div>
+
+        <!-- Letter Preview -->
+        <div class="card">
+            <div class="card-title" style="display:flex;justify-content:space-between;align-items:center;">
+                <span>Generated Letter</span>
+                <button class="btn-edit-toggle" id="edit-toggle-btn">Enable Editing</button>
+            </div>
+            <div class="letter-container" id="letter-container">
+                Generating letter...
+            </div>
+        </div>
+
+        <!-- Approval Queue Mount (for the existing component) -->
+        <div id="approval-mount" class="letter-approval-queue"></div>
+
+        <!-- Action Buttons -->
+        <div class="card">
+            <div class="btn-group">
+                <button class="btn-approve" id="approve-btn">Approve & Queue for Sending</button>
+                <button class="btn-reject" id="reject-btn">Reject</button>
+                <button class="btn-back" onclick="history.back()">Back to Meeting Form</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="/letter-template.js"></script>
+    <script src="/letter-approval-component.js"></script>
+    <script src="/inline-editing.js"></script>
+    <script src="/comment-widget.js"></script>
+    <script src="/notification-bell.js"></script>
+    <script>
+    (function() {
+        'use strict';
+
+        const SUPABASE_URL = 'https://dwrnfpjcvydhmhnvyzov.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NTcyOTAsImV4cCI6MjA5MDMzMzI5MH0.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY';
+        const SB_HEADERS = {
+            'apikey': SUPABASE_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_KEY,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=representation'
+        };
+
+        // ---- Parse URL params ----
+        const params = new URLSearchParams(window.location.search);
+        const companyId = params.get('company_id') || 'default';
+        let meetingData = {};
+        let companyName = params.get('company') || '';
+        let ownerName = params.get('owner') || '';
+
+        // Try to get full meeting data from URL param (passed by meeting-form.js)
+        if (params.get('data')) {
+            try {
+                meetingData = JSON.parse(params.get('data'));
+            } catch(e) {
+                console.warn('Could not parse meeting data from URL:', e);
+            }
+        }
+
+        // Also accept individual params as fallbacks
+        if (!meetingData.motivation_type && params.get('motivation')) {
+            meetingData.motivation_type = params.get('motivation');
+        }
+        if (!meetingData.timeline && params.get('timeline')) {
+            meetingData.timeline = params.get('timeline');
+        }
+        if (!meetingData.annual_revenue && params.get('revenue')) {
+            meetingData.annual_revenue = parseFloat(params.get('revenue')) || 0;
+        }
+        if (!companyName && meetingData.company_name) {
+            companyName = meetingData.company_name;
+        }
+
+        // Try to load from localStorage if we have a company_id
+        if (Object.keys(meetingData).length < 3 && companyId !== 'default') {
+            const stored = localStorage.getItem('meeting_form_' + companyId);
+            if (stored) {
+                try {
+                    const storedData = JSON.parse(stored);
+                    // Map stored field names to meetingData format
+                    meetingData.motivation_type = meetingData.motivation_type || storedData['motivation-type'] || '';
+                    meetingData.motivation_quote = meetingData.motivation_quote || storedData['motivation-quote'] || '';
+                    meetingData.timeline = meetingData.timeline || storedData['timeline-type'] || '';
+                    meetingData.annual_revenue = meetingData.annual_revenue || parseFloat(storedData['annual-revenue']) || 0;
+                    meetingData.estimated_ebitda = meetingData.estimated_ebitda || parseFloat(storedData['estimated-ebitda']) || 0;
+                    meetingData.ebitda_margin = meetingData.ebitda_margin || parseInt(storedData['ebitda-margin']) || 0;
+                    meetingData.growth_rate = meetingData.growth_rate || parseInt(storedData['growth-rate']) || 0;
+                    meetingData.emotional_readiness = meetingData.emotional_readiness || parseInt(storedData['readiness-scale']) || 5;
+                    meetingData.owner_dependency = meetingData.owner_dependency || parseInt(storedData['owner-dependency']) || 5;
+                    meetingData.recurring_revenue_percentage = meetingData.recurring_revenue_percentage || parseInt(storedData['recurring-revenue']) || 0;
+                    meetingData.owner_perks = meetingData.owner_perks || {
+                        vehicle_allowance: parseFloat(storedData['vehicle-allowance']) || 0,
+                        family_salary: parseFloat(storedData['family-salary']) || 0,
+                        travel_entertainment: parseFloat(storedData['travel-entertainment']) || 0,
+                        insurance_benefits: parseFloat(storedData['insurance-benefits']) || 0
+                    };
+                    meetingData.story_elements = meetingData.story_elements || {
+                        origin: storedData['story-origin'] || '',
+                        challenge: storedData['story-challenge'] || '',
+                        community: storedData['story-community'] || '',
+                        culture: storedData['story-culture'] || '',
+                        quirky: storedData['story-quirky'] || '',
+                        personal: storedData['story-personal'] || ''
+                    };
+                    if (!companyName) companyName = storedData['company-name'] || '';
+                } catch(e) {
+                    console.warn('Could not load localStorage meeting data:', e);
+                }
+            }
+        }
+
+        if (!companyName) companyName = 'Company';
+        if (!ownerName) ownerName = 'Owner';
+
+        // ---- Generate letter using LetterTemplateEngine ----
+        const engine = new LetterTemplateEngine();
+        // Use empty buyer research for now (letter-template generates a general NC-SELL-LETTER)
+        const buyerResearch = {};
+        const result = engine.generate(meetingData, buyerResearch, {
+            ownerName: ownerName,
+            companyName: companyName
+        });
+
+        // ---- Populate metadata ----
+        document.getElementById('meta-company').textContent = companyName;
+        document.getElementById('meta-owner').textContent = ownerName;
+        document.getElementById('meta-tone').textContent = result.tone_signal || '--';
+        document.getElementById('meta-motivation').textContent = (meetingData.motivation_type || '--').replace(/_/g, ' ');
+        document.getElementById('meta-timeline').textContent = (meetingData.timeline || meetingData.timeline_type || '--').replace(/months?$/, ' months');
+
+        if (result.estimated_valuation_range && result.estimated_valuation_range.low) {
+            const v = result.estimated_valuation_range;
+            document.getElementById('meta-valuation').textContent =
+                formatDollar(v.low) + ' - ' + formatDollar(v.high);
+        } else {
+            document.getElementById('meta-valuation').textContent = 'Insufficient data';
+        }
+
+        // ---- Personalization score ----
+        const scorePct = Math.round(result.personalization_score * 100);
+        const scoreClass = scorePct >= 80 ? 'high' : scorePct >= 60 ? 'mid' : 'low';
+        document.getElementById('score-fill').style.width = scorePct + '%';
+        document.getElementById('score-fill').className = 'score-fill ' + scoreClass;
+        document.getElementById('score-pct').textContent = scorePct + '%';
+        const badge = document.getElementById('score-badge');
+        badge.textContent = result.readiness_label;
+        badge.className = 'score-badge ' + scoreClass;
+
+        // Score breakdown
+        if (result.score_breakdown) {
+            const bdGrid = document.getElementById('score-breakdown');
+            const labels = {
+                story_elements: 'Story Elements',
+                buyer_research: 'Buyer Research',
+                timeline_match: 'Timeline Match',
+                deal_breakers: 'Deal Breakers',
+                financial_detail: 'Financial Detail'
+            };
+            for (const [key, val] of Object.entries(result.score_breakdown)) {
+                const item = document.createElement('div');
+                item.className = 'breakdown-item';
+                item.innerHTML = '<span class="bk-label">' + (labels[key] || key) + '</span>' +
+                    '<span class="bk-val">' + Math.round(val * 100) + '%</span>';
+                bdGrid.appendChild(item);
+            }
+        }
+
+        // ---- Render letter ----
+        const letterContainer = document.getElementById('letter-container');
+        letterContainer.innerHTML = result.letter_text || '<p>Could not generate letter. Please fill in more meeting data.</p>';
+
+        // Attach inline editing
+        engine.attachInlineEditing(letterContainer, companyId + '-letter');
+
+        // ---- Edit toggle ----
+        let editMode = false;
+        document.getElementById('edit-toggle-btn').addEventListener('click', function() {
+            editMode = !editMode;
+            this.textContent = editMode ? 'Disable Editing' : 'Enable Editing';
+            letterContainer.querySelectorAll('.letter-paragraph, p').forEach(function(p) {
+                p.contentEditable = editMode ? 'true' : 'false';
+                p.classList.toggle('letter-editable', editMode);
+            });
+        });
+
+        // ---- Supabase: Insert letter as pending ----
+        let currentApprovalId = null;
+
+        async function insertPendingLetter() {
+            const letterText = letterContainer.innerText || letterContainer.textContent;
+            try {
+                const res = await fetch(SUPABASE_URL + '/rest/v1/letter_approvals', {
+                    method: 'POST',
+                    headers: SB_HEADERS,
+                    body: JSON.stringify({
+                        company_id: companyId !== 'default' ? companyId : null,
+                        letter_text: letterText,
+                        personalization_score: result.personalization_score,
+                        status: 'pending',
+                        entity: 'next_chapter'
+                    })
+                });
+                if (!res.ok) {
+                    const errText = await res.text();
+                    console.warn('Could not insert letter_approvals record:', errText);
+                    return null;
+                }
+                const data = await res.json();
+                const record = Array.isArray(data) ? data[0] : data;
+                currentApprovalId = record.id;
+                console.log('Letter approval record created:', currentApprovalId);
+                return record;
+            } catch(e) {
+                console.warn('Failed to insert letter approval:', e);
+                return null;
+            }
+        }
+
+        // Insert on page load
+        insertPendingLetter();
+
+        // ---- Approve button ----
+        document.getElementById('approve-btn').addEventListener('click', async function() {
+            const btn = this;
+            btn.disabled = true;
+            btn.textContent = 'Approving...';
+
+            // Get current letter text (may have been edited)
+            const letterText = letterContainer.innerText || letterContainer.textContent;
+
+            try {
+                if (currentApprovalId) {
+                    // Update letter text in case it was edited, then approve
+                    await fetch(SUPABASE_URL + '/rest/v1/letter_approvals?id=eq.' + currentApprovalId, {
+                        method: 'PATCH',
+                        headers: SB_HEADERS,
+                        body: JSON.stringify({
+                            letter_text: letterText,
+                            status: 'approved',
+                            approved_by: localStorage.getItem('crm_user') || 'manual',
+                            approved_at: new Date().toISOString(),
+                            updated_at: new Date().toISOString()
+                        })
+                    });
+                }
+
+                // Also notify the server
+                await fetch('/api/letters/approve', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        letter_id: currentApprovalId,
+                        action: 'approved',
+                        approved_by: localStorage.getItem('crm_user') || 'manual'
+                    })
+                }).catch(function() { /* server may not be running */ });
+
+                showBanner('approved', 'Approved — Letter queued for sending');
+                showToast('Letter approved and queued', 'success');
+                btn.textContent = 'Approved';
+            } catch(e) {
+                btn.disabled = false;
+                btn.textContent = 'Approve & Queue for Sending';
+                showToast('Failed to approve: ' + e.message, 'error');
+            }
+        });
+
+        // ---- Reject button ----
+        document.getElementById('reject-btn').addEventListener('click', async function() {
+            const reason = prompt('Reason for rejection:');
+            if (!reason) return;
+
+            const btn = this;
+            btn.disabled = true;
+            btn.textContent = 'Rejecting...';
+
+            try {
+                if (currentApprovalId) {
+                    await fetch(SUPABASE_URL + '/rest/v1/letter_approvals?id=eq.' + currentApprovalId, {
+                        method: 'PATCH',
+                        headers: SB_HEADERS,
+                        body: JSON.stringify({
+                            status: 'rejected',
+                            rejected_reason: reason,
+                            updated_at: new Date().toISOString()
+                        })
+                    });
+                }
+
+                showBanner('rejected', 'Rejected — ' + reason);
+                showToast('Letter rejected', 'error');
+                btn.textContent = 'Rejected';
+            } catch(e) {
+                btn.disabled = false;
+                btn.textContent = 'Reject';
+                showToast('Failed to reject: ' + e.message, 'error');
+            }
+        });
+
+        // ---- Helpers ----
+        function showBanner(status, text) {
+            const banner = document.getElementById('status-banner');
+            banner.className = 'status-banner ' + status;
+            banner.textContent = text;
+        }
+
+        function showToast(msg, type) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = 'toast ' + type;
+            setTimeout(function() { toast.className = 'toast'; }, 3000);
+        }
+
+        function formatDollar(n) {
+            if (!n || isNaN(n)) return '--';
+            if (n >= 1000000) return '$' + (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+            if (n >= 1000) return '$' + Math.round(n / 1000) + 'K';
+            return '$' + n.toLocaleString();
+        }
+
+        // ---- Init approval queue for any existing pending letters ----
+        if (companyId !== 'default' && typeof LetterApprovalQueue !== 'undefined') {
+            LetterApprovalQueue.init({
+                companyId: companyId,
+                mountSelector: '#approval-mount'
+            });
+        }
+    })();
+    </script>
+</body>
+</html>

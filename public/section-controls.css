@@ -1,0 +1,141 @@
+/**
+ * Section Control Styles
+ * Popup menu, icons, animations for section management
+ */
+
+.section-control-btn {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin: 0;
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid rgba(88, 166, 255, 0.3);
+  border-radius: 6px;
+  color: var(--accent, #58a6ff);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  z-index: 10;
+}
+
+.section-control-btn:hover {
+  background: rgba(88, 166, 255, 0.2);
+  border-color: rgba(88, 166, 255, 0.5);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.section-control-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* Popup Menu */
+.section-control-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  min-width: 160px;
+  background: var(--bg-card, #1c2128);
+  border: 1px solid var(--border, #30363d);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  padding: 4px;
+  display: none;
+  flex-direction: column;
+  gap: 0;
+  z-index: 1000;
+  animation: slideDown 0.15s ease;
+}
+
+.section-control-menu.visible {
+  display: flex;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.control-action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  color: var(--text-primary, #c9d1d9);
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.control-action:hover {
+  background: rgba(88, 166, 255, 0.1);
+  color: var(--accent, #58a6ff);
+}
+
+.control-action:active {
+  background: rgba(88, 166, 255, 0.2);
+}
+
+.action-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  font-size: 14px;
+}
+
+/* Deleted state - faded out */
+[data-deleted="true"] {
+  opacity: 0.3 !important;
+  pointer-events: none !important;
+}
+
+/* Responsive: stack menu on mobile */
+@media (max-width: 768px) {
+  .section-control-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+  }
+
+  .section-control-menu {
+    min-width: 140px;
+  }
+
+  .control-action {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  .action-icon {
+    width: 14px;
+    font-size: 12px;
+  }
+}
+
+/* Print: hide controls */
+@media print {
+  .section-control-btn,
+  .section-control-menu {
+    display: none !important;
+  }
+}

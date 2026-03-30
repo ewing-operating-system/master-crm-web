@@ -38,7 +38,13 @@
     if (h2.id) return h2.id;
     const parent = h2.closest('.section, .card, section, [id]');
     if (parent && parent.id) return parent.id;
-    return h2.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/_+$/, '');
+    // Use only direct text nodes, not child button/menu text from section-controls
+    let text = '';
+    for (const node of h2.childNodes) {
+      if (node.nodeType === 3) text += node.textContent; // text nodes only
+    }
+    if (!text.trim()) text = h2.textContent; // fallback
+    return text.trim().toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/_+$/, '');
   }
 
   // Inject styles
@@ -293,7 +299,12 @@
   }
 
   function renderConversationThread(comment) {
-    const thread = comment.conversation_thread || [];
+    let thread = comment.conversation_thread || [];
+    // Handle case where thread is a JSON string instead of parsed array
+    if (typeof thread === 'string') {
+      try { thread = JSON.parse(thread); } catch(e) { thread = []; }
+    }
+    if (!Array.isArray(thread)) thread = [];
     if (thread.length === 0 && !comment.reply) return '';
 
     let html = '<div class="crm-thread">';
