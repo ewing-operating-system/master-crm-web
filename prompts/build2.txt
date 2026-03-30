@@ -1,0 +1,31 @@
+Read ~/Projects/master-crm-web/CRM-BUILDOUT-SCOPE.md for full context. This is BUILD 2.
+
+You are wiring the Lob API for physical letter mailing. Next Chapter already has a Lob API key.
+
+Steps:
+1. Find the Lob API key: check ~/.openclaw/.env, ~/.claude/skills/connectors/SKILL.md, or ~/.claude/skills/ewing-connectors/SKILL.md
+2. Read the letter template created in Build 1: templates/master-letter.html
+3. Read the letter engine: lib/letter_engine.py
+
+4. Create lib/lob_client.py:
+   - send_letter(html_content, to_address, from_address) → returns letter_id, tracking info
+   - Uses Lob API v1: POST https://api.lob.com/v1/letters
+   - Sets: color=true, double_sided=false, address_placement=top_first_page
+   - From address: Next Chapter, Ewing Gillaspy (get address from connectors skill or use placeholder)
+   - Error handling: retry once on 5xx, log and skip on 4xx
+   - Returns structured result: {letter_id, status, expected_delivery, cost}
+
+5. Create lib/campaign_db.py:
+   - Supabase table: letter_campaigns
+   - Schema: id, company_id, buyer_id, letter_variant (initial/followup/final), lob_letter_id, status (queued/sent/delivered/returned), sent_at, delivered_at, cost_cents
+   - Functions: create_campaign_record(), update_status(), get_campaign_stats()
+   - Read Supabase credentials from ~/.openclaw/.env
+
+6. Create a test script: scripts/test_lob.py
+   - Sends ONE test letter to Lob's test environment (use test API key if available, or Lob's test address)
+   - Verifies the response
+   - Does NOT send real mail
+
+7. Verify all files, no syntax errors.
+
+IMPORTANT: Do NOT send any real letters. Test mode only. The campaign manager (Build 3) controls when real letters go out.

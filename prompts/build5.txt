@@ -1,0 +1,39 @@
+Read ~/Projects/master-crm-web/CRM-BUILDOUT-SCOPE.md for full context. This is BUILD 5.
+
+The URL Ewing shares on the phone must look incredible on mobile. Test and fix every client-facing page.
+
+Steps:
+1. Read these client-facing pages and audit for mobile issues:
+   - public/interactive-aquascience.html
+   - public/interactive-air-control.html
+   - public/interactive-wieser-concrete.html
+   - public/interactive-design-precast.html
+   - public/dataroom-aquascience.html
+   - public/aquascience-hub.html
+   - public/ebitda-levers-concrete-precast.html
+   - public/wieser-concrete_buyside_proposal.html
+
+2. For each page, check:
+   - Does it have a viewport meta tag?
+   - Are there @media queries for mobile (max-width: 700-800px)?
+   - Are table layouts responsive (horizontal scroll or stacked)?
+   - Are touch targets at least 44x44px?
+   - Are fonts readable without pinching (min 14px on mobile)?
+   - Do sliders/interactive elements work on touch?
+   - Is the data room email gate usable on mobile?
+
+3. Fix any issues found. Common fixes:
+   - Add viewport meta if missing
+   - Add @media queries for tables (overflow-x: auto or stack vertically)
+   - Increase padding on interactive elements for touch
+   - Ensure the "Let's Get Started" flow works on small screens
+
+4. Create a shared CSS file: public/mobile-fixes.css
+   - Common responsive fixes that all pages can import
+   - This avoids editing every page individually
+
+5. Add the CSS import to each client-facing page
+
+6. Verify no visual regressions on desktop (don't break what works).
+
+The goal: Ewing shares a URL on a phone call, the prospect opens it on their phone, and it looks PROFESSIONAL. No broken layouts, no tiny text, no sideways scrolling.

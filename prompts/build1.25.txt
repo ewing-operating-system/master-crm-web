@@ -1,0 +1,85 @@
+Read ~/Projects/master-crm-web/CRM-BUILDOUT-SCOPE.md for context.
+
+You are building a COMPANY STORY PAGE template inspired by a Lovable-built buy-side presentation. The goal is a page that tells a company's story so compellingly that the person reading it shares it with their friends.
+
+DESIGN INSPIRATION (from the Lovable Wieser Concrete site):
+- Clean, warm beige/cream background (#f5f5f0 range)
+- Navy blue headings, red accent underlines
+- Section labels in small caps red ("OUR STORY", "CAPABILITIES & REACH", "WHY WIESER")
+- Large hero headline: "Building What Matters. Since 1965."
+- KPI bar: Founded | Years | Employees | Facilities | Revenue | Markets — bold numbers, small labels
+- Real photos: aerial facility shots, vintage photos, family photos, industry convention photos
+- Pull quotes in italic between sections, attributed with source
+- Operator language throughout: "We're Operators, Not Financiers" — not PE finance speak
+- "What It Means to Join the [Company] Family" section with 5 values (keep people, respect legacy, invest in operations, operators not financiers, think in generations)
+- Leadership grid: name, title, credential, one-line bio
+- Industry certifications as bullet points with red squares
+- Facility table: name, location, function
+- Page numbering footer: "CONFIDENTIAL | Company Overview | Page X of Y"
+- Founders photo at the bottom with "Let's Start a Conversation" CTA + contact cards
+
+ALSO from the CII Advisors PDF — buyer profile enhancements:
+- Color-coded badge bar at top: buyer type (Strategic/PE/Franchise) + vertical/horizontal + contextual tag
+- Tiered profiles: full page for HIGH PRIORITY, half page for MEDIUM
+- Structured sections: Overview, Acquisition Track Record, Strategic Fit, Cultural Alignment, What Happens to the Team, Risk/Watch-Outs
+- Key executive with headshot placeholder + LinkedIn link
+- "What Happens to the Team" section on EVERY buyer profile (this is what owners care about most)
+
+Steps:
+1. Read these existing pages to understand current patterns:
+   - public/interactive-aquascience.html (our best interactive page)
+   - public/aquascience-hub.html (our hub page)
+   - public/wieser-concrete_buyside_proposal.html (our buy-side page)
+   - public/ebitda-levers-concrete-precast.html (our deepest content page)
+
+2. Create templates/company-story.html — Jinja2 template:
+   - Hero section: company name, tagline, subtitle description
+   - KPI bar: 6 stats in a row (founded, years, employees, facilities/locations, revenue, markets/cities)
+   - Photo: hero image with caption (use placeholder src with data attribute for future replacement)
+   - Company overview paragraph: "A Company Overview for Prospective Partners"
+   - Pull quote in italic: the one-liner that captures the company's ethos
+   - "OUR STORY" section: generational/origin narrative (2-3 paragraphs, storytelling, not data)
+   - Two photos side by side with captions (vintage + current, or facility + team)
+   - Another pull quote from press or the owner
+   - "Leadership Today" grid: 4 leaders with name, title, credential
+   - "Industry Recognition & Certifications" bullets
+   - "CAPABILITIES & REACH" section: market cards (4 cards in 2x2 grid), facility photos, facility table
+   - "WHY [COMPANY]" section: the operator narrative
+     - Pull quote: "[Company] doesn't acquire companies to strip them down..."
+     - 5 value propositions with bold headings and descriptions (keep people, respect legacy, invest, operators not financiers, think long-term)
+     - "Proven Track Record" paragraph
+   - Founders/team photo
+   - "Let's Start a Conversation" CTA with Ewing + Mark contact cards
+   - Footer: CONFIDENTIAL | Prepared by Next Chapter | company website
+
+3. Create templates/buyer-profile-full.html — full-page buyer profile:
+   - Color badge bar: buyer type + vertical tag + contextual tag (e.g. "Already in Des Moines")
+   - Key executive: name, title, credential, headshot placeholder, LinkedIn link
+   - Sections: Company Overview, Acquisition Track Record, Strategic Fit for [Seller], Cultural Alignment, What Happens to the Team, Risk/Watch-Outs
+   - Footer with page number
+
+4. Create templates/buyer-profile-half.html — half-page summary:
+   - Badge bar (same)
+   - Key executive (compact)
+   - Sections: Overview & Fit, Why [Seller], Risk
+
+5. Create lib/story_engine.py:
+   - Takes: company_id
+   - Reads: company data from Supabase + EBITDA levers + buyer list
+   - Renders: company-story.html with all data filled
+   - Generates buyer profiles (full for top 7 by fit score, half for the rest)
+   - Outputs: one HTML file per company story, plus buyer profile pages
+
+6. Generate a proof of concept: public/story-aquascience.html
+   - Use AquaScience data (Larry Casey, water treatment, 41 years, $8M revenue)
+   - Include placeholder photos (use Unsplash URLs for water treatment/facilities)
+   - Write the operator narrative section specifically for AquaScience
+
+7. Verify: pages render, styling is clean, mobile responsive, looks professional.
+
+CRITICAL QUALITY NOTES:
+- Operator language > PE finance speak throughout
+- Tell their story, not yours
+- Photos break up the wall of text and create emotional connection
+- Pull quotes are the most shareable element — make them quotable
+- This page needs to make someone say "wow, they really understand my business"

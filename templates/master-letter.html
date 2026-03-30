@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Next Chapter Letter — {{ owner_first_name }} {{ owner_last_name }}</title>
+<style>
+  @page { size: 8.5in 11in; margin: 0.75in 0.85in; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 11.5pt;
+    line-height: 1.65;
+    color: #1a1a1a;
+    background: #ffffff;
+    width: 6.8in;
+    max-width: 6.8in;
+    margin: 0 auto;
+  }
+  .letterhead {
+    border-bottom: 2px solid #1a1a2e;
+    padding-bottom: 14pt;
+    margin-bottom: 22pt;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .firm-name {
+    font-family: Arial, sans-serif;
+    font-size: 18pt;
+    font-weight: 700;
+    color: #1a1a2e;
+    letter-spacing: -0.3pt;
+    line-height: 1.1;
+  }
+  .firm-tagline {
+    font-family: Arial, sans-serif;
+    font-size: 8pt;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 1.2pt;
+    margin-top: 3pt;
+  }
+  .firm-contact {
+    font-family: Arial, sans-serif;
+    font-size: 8pt;
+    color: #555;
+    text-align: right;
+    line-height: 1.6;
+  }
+  .letter-date {
+    font-family: Arial, sans-serif;
+    font-size: 10pt;
+    color: #333;
+    margin-bottom: 18pt;
+  }
+  .recipient-block {
+    font-family: Arial, sans-serif;
+    font-size: 10pt;
+    color: #1a1a1a;
+    line-height: 1.7;
+    margin-bottom: 20pt;
+  }
+  .salutation { font-size: 11.5pt; margin-bottom: 14pt; }
+  p { margin-bottom: 13pt; text-align: justify; hyphens: auto; }
+  .highlight-box {
+    border-left: 3pt solid #1a1a2e;
+    background: #f8f8f8;
+    padding: 10pt 14pt;
+    margin: 16pt 0;
+    font-style: italic;
+    font-size: 11pt;
+  }
+  .cta-block {
+    margin: 20pt 0;
+    padding: 14pt 0;
+    border-top: 1pt solid #ddd;
+    border-bottom: 1pt solid #ddd;
+  }
+  .cta-url {
+    font-family: Arial, sans-serif;
+    font-size: 11pt;
+    font-weight: 700;
+    color: #1a1a2e;
+    word-break: break-all;
+  }
+  .signoff { margin-top: 24pt; line-height: 1.7; }
+  .signature-name {
+    font-family: Arial, sans-serif;
+    font-size: 11pt;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-top: 32pt;
+  }
+  .signature-title { font-family: Arial, sans-serif; font-size: 9.5pt; color: #555; }
+  .confidentiality {
+    position: fixed;
+    bottom: 0.4in;
+    left: 0.85in;
+    right: 0.85in;
+    font-family: Arial, sans-serif;
+    font-size: 7pt;
+    color: #aaa;
+    text-align: center;
+    border-top: 0.5pt solid #e0e0e0;
+    padding-top: 5pt;
+  }
+  @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+</style>
+</head>
+<body>
+
+<!-- LETTERHEAD -->
+<div class="letterhead">
+  <div>
+    <div class="firm-name">Next Chapter</div>
+    <div class="firm-tagline">M&amp;A Advisory &middot; Home Services &amp; Trades</div>
+  </div>
+  <div class="firm-contact">
+    Ewing Gillaspy, Managing Partner<br>
+    ewing@nextchapterma.com<br>
+    (512) 555-0190
+  </div>
+</div>
+
+<!-- DATE + RECIPIENT -->
+<div class="letter-date">{{ letter_date }}</div>
+
+<div class="recipient-block">
+  {{ owner_first_name }} {{ owner_last_name }}<br>
+  {{ company_name }}<br>
+  {{ company_address }}<br>
+  {{ company_city }}, {{ company_state }} {{ company_zip }}
+</div>
+
+<!-- SALUTATION -->
+<div class="salutation">Dear {{ owner_first_name }},</div>
+
+<!-- OPENING — their story, told back to them -->
+<p>{{ opening_paragraph }}</p>
+
+<!-- INDUSTRY CONTEXT — market tailwinds, buyer appetite -->
+<p>{{ industry_context_paragraph }}</p>
+
+<!-- EBITDA NARRATIVE — benchmarks woven in naturally, not pitched -->
+<p>{{ ebitda_narrative_paragraph }}</p>
+
+<!-- PULL QUOTE — specific to this company's position -->
+<div class="highlight-box">{{ highlight_quote }}</div>
+
+<!-- THE HOOK — we've done the work already -->
+<p>{{ hook_paragraph }}</p>
+
+<!-- VARIANT PARAGRAPH
+     initial  — first outreach, why we're writing
+     followup — two-week follow-up, reinforce timing
+     final    — four-week last touch, low pressure
+-->
+<p>{{ variant_paragraph }}</p>
+
+<!-- CTA -->
+<div class="cta-block">
+  <p style="margin-bottom:8pt;">We've prepared a detailed analysis of {{ company_name }}'s market position &mdash; who's buying in your space right now, what specifically drives premium multiples in {{ vertical_short }}, and where a business with your track record stands today. It's not a template. It was built for you.</p>
+  <p style="margin-bottom:4pt;">Review it at your convenience:</p>
+  <div class="cta-url">{{ personalized_url }}</div>
+  <p style="margin-top:8pt; font-size:10.5pt; font-style:italic;">Or simply reply to this letter. A phone call works too. There's no pitch waiting &mdash; just a straight conversation about what your business is worth and what your options look like.</p>
+</div>
+
+<!-- CLOSING -->
+<p>{{ closing_paragraph }}</p>
+
+<!-- SIGN-OFF -->
+<div class="signoff">
+  Sincerely,
+  <div class="signature-name">Ewing Gillaspy</div>
+  <div class="signature-title">Managing Partner, Next Chapter M&amp;A Advisory</div>
+</div>
+
+<!-- CONFIDENTIALITY FOOTER -->
+<div class="confidentiality">
+  CONFIDENTIAL &mdash; Prepared exclusively for {{ owner_first_name }} {{ owner_last_name }} at {{ company_name }}.
+  This letter and any analysis referenced are intended solely for the named recipient.
+  Next Chapter M&amp;A Advisory &middot; nextchapterma.com
+</div>
+
+</body>
+</html>

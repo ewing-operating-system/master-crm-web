@@ -1,0 +1,116 @@
+/* Next Chapter M&A Advisory — Shared Mobile Responsive CSS
+   Import in every client-facing page just before </head>
+   All rules scoped to max-width 768px — zero impact on desktop. */
+
+/* 1. Wide table horizontal scroll */
+@media (max-width: 768px) {
+    .data-table, .target-table {
+        display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%;
+    }
+    .data-table thead, .data-table tbody, .target-table thead, .target-table tbody {
+        display: table; width: 100%;
+    }
+}
+
+/* 2. Container & section padding */
+@media (max-width: 768px) {
+    .container { padding-left: 12px !important; padding-right: 12px !important; }
+    .section { padding: 20px 16px !important; }
+    .toc { padding: 16px !important; }
+    .card { padding: 20px !important; }
+}
+
+/* 3. Header sizing */
+@media (max-width: 768px) {
+    .header { padding: 24px 16px !important; }
+    .header h1 { font-size: 22px !important; }
+}
+
+/* 4. Multi-column grid collapse */
+@media (max-width: 768px) {
+    .valuation-grid, .levers-grid, .fee-grid, .phase-grid, .toc-list,
+    .grid2, .grid3, .grid4 { grid-template-columns: 1fr !important; }
+    .snapshot-grid { grid-template-columns: 1fr 1fr !important; }
+}
+
+/* Override inline 2-col grid styles (ebitda-levers page) */
+@media (max-width: 768px) {
+    [style*="grid-template-columns:1fr 1fr"],
+    [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+}
+
+/* 5. Slider row — stack on mobile */
+@media (max-width: 768px) {
+    .slider-row { flex-direction: column; align-items: stretch; }
+    .slider-row input[type="number"], .slider-row select { width: 100%; min-width: 0; }
+    .slider-value { min-width: auto !important; text-align: left !important; }
+}
+
+/* 6. Valuation box flex stack */
+@media (max-width: 768px) {
+    .val-box { flex-direction: column; }
+    .val-amount { font-size: 24px !important; }
+}
+
+/* 7. Email gate modal */
+@media (max-width: 768px) {
+    .gate { margin: 32px auto !important; padding: 24px !important; width: calc(100% - 32px); }
+    .gate input[type="email"] { font-size: 16px; }
+}
+
+/* 8. Attack plan pipeline — stack vertically */
+@media (max-width: 768px) {
+    .attack-pipeline { grid-template-columns: 1fr !important; gap: 16px; }
+    .pipeline-phase { padding: 0 !important; }
+    .pipeline-phase::after, .pipeline-phase::before { display: none !important; }
+    .phase-card { min-height: auto !important; }
+}
+
+/* 9. Match counter */
+@media (max-width: 768px) {
+    .match-counter { flex-direction: column !important; text-align: center; gap: 8px; }
+}
+
+/* 10. Hub page layout */
+@media (max-width: 768px) {
+    .page-header { padding: 16px !important; }
+    .main-content { padding: 12px 16px !important; }
+    .top-nav a { padding: 12px; font-size: 12px; }
+}
+
+/* 11. CTA / Next step boxes */
+@media (max-width: 768px) {
+    .cta-section { padding: 24px 16px !important; }
+    .cta-btn { padding: 16px 24px !important; font-size: 16px !important; width: 100%; box-sizing: border-box; }
+    .next-step-box { padding: 24px 16px !important; }
+}
+
+/* 12. EBITDA lever cards — wrap inline flex children */
+@media (max-width: 768px) {
+    [style*="display:flex"][style*="gap:15px"],
+    [style*="display:flex"][style*="gap: 15px"],
+    [style*="display:flex"][style*="gap:10px"],
+    [style*="display:flex"][style*="gap: 10px"] { flex-wrap: wrap !important; }
+}
+
+/* 13. TOC list — full-width tap targets */
+@media (max-width: 768px) {
+    .toc-list { display: block !important; }
+    .toc-list a { padding: 8px 0; display: block; font-size: 15px; }
+}
+
+/* 14. Checkbox tap targets */
+@media (max-width: 768px) {
+    .checkbox-label { padding: 10px 14px !important; min-height: 44px; }
+}
+
+/* 15. Very small screens */
+@media (max-width: 480px) {
+    body { font-size: 14px; }
+    .snapshot-grid { grid-template-columns: 1fr !important; }
+    .header h1 { font-size: 20px !important; }
+    .section-title { font-size: 18px !important; }
+    .val-amount { font-size: 22px !important; }
+    .header-meta { gap: 10px !important; }
+    .split-display { flex-direction: column; gap: 8px !important; align-items: center; }
+}

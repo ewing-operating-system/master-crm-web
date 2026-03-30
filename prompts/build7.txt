@@ -1,0 +1,29 @@
+Read ~/Projects/master-crm-web/CRM-BUILDOUT-SCOPE.md for full context. This is BUILD 7.
+
+Build the Salesfinity integration that loads contacts and tracks call outcomes.
+
+Steps:
+1. Read the existing Salesfinity loader: ~/.claude/skills/salesfinity-loader/SKILL.md
+2. Find the Salesfinity API key: check ~/.openclaw/.env, ~/.claude/skills/connectors/SKILL.md, ~/.claude/skills/ewing-connectors/SKILL.md
+
+3. Create lib/salesfinity_client.py:
+   - load_contacts(contacts_list) → pushes contacts to Salesfinity dialer
+   - get_call_outcomes(contact_ids) → pulls call results from Salesfinity
+   - Each contact needs: name, phone, company, notes
+   - Returns structured results: {contact_id, calls_made, outcomes: [{call_number, result, timestamp}]}
+
+4. Create lib/salesfinity_sync.py:
+   - pull_outcomes() → gets all call outcomes since last sync
+   - Writes to Supabase call_outcomes table (from Build 3 schema)
+   - Tracks: connected, voicemail, no_answer, callback_requested
+   - Updates campaign_manager progress
+
+5. Create scripts/load_campaign_to_salesfinity.py:
+   - Takes a campaign_batch_id
+   - Reads all contacts in that batch from Supabase
+   - Pushes them to Salesfinity dialer
+   - Updates batch status
+
+6. Verify files, no syntax errors.
+
+If you cannot find the Salesfinity API key or the API docs, document what's missing. Do not fabricate API endpoints.

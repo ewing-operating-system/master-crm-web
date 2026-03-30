@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ company_name }} — The Story</title>
+    <style>
+        body {
+            font-family: Georgia, serif;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+            background: #fafaf8;
+            color: #333;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #d4af37;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin: 0 0 10px 0;
+            color: #1a1a1a;
+        }
+        .tagline {
+            font-size: 1.2em;
+            color: #666;
+            font-style: italic;
+            margin: 0;
+        }
+        .story-section {
+            margin-bottom: 50px;
+        }
+        .story-section h2 {
+            font-size: 1.5em;
+            color: #1a1a1a;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .quote {
+            font-style: italic;
+            color: #666;
+            border-left: 4px solid #d4af37;
+            padding-left: 20px;
+            margin: 30px 0;
+        }
+        .metric {
+            display: inline-block;
+            background: #f5f5f0;
+            padding: 15px 25px;
+            margin: 10px 10px 10px 0;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 2px solid #d4af37;
+            color: #999;
+            font-size: 0.9em;
+        }
+        @media print {
+            body {
+                background: white;
+            }
+            .header {
+                border-bottom: 2px solid #000;
+            }
+            .story-section h2 {
+                border-bottom: 1px solid #000;
+            }
+            .footer {
+                border-top: 2px solid #000;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>{{ company_name }}</h1>
+        <p class="tagline">{{ industry_vertical }} · {{ location }}</p>
+    </div>
+
+    <div class="story-section">
+        <h2>The Founding Story</h2>
+        <p>{{ founding_narrative }}</p>
+        {% if founder_quote %}
+        <div class="quote">
+            "{{ founder_quote }}"
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="story-section">
+        <h2>The Growth</h2>
+        <p>{{ growth_narrative }}</p>
+        <div>
+            {% if revenue %}
+            <span class="metric">Revenue: ${{ revenue|format_currency }}</span>
+            {% endif %}
+            {% if employee_count %}
+            <span class="metric">Team: {{ employee_count }} people</span>
+            {% endif %}
+            {% if years_operating %}
+            <span class="metric">Operating: {{ years_operating }} years</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="story-section">
+        <h2>The Market</h2>
+        <p>{{ market_context }}</p>
+        <p>
+            {% if market_opportunity %}
+            <strong>The Opportunity:</strong> {{ market_opportunity }}
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="story-section">
+        <h2>The Owner's Vision</h2>
+        <p>{{ owner_vision }}</p>
+    </div>
+
+    <div class="story-section">
+        <h2>Why Now</h2>
+        <p>{{ why_now_narrative }}</p>
+        <ul>
+            {% for reason in why_now_reasons %}
+            <li>{{ reason }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="story-section">
+        <h2>The Strategic Fit</h2>
+        <p>{{ strategic_fit }}</p>
+        <p>
+            {% if ebitda_multiple %}
+            <strong>Market Multiple:</strong> {{ ebitda_multiple }}x EBITDA
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="footer">
+        <p>Next Chapter Capital · Strategic Advisory & M&A · {{ generation_date }}</p>
+    </div>
+</body>
+</html>

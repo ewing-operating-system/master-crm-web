@@ -1,0 +1,39 @@
+Read ~/Projects/master-crm-web/CRM-BUILDOUT-SCOPE.md for full context. This is BUILD 3.
+
+You are building the campaign manager that governs letter sending with the 250/150 rule.
+
+Rules:
+- Agent sends up to 250 letters per campaign batch
+- After 250 sent → HARD STOP on sending
+- Monitor Salesfinity call outcomes for those 250 recipients
+- Won't unlock next batch until: 150 of the 250 have been called 5x each, logged in Supabase
+- When threshold met → unlock next batch of 250
+- All state tracked in Supabase
+
+Steps:
+1. Read lib/lob_client.py and lib/campaign_db.py from Build 2
+2. Read the Salesfinity loader skill: ~/.claude/skills/salesfinity-loader/SKILL.md (for API patterns)
+
+3. Create lib/campaign_manager.py:
+   - class CampaignManager:
+     - create_batch(max_letters=250) → selects next 250 researched buyers without letters, generates and sends via Lob
+     - check_call_progress() → queries Supabase for Salesfinity call outcomes on current batch
+     - is_batch_unlocked() → returns True if 150+ contacts called 5x each
+     - get_status() → returns {batch_number, letters_sent, contacts_called_5x, threshold_met, next_action}
+     - run() → main loop: if no active batch, create one. if active batch, check progress. if threshold met, create next.
+
+4. Create Supabase table schema for call tracking:
+   - call_outcomes: id, contact_id, campaign_batch_id, call_number (1-5), outcome (connected/voicemail/no_answer/callback), called_at, salesfinity_call_id
+   - campaign_batches: id, batch_number, created_at, letters_sent, letters_target (250), calls_completed_5x, calls_target (150), status (active/threshold_met/completed)
+
+5. Create scripts/campaign_status.py:
+   - Prints current campaign status in a format suitable for Telegram
+   - Example output: "Batch 1: 250 letters sent. 87/150 contacts called 5x. Need 63 more before next batch."
+
+6. Create an OpenClaw cron config (but do NOT enable):
+   - Schedule: every 4 hours during business hours
+   - Checks campaign status, sends Telegram update if progress changed
+
+7. Verify all files, no syntax errors.
+
+IMPORTANT: This is the cost governor. It must be bulletproof. The 250 limit and 150 threshold are HARD rules, not suggestions.

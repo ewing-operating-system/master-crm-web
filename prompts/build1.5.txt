@@ -1,0 +1,83 @@
+Read ~/Projects/master-crm-web/CRM-BUILDOUT-SCOPE.md for full context.
+
+You are upgrading the meeting prep pages to serve as the DATA COLLECTION ENGINE for the entire downstream pipeline. Nailing the first meeting gets a YES to the proposal.
+
+Current state: Read public/meeting-aquascience_2026-03-29_discovery.html — it's already good (agenda, objectives, questions, talking points, danger zones, buyer table). But it's a READ-ONLY document. It needs to become INTERACTIVE and drive data capture.
+
+What the meeting page needs to become:
+
+1. PRE-MEETING SECTION (what's already there, polished):
+   - Opening hook (the one-liner that shows we did our homework)
+   - Agenda with time blocks (not just a list — "0-5min rapport, 5-15min their story, 15-30min business model...")
+   - Questions to ask (already good — keep these)
+   - Talking points (already good)
+   - Danger zones (already good)
+   - Buyer table (already good)
+
+2. DURING-MEETING SECTION (NEW — this is the key addition):
+   A live note-taking form that captures exactly what feeds downstream:
+   - Owner's personal motivation: dropdown (retirement / partial exit / growth capital / legacy preservation / exploring options)
+   - Timeline: dropdown (3 months / 6 months / 12 months / 2+ years / no rush)
+   - Revenue breakdown form: recurring %, one-time %, by channel (ecommerce vs local vs other)
+   - Margin profile: gross margin %, EBITDA margin %, SDE if owner-operated
+   - Key employees: name + role + retention risk (low/medium/high) — table with add-row button
+   - Deal breakers mentioned: free text checklist (employee treatment, brand preservation, price floor, non-compete concerns, family involvement)
+   - Owner's "perfect buyer" description: free text
+   - Emotional temperature: slider (cold / lukewarm / warm / hot / ready to engage)
+   - Next steps agreed: checklist (financial review, valuation estimate, engagement letter, nurture cadence)
+   - Verbatim quotes worth remembering: free text area ("Larry said: '...'")
+   - Story elements: free text — what about their journey, values, and pride would make a compelling narrative to share with buyers?
+
+   All form fields write to Supabase on change (use the comment-widget.js pattern for Supabase writes).
+   Table: meeting_notes (meeting_id, field_name, field_value, captured_at)
+
+3. POST-MEETING SECTION (NEW):
+   After the meeting, this section auto-generates based on captured data:
+   - Meeting summary (auto-generated from form inputs)
+   - Data completeness score: "You captured 8/12 key fields — missing: margin profile, key employees, deal breakers"
+   - What this unlocks: "With these inputs, we can now generate: preliminary valuation, refined buyer list, personalized proposal"
+   - Action items with due dates
+   - Link to generate the follow-up email (pre-filled from meeting notes)
+   - Link to generate/update the proposal (using captured data)
+
+4. DOWNSTREAM DATA FLOW:
+   The meeting notes feed EVERYTHING:
+   - Letter engine: owner's story, emotional hooks, their language
+   - Proposal engine: revenue breakdown, margin profile, timeline
+   - Buyer targeting: owner's "perfect buyer" profile refines the buyer scoring algorithm
+   - Valuation: revenue, margins, SDE → automated range calculation
+   - EBITDA levers: which levers are relevant based on what we learned about their operations
+
+Steps:
+1. Read public/meeting-aquascience_2026-03-29_discovery.html (current meeting page)
+2. Read public/comment-widget.js (for the Supabase write pattern)
+3. Read public/interactive-aquascience.html (for the interactive form/slider pattern)
+
+4. Create templates/meeting-page-v2.html — a Jinja2 template for the upgraded meeting page
+   - Keep ALL existing sections (they're good)
+   - Add the during-meeting form section
+   - Add the post-meeting auto-generation section
+   - Make it work on mobile (Ewing might be on his phone right after the call)
+   - Professional styling that matches the existing dark theme for internal pages
+
+5. Create lib/meeting_engine_v2.py:
+   - Takes: company_id, meeting_date, meeting_type (discovery/financial_review/engagement)
+   - Reads: company profile, buyer list, EBITDA levers for their vertical, any prior meeting notes
+   - Renders: the v2 template with all pre-meeting data filled
+   - Includes question variations based on meeting_type:
+     - Discovery: broad questions about the business, owner motivation, story
+     - Financial review: specific questions about margins, revenue mix, expenses, add-backs
+     - Engagement: questions about timeline, fee comfort, exclusivity, legal review
+
+6. Create public/meeting-notes.js:
+   - Client-side script that handles form → Supabase writes
+   - Auto-saves every field on change (no submit button needed)
+   - Shows a "saved" indicator per field
+   - Calculates data completeness score in real-time
+   - Works offline (queues writes, syncs when connection returns)
+
+7. Generate a v2 meeting page for AquaScience as proof: public/meeting-aquascience-v2.html
+
+8. Verify: forms render, Supabase write pattern is correct, mobile layout works.
+
+This is the most important page in the entire CRM. If this meeting goes well and you capture the right data, every downstream document is 10x better.

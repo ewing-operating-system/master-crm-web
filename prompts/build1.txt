@@ -1,0 +1,39 @@
+Read ~/Projects/master-crm-web/CRM-BUILDOUT-SCOPE.md for full context.
+
+You are building BUILD 1: Letter Template Engine for Next Chapter, an M&A advisory firm.
+
+Context:
+- This is a physical letter sent to business owners about selling their company
+- Tone: operator narrative, NOT private equity finance speak. Talk like a fellow business owner, not a banker.
+- Letters tell the owner's story back to them. Reference their specific industry, growth trajectory, and market position.
+- Embed favorable EBITDA multipliers naturally (from the ebitda-levers pages)
+- The CTA is a URL to their personalized page on the CRM site
+
+Steps:
+1. Read ~/Projects/master-crm-web/public/ebitda-levers-concrete-precast.html to understand the EBITDA data format
+2. Read ~/Projects/master-crm-web/public/interactive-aquascience.html to understand the client-facing page quality
+3. Read ~/Projects/master-crm-web/public/aquascience-hub.html to understand the hub page structure
+4. Read existing Python engines in public/ directory to understand the pattern
+
+5. Create templates/master-letter.html — a Jinja2 template for the physical letter:
+   - Professional letterhead area (Next Chapter branding)
+   - Personalized opening: "Dear {{owner_name}}," followed by 2-3 sentences about THEIR company
+   - Body: industry context with EBITDA benchmarks woven in naturally
+   - The hook: "We've prepared a detailed analysis of your company's market position"
+   - CTA: "Visit {{personalized_url}} to review the full report"
+   - Sign-off: warm, professional, from Ewing Gillaspy, Managing Partner
+   - Formatted for 8.5x11 print via Lob (proper margins, font sizing for print)
+
+6. Create lib/letter_engine.py:
+   - Takes: company_id (from Supabase)
+   - Reads: company profile, EBITDA levers for their vertical, owner info
+   - Renders: master-letter.html template with all variables filled
+   - Returns: rendered HTML string ready for Lob API
+   - Includes 3 letter variants: initial outreach, follow-up (2 weeks later), final touch (4 weeks later)
+
+7. Create a sample rendered letter for AquaScience (Larry Casey, water treatment) as proof of concept
+   Save to: public/sample-letter-aquascience.html
+
+8. Verify all files created, no syntax errors.
+
+Write clean, production-ready code. This will be used to mail real letters to real people.

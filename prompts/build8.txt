@@ -1,0 +1,34 @@
+Read ~/Projects/master-crm-web/CRM-BUILDOUT-SCOPE.md for full context. This is BUILD 8.
+
+Add source attribution (footnotes with URLs) to every fact on every client-facing page.
+
+Steps:
+1. Read 3-4 client-facing pages to understand the content structure:
+   - public/aquascience-hub.html
+   - public/wieser-concrete-products-inc.html
+   - public/ebitda-levers-concrete-precast.html
+   - public/interactive-aquascience.html
+
+2. Design a footnote system:
+   - Each factual claim gets a superscript number: [1], [2], etc.
+   - At the bottom of each page section, a "Sources" block lists the URLs
+   - Style: subtle, professional, doesn't clutter the page
+   - On click: opens the source URL in a new tab
+
+3. Create public/source-attribution.js:
+   - A reusable script that any page can include
+   - Reads source data from a data attribute or inline JSON
+   - Renders footnote superscripts and the sources section
+   - Supports hover preview of the source title
+
+4. Create public/source-attribution.css:
+   - Styling for footnotes (small, unobtrusive, blue on hover)
+   - Styling for the sources section at the bottom
+
+5. Add the attribution to at least 2 pages as a proof of concept:
+   - Pick pages where you can identify specific claims and add realistic source URLs
+   - If source URLs are stored in Supabase, read them. If not, add placeholder structure.
+
+6. Verify it looks professional and doesn't break existing page layouts.
+
+The goal: on a phone call, when a prospect says "where'd you get that number?" Ewing says "click the footnote."

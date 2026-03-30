@@ -1,0 +1,31 @@
+Read ~/Projects/master-crm-web/CRM-BUILDOUT-SCOPE.md for full context. This is BUILD 6.
+
+Build the pipeline that auto-generates CRM pages when new research arrives.
+
+Steps:
+1. Read the existing Python engines to understand how pages are generated:
+   - Look for lib/*.py files in ~/Projects/master-crm-web/
+   - Understand how they read from Supabase and write HTML to public/
+
+2. Create scripts/regenerate.py:
+   - Connects to Supabase (dwrnfpjcvydhmhnvyzov, credentials from ~/.openclaw/.env)
+   - Queries for targets with status = 'RESEARCHED' and no generated page (or updated research newer than page)
+   - For each target: runs the appropriate engine (company_hub, profile, research_transparency)
+   - Writes the HTML to public/
+   - Runs git add + git commit + git push (triggers Vercel auto-deploy)
+   - Updates target status to 'PUBLISHED' in Supabase
+   - Logs what was generated
+
+3. Create scripts/regenerate_all.py:
+   - Regenerates ALL pages (not just new ones) — useful for template changes
+   - Same pattern but iterates all targets regardless of status
+
+4. Verify the script works by checking:
+   - Can it connect to Supabase?
+   - Can it read target data?
+   - Can it generate at least one page?
+   - Does git push work? (check git remote is configured)
+
+5. Do NOT create cron jobs — just build the scripts. Ewing will enable cron later.
+
+If Supabase credentials are not accessible or the Python engines don't exist in the expected location, document what you found and what's missing. Do not guess.

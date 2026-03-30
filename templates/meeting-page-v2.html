@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ company.name }} — Meeting Prep ({{ meeting.date }})</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0d1117; --bg2:#161b22; --bg3:#21262d; --bgcard:#1c2128;
+  --text:#c9d1d9; --text2:#8b949e; --head:#e6edf3;
+  --acc:#58a6ff; --green:#3fb950; --amber:#d29922; --red:#f85149; --border:#30363d;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:15px}
+.top-bar{background:var(--bg2);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:200}
+.top-bar h1{font-size:17px;font-weight:700;color:var(--head)}
+.top-bar .meta{font-size:12px;color:var(--text2)}
+.internal-badge{background:rgba(248,81,73,.12);border:1px solid rgba(248,81,73,.3);color:#f85149;font-size:10px;font-weight:700;padding:2px 10px;border-radius:20px;letter-spacing:.5px;text-transform:uppercase}
+.hook{background:linear-gradient(135deg,rgba(63,185,80,.15),rgba(88,166,255,.1));border:1px solid rgba(63,185,80,.3);border-radius:12px;padding:20px 28px;margin:20px 24px;font-size:16px;font-style:italic;color:var(--head);line-height:1.6}
+.hook .hook-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--green);margin-bottom:8px;font-style:normal}
+.tab-nav{display:flex;border-bottom:1px solid var(--border);padding:0 24px;background:var(--bg2);position:sticky;top:53px;z-index:190}
+.tab-btn{padding:12px 24px;font-size:13px;font-weight:600;color:var(--text2);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;font-family:inherit}
+.tab-btn:hover{color:var(--head)}
+.tab-btn .tab-count{font-size:10px;background:var(--bg3);border-radius:10px;padding:1px 6px;margin-left:5px}
+.container{max-width:1040px;margin:0 auto;padding:24px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.full{grid-column:1/-1}
+.card{background:var(--bgcard);border:1px solid var(--border);border-radius:10px;padding:20px}
+.card h2{font-size:14px;font-weight:700;color:var(--head);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.card h2 .si{font-size:16px}
+.card ol,.card ul{padding-left:18px}
+.card li{margin:7px 0;font-size:13px;color:var(--text);line-height:1.5}
+.checklist{list-style:none;padding-left:0}
+.checklist li{padding-left:22px;position:relative}
+.checklist li::before{content:"☐";position:absolute;left:0;color:var(--green);font-weight:700}
+.danger-list{list-style:none;padding-left:0}
+.danger-list li{padding-left:22px;position:relative;font-size:13px;margin:7px 0}
+.danger-list li::before{content:"⚠";position:absolute;left:0;color:var(--amber)}
+.buyer-table{width:100%;border-collapse:collapse;font-size:13px}
+.buyer-table th{text-align:left;padding:8px 10px;background:var(--bg3);color:var(--text2);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.buyer-table td{padding:9px 10px;border-bottom:1px solid var(--border);color:var(--text)}
+.fit-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700}
+.fit-high{background:rgba(63,185,80,.15);color:#3fb950;border:1px solid rgba(63,185,80,.3)}
+.fit-mid{background:rgba(88,166,255,.12);color:#58a6ff;border:1px solid rgba(88,166,255,.25)}
+.fit-low{background:rgba(139,148,158,.1);color:#8b949e;border:1px solid rgba(139,148,158,.2)}
+/* DURING form */
+.section-header{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:18px;display:flex;align-items:center;gap:12px}
+.section-header .sh-icon{font-size:24px}
+.section-header .sh-text h3{font-size:15px;font-weight:700;color:var(--head);margin-bottom:3px}
+.section-header .sh-text p{font-size:12px;color:var(--text2)}
+.form-card{background:var(--bgcard);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:16px}
+.form-card h3{font-size:13px;font-weight:700;color:var(--acc);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.field-row{margin-bottom:16px}
+.field-row label{display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.3px}
+.mn-field-wrap{position:relative}
+select.mn-form-input,textarea.mn-form-input,input.mn-form-input{width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:9px 12px;font-size:13px;font-family:inherit;transition:border-color .2s;box-sizing:border-box}
+select.mn-form-input option{background:var(--bg3)}
+textarea.mn-form-input{min-height:80px;resize:vertical}
+select.mn-form-input:focus,textarea.mn-form-input:focus,input.mn-form-input:focus{outline:none;border-color:var(--acc)}
+.field-hint{font-size:11px;color:var(--text2);margin-top:4px;font-style:italic}
+.rev-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rev-field label{font-size:11px;color:var(--text2);display:block;margin-bottom:4px;text-transform:none;font-weight:400}
+.rev-note{grid-column:1/-1;font-size:11px;color:var(--text2);font-style:italic;margin-top:2px}
+.margin-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.temp-wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.temp-slider{flex:1;min-width:180px;-webkit-appearance:none;height:6px;background:linear-gradient(90deg,#6c757d,#fd7e14,#ffc107,#28a745,#20c997);border-radius:3px;outline:none;cursor:pointer}
+.temp-slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--acc);cursor:pointer;border:2px solid var(--bg);box-shadow:0 0 6px rgba(88,166,255,.5)}
+.temp-label-wrap{display:flex;justify-content:space-between;font-size:10px;color:var(--text2);margin-top:4px}
+#mn-temp-label{font-size:15px;font-weight:700;min-width:120px}
+.emp-table-wrap table{width:100%;border-collapse:collapse;font-size:13px}
+.emp-table-wrap th{text-align:left;padding:7px 8px;background:var(--bg3);color:var(--text2);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.emp-table-wrap td{padding:6px 8px;border-bottom:1px solid var(--border)}
+.emp-table-wrap td input,.emp-table-wrap td select{background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:4px;padding:5px 8px;font-size:12px;font-family:inherit;width:100%}
+.emp-table-wrap td input:focus,.emp-table-wrap td select:focus{outline:none;border-color:var(--acc)}
+.add-row-btn{margin-top:10px;background:rgba(88,166,255,.1);border:1px solid rgba(88,166,255,.25);color:var(--acc);font-size:12px;font-weight:600;padding:6px 14px;border-radius:6px;cursor:pointer;font-family:inherit;transition:all .2s}
+.add-row-btn:hover{background:rgba(88,166,255,.2)}
+.check-list{list-style:none;padding:0}
+.check-list li{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid rgba(48,54,61,.5);font-size:13px}
+.check-list li:last-child{border-bottom:none}
+.check-list input[type=checkbox]{width:16px;height:16px;margin-top:1px;accent-color:var(--green);cursor:pointer;flex-shrink:0}
+/* POST section */
+.completeness-card{background:var(--bgcard);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:16px}
+.completeness-score-text{font-size:20px;font-weight:700;color:var(--head);margin-bottom:10px}
+.completeness-bar-track{background:var(--bg3);border-radius:4px;height:8px;overflow:hidden;margin-bottom:8px}
+.unlocks-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.summary-card{background:var(--bgcard);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:16px}
+.summary-card h3{font-size:13px;font-weight:700;color:var(--acc);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px}
+.action-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.action-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;cursor:pointer;border:none;font-family:inherit;transition:all .2s}
+.action-btn-primary{background:var(--acc);color:#fff}.action-btn-primary:hover{background:#79b8ff}
+.action-btn-secondary{background:rgba(88,166,255,.1);border:1px solid rgba(88,166,255,.25);color:var(--acc)}.action-btn-secondary:hover{background:rgba(88,166,255,.2)}
+.action-btn-green{background:rgba(63,185,80,.15);border:1px solid rgba(63,185,80,.3);color:#3fb950}.action-btn-green:hover{background:rgba(63,185,80,.25)}
+.footer{text-align:center;padding:24px;color:var(--text2);font-size:11px;border-top:1px solid var(--border);margin-top:32px}
+@media(max-width:700px){
+  .grid{grid-template-columns:1fr}
+  .margin-grid{grid-template-columns:1fr 1fr}
+  .unlocks-grid{grid-column:1/-1;grid-template-columns:1fr}
+  .container{padding:12px}
+  .hook{margin:12px}
+  .tab-btn{padding:10px 12px;font-size:12px}
+  .action-btns{flex-direction:column}
+}
+</style>
+</head>
+<body data-meeting-id="{{ meeting_id }}" data-company-name="{{ company.name }}" data-owner-name="{{ meeting.owner_first_name }}">
+
+<div class="top-bar">
+  <div>
+    <h1>{{ company.name }}</h1>
+    <div class="meta">{{ meeting.type_label }} &middot; {{ meeting.date }} &middot; {{ meeting.owner_name }} &middot; {{ company.location }} &middot; {{ company.vertical_label }}</div>
+  </div>
+  <span class="internal-badge">Internal &mdash; Do not share</span>
+</div>
+
+<div class="hook">
+  <div class="hook-label">Opening Hook</div>
+  {{ opening_hook }}
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn" data-tab-target="pre">Pre-Meeting <span class="tab-count">Prep</span></button>
+  <button class="tab-btn" data-tab-target="during">During Meeting <span class="tab-count">Form</span></button>
+  <button class="tab-btn" data-tab-target="post">Post-Meeting <span class="tab-count">Review</span></button>
+</div>
+
+<!-- PRE-MEETING -->
+<div data-tab-section="pre">
+<div class="container">
+<div class="grid">
+
+  <div class="card">
+    <h2><span class="si">🗓</span> Agenda</h2>
+    <ol>{% for item in agenda_items %}<li>{{ item }}</li>{% endfor %}</ol>
+  </div>
+
+  <div class="card">
+    <h2><span class="si">🎯</span> Objectives</h2>
+    <ul class="checklist">{% for obj in objectives %}<li>{{ obj }}</li>{% endfor %}</ul>
+  </div>
+
+  <div class="card">
+    <h2><span class="si">💬</span> Questions to Ask</h2>
+    <ol>{% for q in questions %}<li>{{ q }}</li>{% endfor %}</ol>
+  </div>
+
+  <div class="card">
+    <h2><span class="si">📢</span> Talking Points</h2>
+    <ul>{% for tp in talking_points %}<li>{{ tp }}</li>{% endfor %}</ul>
+  </div>
+
+  <div class="card">
+    <h2><span class="si">⚠️</span> Danger Zones</h2>
+    <ul class="danger-list">{% for dz in danger_zones %}<li>{{ dz }}</li>{% endfor %}</ul>
+  </div>
+
+  <div class="card">
+    <h2><span class="si">✅</span> What We Bring</h2>
+    <ul>{% for item in what_we_bring %}<li>{{ item }}</li>{% endfor %}</ul>
+  </div>
+
+  <div class="card full">
+    <h2><span class="si">🏆</span> Success Criteria</h2>
+    <ul class="checklist">{% for item in success_criteria %}<li>{{ item }}</li>{% endfor %}</ul>
+  </div>
+
+  <div class="card">
+    <h2><span class="si">👍</span> If Positive &rarr; Next Steps</h2>
+    <ul class="checklist">{% for item in next_steps_positive %}<li>{{ item }}</li>{% endfor %}</ul>
+  </div>
+
+  <div class="card">
+    <h2><span class="si">🌱</span> If Not Ready &rarr; Nurture</h2>
+    <ul>{% for item in next_steps_nurture %}<li>{{ item }}</li>{% endfor %}</ul>
+  </div>
+
+  <div class="card full">
+    <h2><span class="si">🏢</span> Identified Buyers</h2>
+    <table class="buyer-table">
+      <thead><tr><th>Buyer</th><th>Type</th><th>Fit Score</th><th>Status</th></tr></thead>
+      <tbody>
+        {% for b in buyers %}
+        <tr>
+          <td>{{ b.name }}</td>
+          <td>{{ b.type }}</td>
+          <td><span class="fit-badge {% if b.fit >= 8 %}fit-high{% elif b.fit >= 6 %}fit-mid{% else %}fit-low{% endif %}">{{ b.fit }}/10</span></td>
+          <td>{{ b.status }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</div>
+</div><!-- /pre -->
+
+<!-- DURING MEETING -->
+<div data-tab-section="during" style="display:none">
+<div class="container">
+
+  <div class="section-header">
+    <div class="sh-icon">📝</div>
+    <div class="sh-text">
+      <h3>Live Capture &mdash; Fill This During the Meeting</h3>
+      <p>Every field auto-saves to Supabase on change. Works offline &mdash; queues locally and syncs when reconnected. This data feeds the proposal, letter, buyer targeting, and valuation.</p>
+    </div>
+  </div>
+
+  <div class="form-card">
+    <h3>Owner Profile</h3>
+    <div class="grid">
+
+      <div class="field-row">
+        <label>Owner's Primary Motivation</label>
+        <div class="mn-field-wrap">
+          <select class="mn-form-input" data-field-name="owner_motivation">
+            <option value="">&#8212; Select &#8212;</option>
+            <option value="retirement">Retirement / full exit</option>
+            <option value="partial exit">Partial exit (stay involved)</option>
+            <option value="growth capital">Growth capital (expand)</option>
+            <option value="legacy preservation">Legacy preservation (right buyer)</option>
+            <option value="exploring options">Exploring options (no decision yet)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <label>Timeline to Transaction</label>
+        <div class="mn-field-wrap">
+          <select class="mn-form-input" data-field-name="timeline">
+            <option value="">&#8212; Select &#8212;</option>
+            <option value="3 months">3 months (urgent)</option>
+            <option value="6 months">6 months</option>
+            <option value="12 months">12 months</option>
+            <option value="2+ years">2+ years (planning ahead)</option>
+            <option value="no rush">No rush &mdash; just exploring</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-row full">
+        <label>Owner's "Perfect Buyer" Description</label>
+        <div class="mn-field-wrap">
+          <textarea class="mn-form-input" data-field-name="perfect_buyer_description" placeholder="In their own words: what would the ideal buyer look, feel, and act like? Culture, size, approach to employees, brand preservation..."></textarea>
+        </div>
+      </div>
+
+      <div class="field-row full">
+        <label>Emotional Temperature
+          <span id="mn-temp-label" style="margin-left:12px;font-size:14px;font-weight:700"></span>
+        </label>
+        <div class="mn-field-wrap">
+          <div class="temp-wrap">
+            <input type="range" class="temp-slider mn-form-input" data-field-name="emotional_temperature" min="0" max="5" step="1" value="0">
+          </div>
+          <div class="temp-label-wrap"><span>Cold</span><span>Lukewarm</span><span>Warm</span><span>Hot</span><span>Ready</span></div>
+        </div>
+        <div class="field-hint">Your gut read. Internal use only &mdash; not shared with owner.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="form-card">
+    <h3>Revenue &amp; Margins</h3>
+
+    <div class="field-row">
+      <label>Revenue Mix (% of total)</label>
+      <div class="rev-grid">
+        <div class="rev-field">
+          <label>Recurring %</label>
+          <div class="mn-field-wrap"><input type="number" class="mn-form-input" data-field-name="revenue_recurring_pct" placeholder="e.g. 40" min="0" max="100"></div>
+        </div>
+        <div class="rev-field">
+          <label>One-Time / Project %</label>
+          <div class="mn-field-wrap"><input type="number" class="mn-form-input" data-field-name="revenue_onetime_pct" placeholder="e.g. 60" min="0" max="100"></div>
+        </div>
+        <div class="rev-field">
+          <label>eCommerce %</label>
+          <div class="mn-field-wrap"><input type="number" class="mn-form-input" data-field-name="revenue_ecommerce_pct" placeholder="e.g. 35" min="0" max="100"></div>
+        </div>
+        <div class="rev-field">
+          <label>Local Service %</label>
+          <div class="mn-field-wrap"><input type="number" class="mn-form-input" data-field-name="revenue_local_pct" placeholder="e.g. 65" min="0" max="100"></div>
+        </div>
+        <div class="rev-note">Capture what you learn &mdash; percentages don't need to sum to 100.</div>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <label>Margin Profile</label>
+      <div class="margin-grid">
+        <div class="rev-field">
+          <label>Gross Margin %</label>
+          <div class="mn-field-wrap"><input type="number" class="mn-form-input" data-field-name="gross_margin_pct" placeholder="e.g. 55" min="0" max="100"></div>
+        </div>
+        <div class="rev-field">
+          <label>EBITDA Margin %</label>
+          <div class="mn-field-wrap"><input type="number" class="mn-form-input" data-field-name="ebitda_margin_pct" placeholder="e.g. 18" min="0" max="100"></div>
+        </div>
+        <div class="rev-field">
+          <label>SDE (owner-op) $</label>
+          <div class="mn-field-wrap"><input type="number" class="mn-form-input" data-field-name="sde_amount" placeholder="e.g. 450000" min="0"></div>
+        </div>
+      </div>
+      <div class="field-hint">SDE = Seller's Discretionary Earnings. Includes owner salary + personal add-backs.</div>
+    </div>
+
+  </div>
+
+  <div class="form-card">
+    <h3>Key Employees</h3>
+    <div class="mn-field-wrap emp-table-wrap">
+      <table id="mn-employee-table">
+        <thead><tr><th style="width:35%">Name</th><th style="width:35%">Role / Title</th><th style="width:20%">Retention Risk</th><th style="width:10%"></th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <button type="button" id="mn-add-employee" class="add-row-btn">+ Add Employee</button>
+    </div>
+    <div class="field-hint">Who must stay for the business to keep running? High risk = buyer needs a retention plan.</div>
+  </div>
+
+  <div class="grid">
+
+    <div class="form-card">
+      <h3>Deal Breakers Mentioned</h3>
+      <div class="mn-dealbreakers-wrap">
+        <ul class="check-list">
+          <li><input type="checkbox" class="mn-dealbreaker-cb" value="employee treatment"> Employee treatment must be preserved</li>
+          <li><input type="checkbox" class="mn-dealbreaker-cb" value="brand preservation"> Brand / name must be preserved</li>
+          <li><input type="checkbox" class="mn-dealbreaker-cb" value="price floor"> Hard price floor (won't go below X)</li>
+          <li><input type="checkbox" class="mn-dealbreaker-cb" value="non-compete concerns"> Non-compete concerns (wants to stay active)</li>
+          <li><input type="checkbox" class="mn-dealbreaker-cb" value="family involvement"> Family member must stay employed</li>
+          <li><input type="checkbox" class="mn-dealbreaker-cb" value="local ownership"> Must stay locally owned / operated</li>
+        </ul>
+        <div class="field-row" style="margin-top:10px">
+          <label>Other</label>
+          <input type="text" id="mn-dealbreaker-other" class="mn-form-input" placeholder="Anything else mentioned&hellip;">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h3>Next Steps Agreed</h3>
+      <div class="mn-nextsteps-wrap">
+        <ul class="check-list">
+          <li><input type="checkbox" class="mn-nextstep-cb" value="Send follow-up email summarizing meeting"> Send follow-up email summarizing meeting</li>
+          <li><input type="checkbox" class="mn-nextstep-cb" value="Owner to provide 3 years of P&Ls"> Owner to provide 3 years of P&amp;Ls</li>
+          <li><input type="checkbox" class="mn-nextstep-cb" value="Owner to provide tax returns"> Owner to provide tax returns</li>
+          <li><input type="checkbox" class="mn-nextstep-cb" value="Schedule financial review meeting"> Schedule financial review meeting</li>
+          <li><input type="checkbox" class="mn-nextstep-cb" value="Prepare preliminary valuation estimate"> Prepare preliminary valuation estimate</li>
+          <li><input type="checkbox" class="mn-nextstep-cb" value="Draft engagement letter"> Draft engagement letter</li>
+          <li><input type="checkbox" class="mn-nextstep-cb" value="Add to nurture cadence (not ready)"> Add to nurture cadence (not ready)</li>
+          <li><input type="checkbox" class="mn-nextstep-cb" value="Build curated buyer list (40-60 targets)"> Build curated buyer list (40&ndash;60 targets)</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-card">
+    <h3>Narrative &amp; Intelligence</h3>
+    <div class="grid">
+
+      <div class="field-row">
+        <label>Verbatim Quotes Worth Remembering</label>
+        <div class="mn-field-wrap">
+          <textarea class="mn-form-input" data-field-name="verbatim_quotes" placeholder='e.g. Larry said: "I built this so my employees would have a home, not so I could cash out."'></textarea>
+        </div>
+        <div class="field-hint">Their exact words &mdash; these become emotional hooks in the letter and proposal.</div>
+      </div>
+
+      <div class="field-row">
+        <label>Story Elements</label>
+        <div class="mn-field-wrap">
+          <textarea class="mn-form-input" data-field-name="story_elements" placeholder="What about their journey, values, and pride would make a compelling narrative for buyers? What are they most proud of? What was the hardest moment?"></textarea>
+        </div>
+        <div class="field-hint">Feeds the letter engine. The more specific, the better.</div>
+      </div>
+
+      <div class="field-row full">
+        <label>Other Notes</label>
+        <div class="mn-field-wrap">
+          <textarea class="mn-form-input" data-field-name="other_notes" placeholder="Competitors mentioned, prior acquisition approaches, personal circumstances, timing triggers&hellip;" style="min-height:100px"></textarea>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div><!-- /during -->
+
+<!-- POST MEETING -->
+<div data-tab-section="post" style="display:none">
+<div class="container">
+
+  <div class="section-header">
+    <div class="sh-icon">📊</div>
+    <div class="sh-text">
+      <h3>Post-Meeting Review</h3>
+      <p>Auto-generated from your captured data. Updates in real-time as you fill the During-Meeting form.</p>
+    </div>
+  </div>
+
+  <div class="completeness-card">
+    <div class="completeness-score-text" id="mn-completeness-score">0 of 12 key fields captured</div>
+    <div class="completeness-bar-track"><div class="mn-bar-fill" id="mn-completeness-bar" style="width:0%"></div></div>
+    <div class="mn-completeness-missing" id="mn-completeness-missing">Fill in the During-Meeting form to track completeness.</div>
+  </div>
+
+  <div class="summary-card">
+    <h3>What This Data Unlocks</h3>
+    <div class="unlocks-grid">
+      <div class="mn-unlock-item mn-unlock-locked" id="mn-unlock-letter">Outreach letter (owner story + emotional hooks)</div>
+      <div class="mn-unlock-item mn-unlock-locked" id="mn-unlock-valuation">Preliminary valuation range</div>
+      <div class="mn-unlock-item mn-unlock-locked" id="mn-unlock-buyer-targeting">Refined buyer targeting (perfect buyer profile)</div>
+      <div class="mn-unlock-item mn-unlock-locked" id="mn-unlock-proposal">Full proposal (revenue + margins + timeline)</div>
+      <div class="mn-unlock-item mn-unlock-locked full" id="mn-unlock-full">Complete pipeline: all 6 downstream documents ready to generate</div>
+    </div>
+  </div>
+
+  <div class="summary-card">
+    <h3>Meeting Summary (Auto-Generated)</h3>
+    <div id="mn-auto-summary"><span class="mn-summary-empty">Summary populates as you capture data during the meeting.</span></div>
+  </div>
+
+  <div class="summary-card">
+    <h3>Action Items</h3>
+    <div id="mn-action-items"><p style="color:var(--text2);font-size:13px">Check the Next Steps boxes during the meeting &mdash; they appear here.</p></div>
+    <div class="action-btns">
+      <a id="mn-followup-email-link" href="#" class="action-btn action-btn-primary">&#9993; Generate Follow-Up Email</a>
+      <a href="#during" onclick="document.querySelector('[data-tab-target=during]').click();return false" class="action-btn action-btn-secondary">&larr; Back to Form</a>
+    </div>
+  </div>
+
+</div>
+</div><!-- /post -->
+
+<div class="footer">
+  Generated {{ generated_at }} &mdash; Next Chapter M&amp;A Advisory<br>
+  INTERNAL DOCUMENT &mdash; {{ meeting.type_label }} prep for {{ meeting.owner_name }} at {{ company.name }}
+</div>
+
+<script src="comment-widget.js"></script>
+<script src="meeting-notes.js"></script>
+<script>
+(function() {
+  function syncActionItems() {
+    var panel = document.getElementById('mn-action-items');
+    if (!panel) return;
+    var checked = Array.from(document.querySelectorAll('.mn-nextstep-cb:checked')).map(function(cb){ return cb.value; });
+    if (!checked.length) {
+      panel.innerHTML = '<p style="color:var(--text2);font-size:13px">No next steps checked yet.</p>';
+    } else {
+      panel.innerHTML = '<ul style="list-style:none;padding:0">' +
+        checked.map(function(s){ return '<li style="padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;display:flex;gap:8px"><span style="color:var(--green)">&#10003;</span>' + s + '</li>'; }).join('') +
+        '</ul>';
+    }
+  }
+  document.addEventListener('change', function(e) {
+    if (e.target.classList.contains('mn-nextstep-cb')) syncActionItems();
+  });
+})();
+</script>
+</body>
+</html>
