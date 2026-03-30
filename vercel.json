@@ -15,8 +15,7 @@
       "maxDuration": 30
     },
     "api/webhooks/lob.js": {
-      "maxDuration": 10,
-      "bodyParser": false
+      "maxDuration": 10
     }
   }
 }
