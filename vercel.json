@@ -9,11 +9,7 @@
   ],
   "functions": {
     "api/**/*.js": {
-      "maxDuration": 10
-    },
-    "api/letters/send-to-lob.js": {
-      "maxDuration": 30,
-      "memory": 1024
+      "maxDuration": 30
     }
   }
 }
