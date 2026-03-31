@@ -401,11 +401,18 @@ p + p { margin-top: var(--space-3); }
   padding: var(--space-5) 0;
   position: sticky;
   top: 90px;
+  align-self: flex-start;
   height: fit-content;
   max-height: calc(100vh - 120px);
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--border-base) transparent;
+  z-index: 50;
+}
+
+/* Scroll-spy anchor offset for cards linked from sidebar */
+.card[id] {
+  scroll-margin-top: 100px;
 }
 .sidebar::-webkit-scrollbar       { width: 4px; }
 .sidebar::-webkit-scrollbar-thumb { background: var(--border-base); border-radius: 2px; }
