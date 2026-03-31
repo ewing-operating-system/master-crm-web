@@ -1,0 +1,24 @@
+```json
+{
+  "buyer_slug": "benchmark",
+  "buyer_name": "Buyer Dossier: Benchmark | HR.com Ltd",
+  "line_count": 336,
+  "scores": {
+    "narrative_quality": 8.5,
+    "strategic_depth": 8.0,
+    "evidence_density": 7.0,
+    "actionability": 9.0,
+    "completeness": 7.5,
+    "structure": 7.0
+  },
+  "overall": 8.03,
+  "tier": "gold",
+  "gaps": {
+    "narrative": "The narrative is strong but could be more explicitly framed as a strategic story from the buyer's perspective at the very beginning.",
+    "structure": "The 'Key Earnings Quotes' section appears truncated and lacks proper formatting for the quotes (dates/sources missing, text cut off). Some sections blend together visually.",
+    "tone": "Tone is excellent—confident, operator-focused, and insightful."
+  },
+  "top_strength": "Actionability is exceptional, with 4+ specific, well-reasoned 'Golden Nugget' call openers directly tied to strategic angles and executive quotes.",
+  "biggest_gap": "Evidence Density is the relative weakness; while quotes are used effectively, they lack specific dates/sources (e.g., earnings call Q4 2025) and some appear incomplete, reducing verifiability."
+}
+```

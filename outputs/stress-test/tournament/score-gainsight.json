@@ -1,0 +1,24 @@
+```json
+{
+  "buyer_slug": "gainsight",
+  "buyer_name": "Buyer Dossier: Gainsight | HR.com Ltd",
+  "line_count": 332,
+  "scores": {
+    "narrative_quality": 9.0,
+    "strategic_depth": 8.5,
+    "evidence_density": 8.0,
+    "actionability": 9.5,
+    "completeness": 8.0,
+    "structure": 8.5
+  },
+  "overall": 8.63,
+  "tier": "gold",
+  "gaps": {
+    "narrative": "Minor room to deepen the 'story' about Gainsight's strategic pivot beyond the community+learning angle.",
+    "structure": "Some sections (like 'Challenges & Headwinds') could be visually broken down further for scannability.",
+    "tone": "Tone is excellent; no significant gaps."
+  },
+  "top_strength": "Exceptional actionability with 4 specific, well-reasoned 'Golden Nugget' call openers directly tied to the strategic narrative and recent M&A activity.",
+  "biggest_gap": "Evidence density is strong but could be enhanced with more dated, direct CEO quotes from earnings calls or presentations to match the 'score_10_example' benchmark."
+}
+```

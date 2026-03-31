@@ -1,0 +1,24 @@
+```json
+{
+  "buyer_slug": "paycom",
+  "buyer_name": "Buyer Dossier: Paycom | HR.com Ltd",
+  "line_count": 342,
+  "scores": {
+    "narrative_quality": 9.0,
+    "strategic_depth": 8.5,
+    "evidence_density": 8.0,
+    "actionability": 9.5,
+    "completeness": 7.0,
+    "structure": 7.5
+  },
+  "overall": 8.45,
+  "tier": "gold",
+  "gaps": {
+    "narrative": "The narrative is strong but could be slightly more concise in the opening strategic fit section.",
+    "structure": "The page content appears truncated at the end ('Their automation success with Beti ironically reduces'), suggesting incomplete export or rendering. Some sections (like Earnings Call Data) are implied within other sections rather than having dedicated headers.",
+    "tone": "Tone is excellent—confident and operator-focused."
+  },
+  "top_strength": "Actionability. Provides five exceptionally strong, quote-anchored 'Golden Nugget' openers that are directly tied to the buyer's stated strategy and challenges, making them immediately usable for outreach.",
+  "biggest_gap": "Completeness/Structure. The content is cut off mid-sentence, and while core concepts are covered, the sectioning (e.g., lack of a dedicated 'Earnings Call Data' or 'Verified Contacts' section) means it doesn't fully match the ideal template structure."
+}
+```

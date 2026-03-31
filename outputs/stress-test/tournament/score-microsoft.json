@@ -1,0 +1,24 @@
+```json
+{
+  "buyer_slug": "microsoft",
+  "buyer_name": "Buyer Dossier: Microsoft | HR.com Ltd",
+  "line_count": 356,
+  "scores": {
+    "narrative_quality": 9.0,
+    "strategic_depth": 8.5,
+    "evidence_density": 8.0,
+    "actionability": 9.5,
+    "completeness": 7.5,
+    "structure": 7.0
+  },
+  "overall": 8.48,
+  "tier": "gold",
+  "gaps": {
+    "narrative": "The narrative is strong but could be more explicitly framed as a single, overarching story from the very top.",
+    "structure": "The content is dense and well-organized in thought, but the visual presentation in the provided text block is a single wall of text, lacking clear section breaks, headers, or visual hierarchy.",
+    "tone": "No significant tone gaps. The tone is consistently confident and operator-focused."
+  },
+  "top_strength": "Actionability. The page provides 5 excellent, specific 'Golden Nugget' call openers, each directly tied to a CEO quote and a strategic angle, giving a seller a ready-made playbook for outreach.",
+  "biggest_gap": "Structure/Completeness. While the core ideas for all sections are present, they are presented in a continuous text block without clear visual segmentation. Key sections like 'Challenges & Gaps', 'Earnings Call Data', and 'Verified Contacts' are either implied within other sections or missing entirely as distinct, labeled components."
+}
+```

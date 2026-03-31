@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HR.com Deal Room — Overnight Build</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #0d1117;
+    color: #c9d1d9;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* === TOP NAV (light bar, matches existing pattern) === */
+  .nc-nav {
+    background: #f6f8fa;
+    border-bottom: 1px solid #d0d7de;
+    padding: 8px 20px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
+  .nc-nav .brand { font-weight: 700; color: #0d1117; margin-right: 8px; }
+  .nc-nav .divider { color: #d0d7de; }
+  .nc-nav a { color: #0969da; text-decoration: none; font-weight: 500; }
+  .nc-nav a:hover { text-decoration: underline; }
+
+  /* === PAGE HEADER === */
+  .page-header {
+    background: linear-gradient(135deg, #161b22 0%, #0d1117 50%, #161b22 100%);
+    border-bottom: 1px solid #30363d;
+    padding: 32px 32px 24px;
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .header-inner h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #f0f6fc;
+    letter-spacing: -0.3px;
+    margin-bottom: 6px;
+  }
+  .header-inner .subtitle {
+    font-size: 14px;
+    color: #8b949e;
+  }
+
+  /* === STATUS BAR === */
+  .status-bar {
+    background: #161b22;
+    border-bottom: 1px solid #21262d;
+    padding: 10px 32px;
+  }
+  .status-bar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 13px;
+    flex-wrap: wrap;
+  }
+  .status-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #f39c12;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .status-pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    background: #21262d;
+    color: #8b949e;
+    border: 1px solid #30363d;
+  }
+
+  /* === MAIN CONTENT === */
+  .main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 28px 32px 48px;
+  }
+
+  /* === SECTION GRID === */
+  .section-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 900px) {
+    .section-grid { grid-template-columns: 1fr; }
+  }
+
+  /* === SECTION CARD === */
+  .section-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 20px 24px;
+  }
+  .section-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #21262d;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .section-card-header h2 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #f0f6fc;
+  }
+
+  /* === BADGES === */
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #f0f6fc;
+    white-space: nowrap;
+  }
+  .badge.blue   { background: #1f6feb; }
+  .badge.green  { background: #1a7f37; }
+  .badge.purple { background: #6e40c9; }
+  .badge.orange { background: #b45309; }
+
+  /* === OUTPUT LINKS === */
+  .output-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .output-list li a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #8b949e;
+    text-decoration: none;
+    font-size: 13px;
+    padding: 5px 8px;
+    border-radius: 6px;
+    transition: all 0.12s ease;
+    border: 1px solid transparent;
+  }
+  .output-list li a:hover {
+    color: #58a6ff;
+    background: #0d1117;
+    border-color: #21262d;
+  }
+  .output-list li a .file-icon {
+    font-size: 11px;
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
+
+  /* === CHECKLIST === */
+  .checklist-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 24px 28px;
+  }
+  .checklist-card h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #f0f6fc;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #21262d;
+  }
+  .checklist {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: #c9d1d9;
+  }
+  .checklist li input[type="checkbox"] {
+    margin-top: 2px;
+    accent-color: #58a6ff;
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .checklist li label { cursor: pointer; }
+  .checklist li.done label {
+    text-decoration: line-through;
+    color: #484f58;
+  }
+
+  /* === SECTION LABEL === */
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #8b949e;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<div class="nc-nav">
+  <span class="brand">Next Chapter M&amp;A</span>
+  <span class="divider">|</span>
+  <a href="index.html">Home</a>
+  <a href="hrcom-ltd-hub.html">Company Hub</a>
+  <a href="system-overview.html">System Overview</a>
+</div>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="header-inner">
+    <h1>HR.com Deal Room — Overnight Build</h1>
+    <div class="subtitle">Generated March 31, 2026 at 11:21 &nbsp;|&nbsp; OpenClaw Agents &nbsp;|&nbsp; Zero Claude Usage</div>
+  </div>
+</div>
+
+<!-- STATUS BAR -->
+<div class="status-bar">
+  <div class="status-bar-inner">
+    <span><span class="status-dot"></span><strong style="color:#f0f6fc">Wednesday 3:30 PM ET deadline</strong></span>
+    <span class="status-pill">6 phases</span>
+    <span class="status-pill">~30 agent outputs</span>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <p class="section-label">Agent Outputs by Phase</p>
+
+  <div class="section-grid">
+
+    <!-- SECTION 1: Buyer Intelligence -->
+    <div class="section-card">
+      <div class="section-card-header">
+        <h2>1 &mdash; Buyer Intelligence</h2>
+        <span class="badge blue">15 Exa searches</span>
+      </div>
+      <ul class="output-list">
+        <li><a href="/outputs/buyer-intel/search-sap-ceo-strategy.json" data-file="outputs/buyer-intel/search-sap-ceo-strategy.json" data-status="ready"><span class="file-icon">&#128269;</span>Exa Search: SAP CEO Strategy</a></li>
+        <li><a href="/outputs/buyer-intel/search-workday-ceo-strategy.json" data-file="outputs/buyer-intel/search-workday-ceo-strategy.json" data-status="ready"><span class="file-icon">&#128269;</span>Exa Search: Workday CEO Strategy</a></li>
+        <li><a href="#" data-file="outputs/buyer-intel/search-domain-comps.json" data-status="pending"><span class="file-icon">&#128269;</span>Exa Search: Domain Comps</a></li>
+        <li><a href="/outputs/buyer-intel/search-ai-entering-hr.json" data-file="outputs/buyer-intel/search-ai-entering-hr.json" data-status="ready"><span class="file-icon">&#128269;</span>Exa Search: AI Entering HR</a></li>
+        <li><a href="#" data-file="outputs/buyer-intel/search-hr-tech-consolidation.json" data-status="pending"><span class="file-icon">&#128269;</span>Exa Search: HR Tech Consolidation</a></li>
+        <li><a href="#" data-file="outputs/buyer-intel/search-media-ma-precedents.json" data-status="pending"><span class="file-icon">&#128269;</span>Exa Search: Media M&amp;A Precedents</a></li>
+        <li><a href="/outputs/buyer-intel/search-sierra-ventures.json" data-file="outputs/buyer-intel/search-sierra-ventures.json" data-status="ready"><span class="file-icon">&#128269;</span>Exa Search: Sierra Ventures</a></li>
+        <li><a href="/outputs/buyer-intel/buyer-audit-report.md" data-file="outputs/buyer-intel/buyer-audit-report.md" data-status="ready"><span class="file-icon">&#128196;</span>Buyer Audit Report</a></li>
+        <li><a href="#" data-file="outputs/buyer-intel/all-buyers-68-structured.json" data-status="pending"><span class="file-icon">&#128200;</span>All Buyers (68) Structured Data</a></li>
+      </ul>
+    </div>
+
+    <!-- SECTION 2: Action Plan & Process -->
+    <div class="section-card">
+      <div class="section-card-header">
+        <h2>2 &mdash; Action Plan &amp; Process</h2>
+        <span class="badge green">Wednesday ready</span>
+      </div>
+      <ul class="output-list">
+        <li><a href="#" data-file="outputs/process/action-plan-decision-log.md" data-status="pending"><span class="file-icon">&#128203;</span>Action Plan &amp; Decision Log</a></li>
+        <li><a href="#" data-file="outputs/process/fee-options-one-pager.md" data-status="pending"><span class="file-icon">&#128203;</span>Fee Options One-Pager (for Wednesday)</a></li>
+        <li><a href="#" data-file="outputs/process/transcript-summary-march-23.md" data-status="pending"><span class="file-icon">&#127908;</span>March 23 Transcript Summary</a></li>
+        <li><a href="#" data-file="outputs/process/transcript-summary-march-30.md" data-status="pending"><span class="file-icon">&#127908;</span>March 30 Transcript Summary</a></li>
+      </ul>
+    </div>
+
+    <!-- SECTION 3: Custom Mailers -->
+    <div class="section-card">
+      <div class="section-card-header">
+        <h2>3 &mdash; Custom Mailers</h2>
+        <span class="badge purple">5 emails + scripts</span>
+      </div>
+      <ul class="output-list">
+        <li><a href="#" data-file="outputs/mailers/email-sap-custom.md" data-status="pending"><span class="file-icon">&#128140;</span>SAP Custom Email</a></li>
+        <li><a href="#" data-file="outputs/mailers/email-workday-custom.md" data-status="pending"><span class="file-icon">&#128140;</span>Workday Custom Email</a></li>
+        <li><a href="#" data-file="outputs/mailers/email-ai-company-openai-anthropic.md" data-status="pending"><span class="file-icon">&#128140;</span>AI Company Email (OpenAI/Anthropic)</a></li>
+        <li><a href="#" data-file="outputs/mailers/email-media-buyer-template.md" data-status="pending"><span class="file-icon">&#128140;</span>Media Buyer Template</a></li>
+        <li><a href="#" data-file="outputs/mailers/email-mypeople-investor.md" data-status="pending"><span class="file-icon">&#128140;</span>MyPeople Investor Email</a></li>
+        <li><a href="/outputs/mailers/call-scripts-all-segments.md" data-file="outputs/mailers/call-scripts-all-segments.md" data-status="ready"><span class="file-icon">&#128222;</span>Call Scripts (All Segments)</a></li>
+      </ul>
+    </div>
+
+    <!-- SECTION 4: Narrative & One-Pagers -->
+    <div class="section-card">
+      <div class="section-card-header">
+        <h2>4 &mdash; Narrative &amp; One-Pagers</h2>
+        <span class="badge orange">4 documents</span>
+      </div>
+      <ul class="output-list">
+        <li><a href="/outputs/narrative/debbie-mcgrath-story.md" data-file="outputs/narrative/debbie-mcgrath-story.md" data-status="ready"><span class="file-icon">&#128218;</span>The Debbie McGrath Story</a></li>
+        <li><a href="#" data-file="outputs/narrative/one-pager-hrcom-domain.md" data-status="pending"><span class="file-icon">&#128196;</span>One-Pager: HR.com Domain</a></li>
+        <li><a href="#" data-file="outputs/narrative/one-pager-hrcom-media.md" data-status="pending"><span class="file-icon">&#128196;</span>One-Pager: HR.com Media</a></li>
+        <li><a href="#" data-file="outputs/narrative/one-pager-mypeople-ai.md" data-status="pending"><span class="file-icon">&#128196;</span>One-Pager: MyPeople.ai</a></li>
+      </ul>
+    </div>
+
+    <!-- SECTION 5: Dealroom Page Content -->
+    <div class="section-card">
+      <div class="section-card-header">
+        <h2>5 &mdash; Dealroom Page Content</h2>
+        <span class="badge blue">5 pages for Lovable</span>
+      </div>
+      <ul class="output-list">
+        <li><a href="#" data-file="outputs/dealroom/overview-page-rewrite.md" data-status="pending"><span class="file-icon">&#128196;</span>Overview Page Rewrite</a></li>
+        <li><a href="#" data-file="outputs/dealroom/team-page-rewrite.md" data-status="pending"><span class="file-icon">&#128196;</span>Team Page Rewrite</a></li>
+        <li><a href="#" data-file="outputs/dealroom/engagement-options-page.md" data-status="pending"><span class="file-icon">&#128196;</span>Engagement Options Page <span style="color:#484f58;font-size:11px">(was 404)</span></a></li>
+        <li><a href="#" data-file="outputs/dealroom/targets-page.md" data-status="pending"><span class="file-icon">&#128196;</span>Targets Page <span style="color:#484f58;font-size:11px">(was 404)</span></a></li>
+      </ul>
+    </div>
+
+    <!-- SECTION 6: Tech & Process -->
+    <div class="section-card">
+      <div class="section-card-header">
+        <h2>6 &mdash; Tech &amp; Process</h2>
+        <span class="badge green">Debbie-ready</span>
+      </div>
+      <ul class="output-list">
+        <li><a href="#" data-file="outputs/tech/how-we-run-your-deal-debbie-facing.md" data-status="pending"><span class="file-icon">&#128196;</span>How We Run Your Deal (Debbie-facing)</a></li>
+        <li><a href="#" data-file="outputs/tech/deal-intelligence-summary.md" data-status="pending"><span class="file-icon">&#128200;</span>Deal Intelligence Summary</a></li>
+        <li><a href="#" data-file="outputs/tech/existing-outreach-scripts-audit.md" data-status="pending"><span class="file-icon">&#128196;</span>Existing Outreach Scripts Audit</a></li>
+      </ul>
+    </div>
+
+  </div><!-- /section-grid -->
+
+  <!-- MORNING CHECKLIST -->
+  <p class="section-label">Morning Checklist</p>
+  <div class="checklist-card">
+    <h2>Morning Checklist</h2>
+    <ul class="checklist">
+      <li>
+        <input type="checkbox" id="c1">
+        <label for="c1">Review all documents in <code style="background:#0d1117;padding:1px 5px;border-radius:4px;font-size:12px;color:#79c0ff">outputs/</code> folder</label>
+      </li>
+      <li>
+        <input type="checkbox" id="c2">
+        <label for="c2">Push dealroom content to Lovable (requires Claude session)</label>
+      </li>
+      <li>
+        <input type="checkbox" id="c3">
+        <label for="c3">Git push to deploy</label>
+      </li>
+      <li>
+        <input type="checkbox" id="c4">
+        <label for="c4">Print fee one-pager for Wednesday call</label>
+      </li>
+      <li>
+        <input type="checkbox" id="c5">
+        <label for="c5">Remove Informa from live buyer list</label>
+      </li>
+    </ul>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+  // Persist checkbox state in localStorage
+  document.querySelectorAll('.checklist input[type="checkbox"]').forEach(function(cb) {
+    var key = 'hrcom-overnight-' + cb.id;
+    if (localStorage.getItem(key) === '1') {
+      cb.checked = true;
+      cb.closest('li').classList.add('done');
+    }
+    cb.addEventListener('change', function() {
+      localStorage.setItem(key, cb.checked ? '1' : '0');
+      cb.closest('li').classList.toggle('done', cb.checked);
+    });
+  });
+</script>
+
+</body>
+</html>

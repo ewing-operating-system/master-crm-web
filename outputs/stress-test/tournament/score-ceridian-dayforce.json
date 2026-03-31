@@ -1,0 +1,24 @@
+```json
+{
+  "buyer_slug": "ceridian-dayforce",
+  "buyer_name": "Buyer Dossier: Ceridian (Dayforce) | HR.com Ltd",
+  "line_count": 336,
+  "scores": {
+    "narrative_quality": 8.5,
+    "strategic_depth": 8.0,
+    "evidence_density": 7.5,
+    "actionability": 9.0,
+    "completeness": 6.5,
+    "structure": 7.0
+  },
+  "overall": 7.98,
+  "tier": "gold",
+  "gaps": {
+    "narrative": "Strong narrative but could be more explicitly framed as a strategic story from the opening paragraph.",
+    "structure": "Content is dense and well-organized in sections, but the visual presentation (from the text) suggests a basic layout without clear visual hierarchy or formatting like badges/headers.",
+    "tone": "Tone is strong and operator-focused, but the opening section could be more compelling and less list-like."
+  },
+  "top_strength": "Actionability - Provides four excellent, specific 'Golden Nugget' call openers with clear rationales, directly tying seller assets to buyer's stated strategies and recent events (Thoma Bravo deal).",
+  "biggest_gap": "Completeness - Missing or very thin on key sections: 'Verified Contacts' is absent, 'Earnings Call Data' section is truncated mid-sentence, and 'Recommended Approach' section is not present."
+}
+```

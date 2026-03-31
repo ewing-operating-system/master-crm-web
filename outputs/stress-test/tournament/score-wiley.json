@@ -1,0 +1,24 @@
+```json
+{
+  "buyer_slug": "wiley",
+  "buyer_name": "Buyer Dossier: Wiley | HR.com Ltd",
+  "line_count": 370,
+  "scores": {
+    "narrative_quality": 8.5,
+    "strategic_depth": 8.0,
+    "evidence_density": 8.0,
+    "actionability": 9.0,
+    "completeness": 7.0,
+    "structure": 7.5
+  },
+  "overall": 8.18,
+  "tier": "gold",
+  "gaps": {
+    "narrative": "The narrative is strong but could be slightly more concise and flow more smoothly from strategic thesis to evidence to action.",
+    "structure": "The page is well-organized but the content appears truncated at the end (mid-sentence). Some sections like 'Earnings Call Data' are implied within other sections rather than having a dedicated header.",
+    "tone": "Tone is excellent—confident, operator-focused, and insightful."
+  },
+  "top_strength": "Actionability. The 'Golden Nuggets' section is exceptional, providing 5 specific, well-reasoned, and word-for-word call openers directly tied to strategic angles and evidence.",
+  "biggest_gap": "Completeness. The page content cuts off mid-sentence in the 'Challenges & Headwinds' section, and key sections like a dedicated 'Verified Contacts' list are missing, which prevents a perfect score."
+}
+```

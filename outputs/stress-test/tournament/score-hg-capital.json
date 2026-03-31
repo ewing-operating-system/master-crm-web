@@ -1,0 +1,24 @@
+```json
+{
+  "buyer_slug": "hg-capital",
+  "buyer_name": "Buyer Dossier: HG Capital | HR.com Ltd",
+  "line_count": 126,
+  "scores": {
+    "narrative_quality": 8.5,
+    "strategic_depth": 8.0,
+    "evidence_density": 8.0,
+    "actionability": 2.0,
+    "completeness": 4.0,
+    "structure": 5.0
+  },
+  "overall": 6.33,
+  "tier": "good",
+  "gaps": {
+    "narrative": "Strong narrative but cuts off mid-sentence in the final section, indicating incomplete content.",
+    "structure": "Content is dense and well-written but lacks clear visual hierarchy, section breaks, and the page appears truncated.",
+    "tone": "Tone is excellent—confident, insightful, and operator-focused—but the abrupt ending disrupts the flow."
+  },
+  "top_strength": "Exceptional narrative quality and strategic depth, with a compelling, evidence-backed story that clearly articulates Hg's thesis and why HR.com fits.",
+  "biggest_gap": "Severe lack of actionability. No 'Golden Nugget' call openers, verified contacts, or outreach strategy provided, making the research difficult to operationalize."
+}
+```

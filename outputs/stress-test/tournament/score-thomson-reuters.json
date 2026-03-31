@@ -1,0 +1,24 @@
+```json
+{
+  "buyer_slug": "thomson-reuters",
+  "buyer_name": "Buyer Dossier: Thomson Reuters | HR.com Ltd",
+  "line_count": 357,
+  "scores": {
+    "narrative_quality": 8.5,
+    "strategic_depth": 8.0,
+    "evidence_density": 7.5,
+    "actionability": 9.0,
+    "completeness": 7.0,
+    "structure": 6.5
+  },
+  "overall": 8.03,
+  "tier": "gold",
+  "gaps": {
+    "narrative": "Strong narrative but could be more concise in the opening strategic fit section.",
+    "structure": "Content is dense and well-organized in sections, but the visual formatting in the provided text appears basic (no clear card-based layout, badges, or highlighted quotes evident from the plain text). Some sections like 'Verified Contacts' are cut off.",
+    "tone": "Tone is excellent—confident, insightful, and speaks directly to an operator with a clear strategic story."
+  },
+  "top_strength": "Actionability: Provides 4 excellent, well-explained 'Golden Nugget' call openers that are directly tied to specific strategic angles and CEO quotes, creating a ready-to-use outreach toolkit.",
+  "biggest_gap": "Completeness/Structure: The 'Verified Contacts' section is incomplete (cut off mid-sentence). While sections are present, the visual structure and polish implied by the rubric's top examples (card-based layout, clear hierarchy) are not fully realized in the plain text provided, and the contact list is unfinished."
+}
+```

@@ -1,0 +1,24 @@
+```json
+{
+  "buyer_slug": "sap-successfactors",
+  "buyer_name": "Buyer Dossier: SAP SuccessFactors | HR.com Ltd",
+  "line_count": 403,
+  "scores": {
+    "narrative_quality": 8.5,
+    "strategic_depth": 9.0,
+    "evidence_density": 5.0,
+    "actionability": 2.0,
+    "completeness": 4.0,
+    "structure": 6.0
+  },
+  "overall": 6.08,
+  "tier": "good",
+  "gaps": {
+    "narrative": "Strong narrative but lacks direct quotes from SAP leadership to ground the thesis in declared intent.",
+    "structure": "Content is dense and well-argued but the page appears truncated (cuts off mid-sentence) and lacks clear visual sectioning for key components like contacts and outreach strategy.",
+    "tone": "Tone is confident and operator-focused, but the absence of actionable tools (scripts, contacts) makes it feel more like an internal strategy memo than a ready-to-use outreach dossier."
+  },
+  "top_strength": "Exceptional strategic depth and narrative quality. Clearly articulates 4+ distinct, well-supported integration angles (community moat, content library, benchmarking data, demand-gen channel) that tell a compelling story of structural need.",
+  "biggest_gap": "Severe lack of actionability. Provides zero 'Golden Nugget' call openers, no verified contact information, and no recommended outreach approach, making it difficult for a seller to act on the excellent strategic analysis."
+}
+```

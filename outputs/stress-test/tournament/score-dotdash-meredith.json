@@ -1,0 +1,24 @@
+```json
+{
+  "buyer_slug": "dotdash-meredith",
+  "buyer_name": "Buyer Dossier: Dotdash Meredith | HR.com Ltd",
+  "line_count": 345,
+  "scores": {
+    "narrative_quality": 9.0,
+    "strategic_depth": 8.5,
+    "evidence_density": 8.0,
+    "actionability": 9.5,
+    "completeness": 7.0,
+    "structure": 7.5
+  },
+  "overall": 8.38,
+  "tier": "gold",
+  "gaps": {
+    "narrative": "None",
+    "structure": "Content appears truncated at the end (mid-sentence). Missing dedicated 'Earnings Call Data' and 'Verified Contacts' sections.",
+    "tone": "None"
+  },
+  "top_strength": "Exceptional actionability with 5 specific, well-explained 'Golden Nugget' call openers that directly tie strategic angles to the buyer's own language.",
+  "biggest_gap": "Incomplete page structure; the content cuts off abruptly and is missing key sections like a dedicated contact list and earnings data, lowering the completeness score."
+}
+```

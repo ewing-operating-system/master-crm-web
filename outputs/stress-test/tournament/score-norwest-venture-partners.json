@@ -1,0 +1,24 @@
+```json
+{
+  "buyer_slug": "norwest-venture-partners",
+  "buyer_name": "Buyer Dossier: Norwest Venture Partners | HR.com Ltd",
+  "line_count": 343,
+  "scores": {
+    "narrative_quality": 8.5,
+    "strategic_depth": 8.0,
+    "evidence_density": 6.5,
+    "actionability": 9.0,
+    "completeness": 7.0,
+    "structure": 7.0
+  },
+  "overall": 7.88,
+  "tier": "gold",
+  "gaps": {
+    "narrative": "Strong narrative but could be more concise in opening paragraph.",
+    "structure": "Key Earnings Quotes section contains irrelevant quotes (ServiceNow/xtype) and appears truncated for Norwest-specific quotes.",
+    "tone": "Consistent operator tone throughout."
+  },
+  "top_strength": "Exceptional actionability with 4 highly-specific, well-reasoned 'Golden Nugget' call openers that directly tie HR.com's assets to Norwest's portfolio strategy.",
+  "biggest_gap": "Evidence section is contaminated with irrelevant data and lacks proper sourcing/context for the quotes that are used, reducing credibility."
+}
+```

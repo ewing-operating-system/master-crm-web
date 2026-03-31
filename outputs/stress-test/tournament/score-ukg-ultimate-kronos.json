@@ -1,0 +1,24 @@
+```json
+{
+  "buyer_slug": "ukg-ultimate-kronos",
+  "buyer_name": "Buyer Dossier: UKG (Ultimate Kronos) | HR.com Ltd",
+  "line_count": 336,
+  "scores": {
+    "narrative_quality": 8.0,
+    "strategic_depth": 7.5,
+    "evidence_density": 6.5,
+    "actionability": 9.0,
+    "completeness": 6.0,
+    "structure": 7.0
+  },
+  "overall": 7.48,
+  "tier": "gold",
+  "gaps": {
+    "narrative": "Strong narrative start but could be more explicitly framed as a strategic story from the top (e.g., 'This is UKG's quest to...').",
+    "structure": "Content is present but formatting is inconsistent; some sections are truncated (e.g., Earnings Quotes cut off mid-sentence).",
+    "tone": "Good operator tone, but some sections (like M&A Appetite) are more analytical than narrative-driven."
+  },
+  "top_strength": "Actionability: Four excellent, specific 'Golden Nugget' call openers that are directly tied to CEO quotes and strategic angles, providing a ready-made outreach playbook.",
+  "biggest_gap": "Evidence Density & Completeness: While CEO quotes are used well, they lack specific dates/context (e.g., which earnings call?). The 'Earnings Quotes' section is incomplete, and key sections like 'Verified Contacts' and 'Recommended Approach' are entirely missing."
+}
+```

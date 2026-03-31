@@ -1,0 +1,24 @@
+```json
+{
+  "buyer_slug": "drake-star-partners-advisory-lead",
+  "buyer_name": "Buyer Dossier: Drake Star Partners (Advisory Lead) | HR.com Ltd",
+  "line_count": 107,
+  "scores": {
+    "narrative_quality": 9.0,
+    "strategic_depth": 8.0,
+    "evidence_density": 8.5,
+    "actionability": 2.0,
+    "completeness": 4.0,
+    "structure": 7.0
+  },
+  "overall": 6.68,
+  "tier": "good",
+  "gaps": {
+    "narrative": "The narrative is strong but focuses on establishing Drake Star as an advisor, not a buyer. The 'strategic fit' section is more about why Drake Star would be a good advisor, not why a buyer would acquire HR.com.",
+    "structure": "The page is a single, dense narrative block. While well-written, it lacks the scannable, sectioned structure (e.g., separate cards for Strategic Fit, Golden Nuggets, CEO Quotes, Contacts) defined in the rubric.",
+    "tone": "Tone is excellent—confident, insightful, and operator-focused—but the content is misaligned with the rubric's expectation of a buyer dossier."
+  },
+  "top_strength": "Exceptional narrative quality and evidence density. It tells a compelling, specific story about Drake Star's unique position in the HR tech M&A market, backed by concrete data points, quotes, and deal references.",
+  "biggest_gap": "Critical lack of actionability and incomplete structure for a 'buyer' dossier. It provides no call openers, verified contacts, or a recommended outreach approach, as it's profiling an advisor, not an acquirer."
+}
+```

@@ -1,0 +1,24 @@
+```json
+{
+  "buyer_slug": "silver-lake",
+  "buyer_name": "Buyer Dossier: Silver Lake | HR.com Ltd",
+  "line_count": 350,
+  "scores": {
+    "narrative_quality": 8.5,
+    "strategic_depth": 8.0,
+    "evidence_density": 7.0,
+    "actionability": 9.0,
+    "completeness": 7.5,
+    "structure": 7.0
+  },
+  "overall": 8.03,
+  "tier": "gold",
+  "gaps": {
+    "narrative": "Strong strategic narrative but could be more concise and flow better in the opening section.",
+    "structure": "Content is dense but well-organized; some visual hierarchy improvements could enhance scannability.",
+    "tone": "Consistent operator tone, but some sections could be more direct and less repetitive."
+  },
+  "top_strength": "Excellent actionability with 4+ specific, well-explained 'Golden Nugget' call openers directly tied to strategic angles and verified contacts.",
+  "biggest_gap": "Evidence density is good but relies heavily on the same few data points (ProService, Silae acquisitions, 2M members); lacks dated CEO quotes or specific financial figures beyond the acquisitions mentioned."
+}
+```

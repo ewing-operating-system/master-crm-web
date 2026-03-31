@@ -1,0 +1,24 @@
+```json
+{
+  "buyer_slug": "atd",
+  "buyer_name": "Buyer Dossier: ATD | HR.com Ltd",
+  "line_count": 169,
+  "scores": {
+    "narrative_quality": 7.5,
+    "strategic_depth": 8.0,
+    "evidence_density": 5.0,
+    "actionability": 1.0,
+    "completeness": 4.0,
+    "structure": 6.0
+  },
+  "overall": 5.38,
+  "tier": "good",
+  "gaps": {
+    "narrative": "Strong narrative flow but lacks the compelling, operator-focused opening hook described in the score_10 example. The 'Important Note on Source Quality' section, while honest, undercuts confidence and disrupts the narrative.",
+    "structure": "Content is cut off mid-sentence ('...response to SHRM's growi'), indicating the page is incomplete. Sections are well-labeled but the flow is interrupted by the source quality disclaimer.",
+    "tone": "Analytical and professional, but the 'operator tone' is muted. It reads more like a thorough internal memo than a confident, insight-driven pitch to a seller."
+  },
+  "top_strength": "Strategic Depth: The dossier excels at articulating multiple, well-reasoned acquisition angles (audience consolidation, content breadth, digital infrastructure, research synergy, certification cross-sell) backed by solid market context.",
+  "biggest_gap": "Actionability: The page provides zero ready-to-use tools for outreach. There are no 'Golden Nugget' call openers, no verified contact information, and no suggested approach strategy, making it purely informational rather than operational."
+}
+```

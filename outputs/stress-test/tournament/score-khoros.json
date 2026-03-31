@@ -1,0 +1,24 @@
+```json
+{
+  "buyer_slug": "khoros",
+  "buyer_name": "Buyer Dossier: Khoros | HR.com Ltd",
+  "line_count": 336,
+  "scores": {
+    "narrative_quality": 8.5,
+    "strategic_depth": 7.0,
+    "evidence_density": 6.0,
+    "actionability": 9.0,
+    "completeness": 5.0,
+    "structure": 6.0
+  },
+  "overall": 7.28,
+  "tier": "gold",
+  "gaps": {
+    "narrative": "Strong narrative core but could be more concise and flow better between sections.",
+    "structure": "Sections are present but formatting is inconsistent; the page appears truncated at the end (incomplete 'Key Earnings Quotes' section).",
+    "tone": "Tone is strong and operator-focused, but some sections feel slightly repetitive."
+  },
+  "top_strength": "Actionability: Provides 4 excellent, well-explained 'Golden Nugget' call openers directly tied to executive quotes and strategic angles.",
+  "biggest_gap": "Completeness & Evidence: The page is missing or has very thin core sections (e.g., 'Verified Contacts', 'Recommended Approach'). The 'Key Earnings Quotes' section is cut off and contains irrelevant data, reducing the quality of evidence."
+}
+```

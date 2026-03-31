@@ -1,0 +1,48 @@
+```json
+{
+  "rubric": {
+    "narrative_quality": {
+      "description": "Writing quality, specificity, and operator tone. Measures how well the page tells a compelling, non-generic story about the buyer's strategic needs and how the seller fits.",
+      "score_10_example": "Combines Lovable's strategic narrative flow (e.g., 'This is a story about a $50B giant that needs to own the future of work...') with Accenture's research depth (specific CEO quotes on vision, challenges, and M&A strategy). The tone is confident, insightful, and speaks directly to an operator.",
+      "score_5_example": "Clear and professional writing, but reads like a standard company overview. Lacks a strong narrative hook or distinctive operator voice. May state 'Accenture is a global professional services company' without framing it as a strategic story.",
+      "score_1_example": "Generic, vague, and template-sounding. Uses phrases like 'a leading company in its sector' or 'seeks strategic acquisitions' without any unique insight or tailored perspective.",
+      "weight": 0.25
+    },
+    "strategic_depth": {
+      "description": "Number of distinct, well-supported acquisition angles or strategic rationales for the buyer to acquire the seller.",
+      "score_10_example": "4+ distinct angles, each backed by evidence. E.g., Accenture page angles: 1) Cloud & Digital Transformation Gap, 2) Talent & HR Tech Gap, 3) Competitive Threat from Boutiques, 4) Vertical-Specific Expansion (Healthcare). Each angle references CEO quotes or financial data.",
+      "score_5_example": "2-3 angles mentioned, but they are broad or only partially supported. E.g., 'Accenture wants to grow in cloud and digital' without linking to specific CEO statements about gaps or competitive pressures.",
+      "score_1_example": "One generic, unsupported angle. E.g., 'Accenture acquires companies to grow.' No differentiation or evidence.",
+      "weight": 0.20
+    },
+    "evidence_density": {
+      "description": "Quantity and quality of hard, specific data points: CEO/executive quotes (with dates/context), financial figures, specific past deal references, and market data.",
+      "score_10_example": "8+ specific, dated CEO quotes (e.g., 'Q4 2023 Earnings Call: \"Our $1B investment in AI...\"'), dollar amounts, and references to past acquisitions (e.g., 'Kurt Salmon acquisition in 2016 to bolster retail consulting').",
+      "score_5_example": "3-5 pieces of evidence, but some are generic or lack specific context. E.g., 'The CEO said they are investing in AI' without the date, amount, or direct quote.",
+      "score_1_example": "No direct quotes, numbers, or specific references. All statements are high-level and unverifiable.",
+      "weight": 0.20
+    },
+    "actionability": {
+      "description": "Provides ready-to-use tools for outreach: specific call/email openers ('Golden Nuggets'), verified contact information, and a suggested approach strategy.",
+      "score_10_example": "5+ 'Golden Nugget' call openers tied to specific strategic angles (e.g., 'Open with their $1B AI investment gap in HR...'), 5+ verified contacts with roles and LinkedIn URLs, and a multi-step outreach approach (e.g., 'Step 1: Lead with Industry Cloud Angle').",
+      "score_5_example": "Provides a list of contacts and some high-level talking points, but no specific word-for-word openers or detailed outreach playbook.",
+      "score_1_example": "No scripts, empty or unverified contacts (e.g., 'info@accenture.com'), and no guidance on how to approach.",
+      "weight": 0.15
+    },
+    "completeness": {
+      "description": "Presence and substantive content in all key research sections.",
+      "score_10_example": "All 8 core sections are present and filled: 1) Strategic Fit / Narrative, 2) Golden Nuggets / Openers, 3) CEO Vision & Quotes, 4) M&A Appetite & History, 5) Challenges & Gaps, 6) Earnings Call Data, 7) Verified Contacts, 8) Recommended Approach.",
+      "score_5_example": "Most sections are present, but 2-3 are thin or lack depth (e.g., 'Challenges' section just has one bullet point; 'Contacts' are incomplete).",
+      "score_1_example": "Missing multiple major sections (e.g., no CEO quotes, no contacts, no strategic angles). Page is skeletal.",
+      "weight": 0.10
+    },
+    "structure": {
+      "description": "Visual layout, content density, and information hierarchy. Ensures the page is scannable, well-organized, and balanced.",
+      "score_10_example": "Like the Accenture page: clean card-based layout, balanced sections with appropriate content density, clear visual hierarchy (headers, badges, highlighted quotes), no walls of text or mostly empty spaces.",
+      "score_5_example": "Decent organization but could be improved. Some sections are too long (wall of text), others too sparse. Visual design is basic but functional.",
+      "score_1_example": "Poor structure: a single wall of text, chaotic formatting, or a page dominated by empty containers with little content.",
+      "weight": 0.10
+    }
+  }
+}
+```

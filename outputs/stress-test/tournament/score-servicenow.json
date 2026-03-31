@@ -1,0 +1,24 @@
+```json
+{
+  "buyer_slug": "servicenow",
+  "buyer_name": "Buyer Dossier: ServiceNow | HR.com Ltd",
+  "line_count": 342,
+  "scores": {
+    "narrative_quality": 8.5,
+    "strategic_depth": 8.0,
+    "evidence_density": 8.0,
+    "actionability": 9.0,
+    "completeness": 7.5,
+    "structure": 7.0
+  },
+  "overall": 8.18,
+  "tier": "gold",
+  "gaps": {
+    "narrative": "Strong narrative but could be more concise in the opening strategic fit section.",
+    "structure": "Content is dense and well-organized but the visual layout from the rubric (card-based, badges) is implied rather than confirmed in text format. Some sections run long.",
+    "tone": "Tone is excellent—confident and operator-focused."
+  },
+  "top_strength": "Actionability: Provides 5 specific, well-reasoned 'Golden Nugget' call openers directly tied to strategic angles and financial data, making it immediately useful for outreach.",
+  "biggest_gap": "Structure & Completeness: While all core concepts are covered, the 'Key Earnings Quotes' section is cut off mid-sentence, and the structure, while logically sound, is presented as a continuous text block without clear visual segmentation as described in the ideal rubric example."
+}
+```
