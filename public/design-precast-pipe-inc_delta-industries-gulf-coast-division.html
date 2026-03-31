@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Buyer Dossier: Delta Industries (Gulf Coast Division) | Design Precast &amp; Pipe, Inc.</title>
+<title>Acquisition Target: Delta Industries (Gulf Coast Division) | Design Precast &amp; Pipe, Inc.</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -47,6 +47,24 @@
   td { padding: 10px 12px; border-bottom: 1px solid #21262d; color: #c9d1d9; }
   tr:hover td { background: #1c2128; }
   a { color: #58a6ff; text-decoration: none; }
+  .badge { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; color: #f0f6fc; }
+  .badge.green { background: #27ae60; }
+  .badge.orange { background: #f39c12; color: #1a1a2e; }
+  .badge.blue { background: #1f6feb; }
+  .badge.gray { background: #30363d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
@@ -58,30 +76,100 @@
   <span style="color:#d0d7de">|</span>
   <style>.nc-nav a{color:#0969da;text-decoration:none;font-weight:500}.nc-nav a:hover{text-decoration:underline}</style>
   <a href="index.html">Home</a>
-      <a href="system-overview.html">System Overview</a>
-      <a href="design-precast-and-pipe-inc-hub.html">Design Precast Hub</a>
+  <a href="system-overview.html">System Overview</a>
+  <a href="design-precast-and-pipe-inc-hub.html">Design Precast Hub</a>
 </div>
 <!-- NAV:END -->
 
-
-
 <div class="page">
   <div class="header">
-    <div class="header-label">Buyer Dossier</div>
+    <div class="header-label">Acquisition Target — Buy-Side</div>
     <h1>Delta Industries (Gulf Coast Division)</h1>
-    <div class="subtitle">Prepared for Design Precast &amp; Pipe, Inc.</div>
-    <div class='score-badge'><span class='score-num'>8.0</span><span class='score-label'>Fit</span></div>
+    <div class="subtitle">Gulfport–Biloxi–Bay St. Louis–Lucedale, MS | Precast Concrete Manufacturer</div>
+    <div class="score-badge"><span class="score-num">8.0</span><span class="score-label">Fit</span></div>
   </div>
   <div class="context-bar">
-    <strong>Design Precast &amp; Pipe, Inc.</strong> &bull; Pat Fore III (Founder/President/Owner)
+    <strong>Design Precast &amp; Pipe, Inc.</strong> &bull; Pat Fore III (Founder/President/Owner) &bull; Biloxi, MS &bull;
+    <span class="badge blue" style="font-size:10px">Buy-Side Target</span>
   </div>
   <div class="content">
-    <div class="card" id="buyer-profile">
-        <h2>Buyer Profile</h2>
-        <p>Gulf Coast division of Delta Industries operating in the Gulfport-Biloxi-Bay St. Louis-Lucedale corridor. Same market as Design Precast — a local competitor tuck-in would consolidate the Mississippi Gulf Coast precast market. Divisions of larger companies are sometimes divested.</p>
+
+    <!-- 1. COMPANY PROFILE -->
+    <div class="card" id="company-profile">
+      <h2>Company Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Company</div><div class="fact-value">Delta Industries — Gulf Coast Division</div></div>
+        <div class="fact-item"><div class="fact-label">Location</div><div class="fact-value">Gulfport–Biloxi–Bay St. Louis–Lucedale, MS corridor</div></div>
+        <div class="fact-item"><div class="fact-label">Products</div><div class="fact-value">Precast concrete structures, drainage products, utility structures</div></div>
+        <div class="fact-item"><div class="fact-label">Revenue</div><div class="fact-value">Not disclosed</div></div>
+        <div class="fact-item"><div class="fact-label">Employees</div><div class="fact-value">Not disclosed</div></div>
+        <div class="fact-item"><div class="fact-label">Ownership</div><div class="fact-value">Division of Delta Industries (larger parent company)</div></div>
+      </div>
     </div>
-    
-    
+
+    <!-- 2. KEY CONTACTS -->
+    <div class="card" id="contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <tr><th>Name</th><th>Title</th><th>Email</th><th>Phone</th><th>Notes</th></tr>
+        <tr>
+          <td>Division General Manager</td>
+          <td>GM / Division Head</td>
+          <td>—</td>
+          <td>—</td>
+          <td>Approach parent company for divestiture conversation; GM may be a secondary contact</td>
+        </tr>
+        <tr>
+          <td>Delta Industries Corporate</td>
+          <td>Corporate Development / Owner</td>
+          <td>—</td>
+          <td>—</td>
+          <td>Decision-maker for any divestiture will be at the parent company level</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- 3. STRATEGIC FIT -->
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p><strong style="color:#f0f6fc">Same Market, Local Competitor Tuck-In:</strong> Delta Industries' Gulf Coast Division operates in the Gulfport–Biloxi corridor — the same market as Design Precast. Acquiring this division would consolidate the Mississippi Gulf Coast precast market, eliminating a direct local competitor and gaining their customer relationships, production capacity, and workforce.</p>
+        <p><strong style="color:#f0f6fc">Divestiture Opportunity:</strong> Divisions of larger companies are sometimes divested when they fall outside the parent's core focus, underperform within the portfolio, or when the parent needs capital. Design Precast is ideally positioned to be the acquirer of record — local operator, immediate operational fit, and no integration complexity.</p>
+        <p><strong style="color:#f0f6fc">Market Consolidation Value:</strong> Two competing precast plants in the same Gulf Coast corridor means price competition, shared customer relationships, and split bidding on the same contracts. Consolidation eliminates that friction and creates a single dominant regional supplier with better pricing power and more complete coverage.</p>
+        <p><strong style="color:#f0f6fc">Workforce and Equipment:</strong> An operating precast plant with trained workers and production equipment in the same region is worth significantly more to Design Precast than to any out-of-market buyer. Local operating knowledge, existing customer familiarity, and proximity to Design Precast's own plant mean integration costs would be minimal.</p>
+      </div>
+    </div>
+
+    <!-- 4. APPROACH STRATEGY -->
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <p style="font-size:13px;color:#8b949e;margin-bottom:16px;font-style:italic">Call opener: "We're a precast manufacturer here on the Gulf Coast — we operate in the same markets as your division. We've been watching the industry consolidate, and we think there may be a conversation worth having about the Gulf Coast operation. We'd like to connect with whoever handles strategic decisions for that division."</p>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text">Frame the approach around the parent company's strategic interests — a non-core Gulf Coast division may be more valuable to them as cash than as an operating unit competing in a market they don't dominate.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text">Design Precast is the logical buyer — local, operating in the same market, able to integrate immediately with no transition disruption to the division's customers or employees. No out-of-market buyer can match that.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text">Consolidating the Gulf Coast precast market is good for both the seller (clean exit at fair value) and the acquired division's employees (absorbed into a stronger local operator rather than cut or relocated).</div>
+      </div>
+    </div>
+
+    <!-- 5. PIPELINE HISTORY -->
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <tr><th>Step</th><th>Status</th><th>Date</th><th>Notes</th></tr>
+        <tr><td>Target Identified</td><td><span class="badge green" style="font-size:10px">Complete</span></td><td>Mar 2026</td><td>Added to Design Precast buy-side pipeline</td></tr>
+        <tr><td>Initial Letter</td><td><span class="badge gray" style="font-size:10px">Pending</span></td><td>—</td><td>Next Chapter M&amp;A campaign — approach parent company</td></tr>
+        <tr><td>Discovery Call</td><td><span class="badge gray" style="font-size:10px">Pending</span></td><td>—</td><td>—</td></tr>
+        <tr><td>LOI / Term Sheet</td><td><span class="badge gray" style="font-size:10px">Pending</span></td><td>—</td><td>—</td></tr>
+      </table>
+    </div>
+
   </div>
   <div class="footer">
     Generated March 29, 2026 &bull; Next Chapter M&A Advisory &bull; Confidential

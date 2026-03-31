@@ -49,6 +49,9 @@
   }
   .score-badge .score-num { font-size: 28px; font-weight: 700; line-height: 1; color: white; }
   .score-badge .score-label { font-size: 8px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin-top: 2px; color: white; }
+  .score-high { background: #1a4731 !important; border: 2px solid #2ea043; }
+  .score-med  { background: #3d2f00 !important; border: 2px solid #d29922; }
+  .score-low  { background: #3d0c0c !important; border: 2px solid #da3633; }
 
   /* CONTEXT BAR */
   .context-bar {
@@ -73,6 +76,17 @@
   .card p { margin-bottom: 10px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
   .card strong { color: #f0f6fc; }
 
+  /* FACT GRID */
+  .fact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: #8b949e; text-transform: uppercase; margin-bottom: 4px; }
+  .fact-value { font-size: 14px; font-weight: 500; color: #f0f6fc; }
+
+  /* NARRATIVE BOX */
+  .narrative-box { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 18px 20px; }
+  .narrative-box p { margin-bottom: 10px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+
   /* NARRATIVE CONTENT */
   .narrative-content p { margin-bottom: 12px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
   .narrative-content blockquote {
@@ -80,7 +94,22 @@
     font-style: italic; color: #8b949e;
   }
 
-  /* URGENCY CARD (competitive moat) */
+  /* TALKING POINTS */
+  .talking-point { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+  .tp-num {
+    flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+    background: #1f3d5c; border: 1px solid #58a6ff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: #58a6ff;
+  }
+  .tp-text { font-size: 14px; line-height: 1.7; color: #c9d1d9; padding-top: 3px; }
+
+  /* STATUS BADGES */
+  .status-complete { background: #1a4731; color: #3fb950; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+  .status-next     { background: #3d2f00; color: #d29922; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+  .status-pending  { background: #21262d; color: #8b949e; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+
+  /* URGENCY CARD */
   .urgency-card {
     border: 2px solid #e74c3c !important;
     background: linear-gradient(135deg, #161b22, #1a1015) !important;
@@ -203,8 +232,6 @@
 </div>
 <!-- NAV:END -->
 
-
-
 <div class="page">
 
   <!-- HEADER -->
@@ -214,32 +241,83 @@
     <div class="subtitle">Prepared for Air Control</div>
     <div class="header-meta">
       <span class='tag'>Type: PE</span>
-      
       <span class='tag'>Greenwich, CT</span>
     </div>
-    
+    <div class="score-badge score-med">
+      <div class="score-num">7</div>
+      <div class="score-label">Score</div>
+    </div>
   </div>
 
   <!-- CONTEXT BAR -->
   <div class="context-bar">
     <div>
       <strong>Air Control</strong> &bull; Fred Lowry &bull; HVAC
-      &bull; 3000000.0
+      &bull; McLean, VA
     </div>
     <div>March 29, 2026</div>
   </div>
 
   <!-- CONTENT -->
   <div class="content">
-    
-    <div class="card" id="approach-strategy">
-        <h2>Approach Strategy</h2>
-        
-        <div class="approach-opener">
-            <div class="opener-label">CALL OPENER</div>
-            <p>**&quot;Legacy just closed their 33rd add-on and they still don&#x27;t have a partner in Northern Virginia — your market is the gap in their national map.&quot;** | **&quot;Gridiron did 24 add-ons in 2024 alone and just exited two platforms from Fund IV — their Fund V has capital to deploy and Legacy is the vehicle; the timing for a McLean HVAC operator couldn&#x27;t be better.&quot;** | **&quot;When Gridiron announced the John Henry&#x27;s Plumbing and Buehler Air Conditioning deals in May 2023, they specifically said the thesis was &#x27;entering new geographies and gaining scale&#x27; — that&#x27;s the exact pitch for Air Control.&quot;**</p>
-        </div>
+
+    <!-- BUYER PROFILE -->
+    <div class="card" id="buyer-profile">
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Platform</div><div class="fact-value">Legacy Service Partners</div></div>
+        <div class="fact-item"><div class="fact-label">Backer</div><div class="fact-value">Gridiron Capital (PE)</div></div>
+        <div class="fact-item"><div class="fact-label">Headquarters</div><div class="fact-value">Greenwich, CT</div></div>
+        <div class="fact-item"><div class="fact-label">Revenue</div><div class="fact-value">Not disclosed</div></div>
+        <div class="fact-item"><div class="fact-label">Verticals</div><div class="fact-value">HVAC, Plumbing, Electrical (home services)</div></div>
+        <div class="fact-item"><div class="fact-label">Acquisition Strategy</div><div class="fact-value">Aggressive bolt-on; 33+ add-ons, geographic expansion focus</div></div>
+      </div>
     </div>
+
+    <!-- CONTACTS -->
+    <div class="card" id="contacts">
+      <h2>Key Contacts</h2>
+      <table><thead><tr><th>Name</th><th>Title</th><th>Email</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Tom Burger</td><td>Partner, Gridiron Capital</td><td>—</td><td>PE sponsor; leads home services vertical</td></tr>
+        <tr><td>Legacy CEO</td><td>Chief Executive Officer</td><td>—</td><td>Platform operator; M&amp;A integration lead</td></tr>
+        <tr><td>Corp Dev Lead</td><td>VP Corporate Development</td><td>—</td><td>Primary deal-sourcing contact</td></tr>
+      </tbody></table>
+    </div>
+
+    <!-- STRATEGIC FIT -->
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Gridiron Capital's home services platform Legacy Service Partners has executed 33+ add-on acquisitions and has stated geographic expansion as a core pillar of its Fund V thesis. Northern Virginia — specifically the McLean/Tysons corridor — is a conspicuous gap in their national footprint. The DC metro is one of the highest average-household-income markets in the country, with dense federal facility HVAC demand that aligns directly with Air Control's book of business.</p>
+        <p>Legacy's May 2023 announcement of the John Henry's Plumbing and Buehler Air Conditioning deals explicitly cited "entering new geographies and gaining scale" as the rationale — Air Control fits both criteria. Gridiron's Fund IV generated exits, and Fund V capital is actively deploying. Timing and geography align favorably.</p>
+      </div>
+    </div>
+
+    <!-- APPROACH STRATEGY -->
+    <div class="card" id="approach">
+      <h2>Approach Strategy</h2>
+      <div style="background:#0b2e1a;border:1px solid #27ae60;border-radius:8px;padding:18px 22px;margin-bottom:18px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:#27ae60;margin-bottom:8px;text-transform:uppercase;">Call Opener</div>
+        <p style="color:#a3e4b8;font-size:14px;line-height:1.7;margin:0;">"Legacy just closed their 33rd add-on and they still don't have a partner in Northern Virginia — your market is the gap in their national map."</p>
+      </div>
+      <div class="talking-point"><div class="tp-num">1</div><div class="tp-text"><strong>Fund V deployment urgency.</strong> Gridiron did 24 add-ons in 2024 alone and just exited two platforms from Fund IV — their Fund V has capital to deploy and Legacy is the vehicle. The timing for a McLean HVAC operator couldn't be better.</div></div>
+      <div class="talking-point"><div class="tp-num">2</div><div class="tp-text"><strong>Geography thesis match.</strong> When Gridiron announced the John Henry's Plumbing and Buehler Air Conditioning deals in May 2023, they specifically cited "entering new geographies and gaining scale" — that's the exact pitch for Air Control's McLean footprint.</div></div>
+      <div class="talking-point"><div class="tp-num">3</div><div class="tp-text"><strong>Federal facility premium.</strong> Air Control's federal and government-adjacent customer base in the DC corridor commands service contract multiples above residential-only platforms — a meaningful margin story for a platform being built toward exit.</div></div>
+    </div>
+
+    <!-- PIPELINE HISTORY -->
+    <div class="card" id="pipeline">
+      <h2>Pipeline History</h2>
+      <table><thead><tr><th>Step</th><th>Status</th><th>Date</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Target Identified</td><td><span class="status-complete">Complete</span></td><td>2025</td><td>Identified as geographic expansion buyer for Air Control</td></tr>
+        <tr><td>Research Complete</td><td><span class="status-complete">Complete</span></td><td>Mar 2026</td><td>Full dossier built; Legacy platform confirmed active acquirer</td></tr>
+        <tr><td>Outreach</td><td><span class="status-next">Next Step</span></td><td>—</td><td>Initial contact via Gridiron corp dev or Legacy CEO</td></tr>
+        <tr><td>Intro Call</td><td><span class="status-pending">Pending</span></td><td>—</td><td>Qualify geographic appetite and deal size fit</td></tr>
+      </tbody></table>
+    </div>
+
   </div>
 
   <!-- FOOTER -->

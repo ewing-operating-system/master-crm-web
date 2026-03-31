@@ -16,8 +16,8 @@ fail() { echo -e "${RED}[FAIL]${NC} $1"; }
 
 # ─────────────────────────────────────────────────────────────────────────────
 # FIX 1: Supabase credential mismatch in ~/.openclaw/.env
-# The primary .env has keys from project rdnnhxhohwjucvjwbwch (OLD)
-# but URL points to dwrnfpjcvydhmhnvyzov (CURRENT).
+# The primary .env had keys from project rdnnhxhohwjucvjwbwch (OLD/RETIRED)
+# All keys now point to dwrnfpjcvydhmhnvyzov (CURRENT/master-crm).
 # Workspace .env has the correct keys.
 # ─────────────────────────────────────────────────────────────────────────────
 log "FIX 1: Patching Supabase credentials in ~/.openclaw/.env"

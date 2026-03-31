@@ -48,6 +48,19 @@
   tr:hover td { background: #1c2128; }
   a { color: #58a6ff; text-decoration: none; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
 </head>
@@ -70,22 +83,79 @@
     <div class="header-label">Buyer Dossier</div>
     <h1>Aligned Climate Capital</h1>
     <div class="subtitle">Prepared for AquaScience</div>
-    
+
   </div>
   <div class="context-bar">
     <strong>AquaScience</strong> &bull; Lawrence &quot;Larry&quot; Casey
   </div>
   <div class="content">
+
     <div class="card" id="buyer-profile">
-        <h2>Buyer Profile</h2>
-        <p>Aligned Climate Capital is a specialized investment firm focused on the clean energy transition, managing capital across infrastructure and venture investments. The firm's inaugural Impact Report documented impressive outcomes: investments have avoided over 85,000 metric tons of CO2 and generated 1.16 million MWh of clean energy since 2018, while supporting 1,671 jobs, many in underserved communities. Aligned also committed 3% of carried interest from its latest solar infrastructure fund to nonprofit partners advancing energy access and workforce development.</p>
-<p>Founded with a mission to invest in companies and projects accelerating the clean energy transition, Aligned operates at the intersection of impact investing and infrastructure. Mary King serves as a senior leader at the firm. The global impact investing market has reached a record $1.6 trillion, positioning Aligned within a rapidly growing asset class.</p>
-<p>Aligned's portfolio company Align invested in a cleaner environment through the acquisition of MKB Company, demonstrating the firm's willingness to acquire operating companies in the environmental services space. This precedent is directly relevant to AquaScience: water treatment is fundamentally an environmental service with measurable sustainability outcomes.</p>
-<p>The strategic rationale for Aligned Climate Capital acquiring AquaScience ties to water treatment's role in environmental protection and climate adaptation. Water treatment prevents contamination of natural water sources, enables water reuse and recycling, and supports industries transitioning to more sustainable operations. These outcomes align directly with Aligned's impact measurement framework and investment mandate.</p>
-<p>For AquaScience, Aligned Climate Capital would bring mission-aligned capital, impact measurement expertise, and connections to the broader clean energy and sustainability ecosystem. Wyoming's water treatment needs -- particularly around energy-sector water management and environmental remediation -- resonate with Aligned's focus on clean energy transition infrastructure. The firm's commitment to underserved communities aligns with serving rural Wyoming water treatment needs.</p>
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Firm Type</div><div class="fact-value">Climate-Focused Investment Firm</div></div>
+        <div class="fact-item"><div class="fact-label">Strategy</div><div class="fact-value">Infrastructure &amp; Venture — Clean Energy Transition</div></div>
+        <div class="fact-item"><div class="fact-label">AUM</div><div class="fact-value">Not disclosed</div></div>
+        <div class="fact-item"><div class="fact-label">Impact Market Context</div><div class="fact-value">Global impact investing market: $1.6T (record)</div></div>
+        <div class="fact-item"><div class="fact-label">CO2 Avoided (since 2018)</div><div class="fact-value">&gt;85,000 metric tons</div></div>
+        <div class="fact-item"><div class="fact-label">Clean Energy Generated</div><div class="fact-value">1.16M MWh</div></div>
+        <div class="fact-item"><div class="fact-label">Senior Leader</div><div class="fact-value">Mary King</div></div>
+        <div class="fact-item"><div class="fact-label">Carried Interest to Nonprofits</div><div class="fact-value">3% from latest solar infrastructure fund</div></div>
+      </div>
     </div>
-    
-    
+
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Title</th><th>Coverage</th><th>Email</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Mary King</td><td>Senior Leader</td><td>Portfolio strategy, impact mandate</td><td>—</td></tr>
+          <tr><td>Investment Team</td><td>Infrastructure Investing</td><td>Water &amp; environmental services acquisitions</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Water treatment is a core climate infrastructure service — it prevents contamination of natural water sources, enables water reuse and recycling, and supports industries transitioning to more sustainable operations. These outcomes map directly to Aligned Climate Capital's impact measurement framework and investment mandate in climate adaptation and environmental protection.</p>
+        <p>Aligned's portfolio company precedent (acquisition of MKB Company through environmental services) demonstrates the firm's willingness to invest in operating businesses with measurable environmental outcomes. AquaScience's Wyoming operations produce quantifiable impact: volumes of industrial wastewater treated, contaminant loads prevented from entering natural water systems, and water recycled back into energy and agricultural operations.</p>
+        <p>Wyoming's energy sector water management needs — treatment for oil and gas produced water, mining effluent, and agricultural runoff — align with Aligned's focus on the clean energy transition infrastructure. Serving rural Wyoming communities also resonates with the firm's commitment to underserved communities, documented in its inaugural Impact Report.</p>
+      </div>
+    </div>
+
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <p style="font-size:13px;color:#8b949e;margin-bottom:14px;"><strong style="color:#c9d1d9;">Call Opener:</strong> "Your impact thesis ties to clean energy transition infrastructure — water treatment is exactly that. We represent an operating water treatment company in Wyoming whose work prevents contamination, enables water reuse, and supports energy-sector sustainability. The impact metrics are measurable and the business is cash-generating. Worth exploring?"</p>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text"><strong>Measurable environmental impact, not theory.</strong> AquaScience treats real industrial and municipal water in Wyoming — contaminant loads prevented, volumes recycled, communities served. Aligned can quantify and report these outcomes in its LP impact reporting, strengthening its next fund narrative.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text"><strong>Climate adaptation is a water problem.</strong> Water scarcity, contamination from extraction industries, and agricultural water stress are front-line climate adaptation issues. AquaScience operates at the intersection of all three in Wyoming, making it mission-critical infrastructure under Aligned's investment mandate.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text"><strong>Cash-flowing infrastructure, not a venture bet.</strong> Unlike early-stage climate technology, AquaScience is a proven operating business with existing customer contracts and recurring revenue. It provides Aligned's infrastructure allocation with stable returns alongside its impact metrics.</div>
+      </div>
+    </div>
+
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Activity</th><th>Contact</th><th>Outcome</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>—</td><td>Initial Research &amp; Profile Build</td><td>Internal</td><td>Dossier compiled</td><td><span class="status-complete">Complete</span></td></tr>
+          <tr><td>—</td><td>First Outreach</td><td>Larry Casey</td><td>Pending</td><td><span class="status-next">Next Step</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
   <div class="footer">
     Generated March 29, 2026 &bull; Next Chapter M&A Advisory &bull; Confidential

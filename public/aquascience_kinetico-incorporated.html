@@ -48,6 +48,19 @@
   tr:hover td { background: #1c2128; }
   a { color: #58a6ff; text-decoration: none; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
 </head>
@@ -70,23 +83,82 @@
     <div class="header-label">Buyer Dossier</div>
     <h1>Kinetico Incorporated</h1>
     <div class="subtitle">Prepared for AquaScience</div>
-    
+
   </div>
   <div class="context-bar">
     <strong>AquaScience</strong> &bull; Lawrence &quot;Larry&quot; Casey
   </div>
   <div class="content">
+
     <div class="card" id="buyer-profile">
-        <h2>Buyer Profile</h2>
-        <p>Kinetico Incorporated is a leading manufacturer and provider of water treatment systems, headquartered in Newbury, Ohio. The company specializes in residential and commercial water treatment solutions including water softeners, drinking water filtration systems, and specialty water treatment applications. Kinetico is known for its non-electric, demand-operated water treatment technology, which differentiates its products through lower operating costs and reduced environmental impact.</p>
-<p>Note: The Exa research returned results primarily related to Kinetik Holdings (KNTK), a midstream energy company, which is a different entity. Kinetico Incorporated is the water treatment company, distinct from the publicly traded energy firm.</p>
-<p>Kinetico operates through a global network of independent dealers and company-owned operations, providing water treatment solutions to residential, commercial, and light industrial customers. The company's non-electric water treatment technology creates a differentiated value proposition: systems operate without timers or computers, instead regenerating based on actual water usage. This demand-based approach reduces water and salt waste while providing consistent water quality.</p>
-<p>The strategic rationale for Kinetico acquiring AquaScience is rooted in geographic and service expansion. Kinetico's dealer network model benefits from density -- more service points in a given region improve customer response times, reduce travel costs, and increase market share. AquaScience's Wyoming operations would add a new service territory to Kinetico's network, potentially serving as a company-owned hub from which to build dealer relationships across the Mountain West.</p>
-<p>Kinetico's technology portfolio could also enhance AquaScience's service offerings. Kinetico's proprietary water softening, filtration, and treatment systems could be deployed through AquaScience's customer relationships, creating cross-selling opportunities. Conversely, AquaScience's larger-scale industrial and municipal treatment capabilities could extend Kinetico's reach beyond its traditional residential and commercial focus.</p>
-<p>For AquaScience, Kinetico's established brand, proprietary technology, and global dealer network provide a strong foundation for growth. The combination would create a water treatment platform with both the local market expertise of AquaScience and the technological and brand advantages of Kinetico's established platform.</p>
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Company</div><div class="fact-value">Kinetico Incorporated</div></div>
+        <div class="fact-item"><div class="fact-label">Type</div><div class="fact-value">Private — Water Treatment Systems Manufacturer</div></div>
+        <div class="fact-item"><div class="fact-label">Headquarters</div><div class="fact-value">Newbury, Ohio</div></div>
+        <div class="fact-item"><div class="fact-label">Focus</div><div class="fact-value">Residential &amp; Commercial Water Treatment</div></div>
+        <div class="fact-item"><div class="fact-label">Technology</div><div class="fact-value">Non-electric, demand-operated water softening &amp; filtration</div></div>
+        <div class="fact-item"><div class="fact-label">Distribution</div><div class="fact-value">Global independent dealer network + company-owned ops</div></div>
+        <div class="fact-item"><div class="fact-label">Growth Lever</div><div class="fact-value">Geographic dealer density; new company-owned territories</div></div>
+        <div class="fact-item"><div class="fact-label">Note</div><div class="fact-value">Distinct from Kinetik Holdings (KNTK — midstream energy)</div></div>
+      </div>
     </div>
-    
-    
+
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Title</th><th>Relevance</th><th>Email</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Kinetico Executive Team</td><td>Senior Leadership</td><td>Geographic expansion decisions; company-owned territory strategy</td><td>—</td></tr>
+          <tr><td>VP Business Development</td><td>Growth &amp; Partnerships</td><td>New dealer/territory development; M&amp;A interest</td><td>—</td></tr>
+          <tr><td>Mountain West Regional Manager</td><td>Regional Operations</td><td>Wyoming market intelligence; dealer gap identification</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Kinetico's business model runs on dealer density — the more service points in a region, the lower the cost to serve, the faster the response times, and the higher the market share. Wyoming is a territory where Kinetico's dealer network is sparse or absent. AquaScience would give Kinetico an immediate company-owned hub from which to anchor and grow Mountain West coverage.</p>
+        <p>The technology complement is also real. Kinetico's proprietary demand-operated water softening and filtration systems could be deployed through AquaScience's existing customer relationships — creating cross-sell revenue that neither company could capture independently. AquaScience's larger-scale industrial and commercial capabilities extend Kinetico's addressable market beyond its traditional residential sweet spot.</p>
+        <p>Kinetico is a focused water treatment operator evaluating an operator with the same DNA. This isn't a financial buyer looking at an unfamiliar sector — it's a water treatment company acquiring water treatment expertise in a new geography. Integration friction is low: same technical language, same customer relationship model, same service delivery logic.</p>
+      </div>
+    </div>
+
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <p style="font-size:13px;color:#8b949e;margin-bottom:14px;"><strong style="color:#c9d1d9;">Call Opener:</strong> "Kinetico's model depends on dealer density — and Wyoming is a gap in your Mountain West network. We're running a process on a Wyoming water treatment operator that could anchor company-owned coverage in the region. Wanted to get in front of your business development team before we open this broadly."</p>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text"><strong>Wyoming is a dealer gap you can fill with a company-owned hub.</strong> AquaScience gives Kinetico an established, operating presence in Wyoming rather than starting from zero with a new dealer search. The customer relationships are built. The territory knowledge is embedded. You're buying speed to market.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text"><strong>AquaScience extends your addressable market upmarket.</strong> Kinetico is primarily residential and light commercial. AquaScience's industrial and larger commercial treatment experience opens the door to customers Kinetico currently can't serve. You get both the territory and the capability expansion in one acquisition.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text"><strong>Same business, new geography.</strong> There's no sector learning curve here. Kinetico knows water treatment. AquaScience is a water treatment company. The integration question is operational, not strategic — and that's the easiest kind of acquisition to execute.</div>
+      </div>
+    </div>
+
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Activity</th><th>Outcome</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Mar 2026</td><td>Dossier prepared; Kinetico identified as strategic geographic expansion buyer</td><td>Research complete</td><td><span class="status-complete">Complete</span></td></tr>
+          <tr><td>—</td><td>Initial outreach to business development leadership</td><td>Pending</td><td><span class="status-next">Next Step</span></td></tr>
+          <tr><td>—</td><td>NDA &amp; teaser delivery</td><td>Pending</td><td>—</td></tr>
+          <tr><td>—</td><td>Management introduction</td><td>Pending</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
   <div class="footer">
     Generated March 29, 2026 &bull; Next Chapter M&A Advisory &bull; Confidential

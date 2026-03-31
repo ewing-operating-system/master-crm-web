@@ -75,61 +75,6 @@
 
   /* NARRATIVE CONTENT */
   .narrative-content p { margin-bottom: 12px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
-  .narrative-content blockquote {
-    border-left: 3px solid #58a6ff; padding-left: 16px; margin: 12px 0;
-    font-style: italic; color: #8b949e;
-  }
-
-  /* URGENCY CARD (competitive moat) */
-  .urgency-card {
-    border: 2px solid #e74c3c !important;
-    background: linear-gradient(135deg, #161b22, #1a1015) !important;
-  }
-  .urgency-card h2 { color: #e74c3c !important; border-bottom-color: #e74c3c40 !important; }
-  .urgency-card::before {
-    content: 'URGENT'; position: absolute; top: -1px; right: 24px;
-    background: #e74c3c; color: white; font-size: 10px; font-weight: 700;
-    letter-spacing: 1.5px; padding: 4px 12px; border-radius: 0 0 6px 6px;
-  }
-  .urgency-card { position: relative; }
-
-  /* GOLDEN NUGGET CARDS */
-  .nugget-card {
-    background: #0d1117; border: 1px solid #21262d; border-radius: 8px;
-    padding: 20px; margin-bottom: 16px; border-left: 4px solid #f5a623;
-  }
-  .nugget-header {
-    font-size: 13px; font-weight: 700; color: #f5a623; margin-bottom: 12px;
-    text-transform: uppercase; letter-spacing: 1px;
-  }
-  .ceo-quote {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic; font-size: 15px; line-height: 1.7;
-    color: #e6e6e6; border-left: 3px solid #58a6ff;
-    padding: 12px 0 12px 20px; margin: 12px 0;
-  }
-  .nugget-opener {
-    background: #0b2e1a; border: 1px solid #27ae60; border-radius: 6px;
-    padding: 14px 18px; margin: 12px 0;
-  }
-  .nugget-opener p { color: #a3e4b8 !important; margin: 0 !important; font-size: 13px !important; line-height: 1.65 !important; }
-  .opener-label {
-    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
-    color: #27ae60; margin-bottom: 6px; text-transform: uppercase;
-  }
-  .nugget-why {
-    font-size: 12.5px; color: #8b949e; margin-top: 10px; line-height: 1.6;
-    padding-top: 10px; border-top: 1px solid #21262d;
-  }
-
-  /* EARNINGS QUOTES */
-  .earnings-quote {
-    margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #21262d;
-  }
-  .earnings-quote:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-  .quote-attribution {
-    font-size: 12px; color: #8b949e; margin-top: 8px; font-weight: 500;
-  }
 
   /* CONTACTS TABLE */
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -149,14 +94,25 @@
     padding: 18px 22px; margin-bottom: 16px;
   }
   .approach-opener p { color: #a3e4b8 !important; font-size: 14px !important; line-height: 1.7 !important; }
-  .outreach-step {
-    background: #0d1117; border: 1px solid #21262d; border-radius: 6px;
-    padding: 14px 18px; margin-bottom: 10px;
+  .opener-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+    color: #27ae60; margin-bottom: 6px; text-transform: uppercase;
   }
-  .step-label {
-    font-size: 11px; font-weight: 700; color: #58a6ff; letter-spacing: 1px;
-    text-transform: uppercase; margin-bottom: 4px;
-  }
+
+  /* SAP COMPONENTS */
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
 
   /* FOOTER */
   .footer {
@@ -172,6 +128,7 @@
     .score-badge { top: 24px; right: 24px; width: 56px; height: 56px; }
     .score-badge .score-num { font-size: 22px; }
     .card { padding: 16px; }
+    .fact-grid { grid-template-columns: 1fr; }
   }
 
   /* PRINT */
@@ -182,11 +139,6 @@
     .card { background: white; border: 1px solid #ddd; break-inside: avoid; }
     .card h2 { color: #0f3460; }
     .card p { color: #333; }
-    .urgency-card { border-color: #c0392b !important; background: #fff5f5 !important; }
-    .nugget-opener { background: #f0fff4; border-color: #27ae60; }
-    .nugget-opener p { color: #166534 !important; }
-    .ceo-quote { color: #333; }
-    .narrative-content p { color: #333; }
   }
 </style>
 <link rel="stylesheet" href="section-controls.css">
@@ -214,32 +166,156 @@
     <div class="subtitle">Prepared for Air Control</div>
     <div class="header-meta">
       <span class='tag'>Type: PE-backed platform</span>
-      
       <span class='tag'>Dallas, TX</span>
     </div>
-    
   </div>
 
   <!-- CONTEXT BAR -->
   <div class="context-bar">
     <div>
       <strong>Air Control</strong> &bull; Fred Lowry &bull; HVAC
-      &bull; 3000000.0
+      &bull; McLean, VA
     </div>
     <div>March 29, 2026</div>
   </div>
 
   <!-- CONTENT -->
   <div class="content">
-    
-    <div class="card" id="approach-strategy">
-        <h2>Approach Strategy</h2>
-        
-        <div class="approach-opener">
-            <div class="opener-label">CALL OPENER</div>
-            <p>**&quot;I saw you closed the Practical Systems deal to expand your Twin Cities coverage — Air Control would give you the same technician-base bolt-on, but in the DC metro where federal facilities alone drive year-round demand.&quot;** *(Source: 4frontenergy.com/blog/practical-systems-merger)* | **&quot;Your website says you&#x27;ve spent 30 years building a multi-trade platform across HVAC, plumbing, and electrical — Air Control&#x27;s been doing the same thing in Northern Virginia, and the customer overlap is zero, which means it&#x27;s all incremental.&quot;** *(Source: 4frontenergy.com company description, founded 1993)* | **&quot;You&#x27;ve described yourselves as a company that can &#x27;help across multiple industries&#x27; with commercial and residential — Air Control&#x27;s mix of government-adjacent commercial work and high-income residential in Fairfax County is exactly the dual-channel model you&#x27;re already running in Minnesota.&quot;** *(Source: 4frontenergy.com Practical Systems announcement)*</p>
+
+    <!-- BUYER PROFILE -->
+    <div class="card" id="buyer-profile">
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item">
+          <div class="fact-label">Company</div>
+          <div class="fact-value">4Front Solutions (fka 4Front Energy)</div>
         </div>
+        <div class="fact-item">
+          <div class="fact-label">Sponsor</div>
+          <div class="fact-value">Court Square Capital Partners</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Headquarters</div>
+          <div class="fact-value">Dallas, TX (founded Minneapolis, MN)</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Founded</div>
+          <div class="fact-value">1993</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Services</div>
+          <div class="fact-value">HVAC, plumbing, electrical — commercial &amp; residential</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Revenue</div>
+          <div class="fact-value">Not disclosed</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Known Acquisitions</div>
+          <div class="fact-value">Practical Systems (Twin Cities, 2024)</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Buyer Type</div>
+          <div class="fact-value">PE-backed multi-trade platform</div>
+        </div>
+      </div>
     </div>
+
+    <!-- KEY CONTACTS -->
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Phone</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Management Team</td>
+            <td>Executive Leadership</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Court Square Capital</td>
+            <td>Sponsor / Deal Team</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- STRATEGIC FIT -->
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>4Front Solutions has been running a deliberate multi-trade platform build since Court Square's backing, using acquisitions to expand geographic coverage across HVAC, plumbing, and electrical. The Practical Systems acquisition in the Twin Cities established a repeatable bolt-on pattern.</p>
+        <p>Air Control represents an ideal geographic expansion: the DC metro is a distinct, high-value market with zero customer overlap with 4Front's current Midwest footprint. Federal facilities and high-income residential in Fairfax County drive year-round HVAC demand — the dual commercial/residential channel model matches 4Front's existing operating structure exactly.</p>
+        <p>Court Square's lower-middle-market focus makes the Air Control revenue range directly relevant to their acquisition criteria. The primary question is whether 4Front is actively expanding East or consolidating its existing territory first.</p>
+      </div>
+    </div>
+
+    <!-- APPROACH STRATEGY -->
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <div class="approach-opener">
+        <div class="opener-label">CALL OPENER</div>
+        <p>"I saw you closed the Practical Systems deal to expand your Twin Cities coverage — Air Control would give you the same technician-base bolt-on, but in the DC metro where federal facilities alone drive year-round demand."</p>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text"><strong>Reference Practical Systems by name.</strong> The acquisition was announced publicly on 4frontenergy.com — referencing it signals you've done homework, not a cold pitch. Then position Air Control as the same play in a new geography, not a distressed seller.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text"><strong>Emphasize zero customer overlap.</strong> 4Front's current footprint is Midwest-concentrated. Air Control's Virginia market is fully incremental — no cannibalization, pure expansion revenue. That's a compelling story for a platform still in growth mode.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text"><strong>Lead with the dual-channel model match.</strong> Air Control's mix of government-adjacent commercial work and high-income residential mirrors the commercial/residential split 4Front already runs. Integration risk is lower when the operating model is already familiar.</div>
+      </div>
+    </div>
+
+    <!-- PIPELINE HISTORY -->
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Stage</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Target Identified</td>
+            <td><span class="status-complete">Complete</span></td>
+            <td>2025</td>
+            <td>Added to Air Control buyer list</td>
+          </tr>
+          <tr>
+            <td>Research Complete</td>
+            <td><span class="status-complete">Complete</span></td>
+            <td>Mar 2026</td>
+            <td>Practical Systems deal verified</td>
+          </tr>
+          <tr>
+            <td>Outreach Pending</td>
+            <td><span class="status-next">Next Step</span></td>
+            <td>—</td>
+            <td>Contact Court Square deal team</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 
   <!-- FOOTER -->

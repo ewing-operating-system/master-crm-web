@@ -1,0 +1,63 @@
+[2026-03-31 11:56:27] ============================================
+[2026-03-31 11:56:27] ============================================
+[2026-03-31 11:56:27] HR.COM STRESS TEST + AGENT TOURNAMENT
+[2026-03-31 11:56:27] HR.COM STRESS TEST + AGENT TOURNAMENT
+[2026-03-31 11:56:27] Budget: $100.00 | Claude: ZERO
+[2026-03-31 11:56:27] Budget: $100.00 | Claude: ZERO
+[2026-03-31 11:56:27] ============================================
+[2026-03-31 11:56:27] ============================================
+✅ Sent via Telegram. Message ID: 318
+[2026-03-31 11:56:38] ==========================================
+[2026-03-31 11:56:38] ==========================================
+[2026-03-31 11:56:38] PHASE 0: PREFLIGHT
+[2026-03-31 11:56:38] PHASE 0: PREFLIGHT
+[2026-03-31 11:56:38] ==========================================
+[2026-03-31 11:56:38] ==========================================
+[2026-03-31 11:56:38]   Running Supabase migration via psycopg2...
+[2026-03-31 11:56:38]   Running Supabase migration via psycopg2...
+Tables already exist — skipping migration
+[2026-03-31 11:56:40]   Run ID: 3531f363-cc56-49f9-874a-72e6c45ec0ec
+[2026-03-31 11:56:40]   Run ID: 3531f363-cc56-49f9-874a-72e6c45ec0ec
+[2026-03-31 11:56:40]   Budget: $100.00
+[2026-03-31 11:56:40]   Budget: $100.00
+[2026-03-31 11:56:40]   Buyer pages found: 68
+[2026-03-31 11:56:40]   Buyer pages found: 68
+[2026-03-31 11:56:40]   PHASE 0 COMPLETE
+[2026-03-31 11:56:40]   PHASE 0 COMPLETE
+[2026-03-31 11:56:40]   ⏭️ RESUME: Skipping Phase 1 (rubric exists)
+[2026-03-31 11:56:40]   ⏭️ RESUME: Skipping Phase 1 (rubric exists)
+[2026-03-31 11:56:40]   ⏭️ RESUME: Skipping Phase 2 (rankings exist)
+[2026-03-31 11:56:40]   ⏭️ RESUME: Skipping Phase 2 (rankings exist)
+[2026-03-31 11:56:40]   ⏭️ RESUME: Skipping Phase 3 (comparison exists)
+[2026-03-31 11:56:40]   ⏭️ RESUME: Skipping Phase 3 (comparison exists)
+[2026-03-31 11:56:40] ==========================================
+[2026-03-31 11:56:40] ==========================================
+[2026-03-31 11:56:40] PHASE 4: AGENT TOURNAMENT
+[2026-03-31 11:56:40] PHASE 4: AGENT TOURNAMENT
+[2026-03-31 11:56:41] ==========================================
+[2026-03-31 11:56:41] ==========================================
+[2026-03-31 12:03:49] ============================================
+[2026-03-31 12:03:49] HR.COM STRESS TEST + AGENT TOURNAMENT
+[2026-03-31 12:03:49] Budget: $100.00 | Claude: ZERO
+[2026-03-31 12:03:49] ============================================
+[2026-03-31 12:03:52] ==========================================
+[2026-03-31 12:03:52] PHASE 0: PREFLIGHT
+[2026-03-31 12:03:52] ==========================================
+[2026-03-31 12:03:52]   Running Supabase migration via psycopg2...
+[2026-03-31 12:03:52]   Run ID: 27507579-b9d3-4afa-85f8-63b1068ac7e6
+[2026-03-31 12:03:52]   Budget: $100.00
+[2026-03-31 12:03:52]   Buyer pages found: 68
+[2026-03-31 12:03:52]   PHASE 0 COMPLETE
+[2026-03-31 12:03:52]   ⏭️ RESUME: Skipping Phase 1 (rubric exists)
+[2026-03-31 12:03:52]   ⏭️ RESUME: Skipping Phase 2 (rankings exist)
+[2026-03-31 12:03:52]   ⏭️ RESUME: Skipping Phase 3 (comparison exists)
+[2026-03-31 12:03:52] ==========================================
+[2026-03-31 12:03:52] PHASE 4: AGENT TOURNAMENT
+[2026-03-31 12:03:52] ==========================================
+[2026-03-31 12:03:52]   Tournament: 12 buyers competing
+[2026-03-31 12:03:53]   --- Tournament: Buyer Dossier: ATD | HR.com Ltd (original score: 5.38) ---
+[2026-03-31 12:03:54]   Exa: 'Buyer Dossier: ATD | HR.com Ltd CEO strategy HR acquisition 2025 2026' → 5 results (1s, $0.75)
+[2026-03-31 12:03:58]   Exa: 'Buyer Dossier: ATD | HR.com Ltd M&A acquisition history recent deals' → 5 results (2s, $0.75)
+[2026-03-31 12:04:02]   Exa: 'Buyer Dossier: ATD | HR.com Ltd HR technology community platform strategy' → 5 results (1s, $0.75)
+[2026-03-31 12:04:06]   Exa: 'Buyer Dossier: ATD | HR.com Ltd earnings call CEO quotes AI strategy' → 5 results (1s, $0.75)
+[2026-03-31 12:04:08]   [executor] re_enrich: atd

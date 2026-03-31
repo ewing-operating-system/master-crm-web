@@ -73,64 +73,6 @@
   .card p { margin-bottom: 10px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
   .card strong { color: #f0f6fc; }
 
-  /* NARRATIVE CONTENT */
-  .narrative-content p { margin-bottom: 12px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
-  .narrative-content blockquote {
-    border-left: 3px solid #58a6ff; padding-left: 16px; margin: 12px 0;
-    font-style: italic; color: #8b949e;
-  }
-
-  /* URGENCY CARD (competitive moat) */
-  .urgency-card {
-    border: 2px solid #e74c3c !important;
-    background: linear-gradient(135deg, #161b22, #1a1015) !important;
-  }
-  .urgency-card h2 { color: #e74c3c !important; border-bottom-color: #e74c3c40 !important; }
-  .urgency-card::before {
-    content: 'URGENT'; position: absolute; top: -1px; right: 24px;
-    background: #e74c3c; color: white; font-size: 10px; font-weight: 700;
-    letter-spacing: 1.5px; padding: 4px 12px; border-radius: 0 0 6px 6px;
-  }
-  .urgency-card { position: relative; }
-
-  /* GOLDEN NUGGET CARDS */
-  .nugget-card {
-    background: #0d1117; border: 1px solid #21262d; border-radius: 8px;
-    padding: 20px; margin-bottom: 16px; border-left: 4px solid #f5a623;
-  }
-  .nugget-header {
-    font-size: 13px; font-weight: 700; color: #f5a623; margin-bottom: 12px;
-    text-transform: uppercase; letter-spacing: 1px;
-  }
-  .ceo-quote {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic; font-size: 15px; line-height: 1.7;
-    color: #e6e6e6; border-left: 3px solid #58a6ff;
-    padding: 12px 0 12px 20px; margin: 12px 0;
-  }
-  .nugget-opener {
-    background: #0b2e1a; border: 1px solid #27ae60; border-radius: 6px;
-    padding: 14px 18px; margin: 12px 0;
-  }
-  .nugget-opener p { color: #a3e4b8 !important; margin: 0 !important; font-size: 13px !important; line-height: 1.65 !important; }
-  .opener-label {
-    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
-    color: #27ae60; margin-bottom: 6px; text-transform: uppercase;
-  }
-  .nugget-why {
-    font-size: 12.5px; color: #8b949e; margin-top: 10px; line-height: 1.6;
-    padding-top: 10px; border-top: 1px solid #21262d;
-  }
-
-  /* EARNINGS QUOTES */
-  .earnings-quote {
-    margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #21262d;
-  }
-  .earnings-quote:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-  .quote-attribution {
-    font-size: 12px; color: #8b949e; margin-top: 8px; font-weight: 500;
-  }
-
   /* CONTACTS TABLE */
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th {
@@ -149,14 +91,25 @@
     padding: 18px 22px; margin-bottom: 16px;
   }
   .approach-opener p { color: #a3e4b8 !important; font-size: 14px !important; line-height: 1.7 !important; }
-  .outreach-step {
-    background: #0d1117; border: 1px solid #21262d; border-radius: 6px;
-    padding: 14px 18px; margin-bottom: 10px;
+  .opener-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+    color: #27ae60; margin-bottom: 6px; text-transform: uppercase;
   }
-  .step-label {
-    font-size: 11px; font-weight: 700; color: #58a6ff; letter-spacing: 1px;
-    text-transform: uppercase; margin-bottom: 4px;
-  }
+
+  /* SAP COMPONENTS */
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
 
   /* FOOTER */
   .footer {
@@ -172,6 +125,7 @@
     .score-badge { top: 24px; right: 24px; width: 56px; height: 56px; }
     .score-badge .score-num { font-size: 22px; }
     .card { padding: 16px; }
+    .fact-grid { grid-template-columns: 1fr; }
   }
 
   /* PRINT */
@@ -182,11 +136,6 @@
     .card { background: white; border: 1px solid #ddd; break-inside: avoid; }
     .card h2 { color: #0f3460; }
     .card p { color: #333; }
-    .urgency-card { border-color: #c0392b !important; background: #fff5f5 !important; }
-    .nugget-opener { background: #f0fff4; border-color: #27ae60; }
-    .nugget-opener p { color: #166534 !important; }
-    .ceo-quote { color: #333; }
-    .narrative-content p { color: #333; }
   }
 </style>
 <link rel="stylesheet" href="section-controls.css">
@@ -214,32 +163,156 @@
     <div class="subtitle">Prepared for Air Control</div>
     <div class="header-meta">
       <span class='tag'>Type: PE-backed strategic</span>
-      
       <span class='tag'>Norwalk, CT</span>
     </div>
-    
   </div>
 
   <!-- CONTEXT BAR -->
   <div class="context-bar">
     <div>
       <strong>Air Control</strong> &bull; Fred Lowry &bull; HVAC
-      &bull; 3000000.0
+      &bull; McLean, VA
     </div>
     <div>March 29, 2026</div>
   </div>
 
   <!-- CONTENT -->
   <div class="content">
-    
-    <div class="card" id="approach-strategy">
-        <h2>Approach Strategy</h2>
-        
-        <div class="approach-opener">
-            <div class="opener-label">CALL OPENER</div>
-            <p>**&quot;You did four HVAC deals in Phoenix in under a year — McLean gives you the same density play on the East Coast, 90 minutes from your Norwalk HQ.&quot;** *(References Canyon State acquisition, Jan 2021, and the multi-deal Phoenix cluster strategy.)* | **&quot;Your Advantage Program launched in August &#x27;22 specifically to put HVAC on a subscription model — Air Control&#x27;s residential install base is a ready-made subscriber pool you don&#x27;t have in the mid-Atlantic today.&quot;** *(References HomeServe Advantage Program press release, Aug 9, 2022.)* | **&quot;When you bought Freedom Heating in Birmingham in August 2020, you called it your first move into the Southeast — Air Control would be your first move into the DC metro, and the federal workforce demographics here are a different tier of homeowner.&quot;** *(References Freedom Heating/Worry Free Comfort Systems acquisition, Aug 10, 2020.)*</p>
+
+    <!-- BUYER PROFILE -->
+    <div class="card" id="buyer-profile">
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item">
+          <div class="fact-label">Company</div>
+          <div class="fact-value">HomeServe USA Corp.</div>
         </div>
+        <div class="fact-item">
+          <div class="fact-label">Sponsor</div>
+          <div class="fact-value">Brookfield Asset Management</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Headquarters</div>
+          <div class="fact-value">Norwalk, CT</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Buyer Type</div>
+          <div class="fact-value">Home repair / warranty platform with owned HVAC operators</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Key Program</div>
+          <div class="fact-value">HomeServe Advantage (subscription HVAC, launched Aug 2022)</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Revenue</div>
+          <div class="fact-value">Not disclosed</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Known Acquisitions</div>
+          <div class="fact-value">Freedom Heating / Worry Free Comfort (Birmingham, Aug 2020); Canyon State (Phoenix cluster, Jan 2021)</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Mid-Atlantic Presence</div>
+          <div class="fact-value">Limited — no known owned operators in DC metro</div>
+        </div>
+      </div>
     </div>
+
+    <!-- KEY CONTACTS -->
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Phone</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Executive Team</td>
+            <td>Leadership — HomeServe USA</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Brookfield Deal Team</td>
+            <td>Sponsor — Infrastructure / Services</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- STRATEGIC FIT -->
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>HomeServe USA's strategic model combines home warranty / subscription programs with owned HVAC operators. The HomeServe Advantage subscription program, launched August 2022, puts recurring HVAC revenue at the center of their growth model — and requires owned operators in the markets they serve to fulfill it.</p>
+        <p>Their acquisition track record shows a cluster-build approach: Freedom Heating gave them the Southeast entry in August 2020; Canyon State opened the Phoenix market in January 2021 and was followed by multiple Phoenix-area deals within a year. Air Control would follow the same entry pattern in the DC metro — a high-income, high-density market where HomeServe currently has no owned HVAC presence.</p>
+        <p>The DC metro's federal workforce demographic represents a distinct tier of homeowner — stable employment, high home values, strong service agreement adoption rates. Norwalk to McLean is 90 minutes: this is not a remote expansion. It is a logical next territory for a platform already operating on the East Coast.</p>
+      </div>
+    </div>
+
+    <!-- APPROACH STRATEGY -->
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <div class="approach-opener">
+        <div class="opener-label">CALL OPENER</div>
+        <p>"You did four HVAC deals in Phoenix in under a year — McLean gives you the same density play on the East Coast, 90 minutes from your Norwalk HQ."</p>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text"><strong>Connect to the Advantage Program subscriber thesis.</strong> HomeServe Advantage was launched specifically to put HVAC on a subscription model. Air Control's residential install base in Fairfax County is a ready-made subscriber pool — the infrastructure to convert is already there, with existing customer relationships and recurring service history.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text"><strong>Reference the Southeast entry playbook directly.</strong> The Freedom Heating acquisition in Birmingham was framed publicly as HomeServe's first move into the Southeast. Air Control in McLean would be framed the same way — first move into the DC metro, which has meaningfully higher homeowner income levels than Birmingham or Phoenix.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text"><strong>Emphasize the federal workforce demographic premium.</strong> McLean, Reston, and the broader Fairfax County market is the highest-concentration federal employment corridor in the US. Homeowners here are stable, high-income, and have strong service agreement adoption rates — a better subscriber acquisition profile than virtually any other US market outside Manhattan.</div>
+      </div>
+    </div>
+
+    <!-- PIPELINE HISTORY -->
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Stage</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Target Identified</td>
+            <td><span class="status-complete">Complete</span></td>
+            <td>2025</td>
+            <td>Added to Air Control buyer list</td>
+          </tr>
+          <tr>
+            <td>Research Complete</td>
+            <td><span class="status-complete">Complete</span></td>
+            <td>Mar 2026</td>
+            <td>Advantage Program and acquisition cluster verified</td>
+          </tr>
+          <tr>
+            <td>Outreach Pending</td>
+            <td><span class="status-next">Next Step</span></td>
+            <td>—</td>
+            <td>Identify HomeServe USA corp dev contact</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 
   <!-- FOOTER -->

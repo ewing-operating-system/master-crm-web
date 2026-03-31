@@ -73,6 +73,17 @@
   .card p { margin-bottom: 10px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
   .card strong { color: #f0f6fc; }
 
+  /* FACT GRID */
+  .fact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 700px) { .fact-grid { grid-template-columns: repeat(2, 1fr); } }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 14px 16px; }
+  .fact-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 14px; font-weight: 600; color: #f0f6fc; }
+
+  /* NARRATIVE BOX */
+  .narrative-box p { margin-bottom: 12px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+
   /* NARRATIVE CONTENT */
   .narrative-content p { margin-bottom: 12px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
   .narrative-content blockquote {
@@ -80,7 +91,7 @@
     font-style: italic; color: #8b949e;
   }
 
-  /* URGENCY CARD (competitive moat) */
+  /* URGENCY CARD */
   .urgency-card {
     border: 2px solid #e74c3c !important;
     background: linear-gradient(135deg, #161b22, #1a1015) !important;
@@ -93,7 +104,7 @@
   }
   .urgency-card { position: relative; }
 
-  /* GOLDEN NUGGET CARDS */
+  /* NUGGET CARDS */
   .nugget-card {
     background: #0d1117; border: 1px solid #21262d; border-radius: 8px;
     padding: 20px; margin-bottom: 16px; border-left: 4px solid #f5a623;
@@ -149,6 +160,16 @@
     padding: 18px 22px; margin-bottom: 16px;
   }
   .approach-opener p { color: #a3e4b8 !important; font-size: 14px !important; line-height: 1.7 !important; }
+  .talking-point {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: #0d1117; border: 1px solid #21262d; border-radius: 6px;
+    padding: 14px 18px; margin-bottom: 10px;
+  }
+  .tp-num {
+    font-size: 18px; font-weight: 700; color: #58a6ff;
+    line-height: 1; min-width: 24px; margin-top: 1px;
+  }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.65; }
   .outreach-step {
     background: #0d1117; border: 1px solid #21262d; border-radius: 6px;
     padding: 14px 18px; margin-bottom: 10px;
@@ -156,6 +177,16 @@
   .step-label {
     font-size: 11px; font-weight: 700; color: #58a6ff; letter-spacing: 1px;
     text-transform: uppercase; margin-bottom: 4px;
+  }
+
+  /* STATUS BADGES */
+  .status-complete {
+    display: inline-block; padding: 2px 10px; border-radius: 10px;
+    background: #0e3a1f; color: #3fb950; font-size: 11px; font-weight: 600;
+  }
+  .status-next {
+    display: inline-block; padding: 2px 10px; border-radius: 10px;
+    background: #1a2c4e; color: #58a6ff; font-size: 11px; font-weight: 600;
   }
 
   /* FOOTER */
@@ -214,32 +245,160 @@
     <div class="subtitle">Prepared for Air Control</div>
     <div class="header-meta">
       <span class='tag'>Type: PE-backed platform</span>
-      
       <span class='tag'>San Jose, CA</span>
     </div>
-    
   </div>
 
   <!-- CONTEXT BAR -->
   <div class="context-bar">
     <div>
       <strong>Air Control</strong> &bull; Fred Lowry &bull; HVAC
-      &bull; 3000000.0
+      &bull; $3M Revenue
     </div>
     <div>March 29, 2026</div>
   </div>
 
   <!-- CONTENT -->
   <div class="content">
-    
-    <div class="card" id="approach-strategy">
-        <h2>Approach Strategy</h2>
-        
-        <div class="approach-opener">
-            <div class="opener-label">CALL OPENER</div>
-            <p>**&quot;Congrats on the Yearout integration — adding Albuquerque to the Therma footprint in 2019 looked like a smart geographic play. We&#x27;re working with a similar-profile mechanical shop in McLean that could do the same thing for you on the East Coast.&quot;** | **&quot;We noticed Legence is positioning as Blackstone&#x27;s Energy Transition Accelerator — we have a target in the DC metro whose federal building-efficiency contracts fit that thesis perfectly, and there&#x27;s no Legence presence in the corridor yet.&quot;** | **&quot;Therma added 39 people last year, an 8.2% headcount jump — if technician recruiting is that aggressive organically, acquiring a tenured Mid-Atlantic crew with existing clearances and customer relationships might be a faster path.&quot;**</p>
+
+    <!-- 1. BUYER PROFILE -->
+    <div class="card" id="buyer-profile">
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item">
+          <div class="fact-label">Platform</div>
+          <div class="fact-value">Therma Holdings</div>
         </div>
+        <div class="fact-item">
+          <div class="fact-label">Backer</div>
+          <div class="fact-value">EQT Partners (Stockholm)</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Headquarters</div>
+          <div class="fact-value">San Jose, CA</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Revenue</div>
+          <div class="fact-value">Not disclosed</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Verticals</div>
+          <div class="fact-value">Commercial HVAC, Mechanical, Energy Efficiency</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Acquisition Strategy</div>
+          <div class="fact-value">Geographic expansion; build East Coast presence</div>
+        </div>
+      </div>
     </div>
+
+    <!-- 2. KEY CONTACTS -->
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Email</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Therma CEO</td>
+            <td>Chief Executive Officer</td>
+            <td>—</td>
+            <td>Led Yearout integration in Albuquerque (2019)</td>
+          </tr>
+          <tr>
+            <td>EQT Corp Dev</td>
+            <td>Corporate Development, EQT</td>
+            <td>—</td>
+            <td>EQT-level M&amp;A team oversees portfolio acquisitions</td>
+          </tr>
+          <tr>
+            <td>Legence (Blackstone)</td>
+            <td>Competitive Platform to Watch</td>
+            <td>—</td>
+            <td>Energy Transition Accelerator; no DC corridor presence yet</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 3. STRATEGIC FIT -->
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Therma's 2019 acquisition of Yearout Mechanical in Albuquerque demonstrated their appetite for geographic expansion beyond California — adding tenured crews with strong local relationships in markets they couldn't build organically. Air Control in McLean represents the same thesis applied to the East Coast, a geography Therma has no current presence in despite EQT's clear mandate to scale the platform nationally.</p>
+        <p>Air Control's federal and government-contractor customer relationships in the DC metro align directly with Therma's positioning as a high-performance commercial mechanical contractor. The cleared-facility and energy efficiency retrofit work that Air Control has built in Northern Virginia is precisely the contract base that supports EQT's broader energy transition thesis — and there is no Therma or Legence presence in the DC corridor to compete against yet.</p>
+        <p>Therma added 39 people last year, an 8.2% headcount jump — if technician recruiting is that aggressive organically, acquiring a tenured Mid-Atlantic crew with existing customer relationships and clearances is a materially faster path to East Coast capacity than organic hiring alone. Air Control provides immediate market entry without a multi-year ramp.</p>
+      </div>
+    </div>
+
+    <!-- 4. APPROACH STRATEGY -->
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <div class="approach-opener">
+        <div class="opener-label">Call Opener</div>
+        <p>"Congrats on the Yearout integration — adding Albuquerque to the Therma footprint in 2019 looked like a smart geographic play. We're working with a similar-profile mechanical shop in McLean that could do the same thing for you on the East Coast."</p>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text">Legence is positioning as Blackstone's Energy Transition Accelerator — we have a target in the DC metro whose federal building-efficiency contracts fit that thesis perfectly, and there's no Legence presence in the corridor yet. First mover matters here.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text">Therma added 39 people last year, an 8.2% headcount jump — if technician recruiting is that aggressive organically, acquiring a tenured Mid-Atlantic crew with existing clearances and customer relationships might be a faster path.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text">EQT's mandate for Therma is national scale — Air Control provides an immediate beachhead in the DC metro, one of the densest commercial HVAC markets in the country, without the 2–3 year ramp of a greenfield office build.</div>
+      </div>
+    </div>
+
+    <!-- 5. PIPELINE HISTORY -->
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Step</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Dossier Created</td>
+            <td><span class="status-complete">Complete</span></td>
+            <td>Mar 29, 2026</td>
+            <td>Initial buyer research and profile built</td>
+          </tr>
+          <tr>
+            <td>Outreach</td>
+            <td><span class="status-next">Next</span></td>
+            <td>—</td>
+            <td>Target Therma CEO + EQT corp dev; lead with East Coast expansion angle</td>
+          </tr>
+          <tr>
+            <td>Intro Call</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>NDA / CIM Delivery</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 
   <!-- FOOTER -->

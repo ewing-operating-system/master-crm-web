@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Buyer Dossier: Alfred Miller Precast | Design Precast &amp; Pipe, Inc.</title>
+<title>Acquisition Target: Alfred Miller Precast | Design Precast &amp; Pipe, Inc.</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -47,6 +47,24 @@
   td { padding: 10px 12px; border-bottom: 1px solid #21262d; color: #c9d1d9; }
   tr:hover td { background: #1c2128; }
   a { color: #58a6ff; text-decoration: none; }
+  .badge { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; color: #f0f6fc; }
+  .badge.green { background: #27ae60; }
+  .badge.orange { background: #f39c12; color: #1a1a2e; }
+  .badge.blue { background: #1f6feb; }
+  .badge.gray { background: #30363d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
@@ -58,30 +76,93 @@
   <span style="color:#d0d7de">|</span>
   <style>.nc-nav a{color:#0969da;text-decoration:none;font-weight:500}.nc-nav a:hover{text-decoration:underline}</style>
   <a href="index.html">Home</a>
-      <a href="system-overview.html">System Overview</a>
-      <a href="design-precast-and-pipe-inc-hub.html">Design Precast Hub</a>
+  <a href="system-overview.html">System Overview</a>
+  <a href="design-precast-and-pipe-inc-hub.html">Design Precast Hub</a>
 </div>
 <!-- NAV:END -->
 
-
-
 <div class="page">
   <div class="header">
-    <div class="header-label">Buyer Dossier</div>
+    <div class="header-label">Acquisition Target — Buy-Side</div>
     <h1>Alfred Miller Precast</h1>
-    <div class="subtitle">Prepared for Design Precast &amp; Pipe, Inc.</div>
-    <div class='score-badge'><span class='score-num'>7.5</span><span class='score-label'>Fit</span></div>
+    <div class="subtitle">Louisiana | Multi-Generational Family Precast Manufacturer</div>
+    <div class="score-badge"><span class="score-num">7.5</span><span class="score-label">Fit</span></div>
   </div>
   <div class="context-bar">
-    <strong>Design Precast &amp; Pipe, Inc.</strong> &bull; Pat Fore III (Founder/President/Owner)
+    <strong>Design Precast &amp; Pipe, Inc.</strong> &bull; Pat Fore III (Founder/President/Owner) &bull; Biloxi, MS &bull;
+    <span class="badge blue" style="font-size:10px">Buy-Side Target</span>
   </div>
   <div class="content">
-    <div class="card" id="buyer-profile">
-        <h2>Buyer Profile</h2>
-        <p>Louisiana-based precast manufacturer born from a family of bricklayers. Multi-generational family business with precast operations. Louisiana presence complements Design Precast's Arnaudville plant. Family construction lineage suggests strong quality culture but potential succession considerations.</p>
+
+    <!-- 1. COMPANY PROFILE -->
+    <div class="card" id="company-profile">
+      <h2>Company Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Company</div><div class="fact-value">Alfred Miller Precast</div></div>
+        <div class="fact-item"><div class="fact-label">Location</div><div class="fact-value">Louisiana</div></div>
+        <div class="fact-item"><div class="fact-label">Products</div><div class="fact-value">Precast concrete structures, drainage products, utility vaults</div></div>
+        <div class="fact-item"><div class="fact-label">Revenue</div><div class="fact-value">Not disclosed</div></div>
+        <div class="fact-item"><div class="fact-label">Employees</div><div class="fact-value">Not disclosed</div></div>
+        <div class="fact-item"><div class="fact-label">Ownership</div><div class="fact-value">Multi-generational family owned; construction lineage from bricklaying</div></div>
+      </div>
     </div>
-    
-    
+
+    <!-- 2. KEY CONTACTS -->
+    <div class="card" id="contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <tr><th>Name</th><th>Title</th><th>Email</th><th>Phone</th><th>Notes</th></tr>
+        <tr>
+          <td>Miller Family Principal</td>
+          <td>Owner / Operator</td>
+          <td>—</td>
+          <td>—</td>
+          <td>Multi-generational family business; succession considerations likely relevant</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- 3. STRATEGIC FIT -->
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p><strong style="color:#f0f6fc">Louisiana Adjacency:</strong> Alfred Miller Precast operates in Louisiana — directly adjacent to Design Precast's existing footprint in Biloxi, MS and the Arnaudville, LA corridor. A Louisiana acquisition would deepen Design Precast's Gulf Coast presence and extend market reach without a long-distance integration challenge.</p>
+        <p><strong style="color:#f0f6fc">Family Construction Lineage:</strong> A family born from bricklaying into precast manufacturing brings deep trade craft and a quality culture that is difficult to build from scratch. This is not a financial roll-up — it's a company with generational pride in their product, which translates to retained workforce and customer loyalty post-acquisition.</p>
+        <p><strong style="color:#f0f6fc">Succession Dynamics:</strong> Multi-generational family businesses frequently reach an inflection point where the next generation has diverging interests or the founding generation is approaching exit. Design Precast, as a fellow family-owned operator, is the ideal conversation partner — not a fund, not a stranger, but a peer who understands what was built.</p>
+        <p><strong style="color:#f0f6fc">Platform Logic:</strong> Combining Alfred Miller's Louisiana presence with Design Precast's Mississippi operations creates a two-state Gulf Coast manufacturing base with shared procurement, combined DOT bidding power, and a unified brand story for future strategic conversations.</p>
+      </div>
+    </div>
+
+    <!-- 4. APPROACH STRATEGY -->
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <p style="font-size:13px;color:#8b949e;margin-bottom:16px;font-style:italic">Call opener: "We're a precast manufacturer out of Biloxi — family-owned, like you all. We've been active in Louisiana and we know the Miller name in this industry. We'd like to have a conversation, not a pitch — just a talk between people in the same business about where things are headed."</p>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text">Lead with shared identity — both family-owned, both in precast, both Gulf Coast. This is a conversation between peers, not a buyer approaching a target. That framing matters to multi-generational families.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text">Succession is the real question. Ask about the next generation — not as a pressure point, but as genuine curiosity. If there's no clear successor, that conversation opens naturally into options for the business's future.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text">A combined Louisiana-Mississippi operation is stronger than either alone. Larger DOT contracts, shared materials purchasing, unified estimating — these are real operational advantages that benefit the people who stay in both businesses.</div>
+      </div>
+    </div>
+
+    <!-- 5. PIPELINE HISTORY -->
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <tr><th>Step</th><th>Status</th><th>Date</th><th>Notes</th></tr>
+        <tr><td>Target Identified</td><td><span class="badge green" style="font-size:10px">Complete</span></td><td>Mar 2026</td><td>Added to Design Precast buy-side pipeline</td></tr>
+        <tr><td>Initial Letter</td><td><span class="badge gray" style="font-size:10px">Pending</span></td><td>—</td><td>Next Chapter M&amp;A campaign</td></tr>
+        <tr><td>Discovery Call</td><td><span class="badge gray" style="font-size:10px">Pending</span></td><td>—</td><td>—</td></tr>
+        <tr><td>LOI / Term Sheet</td><td><span class="badge gray" style="font-size:10px">Pending</span></td><td>—</td><td>—</td></tr>
+      </table>
+    </div>
+
   </div>
   <div class="footer">
     Generated March 29, 2026 &bull; Next Chapter M&A Advisory &bull; Confidential

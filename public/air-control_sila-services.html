@@ -49,6 +49,9 @@
   }
   .score-badge .score-num { font-size: 28px; font-weight: 700; line-height: 1; color: white; }
   .score-badge .score-label { font-size: 8px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin-top: 2px; color: white; }
+  .score-high { background: #1a4731 !important; border: 2px solid #2ea043; }
+  .score-med  { background: #3d2f00 !important; border: 2px solid #d29922; }
+  .score-low  { background: #3d0c0c !important; border: 2px solid #da3633; }
 
   /* CONTEXT BAR */
   .context-bar {
@@ -73,63 +76,31 @@
   .card p { margin-bottom: 10px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
   .card strong { color: #f0f6fc; }
 
-  /* NARRATIVE CONTENT */
-  .narrative-content p { margin-bottom: 12px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
-  .narrative-content blockquote {
-    border-left: 3px solid #58a6ff; padding-left: 16px; margin: 12px 0;
-    font-style: italic; color: #8b949e;
-  }
+  /* FACT GRID */
+  .fact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: #8b949e; text-transform: uppercase; margin-bottom: 4px; }
+  .fact-value { font-size: 14px; font-weight: 500; color: #f0f6fc; }
 
-  /* URGENCY CARD (competitive moat) */
-  .urgency-card {
-    border: 2px solid #e74c3c !important;
-    background: linear-gradient(135deg, #161b22, #1a1015) !important;
-  }
-  .urgency-card h2 { color: #e74c3c !important; border-bottom-color: #e74c3c40 !important; }
-  .urgency-card::before {
-    content: 'URGENT'; position: absolute; top: -1px; right: 24px;
-    background: #e74c3c; color: white; font-size: 10px; font-weight: 700;
-    letter-spacing: 1.5px; padding: 4px 12px; border-radius: 0 0 6px 6px;
-  }
-  .urgency-card { position: relative; }
+  /* NARRATIVE BOX */
+  .narrative-box { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 18px 20px; }
+  .narrative-box p { margin-bottom: 10px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
+  .narrative-box p:last-child { margin-bottom: 0; }
 
-  /* GOLDEN NUGGET CARDS */
-  .nugget-card {
-    background: #0d1117; border: 1px solid #21262d; border-radius: 8px;
-    padding: 20px; margin-bottom: 16px; border-left: 4px solid #f5a623;
+  /* TALKING POINTS */
+  .talking-point { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+  .tp-num {
+    flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+    background: #1f3d5c; border: 1px solid #58a6ff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: #58a6ff;
   }
-  .nugget-header {
-    font-size: 13px; font-weight: 700; color: #f5a623; margin-bottom: 12px;
-    text-transform: uppercase; letter-spacing: 1px;
-  }
-  .ceo-quote {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic; font-size: 15px; line-height: 1.7;
-    color: #e6e6e6; border-left: 3px solid #58a6ff;
-    padding: 12px 0 12px 20px; margin: 12px 0;
-  }
-  .nugget-opener {
-    background: #0b2e1a; border: 1px solid #27ae60; border-radius: 6px;
-    padding: 14px 18px; margin: 12px 0;
-  }
-  .nugget-opener p { color: #a3e4b8 !important; margin: 0 !important; font-size: 13px !important; line-height: 1.65 !important; }
-  .opener-label {
-    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
-    color: #27ae60; margin-bottom: 6px; text-transform: uppercase;
-  }
-  .nugget-why {
-    font-size: 12.5px; color: #8b949e; margin-top: 10px; line-height: 1.6;
-    padding-top: 10px; border-top: 1px solid #21262d;
-  }
+  .tp-text { font-size: 14px; line-height: 1.7; color: #c9d1d9; padding-top: 3px; }
 
-  /* EARNINGS QUOTES */
-  .earnings-quote {
-    margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #21262d;
-  }
-  .earnings-quote:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-  .quote-attribution {
-    font-size: 12px; color: #8b949e; margin-top: 8px; font-weight: 500;
-  }
+  /* STATUS BADGES */
+  .status-complete { background: #1a4731; color: #3fb950; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+  .status-next     { background: #3d2f00; color: #d29922; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+  .status-pending  { background: #21262d; color: #8b949e; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
 
   /* CONTACTS TABLE */
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -142,21 +113,6 @@
   tr:hover td { background: #1c2128; }
   a { color: #58a6ff; text-decoration: none; }
   a:hover { text-decoration: underline; }
-
-  /* APPROACH */
-  .approach-opener {
-    background: #0b2e1a; border: 1px solid #27ae60; border-radius: 8px;
-    padding: 18px 22px; margin-bottom: 16px;
-  }
-  .approach-opener p { color: #a3e4b8 !important; font-size: 14px !important; line-height: 1.7 !important; }
-  .outreach-step {
-    background: #0d1117; border: 1px solid #21262d; border-radius: 6px;
-    padding: 14px 18px; margin-bottom: 10px;
-  }
-  .step-label {
-    font-size: 11px; font-weight: 700; color: #58a6ff; letter-spacing: 1px;
-    text-transform: uppercase; margin-bottom: 4px;
-  }
 
   /* FOOTER */
   .footer {
@@ -182,11 +138,6 @@
     .card { background: white; border: 1px solid #ddd; break-inside: avoid; }
     .card h2 { color: #0f3460; }
     .card p { color: #333; }
-    .urgency-card { border-color: #c0392b !important; background: #fff5f5 !important; }
-    .nugget-opener { background: #f0fff4; border-color: #27ae60; }
-    .nugget-opener p { color: #166534 !important; }
-    .ceo-quote { color: #333; }
-    .narrative-content p { color: #333; }
   }
 </style>
 <link rel="stylesheet" href="section-controls.css">
@@ -203,8 +154,6 @@
 </div>
 <!-- NAV:END -->
 
-
-
 <div class="page">
 
   <!-- HEADER -->
@@ -214,32 +163,83 @@
     <div class="subtitle">Prepared for Air Control</div>
     <div class="header-meta">
       <span class='tag'>Type: PE-backed platform</span>
-      
       <span class='tag'>Philadelphia, PA</span>
     </div>
-    
+    <div class="score-badge score-high">
+      <div class="score-num">9</div>
+      <div class="score-label">Score</div>
+    </div>
   </div>
 
   <!-- CONTEXT BAR -->
   <div class="context-bar">
     <div>
       <strong>Air Control</strong> &bull; Fred Lowry &bull; HVAC
-      &bull; 3000000.0
+      &bull; McLean, VA
     </div>
     <div>March 29, 2026</div>
   </div>
 
   <!-- CONTENT -->
   <div class="content">
-    
-    <div class="card" id="approach-strategy">
-        <h2>Approach Strategy</h2>
-        
-        <div class="approach-opener">
-            <div class="opener-label">CALL OPENER</div>
-            <p>**&quot;Sila just brought on Kyle Johnson as VP of M&amp;A Integration in October — they&#x27;re clearly tooling up for the next wave of acquisitions, and your geography is the obvious white space on their map.&quot;** | **&quot;Goldman Sachs Alternatives closed their majority stake in Sila in November 2024, replacing Morgan Stanley Capital Partners — that&#x27;s fresh PE capital with a deployment mandate, and HVAC platforms in their first 18 months post-recap are the most aggressive acquirers in the space.&quot;** | **&quot;Sila&#x27;s corporate development lead Kyle Martin has personally closed over 70 acquisitions in 15 years — when he calls, the process moves; he&#x27;s not a tire-kicker.&quot;**</p>
-        </div>
+
+    <!-- BUYER PROFILE -->
+    <div class="card" id="buyer-profile">
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Platform</div><div class="fact-value">Sila Services</div></div>
+        <div class="fact-item"><div class="fact-label">Backer</div><div class="fact-value">Goldman Sachs Alternatives (majority stake, Nov 2024)</div></div>
+        <div class="fact-item"><div class="fact-label">Headquarters</div><div class="fact-value">Philadelphia, PA</div></div>
+        <div class="fact-item"><div class="fact-label">Revenue</div><div class="fact-value">Not disclosed</div></div>
+        <div class="fact-item"><div class="fact-label">Verticals</div><div class="fact-value">HVAC, Plumbing, Electrical (residential &amp; light commercial)</div></div>
+        <div class="fact-item"><div class="fact-label">Acquisition Strategy</div><div class="fact-value">Active Mid-Atlantic acquirer; new VP M&amp;A Integration hired Oct 2024</div></div>
+      </div>
     </div>
+
+    <!-- CONTACTS -->
+    <div class="card" id="contacts">
+      <h2>Key Contacts</h2>
+      <table><thead><tr><th>Name</th><th>Title</th><th>Email</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Kyle Martin</td><td>VP Corporate Development, Sila Services</td><td>—</td><td>70+ acquisitions in 15 years; primary deal-sourcing contact</td></tr>
+        <tr><td>Kyle Johnson</td><td>VP M&amp;A Integration, Sila Services</td><td>—</td><td>Hired Oct 2024; signals next wave of acquisitions tooling up</td></tr>
+        <tr><td>Goldman Sachs Alternatives</td><td>PE Sponsor</td><td>—</td><td>Closed majority stake Nov 2024; fresh capital with deployment mandate</td></tr>
+      </tbody></table>
+    </div>
+
+    <!-- STRATEGIC FIT -->
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Sila Services is geographically the closest high-priority acquirer to Air Control — the company operates throughout the Philadelphia/Mid-Atlantic corridor, and McLean is a natural southern extension of their service territory. Goldman Sachs Alternatives closed their majority stake in November 2024, replacing Morgan Stanley Capital Partners. Platforms in their first 18 months post-recap are historically the most aggressive acquirers in the HVAC space, and Sila has already hired a VP of M&amp;A Integration in October 2024 to handle the incoming deal flow.</p>
+        <p>Kyle Martin, Sila's VP of Corporate Development, has personally closed over 70 acquisitions in 15 years. He is a sophisticated, experienced counterpart who moves quickly and does not waste time on deals that don't fit. Air Control's McLean footprint, federal facility customer mix, and clean financials represent the exact profile Sila has historically targeted for Mid-Atlantic density plays.</p>
+      </div>
+    </div>
+
+    <!-- APPROACH STRATEGY -->
+    <div class="card" id="approach">
+      <h2>Approach Strategy</h2>
+      <div style="background:#0b2e1a;border:1px solid #27ae60;border-radius:8px;padding:18px 22px;margin-bottom:18px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:#27ae60;margin-bottom:8px;text-transform:uppercase;">Call Opener</div>
+        <p style="color:#a3e4b8;font-size:14px;line-height:1.7;margin:0;">"Sila just brought on Kyle Johnson as VP of M&amp;A Integration in October — they're clearly tooling up for the next wave of acquisitions, and your geography is the obvious white space on their map."</p>
+      </div>
+      <div class="talking-point"><div class="tp-num">1</div><div class="tp-text"><strong>Goldman Sachs capital is actively deploying.</strong> Goldman Sachs Alternatives closed their majority stake in Sila in November 2024, replacing Morgan Stanley Capital Partners — that's fresh institutional capital with a deployment mandate, and HVAC platforms in their first 18 months post-recap are the most aggressive acquirers in the space.</div></div>
+      <div class="talking-point"><div class="tp-num">2</div><div class="tp-text"><strong>Kyle Martin doesn't take tire-kicker calls.</strong> Sila's corporate development lead Kyle Martin has personally closed over 70 acquisitions in 15 years — when he calls, the process moves. Air Control fits the size, geography, and service mix that Sila has consistently targeted. This is a high-probability first meeting.</div></div>
+      <div class="talking-point"><div class="tp-num">3</div><div class="tp-text"><strong>McLean is the white space on Sila's map.</strong> Sila's Mid-Atlantic coverage stops north of DC. McLean gives them the capital's premier residential and light commercial HVAC market — federal contractors, high-income homeowners, multi-year service agreements. This isn't a bolt-on; it's a market entry.</div></div>
+    </div>
+
+    <!-- PIPELINE HISTORY -->
+    <div class="card" id="pipeline">
+      <h2>Pipeline History</h2>
+      <table><thead><tr><th>Step</th><th>Status</th><th>Date</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Target Identified</td><td><span class="status-complete">Complete</span></td><td>2025</td><td>Identified as highest-priority Mid-Atlantic buyer for Air Control</td></tr>
+        <tr><td>Research Complete</td><td><span class="status-complete">Complete</span></td><td>Mar 2026</td><td>Full dossier built; Goldman recap and Kyle Johnson hire confirmed</td></tr>
+        <tr><td>Outreach</td><td><span class="status-next">Next Step</span></td><td>—</td><td>Contact Kyle Martin directly at Sila Services corp dev</td></tr>
+        <tr><td>Intro Call</td><td><span class="status-pending">Pending</span></td><td>—</td><td>Qualify geographic appetite and deal structure; Kyle moves fast</td></tr>
+      </tbody></table>
+    </div>
+
   </div>
 
   <!-- FOOTER -->

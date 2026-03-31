@@ -38,6 +38,20 @@
   .tag-fs { background: #2a1a3a; color: #bc8cff; }
   .tag-sb { background: #1a3a3a; color: #39d353; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
+  .risk-note { background: #2e1a0b; border: 1px solid #7a3e0a; border-radius: 6px; padding: 12px 16px; margin-top: 12px; font-size: 13px; color: #f0a070; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
 </head>
@@ -69,43 +83,56 @@
   </div>
   <div class="content">
 
-    <div class="card" id="snapshot">
-      <h2>Snapshot</h2>
+    <div class="card" id="buyer-profile">
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Platform</div><div class="fact-value">Heaven's Best Carpet &amp; Upholstery Cleaning</div></div>
+        <div class="fact-item"><div class="fact-label">Backer</div><div class="fact-value">Owner-operated / founder-led (no PE backer)</div></div>
+        <div class="fact-item"><div class="fact-label">Headquarters</div><div class="fact-value">Rexburg, ID</div></div>
+        <div class="fact-item"><div class="fact-label">Revenue</div><div class="fact-value">Not disclosed</div></div>
+        <div class="fact-item"><div class="fact-label">Verticals</div><div class="fact-value">Residential carpet cleaning (franchise)</div></div>
+        <div class="fact-item"><div class="fact-label">Acquisition Strategy</div><div class="fact-value">None observed; pure franchise territory growth</div></div>
+      </div>
+    </div>
+
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
       <table>
-        <tr><th>Field</th><th>Detail</th></tr>
-        <tr><td>Headquarters</td><td>Rexburg, ID</td></tr>
-        <tr><td>Revenue</td><td>Not publicly disclosed</td></tr>
-        <tr><td>Backing</td><td>Owner-operated / founder-led</td></tr>
-        <tr><td>Buyer Type</td><td>Franchise System</td></tr>
-        <tr><td>Fit Score</td><td>4 / 10</td></tr>
-        <tr><td>Confidence</td><td>LOW</td></tr>
+        <tr><th>Name</th><th>Title</th><th>Email</th><th>Notes</th></tr>
+        <tr><td>Jeff Francom</td><td>President / Owner</td><td>—</td><td>Founder family; long-tenured operator</td></tr>
       </table>
     </div>
 
-    <div class="card" id="buyer-profile">
-      <h2>Company Overview</h2>
-      <p>Mature carpet cleaning franchise with 420 franchised locations across 39 US states (2024 FDD). Family-oriented owner-operator franchise system. No PE backing. No acquisitive behavior observed.</p>
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Heaven's Best is a mature, family-oriented carpet cleaning franchise with 420+ locations across 39 states. The system is built around low-cost owner-operator units with a residential focus. There is no track record of acquiring operating companies and no PE backer providing capital for M&amp;A.</p>
+        <p>Springer Floor's commercial orientation is structurally misaligned with Heaven's Best's residential franchise model. A commercial floor care acquisition would be an out-of-character move for a system that grows exclusively through franchisee onboarding.</p>
+        <p>This buyer was included in the CII Advisors list for completeness. Not a realistic near-term acquirer, and not worth prioritizing outreach resources.</p>
+      </div>
     </div>
 
-    <div class="card" id="acquisition-history">
-      <h2>Acquisition History</h2>
-      <p>No known acquisition activity. No PE backing.</p>
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <div style="background:#0d2b1a;border:1px solid #1a5c34;border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:14px;color:#5dbb8a;line-height:1.7;">
+        <strong>Call Opener:</strong> "I know your model is built around franchisee growth, but I wanted to have a quick conversation — we represent a commercial floor care company that could either complement your existing franchisee base as a preferred subcontractor or be a conversation worth having if your strategy ever expands into B2B accounts."
+      </div>
+      <div class="talking-point"><div class="tp-num">1</div><div class="tp-text">Heaven's Best franchisees occasionally service commercial accounts — a preferred commercial subcontractor arrangement with Springer Floor could increase franchisee revenue without requiring system-wide M&amp;A commitment.</div></div>
+      <div class="talking-point"><div class="tp-num">2</div><div class="tp-text">Springer Floor's trained technicians and established commercial routes represent years of B2B relationship-building — a shortcut to commercial revenue that franchisee onboarding alone cannot replicate.</div></div>
+      <div class="talking-point"><div class="tp-num">3</div><div class="tp-text">If the system ever seeks PE backing to accelerate growth, a commercial floor care platform would be a natural first bolt-on acquisition to demonstrate B2B capability to investors.</div></div>
     </div>
 
-    <div class="card" id="fit-narrative">
-      <h2>Why They'd Buy Springer Floor</h2>
-      <p>Mature owner-operator system with no PE backing and no acquisition track record. Acquisition of a commercial floor care operator is out of character for this platform.</p>
-    </div>
-
-    <div class="card" id="investment-thesis">
-      <h2>Investment Thesis</h2>
-      <p>No discernible acquisition thesis. Included in CII document for completeness.</p>
-    </div>
-
-    <div class="card" id="validation">
-      <h2>Research Verdict</h2>
-      <p>Included by CII Advisors. Not a realistic near-term acquirer.</p>
-      <p style="margin-top:12px;font-size:12px;color:#484f58;">Source: CII Advisors Buyer Profiles PDF (March 2026) + Exa web validation (March 30, 2026)</p>
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <tr><th>Step</th><th>Status</th><th>Date</th><th>Notes</th></tr>
+        <tr><td>Identified</td><td><span class="status-complete">Complete</span></td><td>Mar 2026</td><td>Included in CII Advisors buyer list</td></tr>
+        <tr><td>Research &amp; Validation</td><td><span class="status-complete">Complete</span></td><td>Mar 30, 2026</td><td>No acquisition activity; no PE backer confirmed</td></tr>
+        <tr><td>Initial Outreach</td><td>—</td><td>—</td><td>Low priority; deprioritize in favor of higher-fit buyers</td></tr>
+        <tr><td>Intro Call</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>NDA / Materials</td><td>—</td><td>—</td><td>—</td></tr>
+      </table>
+      <div class="risk-note">No acquisition track record and no PE capital. Not a realistic near-term buyer. Place in low-priority monitoring queue only.</div>
     </div>
 
   </div>

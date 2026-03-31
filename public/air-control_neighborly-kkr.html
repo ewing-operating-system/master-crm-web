@@ -73,6 +73,17 @@
   .card p { margin-bottom: 10px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
   .card strong { color: #f0f6fc; }
 
+  /* FACT GRID */
+  .fact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 700px) { .fact-grid { grid-template-columns: repeat(2, 1fr); } }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 14px 16px; }
+  .fact-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 14px; font-weight: 600; color: #f0f6fc; }
+
+  /* NARRATIVE BOX */
+  .narrative-box p { margin-bottom: 12px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+
   /* NARRATIVE CONTENT */
   .narrative-content p { margin-bottom: 12px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
   .narrative-content blockquote {
@@ -80,7 +91,7 @@
     font-style: italic; color: #8b949e;
   }
 
-  /* URGENCY CARD (competitive moat) */
+  /* URGENCY CARD */
   .urgency-card {
     border: 2px solid #e74c3c !important;
     background: linear-gradient(135deg, #161b22, #1a1015) !important;
@@ -93,7 +104,7 @@
   }
   .urgency-card { position: relative; }
 
-  /* GOLDEN NUGGET CARDS */
+  /* NUGGET CARDS */
   .nugget-card {
     background: #0d1117; border: 1px solid #21262d; border-radius: 8px;
     padding: 20px; margin-bottom: 16px; border-left: 4px solid #f5a623;
@@ -149,6 +160,16 @@
     padding: 18px 22px; margin-bottom: 16px;
   }
   .approach-opener p { color: #a3e4b8 !important; font-size: 14px !important; line-height: 1.7 !important; }
+  .talking-point {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: #0d1117; border: 1px solid #21262d; border-radius: 6px;
+    padding: 14px 18px; margin-bottom: 10px;
+  }
+  .tp-num {
+    font-size: 18px; font-weight: 700; color: #58a6ff;
+    line-height: 1; min-width: 24px; margin-top: 1px;
+  }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.65; }
   .outreach-step {
     background: #0d1117; border: 1px solid #21262d; border-radius: 6px;
     padding: 14px 18px; margin-bottom: 10px;
@@ -156,6 +177,16 @@
   .step-label {
     font-size: 11px; font-weight: 700; color: #58a6ff; letter-spacing: 1px;
     text-transform: uppercase; margin-bottom: 4px;
+  }
+
+  /* STATUS BADGES */
+  .status-complete {
+    display: inline-block; padding: 2px 10px; border-radius: 10px;
+    background: #0e3a1f; color: #3fb950; font-size: 11px; font-weight: 600;
+  }
+  .status-next {
+    display: inline-block; padding: 2px 10px; border-radius: 10px;
+    background: #1a2c4e; color: #58a6ff; font-size: 11px; font-weight: 600;
   }
 
   /* FOOTER */
@@ -214,32 +245,160 @@
     <div class="subtitle">Prepared for Air Control</div>
     <div class="header-meta">
       <span class='tag'>Type: PE-backed franchisor</span>
-      
       <span class='tag'>Waco, TX</span>
     </div>
-    
   </div>
 
   <!-- CONTEXT BAR -->
   <div class="context-bar">
     <div>
       <strong>Air Control</strong> &bull; Fred Lowry &bull; HVAC
-      &bull; 3000000.0
+      &bull; $3M Revenue
     </div>
     <div>March 29, 2026</div>
   </div>
 
   <!-- CONTENT -->
   <div class="content">
-    
-    <div class="card" id="approach-strategy">
-        <h2>Approach Strategy</h2>
-        
-        <div class="approach-opener">
-            <div class="opener-label">CALL OPENER</div>
-            <p>**&quot;Neighborly just earned another spot on the 2026 Franchise 500 with 28 brands and 5,500 locations — and HVAC is one of the essential categories they&#x27;re doubling down on. Air Control fits that thesis in a market they need to own.&quot;** | **&quot;KKR&#x27;s platform is doing $4.1 billion in revenue across 10 countries, but the Northern Virginia corridor is exactly where Ally Services just picked off J Hood in Manassas — if Neighborly doesn&#x27;t move on McLean, someone else in their backyard will.&quot;** | **&quot;Tim Sedgwick has been running operations at Neighborly since 2020 and they&#x27;ve added 8+ brands in the last few years — the integration muscle is there, and a single-site HVAC operator is a low-complexity bolt-on for a machine that onboards franchise locations at scale.&quot;**</p>
+
+    <!-- 1. BUYER PROFILE -->
+    <div class="card" id="buyer-profile">
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item">
+          <div class="fact-label">Platform</div>
+          <div class="fact-value">Neighborly (fka Dwyer Group)</div>
         </div>
+        <div class="fact-item">
+          <div class="fact-label">Backer</div>
+          <div class="fact-value">KKR</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Headquarters</div>
+          <div class="fact-value">Waco, TX</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Revenue</div>
+          <div class="fact-value">~$4.1B system revenue</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Verticals</div>
+          <div class="fact-value">HVAC (Aire Serv), Plumbing (Mr. Rooter), 28 home service brands</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Acquisition Strategy</div>
+          <div class="fact-value">Franchise conversion and tuck-in acquisitions by brand</div>
+        </div>
+      </div>
     </div>
+
+    <!-- 2. KEY CONTACTS -->
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Email</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tim Sedgwick</td>
+            <td>COO / Head of Operations</td>
+            <td>—</td>
+            <td>Running operations since 2020; oversaw 8+ brand additions</td>
+          </tr>
+          <tr>
+            <td>Neighborly Corp Dev</td>
+            <td>Corporate Development</td>
+            <td>—</td>
+            <td>Handles franchise conversion and tuck-in acquisition pipeline</td>
+          </tr>
+          <tr>
+            <td>Aire Serv Leadership</td>
+            <td>Brand President, HVAC</td>
+            <td>—</td>
+            <td>Aire Serv is Neighborly's HVAC franchise brand; NoVA territory open</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 3. STRATEGIC FIT -->
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Neighborly is the largest home services franchisor in the world with 28 brands and 5,500+ locations — and HVAC, through Aire Serv, is one of their core essential categories. The Northern Virginia corridor is a high-income, high-density residential market where Neighborly has franchise presence in adjacent trades but demonstrably weak HVAC coverage relative to the market's size and spend profile.</p>
+        <p>The competitive risk is real: Ally Services just picked off J Hood in Manassas, adding to their NoVA HVAC footprint. If Neighborly doesn't move on McLean, a competing platform — Aire Serv, Service Experts, or another national brand — will establish a stronger position in Fairfax County first. Air Control's existing customer base and brand recognition in McLean represent a faster path to market penetration than a greenfield franchise start.</p>
+        <p>Tim Sedgwick has been running Neighborly operations since 2020 and the platform has added 8+ brands in recent years — the integration infrastructure is built for this. A single-site HVAC operator in a proven market is a low-complexity bolt-on for a machine that already onboards franchise locations at national scale. KKR's backing ensures the capital to move quickly when the right asset surfaces.</p>
+      </div>
+    </div>
+
+    <!-- 4. APPROACH STRATEGY -->
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <div class="approach-opener">
+        <div class="opener-label">Call Opener</div>
+        <p>"Neighborly just earned another spot on the 2026 Franchise 500 with 28 brands and 5,500 locations — and HVAC is one of the essential categories they're doubling down on. Air Control fits that thesis in a market they need to own."</p>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text">KKR's platform is doing $4.1 billion in revenue across 10 countries, but the Northern Virginia corridor is exactly where Ally Services just picked off J Hood in Manassas — if Neighborly doesn't move on McLean, someone else in their backyard will.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text">Tim Sedgwick has been running operations at Neighborly since 2020 and they've added 8+ brands in the last few years — the integration muscle is there, and a single-site HVAC operator is a low-complexity bolt-on for a machine that onboards franchise locations at scale.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text">Air Control's existing customer relationships in McLean — a high-income Fairfax County zip code with one of the strongest residential HVAC service demand profiles on the East Coast — represent immediate recurring revenue that a new franchise start can't replicate for years.</div>
+      </div>
+    </div>
+
+    <!-- 5. PIPELINE HISTORY -->
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Step</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Dossier Created</td>
+            <td><span class="status-complete">Complete</span></td>
+            <td>Mar 29, 2026</td>
+            <td>Initial buyer research and profile built</td>
+          </tr>
+          <tr>
+            <td>Outreach</td>
+            <td><span class="status-next">Next</span></td>
+            <td>—</td>
+            <td>Target Neighborly corp dev + Aire Serv brand president; lead with NoVA gap angle</td>
+          </tr>
+          <tr>
+            <td>Intro Call</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>NDA / CIM Delivery</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 
   <!-- FOOTER -->

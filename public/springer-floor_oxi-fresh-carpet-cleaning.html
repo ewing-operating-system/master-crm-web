@@ -38,6 +38,20 @@
   .tag-fs { background: #2a1a3a; color: #bc8cff; }
   .tag-sb { background: #1a3a3a; color: #39d353; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
+  .risk-note { background: #2e1a0b; border: 1px solid #7a3e0a; border-radius: 6px; padding: 12px 16px; margin-top: 12px; font-size: 13px; color: #f0a070; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
 </head>
@@ -69,43 +83,56 @@
   </div>
   <div class="content">
 
-    <div class="card" id="snapshot">
-      <h2>Snapshot</h2>
+    <div class="card" id="buyer-profile">
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Platform</div><div class="fact-value">Oxi Fresh Franchising</div></div>
+        <div class="fact-item"><div class="fact-label">Backer</div><div class="fact-value">Owner-operated / founder-led (founded 2006)</div></div>
+        <div class="fact-item"><div class="fact-label">Headquarters</div><div class="fact-value">Lakewood, CO</div></div>
+        <div class="fact-item"><div class="fact-label">Revenue</div><div class="fact-value">Est. $55M–$65M system-wide (~$113K AUV)</div></div>
+        <div class="fact-item"><div class="fact-label">Verticals</div><div class="fact-value">Residential carpet cleaning (eco-focused franchise)</div></div>
+        <div class="fact-item"><div class="fact-label">Acquisition Strategy</div><div class="fact-value">No M&amp;A activity; territory sales only</div></div>
+      </div>
+    </div>
+
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
       <table>
-        <tr><th>Field</th><th>Detail</th></tr>
-        <tr><td>Headquarters</td><td>Lakewood, CO</td></tr>
-        <tr><td>Revenue</td><td>Est. $55M–$65M system-wide (400–500 locations at ~$113K AUV)</td></tr>
-        <tr><td>Backing</td><td>Owner-operated / founder-led (founded 2006)</td></tr>
-        <tr><td>Buyer Type</td><td>Franchise System</td></tr>
-        <tr><td>Fit Score</td><td>4 / 10</td></tr>
-        <tr><td>Confidence</td><td>LOW</td></tr>
+        <tr><th>Name</th><th>Title</th><th>Email</th><th>Notes</th></tr>
+        <tr><td>Jonathan Barnett</td><td>Founder &amp; CEO</td><td>—</td><td>Primary decision-maker; founder-operator since 2006</td></tr>
       </table>
     </div>
 
-    <div class="card" id="buyer-profile">
-      <h2>Company Overview</h2>
-      <p>Eco-friendly carpet cleaning franchise with 400–500 US locations and a handful in Canada. Founded 2006. Grows via territory sales with a low-cost model focused on residential.</p>
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Oxi Fresh is an eco-friendly carpet cleaning franchise with 400–500 US locations and a low-cost owner-operator model. Average unit volume of ~$113K reflects a lean residential-focused system not built for commercial account management or B2B sales.</p>
+        <p>Springer Floor's commercial floor care accounts — facility managers, property managers, and commercial buildings — are adjacent to what Oxi Fresh franchisees serve, but the scale difference is significant. Acquiring a commercial operator would be a structural departure from their franchise growth playbook.</p>
+        <p>No PE backing and no acquisition track record make this a low-probability near-term buyer. The theoretical case is that a commercial floor account portfolio could add B2B revenue per franchise territory, but the financial mechanism to execute the acquisition is absent.</p>
+      </div>
     </div>
 
-    <div class="card" id="acquisition-history">
-      <h2>Acquisition History</h2>
-      <p>No known acquisition activity. Growth model is franchise territory sales exclusively.</p>
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <div style="background:#0d2b1a;border:1px solid #1a5c34;border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:14px;color:#5dbb8a;line-height:1.7;">
+        <strong>Call Opener:</strong> "We work with a commercial floor care company in Kansas City that runs B2B accounts your franchisees could inherit immediately. I wanted to see if a conversation made sense — either as a direct acquisition or a preferred commercial subcontractor arrangement in existing Oxi Fresh territories."
+      </div>
+      <div class="talking-point"><div class="tp-num">1</div><div class="tp-text">Oxi Fresh's eco-friendly brand is well-positioned to compete for commercial accounts that prioritize green cleaning certifications — Springer Floor's commercial client base includes exactly that category of facility manager.</div></div>
+      <div class="talking-point"><div class="tp-num">2</div><div class="tp-text">An acquisition would immediately add recurring B2B revenue per territory without requiring franchisees to develop commercial sales capabilities from scratch.</div></div>
+      <div class="talking-point"><div class="tp-num">3</div><div class="tp-text">Even a referral or subcontractor arrangement could be structured to test the commercial model before any capital commitment — a low-risk way to evaluate B2B expansion.</div></div>
     </div>
 
-    <div class="card" id="fit-narrative">
-      <h2>Why They'd Buy Springer Floor</h2>
-      <p>Franchise-focused with thin unit economics (~$113K AUV). No acquisition-oriented behavior observed. A commercial floor account portfolio could accelerate B2B revenue in existing franchise territories, but the financial capacity to execute an acquisition is absent.</p>
-    </div>
-
-    <div class="card" id="investment-thesis">
-      <h2>Investment Thesis</h2>
-      <p>Theoretical only. No PE backing, no acquisition track record.</p>
-    </div>
-
-    <div class="card" id="validation">
-      <h2>Research Verdict</h2>
-      <p>Included by CII Advisors. Not a near-term acquirer.</p>
-      <p style="margin-top:12px;font-size:12px;color:#484f58;">Source: CII Advisors Buyer Profiles PDF (March 2026) + Exa web validation (March 30, 2026)</p>
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <tr><th>Step</th><th>Status</th><th>Date</th><th>Notes</th></tr>
+        <tr><td>Identified</td><td><span class="status-complete">Complete</span></td><td>Mar 2026</td><td>Included in CII Advisors buyer list</td></tr>
+        <tr><td>Research &amp; Validation</td><td><span class="status-complete">Complete</span></td><td>Mar 30, 2026</td><td>No M&amp;A activity; founder-led with no PE capital confirmed</td></tr>
+        <tr><td>Initial Outreach</td><td>—</td><td>—</td><td>Low priority; pursue only after higher-fit buyers are engaged</td></tr>
+        <tr><td>Intro Call</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>NDA / Materials</td><td>—</td><td>—</td><td>—</td></tr>
+      </table>
+      <div class="risk-note">No acquisition history and no PE capital. Thin unit economics (~$113K AUV) cannot fund a meaningful acquisition. Low priority — monitor only.</div>
     </div>
 
   </div>

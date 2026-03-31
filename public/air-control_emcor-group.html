@@ -73,6 +73,17 @@
   .card p { margin-bottom: 10px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
   .card strong { color: #f0f6fc; }
 
+  /* FACT GRID */
+  .fact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 700px) { .fact-grid { grid-template-columns: repeat(2, 1fr); } }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 14px 16px; }
+  .fact-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 14px; font-weight: 600; color: #f0f6fc; }
+
+  /* NARRATIVE BOX */
+  .narrative-box p { margin-bottom: 12px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+
   /* NARRATIVE CONTENT */
   .narrative-content p { margin-bottom: 12px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
   .narrative-content blockquote {
@@ -149,6 +160,16 @@
     padding: 18px 22px; margin-bottom: 16px;
   }
   .approach-opener p { color: #a3e4b8 !important; font-size: 14px !important; line-height: 1.7 !important; }
+  .talking-point {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: #0d1117; border: 1px solid #21262d; border-radius: 6px;
+    padding: 14px 18px; margin-bottom: 10px;
+  }
+  .tp-num {
+    font-size: 18px; font-weight: 700; color: #58a6ff;
+    line-height: 1; min-width: 24px; margin-top: 1px;
+  }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.65; }
   .outreach-step {
     background: #0d1117; border: 1px solid #21262d; border-radius: 6px;
     padding: 14px 18px; margin-bottom: 10px;
@@ -156,6 +177,16 @@
   .step-label {
     font-size: 11px; font-weight: 700; color: #58a6ff; letter-spacing: 1px;
     text-transform: uppercase; margin-bottom: 4px;
+  }
+
+  /* STATUS BADGES */
+  .status-complete {
+    display: inline-block; padding: 2px 10px; border-radius: 10px;
+    background: #0e3a1f; color: #3fb950; font-size: 11px; font-weight: 600;
+  }
+  .status-next {
+    display: inline-block; padding: 2px 10px; border-radius: 10px;
+    background: #1a2c4e; color: #58a6ff; font-size: 11px; font-weight: 600;
   }
 
   /* FOOTER */
@@ -213,33 +244,161 @@
     <h1>EMCOR Group</h1>
     <div class="subtitle">Prepared for Air Control</div>
     <div class="header-meta">
-      <span class='tag'>Type: strategic</span>
-      
+      <span class='tag'>Type: Strategic</span>
       <span class='tag'>Norwalk, CT</span>
     </div>
-    
   </div>
 
   <!-- CONTEXT BAR -->
   <div class="context-bar">
     <div>
       <strong>Air Control</strong> &bull; Fred Lowry &bull; HVAC
-      &bull; 3000000.0
+      &bull; $3M Revenue
     </div>
     <div>March 29, 2026</div>
   </div>
 
   <!-- CONTENT -->
   <div class="content">
-    
-    <div class="card" id="approach-strategy">
-        <h2>Approach Strategy</h2>
-        
-        <div class="approach-opener">
-            <div class="opener-label">CALL OPENER</div>
-            <p>**&quot;EMCOR just posted record RPOs of $13.25 billion, up 31% year-over-year — Bruce Burdon&#x27;s team is going to need local mechanical contractors to help execute that backlog in the mid-Atlantic.&quot;** | **&quot;When EMCOR acquired ECM Holding Group in July 2023 for their HVAC and energy efficiency retrofit capabilities, they signaled that bolt-on mechanical services deals are a named strategy — Air Control fits that exact profile in a market ECM doesn&#x27;t cover locally.&quot;** | **&quot;Tony Guzzi guided 2026 revenue to $17.75–$18.50 billion on the February 26 earnings call — that&#x27;s $750M+ of incremental revenue to find, and tuck-in HVAC acquisitions in high-density government markets are the fastest path to fill that gap.&quot;**</p>
+
+    <!-- 1. BUYER PROFILE -->
+    <div class="card" id="buyer-profile">
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item">
+          <div class="fact-label">Platform</div>
+          <div class="fact-value">EMCOR Group (NYSE: EME)</div>
         </div>
+        <div class="fact-item">
+          <div class="fact-label">Backer</div>
+          <div class="fact-value">Public Company</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Headquarters</div>
+          <div class="fact-value">Norwalk, CT</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Revenue</div>
+          <div class="fact-value">$14B+ (2025)</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Verticals</div>
+          <div class="fact-value">Mechanical, Electrical, HVAC, Facilities</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Acquisition Strategy</div>
+          <div class="fact-value">Bolt-on mechanical contractors in growth markets</div>
+        </div>
+      </div>
     </div>
+
+    <!-- 2. KEY CONTACTS -->
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Email</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tony Guzzi</td>
+            <td>President &amp; CEO</td>
+            <td>—</td>
+            <td>Guided 2026 revenue to $17.75–$18.50B on Feb 26 earnings call</td>
+          </tr>
+          <tr>
+            <td>Bruce Burdon</td>
+            <td>EVP, Mechanical Construction</td>
+            <td>—</td>
+            <td>Oversees mid-Atlantic mechanical contractor strategy</td>
+          </tr>
+          <tr>
+            <td>Mark Pompa</td>
+            <td>EVP &amp; CFO</td>
+            <td>—</td>
+            <td>Capital allocation lead; approves tuck-in acquisitions</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 3. STRATEGIC FIT -->
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>EMCOR posted record RPOs of $13.25 billion in 2025, up 31% year-over-year, with guidance of $17.75–$18.50B for 2026. That scale of backlog growth requires local mechanical contractor capacity to execute — particularly in high-density government and commercial markets like the DC metro, where EMCOR's existing footprint has gaps in Northern Virginia.</p>
+        <p>EMCOR's July 2023 acquisition of ECM Holding Group specifically for HVAC and energy efficiency retrofit capabilities signals that bolt-on mechanical services deals are a named part of their strategy. Air Control operates in exactly the profile ECM was acquired for — local market knowledge, tenured technicians, and established commercial and government relationships — but in a geography ECM doesn't currently cover.</p>
+        <p>Tony Guzzi's 2026 guidance represents $750M+ of incremental revenue to find. Tuck-in HVAC acquisitions in high-density government markets are among the fastest paths to fill that gap with recurring, contract-based revenue — and McLean puts Air Control in the middle of the single most valuable government services corridor in the country.</p>
+      </div>
+    </div>
+
+    <!-- 4. APPROACH STRATEGY -->
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <div class="approach-opener">
+        <div class="opener-label">Call Opener</div>
+        <p>"EMCOR just posted record RPOs of $13.25 billion, up 31% year-over-year — Bruce Burdon's team is going to need local mechanical contractors to help execute that backlog in the mid-Atlantic."</p>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text">When EMCOR acquired ECM Holding Group in July 2023 for their HVAC and energy efficiency retrofit capabilities, they signaled that bolt-on mechanical services deals are a named strategy — Air Control fits that exact profile in a market ECM doesn't cover locally.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text">Tony Guzzi guided 2026 revenue to $17.75–$18.50 billion on the February 26 earnings call — that's $750M+ of incremental revenue to find, and tuck-in HVAC acquisitions in high-density government markets are the fastest path to fill that gap.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text">Air Control's Northern Virginia location puts it at the center of federal agency, intelligence community, and defense contractor HVAC spend — a customer type EMCOR serves nationally at scale but lacks local execution capacity for in Fairfax County specifically.</div>
+      </div>
+    </div>
+
+    <!-- 5. PIPELINE HISTORY -->
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Step</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Dossier Created</td>
+            <td><span class="status-complete">Complete</span></td>
+            <td>Mar 29, 2026</td>
+            <td>Initial buyer research and profile built</td>
+          </tr>
+          <tr>
+            <td>Outreach</td>
+            <td><span class="status-next">Next</span></td>
+            <td>—</td>
+            <td>Target Bruce Burdon or EMCOR corp dev via direct outreach</td>
+          </tr>
+          <tr>
+            <td>Intro Call</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>NDA / CIM Delivery</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 
   <!-- FOOTER -->

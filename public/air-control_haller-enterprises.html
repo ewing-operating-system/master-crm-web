@@ -73,6 +73,17 @@
   .card p { margin-bottom: 10px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
   .card strong { color: #f0f6fc; }
 
+  /* FACT GRID */
+  .fact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 700px) { .fact-grid { grid-template-columns: repeat(2, 1fr); } }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 14px 16px; }
+  .fact-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 14px; font-weight: 600; color: #f0f6fc; }
+
+  /* NARRATIVE BOX */
+  .narrative-box p { margin-bottom: 12px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+
   /* NARRATIVE CONTENT */
   .narrative-content p { margin-bottom: 12px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
   .narrative-content blockquote {
@@ -80,7 +91,7 @@
     font-style: italic; color: #8b949e;
   }
 
-  /* URGENCY CARD (competitive moat) */
+  /* URGENCY CARD */
   .urgency-card {
     border: 2px solid #e74c3c !important;
     background: linear-gradient(135deg, #161b22, #1a1015) !important;
@@ -93,7 +104,7 @@
   }
   .urgency-card { position: relative; }
 
-  /* GOLDEN NUGGET CARDS */
+  /* NUGGET CARDS */
   .nugget-card {
     background: #0d1117; border: 1px solid #21262d; border-radius: 8px;
     padding: 20px; margin-bottom: 16px; border-left: 4px solid #f5a623;
@@ -149,6 +160,16 @@
     padding: 18px 22px; margin-bottom: 16px;
   }
   .approach-opener p { color: #a3e4b8 !important; font-size: 14px !important; line-height: 1.7 !important; }
+  .talking-point {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: #0d1117; border: 1px solid #21262d; border-radius: 6px;
+    padding: 14px 18px; margin-bottom: 10px;
+  }
+  .tp-num {
+    font-size: 18px; font-weight: 700; color: #58a6ff;
+    line-height: 1; min-width: 24px; margin-top: 1px;
+  }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.65; }
   .outreach-step {
     background: #0d1117; border: 1px solid #21262d; border-radius: 6px;
     padding: 14px 18px; margin-bottom: 10px;
@@ -156,6 +177,16 @@
   .step-label {
     font-size: 11px; font-weight: 700; color: #58a6ff; letter-spacing: 1px;
     text-transform: uppercase; margin-bottom: 4px;
+  }
+
+  /* STATUS BADGES */
+  .status-complete {
+    display: inline-block; padding: 2px 10px; border-radius: 10px;
+    background: #0e3a1f; color: #3fb950; font-size: 11px; font-weight: 600;
+  }
+  .status-next {
+    display: inline-block; padding: 2px 10px; border-radius: 10px;
+    background: #1a2c4e; color: #58a6ff; font-size: 11px; font-weight: 600;
   }
 
   /* FOOTER */
@@ -213,33 +244,161 @@
     <h1>Haller Enterprises</h1>
     <div class="subtitle">Prepared for Air Control</div>
     <div class="header-meta">
-      <span class='tag'>Type: strategic</span>
-      
+      <span class='tag'>Type: Strategic</span>
       <span class='tag'>Lititz, PA</span>
     </div>
-    
   </div>
 
   <!-- CONTEXT BAR -->
   <div class="context-bar">
     <div>
       <strong>Air Control</strong> &bull; Fred Lowry &bull; HVAC
-      &bull; 3000000.0
+      &bull; $3M Revenue
     </div>
     <div>March 29, 2026</div>
   </div>
 
   <!-- CONTENT -->
   <div class="content">
-    
-    <div class="card" id="approach-strategy">
-        <h2>Approach Strategy</h2>
-        
-        <div class="approach-opener">
-            <div class="opener-label">CALL OPENER</div>
-            <p>**&quot;Kenny, congrats on the presidency — 24 years from your start in &#x27;99 to running the whole shop. We&#x27;re working with an HVAC company in McLean that has a similar culture of promoting from within, and I think you&#x27;d appreciate how they&#x27;ve built their team.&quot;** | **&quot;Haller won ACCA&#x27;s 2014 Commercial Contractor of the Year across all of south-central PA — this target would let you bring that same commercial playbook into the DC metro, which is arguably the densest federal/commercial HVAC market on the East Coast.&quot;** | **&quot;Rick built Haller from one truck in a garage in 1981 to 200 trucks and five branches — the founder of this Virginia business has a similar story and cares about where his company lands. That matters more to him than an extra turn of EBITDA.&quot;**</p>
+
+    <!-- 1. BUYER PROFILE -->
+    <div class="card" id="buyer-profile">
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item">
+          <div class="fact-label">Platform</div>
+          <div class="fact-value">Haller Enterprises</div>
         </div>
+        <div class="fact-item">
+          <div class="fact-label">Backer</div>
+          <div class="fact-value">Family-owned (Rick Haller, founder)</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Headquarters</div>
+          <div class="fact-value">Lititz, PA</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Revenue</div>
+          <div class="fact-value">Not disclosed</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Verticals</div>
+          <div class="fact-value">HVAC, Plumbing, Electrical, Commercial</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Acquisition Strategy</div>
+          <div class="fact-value">Geographic expansion into DC metro; culture-first</div>
+        </div>
+      </div>
     </div>
+
+    <!-- 2. KEY CONTACTS -->
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Email</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Kenny Haller</td>
+            <td>President</td>
+            <td>—</td>
+            <td>24-year tenure; promoted from within in 1999; now runs the company</td>
+          </tr>
+          <tr>
+            <td>Rick Haller</td>
+            <td>Founder</td>
+            <td>—</td>
+            <td>Built from one truck (1981) to 200 trucks and five branches</td>
+          </tr>
+          <tr>
+            <td>Haller Business Dev</td>
+            <td>Business Development</td>
+            <td>—</td>
+            <td>Contact for partnership and acquisition inquiries</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 3. STRATEGIC FIT -->
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Haller Enterprises was built over 40+ years by Rick Haller from a single truck in a Lancaster County garage into a 200-truck, five-branch operation — a founder story with direct parallels to Air Control's trajectory in Northern Virginia. Both companies were built the same way: slowly, with a focus on people and repeat customer relationships. That shared origin creates an unusually natural cultural alignment between buyer and seller.</p>
+        <p>Haller won ACCA's Commercial Contractor of the Year award for all of south-central Pennsylvania — their commercial HVAC playbook is proven. Air Control would let them apply that same playbook in the DC metro, which is arguably the densest federal and commercial HVAC market on the East Coast and a geography Haller has not yet entered.</p>
+        <p>Kenny Haller's rise from within — 24 years of service before taking the president role — signals that Haller values continuity and operator tenure. For Fred Lowry, who cares deeply about what happens to his team post-close, a buyer that promotes from within rather than installs outside management is a meaningfully different conversation than a financial platform rollup.</p>
+      </div>
+    </div>
+
+    <!-- 4. APPROACH STRATEGY -->
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <div class="approach-opener">
+        <div class="opener-label">Call Opener</div>
+        <p>"Kenny, congrats on the presidency — 24 years from your start in '99 to running the whole shop. We're working with an HVAC company in McLean that has a similar culture of promoting from within, and I think you'd appreciate how they've built their team."</p>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text">Haller won ACCA's 2014 Commercial Contractor of the Year across all of south-central PA — this target would let you bring that same commercial playbook into the DC metro, which is arguably the densest federal and commercial HVAC market on the East Coast.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text">Rick built Haller from one truck in a garage in 1981 to 200 trucks and five branches — the founder of this Virginia business has a similar story and cares about where his company lands. That matters more to him than an extra turn of EBITDA.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text">Haller has no DC metro presence today — Air Control gives you an immediate foothold in Fairfax County with an existing customer base, trained technicians, and zero ramp-up time, anchored by a founder willing to stay through transition.</div>
+      </div>
+    </div>
+
+    <!-- 5. PIPELINE HISTORY -->
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Step</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Dossier Created</td>
+            <td><span class="status-complete">Complete</span></td>
+            <td>Mar 29, 2026</td>
+            <td>Initial buyer research and profile built</td>
+          </tr>
+          <tr>
+            <td>Outreach</td>
+            <td><span class="status-next">Next</span></td>
+            <td>—</td>
+            <td>Target Kenny Haller directly; lead with founder-to-founder culture story</td>
+          </tr>
+          <tr>
+            <td>Intro Call</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>NDA / CIM Delivery</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 
   <!-- FOOTER -->

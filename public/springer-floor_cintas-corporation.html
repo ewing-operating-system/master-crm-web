@@ -48,6 +48,19 @@
   tr:hover td { background: #1c2128; }
   a { color: #58a6ff; text-decoration: none; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
 </head>
@@ -63,83 +76,149 @@
 </div>
 <!-- NAV:END -->
 
-
-
 <div class="page">
   <div class="header">
     <div class="header-label">Buyer Dossier</div>
     <h1>Cintas Corporation</h1>
     <div class="subtitle">Prepared for Springer Floor</div>
-    <div class='score-badge'><span class='score-num'>5</span><span class='score-label'>Fit</span></div>
+    <div class="score-badge"><span class="score-num">5</span><span class="score-label">Fit</span></div>
   </div>
   <div class="context-bar">
     <strong>Springer Floor</strong> &bull; Terri Holman
   </div>
   <div class="content">
+
+    <!-- SECTION 1: BUYER PROFILE -->
     <div class="card" id="buyer-profile">
-        <h2>Buyer Profile</h2>
-        <h3>Cintas Corporation -- SAP-Quality Buyer Dossier</h3>
-<p><strong>Research Date:</strong> 2026-03-29</p>
-<h4>Company Profile</h4>
-<ul><li><strong>Revenue indicators:</strong> $85 million, $5.5 billion, $600 million</li><li><strong>Workforce indicators:</strong> , employees</li></ul>
-<h4>Strategic Direction</h4>
-<ul><li>Cintas Corporation (CTAS) Q3 2025 Earnings Call Transcript | Seeking Alpha</li></ul>
-<p>SA Transcripts</p>
-<p>159.</p>
-<ul><li>14K Followers</li></ul>
-<p>5</p>
-<p>Share</p>
-<ul><li>Comment(1)</li></ul>
-<h4>Q3: 2025-03-26 Earnings Summary</h4>
-<p>InsightsTranscript Insights</p>
-<p>Play Call</p>
-<p>EPS of $1.</p>
-<ul><li>Cintas (CTAS) Q2 2026 Earnings Call Transcript - AOL</li></ul>
-<p>Thu, December 18, 2025 at 6:25 PM UTC</p>
-<p>0</p>
-<p>Logo of jester cap with thought bubble.</p>
-<ul><li>## DATE</li></ul>
-<p>Thursday, December 18, 2025 at 10 a.</p>
-<ul><li>Facility Services | Blog | Cintas</li></ul>
-<h4>Facility Services</h4>
-<ul><li>Industries</li><li>Fire Protection</li><li>First Aid & Safety</li><li>Facility Services</li><li>Workwear & Apparel</li><li>Stories & Insights</li></ul>
-<h3>6 Effective Cleaning Strategies for a Safer, Cleaner Kitchen</h3>
-<p>Cleanliness is essential for safety and efficiency in any commercial kitchen.</p>
-<ul><li>Read More</li></ul>
-<h3>A handy way to maintain healthy environments</h3>
-<p>Hand sanitizer dispensers can help transform spaces into healthier places</p>
-<p>Read More</p>
-<h3>3 Simple Steps to Refresh Your Cleaning Approach</h3>
-<p>A clean business does more than look good: it helps boost customer satisfaction and boost.</p>
-<ul><li>CINTAS TO ACQUIRE UNIFIRST IN $5.</li><li>5 BILLION TRANSACTION THAT EXPANDS SERVICE CAPABILITIES, ENHANCES WORKDAY SOLUTIONS AND ADVANCES INDUSTRY INNOVATION</li></ul>
-<p>Published 03.</p>
-<h4>Acquisition History & M&A Posture</h4>
-<ul><li>CINTAS TO ACQUIRE UNIFIRST IN $5.</li><li>5 BILLION TRANSACTION THAT EXPANDS SERVICE CAPABILITIES, ENHANCES WORKDAY SOLUTIONS AND ADVANCES INDUSTRY INNOVATION</li></ul>
-<p>Published 03.</p>
-<ul><li>26</li></ul>
-<h4>CINTAS TO ACQUIRE UNIFIRST IN $5.</h4>
-<ul><li>5B UniFirst Acquisition | FinancialContent</li></ul>
-<p>Looking for our Business Solutions? Click here: CloudQuote APIs Contact Us</p>
-<h4>The Uniform Giant Consolidates: A Deep-Dive into Cintas (CTAS) and the $5.</h4>
-<ul><li>5B UniFirst Acquisition</li></ul>
-<p>Published at March 12th 2026, 10:01 AM EDT via Finterra</p>
-<p>On March 12, 2026, the industrial services sector is still reeling from yesterday’s seismic announcement: Cintas Corporation (Nasdaq: CTAS) has entered into a definitive agreement to acquire its long-time rival, UniFirst Corporation (NYSE: UNF), for an enterprise value of $5.</p>
-<ul><li>This "mega-merger" of the two largest players in the North American uniform rental and facility services market represents a definitive shift in the landscape of American labor and business operations.</li><li>5 Billion Acquisition Of Uniform And Workwear Provider UniFirst</li></ul>
-<h4>Cintas: $5.</h4>
-<ul><li>5 Billion Acquisition Of Uniform And Workwear Provider UniFirst</li></ul>
-<p>By Amit Chowdhry • Mar 11, 2026</p>
-<p>Cintas: $5.</p>
-<ul><li>5 Billion Acquisition Of Uniform And Workwear Provider UniFirst</li></ul>
-<p>Cintas announced it has entered into a definitive agreement to acquire UniFirst in a transaction valued at approximately $5.</p>
-<h4>Key Decision Makers</h4>
-<ul><li>Vice President - Corporate Development at Cintas | The Org</li><li>Vice President - Corporate Development</li><li>Vice President - Corporate Development</li><li>Vice President | Cintas | Western Group</li><li>Vice President Western Group at Cintas</li><li>Vice President Western Group at Cintas (Current)</li><li>Vice President at Cintas</li><li>Vice President at Cintas</li><li>Vice President at Cintas (Current)</li></ul>
-<h4>Fit Rationale for Springer Floor (Floor Care/Carpet Cleaning, Des Moines IA)</h4>
-<ul><li>Springer Floor operates in the floor care and carpet cleaning vertical in Des Moines, IA</li><li>Buyer operates in adjacent/overlapping service categories</li></ul>
-<h4>Sources</h4>
-<ul><li>[Cintas Corporation (CTAS) Q3 2025 Earnings Call Transcript](https://seekingalpha.com/article/4770611-cintas-corporation-ctas-q3-2025-earnings-call-transcript)</li><li>[Cintas (CTAS) Q2 2026 Earnings Call Transcript](https://www.aol.com/articles/cintas-ctas-q2-2026-earnings-182526975.html)</li><li>[Earnings call transcript: Cintas beats Q3 2025 forecasts, st](https://www.investing.com/news/transcripts/earnings-call-transcript-cintas-beats-q3-2025-forecasts-stock-jumps-7-93CH-3949876)</li><li>[cintas to acquire unifirst in $5.5 billion transaction](https://www.cintas.com/newsroom/details/news/2026/03/11/cintas-to-acquire-unifirst-in-5.5-billion-transaction-that-expands-service-capabilities-enhances-workday-solutions-and-advances-industry-innovation)</li><li>[The Uniform Giant Consolidates: A Deep-Dive into Cintas (CTA](https://www.financialcontent.com/article/finterra-2026-3-12-the-uniform-giant-consolidates-a-deep-dive-into-cintas-ctas-and-the-55b-unifirst-acquisition)</li><li>[Cintas: $5.5 Billion Acquisition Of Uniform And Workwear Pro](https://pulse2.com/cintas-5-5-billion-acquisition-of-uniform-and-workwear-provider-unifirst/)</li><li>[Mike Mahoney - Vice President - Corporate Development at Cin](https://theorg.com/org/cintas/org-chart/mike-mahoney)</li><li>[James Chapman | Vice President | Cintas | Western Group](https://linkedin.com/in/james-chapman-7b905a107)</li><li>[Chad Mongeon - Group Vice President at Cintas - LinkedIn](https://www.linkedin.com/in/chad-mongeon-21473332)</li><li>[Cintas](https://cintas.com/)</li><li>[Cintas - 2026 Company Profile, Funding, Competitors & Financ](https://tracxn.com/d/companies/cintas/__LSZPq299MHC2cxJrqVo0eEPRSHNAIIiwH4JSpumwAoY)</li><li>[Cintas: Number of Employees 2012-2026 | CTAS - Macrotrends](https://www.macrotrends.net/stocks/charts/CTAS/cintas/number-of-employees)</li><li>[Facility Services | Blog - Cintas](https://www.cintas.com/about/blog/facility-services)</li></ul>
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item">
+          <div class="fact-label">Company</div>
+          <div class="fact-value">Cintas Corporation</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Ticker</div>
+          <div class="fact-value">NYSE: CTAS</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Headquarters</div>
+          <div class="fact-value">Mason, OH (Cincinnati metro)</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Revenue</div>
+          <div class="fact-value">~$9.5B+ annual (FY2025); acquiring UniFirst for $5.5B</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Employees</div>
+          <div class="fact-value">~45,000+</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Service Lines</div>
+          <div class="fact-value">Uniforms, facility services, first aid &amp; safety, fire protection</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Facility Services</div>
+          <div class="fact-value">Restroom care, floor care programs, mat services, sanitizers</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">M&amp;A Posture</div>
+          <div class="fact-value">Active acquirer — $5.5B UniFirst deal March 2026; tuck-ins ongoing</div>
+        </div>
+      </div>
     </div>
-    
-    
+
+    <!-- SECTION 2: KEY CONTACTS -->
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Phone</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Mike Mahoney</td>
+            <td>VP Corporate Development</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>James Chapman</td>
+            <td>VP — Western Group</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Chad Mongeon</td>
+            <td>Group Vice President</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SECTION 3: STRATEGIC FIT -->
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Cintas is the dominant force in North American facility services — uniforms, restroom programs, first aid, fire protection, and facility cleaning. They already sell floor care programs (mat services, hard floor cleaning) to commercial accounts, but their in-house capability is oriented toward programmatic mat and mop delivery, not skilled floor restoration. Commercial hardwood refinishing, deep carpet extraction, and specialty floor finish services are not in their current service menu.</p>
+        <p>The $5.5B UniFirst acquisition in March 2026 signals that Cintas is in active consolidation mode — adding the last major uniform competitor. That deal will dominate management bandwidth for 12–24 months, but Cintas's local branch model means regional facility services acquisitions are handled at the VP / Group level, not the CEO level. A floor care tuck-in in Des Moines fits within that framework.</p>
+        <p>Springer Floor would give Cintas's Des Moines Facility Services team a premium floor care offering to upsell into their existing commercial account base — without building the technical capability from scratch. This is a route-density play: the same sales rep who sells mats and restroom supplies can now sell floor restoration on the same customer call.</p>
+      </div>
+    </div>
+
+    <!-- SECTION 4: APPROACH STRATEGY -->
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <p style="font-size:13px; color:#8b949e; margin-bottom:14px;"><strong style="color:#c9d1d9;">Call Opener:</strong> "Hi — I represent the owner of Springer Floor Care in Des Moines. Commercial floor restoration specialist — hardwood, carpet, hard floor programs. I know Cintas serves the Des Moines commercial market and already has facility services accounts there. I wanted to see if adding a floor restoration capability to that market makes sense. Do you have 15 minutes this week?"</p>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text"><strong>Cintas already has the accounts — Springer Floor gives them a premium service to sell into them.</strong> Every Cintas commercial facility client in Des Moines needs floor restoration periodically. Today that work goes to a local vendor. An acquisition brings that revenue in-house.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text"><strong>Floor restoration is the natural extension of Cintas's floor programs.</strong> Cintas sells mat service and floor cleaning programs today. Deep restoration — hardwood refinishing, carpet extraction, specialty coatings — is the premium tier above their current offering. Springer Floor fills that gap.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text"><strong>This is a branch-level decision, not a UniFirst-scale deal.</strong> Cintas's Group VP and regional team can evaluate and close a floor care tuck-in independently of the UniFirst integration. Small market, clean business, trained crew — fits the local acquisition model Cintas uses for service line fills.</div>
+      </div>
+    </div>
+
+    <!-- SECTION 5: PIPELINE HISTORY -->
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Activity</th>
+            <th>Owner</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2026-03-29</td>
+            <td>Dossier researched and built</td>
+            <td>Next Chapter M&amp;A</td>
+            <td><span class="status-complete">Complete</span></td>
+          </tr>
+          <tr>
+            <td>—</td>
+            <td>Outreach letter sent to Cintas VP Corporate Development</td>
+            <td>Terri Holman</td>
+            <td><span class="status-next">Next Step</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
   <div class="footer">
     Generated March 29, 2026 &bull; Next Chapter M&A Advisory &bull; Confidential

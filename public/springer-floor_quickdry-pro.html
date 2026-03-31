@@ -38,6 +38,20 @@
   .tag-fs { background: #2a1a3a; color: #bc8cff; }
   .tag-sb { background: #1a3a3a; color: #39d353; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
+  .risk-note { background: #2e1a0b; border: 1px solid #7a3e0a; border-radius: 6px; padding: 12px 16px; margin-top: 12px; font-size: 13px; color: #f0a070; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
 </head>
@@ -69,43 +83,56 @@
   </div>
   <div class="content">
 
-    <div class="card" id="snapshot">
-      <h2>Snapshot</h2>
+    <div class="card" id="buyer-profile">
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Platform</div><div class="fact-value">QuickDry Pro (independent operator)</div></div>
+        <div class="fact-item"><div class="fact-label">Backer</div><div class="fact-value">Owner-operated (Chris Ward, IICRC-certified, 20+ years)</div></div>
+        <div class="fact-item"><div class="fact-label">Headquarters</div><div class="fact-value">Gardner, KS</div></div>
+        <div class="fact-item"><div class="fact-label">Revenue</div><div class="fact-value">Under $5M</div></div>
+        <div class="fact-item"><div class="fact-label">Verticals</div><div class="fact-value">Carpet &amp; hard-surface cleaning (residential and commercial)</div></div>
+        <div class="fact-item"><div class="fact-label">Acquisition Strategy</div><div class="fact-value">Active M&amp;A page; positioning as local KC roll-up</div></div>
+      </div>
+    </div>
+
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
       <table>
-        <tr><th>Field</th><th>Detail</th></tr>
-        <tr><td>Headquarters</td><td>Gardner, KS</td></tr>
-        <tr><td>Revenue</td><td>Under $5M</td></tr>
-        <tr><td>Backing</td><td>Owner-operated (Chris Ward, IICRC-certified, 20+ years)</td></tr>
-        <tr><td>Buyer Type</td><td>Strategic Buyer</td></tr>
-        <tr><td>Fit Score</td><td>4 / 10</td></tr>
-        <tr><td>Confidence</td><td>LOW</td></tr>
+        <tr><th>Name</th><th>Title</th><th>Email</th><th>Notes</th></tr>
+        <tr><td>Chris Ward</td><td>Owner / Operator</td><td>—</td><td>IICRC-certified; 20+ years experience; decision-maker</td></tr>
       </table>
     </div>
 
-    <div class="card" id="buyer-profile">
-      <h2>Company Overview</h2>
-      <p>Kansas City-area carpet and hard-surface cleaning operator. Has a live M&A page at quickdrypro.com/mergers-and-acquisitions/ actively inviting local carpet cleaning business owners to discuss acquisition opportunities.</p>
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>QuickDry Pro is an owner-operated carpet and hard-surface cleaning company in Gardner, KS — less than 30 miles from Springer Floor's operating territory. Critically, they have a live M&amp;A page at quickdrypro.com/mergers-and-acquisitions/ actively inviting local carpet cleaning business owners to discuss acquisition opportunities, signaling an explicit roll-up ambition.</p>
+        <p>The geographic overlap is direct: QuickDry Pro is positioned to become the dominant Kansas City metro floor care operator by aggregating smaller regional players. Springer Floor would represent an anchor commercial acquisition — adding a trained workforce, established B2B accounts, and commercial-grade equipment to QuickDry's largely residential base.</p>
+        <p>The hard constraint is capital: QuickDry Pro's sub-$5M revenue base is insufficient to fund a meaningful acquisition without outside financing. This is a real strategic fit story, but the deal cannot close without a lender or outside investor joining the transaction. Worth engaging — if they close PE or SBA financing, this moves up the priority list immediately.</p>
+      </div>
     </div>
 
-    <div class="card" id="acquisition-history">
-      <h2>Acquisition History</h2>
-      <p>Has dedicated M&A page. No confirmed completed acquisitions publicly documented. Positioning as local/regional roll-up vehicle.</p>
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <div style="background:#0d2b1a;border:1px solid #1a5c34;border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:14px;color:#5dbb8a;line-height:1.7;">
+        <strong>Call Opener:</strong> "I saw your M&amp;A page and wanted to reach out directly — we represent a commercial floor care company in Kansas City that fits exactly what you're building. I'd like to have a quick conversation about whether there's a deal structure that works for both sides."
+      </div>
+      <div class="talking-point"><div class="tp-num">1</div><div class="tp-text">QuickDry Pro's M&amp;A page signals explicit acquisition intent — Springer Floor is not a cold outreach, it's an inbound-adjacent conversation that aligns with a strategy they've already publicly committed to.</div></div>
+      <div class="talking-point"><div class="tp-num">2</div><div class="tp-text">Springer Floor's commercial account base gives QuickDry Pro immediate B2B revenue — a segment they currently underserve — and the trained technicians to service it without hiring from scratch.</div></div>
+      <div class="talking-point"><div class="tp-num">3</div><div class="tp-text">A seller-financing or earnout structure could bridge the capital gap if QuickDry doesn't have outside backing — the right deal architecture may make this executable even without a PE partner.</div></div>
     </div>
 
-    <div class="card" id="fit-narrative">
-      <h2>Why They'd Buy Springer Floor</h2>
-      <p>Positioned as a regional acquirer in adjacent geography. Springer Floor would be an anchor commercial acquisition. However, current revenue is too small to fund a meaningful acquisition without outside capital. Worth monitoring — if they close outside funding, appetite is real.</p>
-    </div>
-
-    <div class="card" id="investment-thesis">
-      <h2>Investment Thesis</h2>
-      <p>Roll up Kansas City-area floor care operators to build a regional commercial platform.</p>
-    </div>
-
-    <div class="card" id="validation">
-      <h2>Research Verdict</h2>
-      <p>VALIDATED: M&A page confirmed live at quickdrypro.com/mergers-and-acquisitions/.</p>
-      <p style="margin-top:12px;font-size:12px;color:#484f58;">Source: CII Advisors Buyer Profiles PDF (March 2026) + Exa web validation (March 30, 2026)</p>
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <tr><th>Step</th><th>Status</th><th>Date</th><th>Notes</th></tr>
+        <tr><td>Identified</td><td><span class="status-complete">Complete</span></td><td>Mar 2026</td><td>Included in CII Advisors buyer list</td></tr>
+        <tr><td>Research &amp; Validation</td><td><span class="status-complete">Complete</span></td><td>Mar 30, 2026</td><td>M&amp;A page live at quickdrypro.com/mergers-and-acquisitions/ confirmed</td></tr>
+        <tr><td>Initial Outreach</td><td><span class="status-next">Next Step</span></td><td>—</td><td>Direct outreach to Chris Ward — reference the M&amp;A page explicitly</td></tr>
+        <tr><td>Intro Call</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>NDA / Materials</td><td>—</td><td>—</td><td>—</td></tr>
+      </table>
+      <div class="risk-note">Capital is the primary constraint. Revenue under $5M limits acquisition capacity. Explore seller-financing or earnout structures. Escalate priority if QuickDry secures outside funding.</div>
     </div>
 
   </div>

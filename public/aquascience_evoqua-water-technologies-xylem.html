@@ -48,6 +48,19 @@
   tr:hover td { background: #1c2128; }
   a { color: #58a6ff; text-decoration: none; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
 </head>
@@ -76,17 +89,78 @@
     <strong>AquaScience</strong> &bull; Lawrence &quot;Larry&quot; Casey
   </div>
   <div class="content">
+
     <div class="card" id="buyer-profile">
-        <h2>Buyer Profile</h2>
-        <p>Evoqua Water Technologies, now fully integrated into Xylem Inc. (NYSE: XYL), represents one of the most compelling strategic buyers for AquaScience. Xylem completed its landmark $7.5 billion all-stock acquisition of Evoqua in 2023, creating the world's largest pure-play water technology company with $7.3 billion in pro forma revenue and more than 22,000 employees globally. Headquartered in Washington, D.C., the combined entity operates across 150+ countries with a market capitalization surpassing $32 billion by late 2025.</p>
-<p>Under CEO Matthew Pine and CFO Bill Grogan, Xylem delivered record full-year 2025 results: revenue of $9.0 billion (up 6% reported, 5% organically), adjusted EPS of $5.08 (up 19%), and Q4 orders of $2.4 billion (up 9%). The company initiated 2026 guidance of $9.1-$9.2 billion in revenue with adjusted EPS of $5.35-$5.60, signaling continued growth momentum. Keith Buettner serves as VP of Investor Relations and FP&A.</p>
-<p>The strategic rationale for acquiring AquaScience is deeply aligned with Xylem's post-Evoqua integration thesis. Evoqua's legacy strength was in North American water treatment -- advanced water and wastewater treatment capabilities, a vast installed base of service contracts, and digital monitoring solutions. AquaScience's Wyoming-based water treatment operations would extend Xylem's geographic coverage in the Mountain West and Intermountain regions where water scarcity and treatment demand are intensifying.</p>
-<p>Xylem's growth thesis centers on capturing the $401 billion water infrastructure market, leveraging 1,900+ patents and $1.2 billion in R&D investments to build smart water solutions for aging systems. The company has been actively pursuing an "80/20" strategic focus post-Evoqua integration, concentrating resources on highest-value customers and applications. AquaScience's specialized treatment capabilities would complement this approach.</p>
-<p>Key M&A decision-makers include Tracy Evans, Director of Corporate Development at Xylem, and historically Amit Shah, who served as Sr. Director of Strategy and M&A at Evoqua. Karen Pulick continues as Director of Global IT and M&A Integration, indicating the organization maintains robust acquisition integration infrastructure. Given Xylem's demonstrated ability to integrate a $7.5 billion acquisition, a smaller tuck-in like AquaScience would be highly executable.</p>
-<p>The fit is exceptionally strong: Xylem actively seeks water treatment assets that expand its service footprint, add recurring revenue streams, and deepen its technological capabilities in underserved geographies. AquaScience's Wyoming presence addresses a gap in Xylem's Mountain West coverage, and the company's treatment expertise aligns with Xylem's shift from equipment sales toward end-to-end water solutions.</p>
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Company</div><div class="fact-value">Xylem Inc. (f/k/a Evoqua Water Technologies)</div></div>
+        <div class="fact-item"><div class="fact-label">Ticker</div><div class="fact-value">NYSE: XYL</div></div>
+        <div class="fact-item"><div class="fact-label">Merger</div><div class="fact-value">Xylem acquired Evoqua in 2023 for $7.5B</div></div>
+        <div class="fact-item"><div class="fact-label">2025 Revenue</div><div class="fact-value">$9.0 Billion (up 6%)</div></div>
+        <div class="fact-item"><div class="fact-label">2025 Adj. EPS</div><div class="fact-value">$5.08 (up 19%)</div></div>
+        <div class="fact-item"><div class="fact-label">Market Cap</div><div class="fact-value">&gt;$32 Billion (late 2025)</div></div>
+        <div class="fact-item"><div class="fact-label">CEO</div><div class="fact-value">Matthew Pine</div></div>
+        <div class="fact-item"><div class="fact-label">Corp Dev Contact</div><div class="fact-value">Tracy Evans, Director of Corporate Development</div></div>
+      </div>
     </div>
-    
-    
+
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Title</th><th>Relevance</th><th>Email</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Matthew Pine</td><td>CEO, Xylem</td><td>Strategic direction; M&amp;A growth thesis</td><td>—</td></tr>
+          <tr><td>Bill Grogan</td><td>CFO, Xylem</td><td>Financial approvals; deal economics</td><td>—</td></tr>
+          <tr><td>Tracy Evans</td><td>Director, Corporate Development</td><td>Primary M&amp;A contact; deal origination and execution</td><td>—</td></tr>
+          <tr><td>Karen Pulick</td><td>Director, Global IT &amp; M&amp;A Integration</td><td>Integration planning; tuck-in execution expertise</td><td>—</td></tr>
+          <tr><td>Keith Buettner</td><td>VP, Investor Relations &amp; FP&amp;A</td><td>Financial framing; IR context for deal announcements</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Xylem — the world's largest pure-play water technology company after absorbing Evoqua — is pursuing the $401 billion global water infrastructure market. Their post-integration "80/20" strategic focus concentrates resources on the highest-value customers and geographies. The Mountain West is an underpenetrated whitespace for Xylem's North American service footprint, and AquaScience fills it precisely.</p>
+        <p>Evoqua's legacy was built on North American water treatment service contracts — an installed base, recurring service revenue, and digital monitoring relationships. AquaScience's Wyoming operations mirror that model at a regional scale. For Xylem, this is a tuck-in that extends geographic service coverage without integration complexity: same product logic, same customer relationship model, new territory.</p>
+        <p>Xylem has the integration infrastructure to execute small acquisitions efficiently — Karen Pulick's continued M&A integration leadership role confirms the organization is structurally prepared for add-ons. A company that absorbed a $7.5 billion acquisition in 2023 will have minimal friction closing a Mountain West water treatment operator. The question for Xylem is fit and footprint, not execution capacity.</p>
+      </div>
+    </div>
+
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <p style="font-size:13px;color:#8b949e;margin-bottom:14px;"><strong style="color:#c9d1d9;">Call Opener:</strong> "Tracy, Xylem has been building out North American water treatment service coverage since the Evoqua integration — we have a Wyoming water treatment operator in process that fills a Mountain West whitespace in your service footprint. Small tuck-in, clean asset, recurring service contracts. Wanted to get this in front of you before we broaden the process."</p>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text"><strong>Wyoming is a gap in your Mountain West coverage.</strong> Xylem's 150+ country footprint still has regional density gaps in the Intermountain West. AquaScience is an established operator with community-embedded customer relationships — the type of local presence Xylem's scale alone cannot replicate.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text"><strong>Evoqua DNA — service contracts and recurring revenue.</strong> AquaScience operates exactly the service contract model Evoqua was built on: installed base, recurring treatment service revenue, local technical relationships. This is a natural extension of Xylem's Evoqua-inherited playbook into a new region.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text"><strong>Tuck-in, not transformation.</strong> AquaScience is a clean, focused water treatment operator with no legacy liabilities. For a company that executed a $7.5B integration, this is a rounding error on complexity but a meaningful addition to regional service density and recurring revenue.</div>
+      </div>
+    </div>
+
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Activity</th><th>Outcome</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Mar 2026</td><td>Dossier prepared; Xylem/Evoqua identified as Tier 1 strategic buyer</td><td>Research complete</td><td><span class="status-complete">Complete</span></td></tr>
+          <tr><td>—</td><td>Outreach to Tracy Evans, Corp Dev</td><td>Pending</td><td><span class="status-next">Next Step</span></td></tr>
+          <tr><td>—</td><td>NDA &amp; teaser delivery</td><td>Pending</td><td>—</td></tr>
+          <tr><td>—</td><td>Management introduction</td><td>Pending</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
   <div class="footer">
     Generated March 29, 2026 &bull; Next Chapter M&A Advisory &bull; Confidential

@@ -73,64 +73,6 @@
   .card p { margin-bottom: 10px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
   .card strong { color: #f0f6fc; }
 
-  /* NARRATIVE CONTENT */
-  .narrative-content p { margin-bottom: 12px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
-  .narrative-content blockquote {
-    border-left: 3px solid #58a6ff; padding-left: 16px; margin: 12px 0;
-    font-style: italic; color: #8b949e;
-  }
-
-  /* URGENCY CARD (competitive moat) */
-  .urgency-card {
-    border: 2px solid #e74c3c !important;
-    background: linear-gradient(135deg, #161b22, #1a1015) !important;
-  }
-  .urgency-card h2 { color: #e74c3c !important; border-bottom-color: #e74c3c40 !important; }
-  .urgency-card::before {
-    content: 'URGENT'; position: absolute; top: -1px; right: 24px;
-    background: #e74c3c; color: white; font-size: 10px; font-weight: 700;
-    letter-spacing: 1.5px; padding: 4px 12px; border-radius: 0 0 6px 6px;
-  }
-  .urgency-card { position: relative; }
-
-  /* GOLDEN NUGGET CARDS */
-  .nugget-card {
-    background: #0d1117; border: 1px solid #21262d; border-radius: 8px;
-    padding: 20px; margin-bottom: 16px; border-left: 4px solid #f5a623;
-  }
-  .nugget-header {
-    font-size: 13px; font-weight: 700; color: #f5a623; margin-bottom: 12px;
-    text-transform: uppercase; letter-spacing: 1px;
-  }
-  .ceo-quote {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic; font-size: 15px; line-height: 1.7;
-    color: #e6e6e6; border-left: 3px solid #58a6ff;
-    padding: 12px 0 12px 20px; margin: 12px 0;
-  }
-  .nugget-opener {
-    background: #0b2e1a; border: 1px solid #27ae60; border-radius: 6px;
-    padding: 14px 18px; margin: 12px 0;
-  }
-  .nugget-opener p { color: #a3e4b8 !important; margin: 0 !important; font-size: 13px !important; line-height: 1.65 !important; }
-  .opener-label {
-    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
-    color: #27ae60; margin-bottom: 6px; text-transform: uppercase;
-  }
-  .nugget-why {
-    font-size: 12.5px; color: #8b949e; margin-top: 10px; line-height: 1.6;
-    padding-top: 10px; border-top: 1px solid #21262d;
-  }
-
-  /* EARNINGS QUOTES */
-  .earnings-quote {
-    margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #21262d;
-  }
-  .earnings-quote:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-  .quote-attribution {
-    font-size: 12px; color: #8b949e; margin-top: 8px; font-weight: 500;
-  }
-
   /* CONTACTS TABLE */
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th {
@@ -149,14 +91,25 @@
     padding: 18px 22px; margin-bottom: 16px;
   }
   .approach-opener p { color: #a3e4b8 !important; font-size: 14px !important; line-height: 1.7 !important; }
-  .outreach-step {
-    background: #0d1117; border: 1px solid #21262d; border-radius: 6px;
-    padding: 14px 18px; margin-bottom: 10px;
+  .opener-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+    color: #27ae60; margin-bottom: 6px; text-transform: uppercase;
   }
-  .step-label {
-    font-size: 11px; font-weight: 700; color: #58a6ff; letter-spacing: 1px;
-    text-transform: uppercase; margin-bottom: 4px;
-  }
+
+  /* SAP COMPONENTS */
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
 
   /* FOOTER */
   .footer {
@@ -172,6 +125,7 @@
     .score-badge { top: 24px; right: 24px; width: 56px; height: 56px; }
     .score-badge .score-num { font-size: 22px; }
     .card { padding: 16px; }
+    .fact-grid { grid-template-columns: 1fr; }
   }
 
   /* PRINT */
@@ -182,11 +136,6 @@
     .card { background: white; border: 1px solid #ddd; break-inside: avoid; }
     .card h2 { color: #0f3460; }
     .card p { color: #333; }
-    .urgency-card { border-color: #c0392b !important; background: #fff5f5 !important; }
-    .nugget-opener { background: #f0fff4; border-color: #27ae60; }
-    .nugget-opener p { color: #166534 !important; }
-    .ceo-quote { color: #333; }
-    .narrative-content p { color: #333; }
   }
 </style>
 <link rel="stylesheet" href="section-controls.css">
@@ -214,32 +163,162 @@
     <div class="subtitle">Prepared for Air Control</div>
     <div class="header-meta">
       <span class='tag'>Type: PE-backed franchisor</span>
-      
       <span class='tag'>Columbia, MD</span>
     </div>
-    
   </div>
 
   <!-- CONTEXT BAR -->
   <div class="context-bar">
     <div>
       <strong>Air Control</strong> &bull; Fred Lowry &bull; HVAC
-      &bull; 3000000.0
+      &bull; McLean, VA
     </div>
     <div>March 29, 2026</div>
   </div>
 
   <!-- CONTENT -->
   <div class="content">
-    
-    <div class="card" id="approach-strategy">
-        <h2>Approach Strategy</h2>
-        
-        <div class="approach-opener">
-            <div class="opener-label">CALL OPENER</div>
-            <p>**&quot;Congrats on the Caiafa hire — a COO from IHG running a home services franchisor tells me you&#x27;re scaling the playbook, not just maintaining it. We have an HVAC operator 35 miles from your HQ that could be your next One Hour anchor territory in Northern Virginia.&quot;** | **&quot;I noticed you brought on Ryan Green as SVP of M&amp;A in May — when a platform hires a dedicated deal lead with 15 years of full-lifecycle experience, that usually means the pipeline is about to get busy. We have something that should be in it.&quot;** | **&quot;Your acquisitions page says most of your brands were acquired directly from founders and that founders typically stay on post-close. That&#x27;s exactly the transition our client is looking for — and they happen to operate in your backyard.&quot;**</p>
+
+    <!-- BUYER PROFILE -->
+    <div class="card" id="buyer-profile">
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item">
+          <div class="fact-label">Company</div>
+          <div class="fact-value">Authority Brands Inc.</div>
         </div>
+        <div class="fact-item">
+          <div class="fact-label">Sponsor</div>
+          <div class="fact-value">Apax Partners</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Headquarters</div>
+          <div class="fact-value">Columbia, MD</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Buyer Type</div>
+          <div class="fact-value">PE-backed home services franchisor</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Key HVAC Brand</div>
+          <div class="fact-value">One Hour Heating &amp; Air Conditioning</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Revenue</div>
+          <div class="fact-value">Not disclosed</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Recent Hire — M&amp;A</div>
+          <div class="fact-value">Ryan Green, SVP M&amp;A (15 yrs experience)</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Recent Hire — Ops</div>
+          <div class="fact-value">Caiafa, COO (ex-IHG)</div>
+        </div>
+      </div>
     </div>
+
+    <!-- KEY CONTACTS -->
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Phone</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ryan Green</td>
+            <td>SVP, M&amp;A</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Caiafa</td>
+            <td>COO</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Apax Partners Deal Team</td>
+            <td>Sponsor</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- STRATEGIC FIT -->
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Authority Brands is headquartered 35 miles from McLean — Air Control would be a backyard acquisition, not a remote expansion. The One Hour Heating &amp; Air Conditioning franchise is their HVAC vehicle; Air Control could function as a company-owned anchor territory or a conversion to the One Hour brand in Northern Virginia.</p>
+        <p>The hiring of Ryan Green as SVP of M&amp;A signals a deliberate acceleration of the deal pipeline. A dedicated M&amp;A executive with 15 years of full-lifecycle deal experience is not hired to maintain the status quo. The timing is favorable for outreach.</p>
+        <p>Authority Brands' acquisition model favors founder-led businesses: their public materials explicitly note that founders typically stay on post-close. Fred Lowry's profile fits the preferred seller archetype. The key risk is whether Authority Brands prefers franchise conversions over outright acquisitions at this stage of their platform.</p>
+      </div>
+    </div>
+
+    <!-- APPROACH STRATEGY -->
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <div class="approach-opener">
+        <div class="opener-label">CALL OPENER</div>
+        <p>"Congrats on the Caiafa hire — a COO from IHG running a home services franchisor tells me you're scaling the playbook, not just maintaining it. We have an HVAC operator 35 miles from your HQ that could be your next One Hour anchor territory in Northern Virginia."</p>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text"><strong>Open with Ryan Green's hire.</strong> When a platform hires a dedicated M&amp;A SVP with 15 years of full-lifecycle experience, the pipeline is about to get busy. Reference the hire directly — it tells him you understand why he was brought on and that you're bringing him a real opportunity, not background noise.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text"><strong>Anchor on the founder-stays model.</strong> Authority Brands' acquisitions page explicitly states that most brands were acquired directly from founders who typically remain post-close. That's exactly Air Control's preferred transition. Position this as a cultural match, not just a financial transaction.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text"><strong>Own the Northern Virginia gap.</strong> Authority Brands is based in Columbia, MD. One Hour has limited owned density in Northern Virginia. Air Control's McLean customer base — federal workforce homeowners, Fairfax County demographics — is the missing piece in their DC-metro footprint.</div>
+      </div>
+    </div>
+
+    <!-- PIPELINE HISTORY -->
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Stage</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Target Identified</td>
+            <td><span class="status-complete">Complete</span></td>
+            <td>2025</td>
+            <td>Added to Air Control buyer list</td>
+          </tr>
+          <tr>
+            <td>Research Complete</td>
+            <td><span class="status-complete">Complete</span></td>
+            <td>Mar 2026</td>
+            <td>Ryan Green hire verified; Caiafa COO hire confirmed</td>
+          </tr>
+          <tr>
+            <td>Outreach Pending</td>
+            <td><span class="status-next">Next Step</span></td>
+            <td>—</td>
+            <td>Route through Ryan Green, SVP M&amp;A</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 
   <!-- FOOTER -->

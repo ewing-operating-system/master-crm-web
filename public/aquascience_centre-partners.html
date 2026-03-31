@@ -48,6 +48,19 @@
   tr:hover td { background: #1c2128; }
   a { color: #58a6ff; text-decoration: none; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
 </head>
@@ -70,22 +83,82 @@
     <div class="header-label">Buyer Dossier</div>
     <h1>Centre Partners</h1>
     <div class="subtitle">Prepared for AquaScience</div>
-    
+
   </div>
   <div class="context-bar">
     <strong>AquaScience</strong> &bull; Lawrence &quot;Larry&quot; Casey
   </div>
   <div class="content">
+
     <div class="card" id="buyer-profile">
-        <h2>Buyer Profile</h2>
-        <p>Centre Partners Management is a middle-market investment firm focused on control investments in North American businesses. Founded in 1986 and headquartered at 780 3rd Avenue, 41st Floor, New York, NY 10017, the firm has completed 23 platform investments, 14 portfolio exits, and manages across 9 funds. Centre Partners primarily serves sectors including consumer products and services, healthcare services, business services, food and beverage, and residential and commercial services.</p>
-<p>A key signal of Centre Partners' relevance to AquaScience is UnitedLandServices, a Centre Partners portfolio company backed by Centre Partners and LP First Capital (LPFC). UnitedLandServices completed four strategic acquisitions in 2025, adding significant scale while continuing organic growth execution. Since the platform was formed, the company has demonstrated rapid buy-and-build growth through serial acquisitions -- precisely the model that could be applied to a water treatment platform.</p>
-<p>Centre Partners' investment criteria align well with AquaScience: the firm targets middle-market businesses with experienced management, organic and acquisitive growth potential, operational improvement opportunities, market leadership in niche segments, and sustainable competitive advantages. AquaScience's water treatment operations in Wyoming meet these criteria as a niche leader in a market with strong secular growth drivers.</p>
-<p>The firm's experience in residential and commercial services, along with outsourced industrial services, provides relevant operational expertise for managing a water treatment business. Water treatment shares many characteristics with the service businesses Centre Partners typically acquires: recurring revenue, essential service nature, local market expertise, and fragmented competitive landscapes that support buy-and-build strategies.</p>
-<p>Centre Partners' New York headquarters and focus on North American middle-market investments position it as a natural investor in water treatment, particularly given the growing institutional investor appetite for essential infrastructure services. The firm's track record of building platforms through serial acquisitions (as demonstrated by UnitedLandServices) makes it a credible buyer capable of using AquaScience as the foundation for a broader water treatment platform.</p>
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Firm</div><div class="fact-value">Centre Partners Management</div></div>
+        <div class="fact-item"><div class="fact-label">Type</div><div class="fact-value">Middle-Market PE — Control Investments</div></div>
+        <div class="fact-item"><div class="fact-label">Founded</div><div class="fact-value">1986</div></div>
+        <div class="fact-item"><div class="fact-label">Headquarters</div><div class="fact-value">New York, NY (780 3rd Ave, 41st Fl)</div></div>
+        <div class="fact-item"><div class="fact-label">Track Record</div><div class="fact-value">23 platform investments, 14 exits, 9 funds</div></div>
+        <div class="fact-item"><div class="fact-label">Key Portfolio Co.</div><div class="fact-value">UnitedLandServices (4 acquisitions in 2025)</div></div>
+        <div class="fact-item"><div class="fact-label">Target Sectors</div><div class="fact-value">Industrial services, residential/commercial services, healthcare</div></div>
+        <div class="fact-item"><div class="fact-label">Deal Preference</div><div class="fact-value">North American middle-market, buy-and-build</div></div>
+      </div>
     </div>
-    
-    
+
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Title</th><th>Relevance</th><th>Email</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Centre Partners Investment Team</td><td>Industrial/Services Group</td><td>Platform origination in outsourced industrial services</td><td>—</td></tr>
+          <tr><td>LP First Capital (LPFC)</td><td>Co-investor (UnitedLandServices)</td><td>Co-investment partner; parallel water services interest possible</td><td>—</td></tr>
+          <tr><td>Corp Dev</td><td>Corporate Development</td><td>Deal sourcing and structuring</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Centre Partners has already demonstrated its buy-and-build playbook through UnitedLandServices — a platform that completed four strategic acquisitions in 2025 alone. That same model applied to water treatment would position AquaScience as the Wyoming anchor for a Mountain West water services roll-up: recurring revenue, essential-service nature, fragmented competitive landscape, and operational improvement opportunity.</p>
+        <p>Centre Partners' stated investment criteria match AquaScience precisely: experienced management, organic and acquisitive growth potential, market leadership in a niche segment, and sustainable competitive advantages. Water treatment in Wyoming qualifies on all counts — it's a niche service with regulatory defensibility, community entrenchment, and limited competition from institutional players.</p>
+        <p>The industrial services and residential/commercial services experience in Centre's portfolio gives them operational frameworks applicable to water treatment. The recurring revenue model, service territory density logic, and fragmented competitive landscape Centre navigates in other sectors translate directly to water treatment management. They know how to buy, integrate, and grow this type of business.</p>
+      </div>
+    </div>
+
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <p style="font-size:13px;color:#8b949e;margin-bottom:14px;"><strong style="color:#c9d1d9;">Call Opener:</strong> "Centre has shown real conviction in the outsourced essential-services model through UnitedLandServices — we're running a process on a Wyoming water treatment company that fits the same platform logic: recurring revenue, essential service, fragmented market, clear add-on runway. Wanted to get this in front of your team before we broaden outreach."</p>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text"><strong>Same playbook you ran with UnitedLandServices.</strong> AquaScience offers the same buy-and-build entry point: a quality operator in a fragmented market with demonstrated recurring revenue. The Mountain West water treatment landscape has the same consolidation characteristics that made ULS attractive in land services.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text"><strong>Essential-service defensibility.</strong> Water treatment customers don't churn — they can't operate without clean water. That contract stickiness and low voluntary churn profile is the recurring revenue quality Centre seeks in every platform. AquaScience's customer relationships are multi-year and operationally embedded.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text"><strong>Experienced owner ready to transition.</strong> Larry Casey has built a clean, focused water treatment operation. He's ready for a structured exit with the right partner. Centre gets a management-supported transition and a willing seller — no adversarial dynamic, no operational disruption risk.</div>
+      </div>
+    </div>
+
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Activity</th><th>Outcome</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Mar 2026</td><td>Dossier prepared; Centre Partners identified as Tier 2 financial buyer</td><td>Research complete</td><td><span class="status-complete">Complete</span></td></tr>
+          <tr><td>—</td><td>Initial outreach to investment team</td><td>Pending</td><td><span class="status-next">Next Step</span></td></tr>
+          <tr><td>—</td><td>NDA &amp; teaser delivery</td><td>Pending</td><td>—</td></tr>
+          <tr><td>—</td><td>Management introduction</td><td>Pending</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
   <div class="footer">
     Generated March 29, 2026 &bull; Next Chapter M&A Advisory &bull; Confidential

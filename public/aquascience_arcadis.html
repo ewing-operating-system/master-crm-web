@@ -48,6 +48,19 @@
   tr:hover td { background: #1c2128; }
   a { color: #58a6ff; text-decoration: none; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
 </head>
@@ -70,22 +83,81 @@
     <div class="header-label">Buyer Dossier</div>
     <h1>Arcadis</h1>
     <div class="subtitle">Prepared for AquaScience</div>
-    
+
   </div>
   <div class="context-bar">
     <strong>AquaScience</strong> &bull; Lawrence &quot;Larry&quot; Casey
   </div>
   <div class="content">
+
     <div class="card" id="buyer-profile">
-        <h2>Buyer Profile</h2>
-        <p>Arcadis NV (Euronext: ARCAD) is a leading global design and consultancy firm for natural and built assets, with significant operations in water, environment, and infrastructure. The company reported 2025 full-year net revenues of EUR 3.8 billion, with organic growth of -0.5% but total backlog of EUR 3.6 billion showing organic growth. Free cash flow was EUR 288 million (up 26.3%), and operating EBITA was EUR 418 million with an 11.1% margin (down from 11.5% in 2024).</p>
-<p>Under outgoing CEO Alan Brookes and incoming CEO nominee Heather Polinsky, Arcadis is navigating a strategic transformation. The Q4 2025 results showed mixed performance: strong performers in Mobility (UK and Australia), Property and Investment, and Resilience were offset by some areas of weakness. Critically for AquaScience, Arcadis's Environmental Restoration, Water Optimization, Energy Transition, and Climate Adaptation segments represent core growth priorities.</p>
-<p>Arcadis secured two contracts in Los Angeles worth over $18 million over 5 years for project management and construction management in March 2026, demonstrating continued U.S. market investment. The company's CFO Simon Crowe oversees financial strategy including M&A capital allocation. Arcadis operates globally but has particular strength in North America, where it has been expanding its environmental and water consulting capabilities.</p>
-<p>The strategic rationale for Arcadis acquiring AquaScience lies in Arcadis's Water Optimization practice. While Arcadis is primarily a consulting and design firm, the company has been moving toward more integrated solutions that combine advisory with operational capabilities. AquaScience's hands-on water treatment operations in Wyoming would give Arcadis a captive operational platform to complement its consulting services in the Mountain West region.</p>
-<p>AquaScience's fit with Arcadis is particularly compelling in the context of Arcadis's Resilience segment, which focuses on climate adaptation and environmental restoration -- areas where water treatment is increasingly critical. Wyoming's energy, mining, and agricultural sectors all generate complex water treatment needs that align with Arcadis's expertise in environmental remediation and sustainable water management.</p>
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Ticker</div><div class="fact-value">Euronext: ARCAD</div></div>
+        <div class="fact-item"><div class="fact-label">Headquarters</div><div class="fact-value">Amsterdam, Netherlands</div></div>
+        <div class="fact-item"><div class="fact-label">2025 Net Revenue</div><div class="fact-value">EUR 3.8B</div></div>
+        <div class="fact-item"><div class="fact-label">Operating EBITA</div><div class="fact-value">EUR 418M (11.1% margin)</div></div>
+        <div class="fact-item"><div class="fact-label">Free Cash Flow (2025)</div><div class="fact-value">EUR 288M (+26.3% YoY)</div></div>
+        <div class="fact-item"><div class="fact-label">Backlog</div><div class="fact-value">EUR 3.6B</div></div>
+        <div class="fact-item"><div class="fact-label">Incoming CEO</div><div class="fact-value">Heather Polinsky</div></div>
+        <div class="fact-item"><div class="fact-label">CFO</div><div class="fact-value">Simon Crowe</div></div>
+      </div>
     </div>
-    
-    
+
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Title</th><th>Coverage</th><th>Email</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Heather Polinsky</td><td>Incoming CEO</td><td>Strategic transformation, Water Optimization</td><td>—</td></tr>
+          <tr><td>Simon Crowe</td><td>CFO</td><td>M&amp;A capital allocation</td><td>—</td></tr>
+          <tr><td>Water Optimization Lead</td><td>Global Business Line Director</td><td>Water treatment &amp; operations strategy</td><td>—</td></tr>
+          <tr><td>North America M&amp;A</td><td>Corp Dev / BD</td><td>U.S. acquisitions</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Arcadis is one of the world's leading water and environment consultancies, and it has been moving toward integrated solutions that combine advisory with operational capabilities. AquaScience represents exactly what Arcadis's Water Optimization practice needs to become more than a design-and-consult firm in the Mountain West — a captive operational platform that generates recurring revenue alongside project fees.</p>
+        <p>Wyoming's energy, mining, and agricultural sectors produce the complex, multi-contaminant water treatment challenges that Arcadis is built to solve at the engineering level. AquaScience's operations turn that engineering expertise into hands-on treatment contracts — the natural downstream extension of Arcadis's consulting work. Together, they create a full-service water management offering from design through ongoing operations.</p>
+        <p>Arcadis's Resilience segment — focused on climate adaptation and environmental restoration — is a strategic priority under its transformation. Water treatment is front-line resilience infrastructure. AquaScience's work preventing contamination of Wyoming's natural water systems maps directly to Arcadis's Resilience narrative and business development pipeline.</p>
+      </div>
+    </div>
+
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <p style="font-size:13px;color:#8b949e;margin-bottom:14px;"><strong style="color:#c9d1d9;">Call Opener:</strong> "Arcadis designs world-class water systems — AquaScience operates them. We represent a Wyoming water treatment company that could give your Water Optimization practice an operational platform in the Mountain West, turning consulting engagements into full-lifecycle managed services. With Heather Polinsky stepping in and the Resilience segment as a priority, the timing is right."</p>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text"><strong>Operations extend consulting into recurring revenue.</strong> Arcadis earns project fees designing and advising on water systems. AquaScience earns recurring service contracts operating them. Combining the two creates a full-lifecycle water management offering — advisory, design, and operations under one roof — that competitors cannot easily replicate.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text"><strong>Mountain West is a strategic geography for Arcadis's North America growth.</strong> With recent LA contract wins ($18M+) and active U.S. expansion, Arcadis is building North American density. Wyoming's energy and environmental sectors — highly active in water management — are underserved by major engineering firms with operational depth.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text"><strong>Direct fit with the Resilience segment mandate.</strong> AquaScience's treatment work prevents contamination, enables water reuse, and protects natural water systems — all core Resilience outcomes. The acquisition strengthens Arcadis's ability to win Resilience segment contracts by demonstrating operational credibility, not just consulting pedigree.</div>
+      </div>
+    </div>
+
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Activity</th><th>Contact</th><th>Outcome</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>—</td><td>Initial Research &amp; Profile Build</td><td>Internal</td><td>Dossier compiled</td><td><span class="status-complete">Complete</span></td></tr>
+          <tr><td>—</td><td>First Outreach</td><td>Larry Casey</td><td>Pending</td><td><span class="status-next">Next Step</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
   <div class="footer">
     Generated March 29, 2026 &bull; Next Chapter M&A Advisory &bull; Confidential

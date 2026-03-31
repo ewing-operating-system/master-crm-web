@@ -73,6 +73,17 @@
   .card p { margin-bottom: 10px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
   .card strong { color: #f0f6fc; }
 
+  /* FACT GRID */
+  .fact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 700px) { .fact-grid { grid-template-columns: repeat(2, 1fr); } }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 14px 16px; }
+  .fact-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 14px; font-weight: 600; color: #f0f6fc; }
+
+  /* NARRATIVE BOX */
+  .narrative-box p { margin-bottom: 12px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+
   /* NARRATIVE CONTENT */
   .narrative-content p { margin-bottom: 12px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
   .narrative-content blockquote {
@@ -80,7 +91,7 @@
     font-style: italic; color: #8b949e;
   }
 
-  /* URGENCY CARD (competitive moat) */
+  /* URGENCY CARD */
   .urgency-card {
     border: 2px solid #e74c3c !important;
     background: linear-gradient(135deg, #161b22, #1a1015) !important;
@@ -93,7 +104,7 @@
   }
   .urgency-card { position: relative; }
 
-  /* GOLDEN NUGGET CARDS */
+  /* NUGGET CARDS */
   .nugget-card {
     background: #0d1117; border: 1px solid #21262d; border-radius: 8px;
     padding: 20px; margin-bottom: 16px; border-left: 4px solid #f5a623;
@@ -149,6 +160,16 @@
     padding: 18px 22px; margin-bottom: 16px;
   }
   .approach-opener p { color: #a3e4b8 !important; font-size: 14px !important; line-height: 1.7 !important; }
+  .talking-point {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: #0d1117; border: 1px solid #21262d; border-radius: 6px;
+    padding: 14px 18px; margin-bottom: 10px;
+  }
+  .tp-num {
+    font-size: 18px; font-weight: 700; color: #58a6ff;
+    line-height: 1; min-width: 24px; margin-top: 1px;
+  }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.65; }
   .outreach-step {
     background: #0d1117; border: 1px solid #21262d; border-radius: 6px;
     padding: 14px 18px; margin-bottom: 10px;
@@ -156,6 +177,16 @@
   .step-label {
     font-size: 11px; font-weight: 700; color: #58a6ff; letter-spacing: 1px;
     text-transform: uppercase; margin-bottom: 4px;
+  }
+
+  /* STATUS BADGES */
+  .status-complete {
+    display: inline-block; padding: 2px 10px; border-radius: 10px;
+    background: #0e3a1f; color: #3fb950; font-size: 11px; font-weight: 600;
+  }
+  .status-next {
+    display: inline-block; padding: 2px 10px; border-radius: 10px;
+    background: #1a2c4e; color: #58a6ff; font-size: 11px; font-weight: 600;
   }
 
   /* FOOTER */
@@ -214,32 +245,160 @@
     <div class="subtitle">Prepared for Air Control</div>
     <div class="header-meta">
       <span class='tag'>Type: PE-backed platform</span>
-      
       <span class='tag'>Charlotte, NC</span>
     </div>
-    
   </div>
 
   <!-- CONTEXT BAR -->
   <div class="context-bar">
     <div>
       <strong>Air Control</strong> &bull; Fred Lowry &bull; HVAC
-      &bull; 3000000.0
+      &bull; $3M Revenue
     </div>
     <div>March 29, 2026</div>
   </div>
 
   <!-- CONTENT -->
   <div class="content">
-    
-    <div class="card" id="approach-strategy">
-        <h2>Approach Strategy</h2>
-        
-        <div class="approach-opener">
-            <div class="opener-label">CALL OPENER</div>
-            <p>**&quot;Ryan, I saw you&#x27;ve been running corp dev at FCG since July 2022 and Flow Controls in Baltimore already covers the DC corridor — we have a controls and mechanical services business in McLean that would fill your Northern Virginia white space.&quot;** | **&quot;Raymond, congratulations on the CEO appointment in October — David Patterson built FCG on the thesis that acquired companies keep their identity and culture, and our client&#x27;s founder is looking for exactly that kind of transition.&quot;** | **&quot;Your Baltimore operation has served Virginia and DC since 1979 with process instrumentation — this would add 24/7 HVAC service capability to the same customer base, same geography, different call reason.&quot;**</p>
+
+    <!-- 1. BUYER PROFILE -->
+    <div class="card" id="buyer-profile">
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item">
+          <div class="fact-label">Platform</div>
+          <div class="fact-value">Flow Control Group</div>
         </div>
+        <div class="fact-item">
+          <div class="fact-label">Backer</div>
+          <div class="fact-value">Partners Group (Zurich)</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Headquarters</div>
+          <div class="fact-value">Charlotte, NC</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Revenue</div>
+          <div class="fact-value">Not disclosed</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Verticals</div>
+          <div class="fact-value">HVAC, Plumbing, Process Instrumentation, Controls</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Acquisition Strategy</div>
+          <div class="fact-value">Geographic tuck-ins; preserve brand &amp; culture</div>
+        </div>
+      </div>
     </div>
+
+    <!-- 2. KEY CONTACTS -->
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Email</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Raymond Hoglund</td>
+            <td>CEO (appointed Oct 2023)</td>
+            <td>—</td>
+            <td>Leads overall platform strategy post-David Patterson</td>
+          </tr>
+          <tr>
+            <td>Ryan (Corp Dev)</td>
+            <td>Corporate Development Lead</td>
+            <td>—</td>
+            <td>In seat since July 2022; runs deal sourcing and pipeline</td>
+          </tr>
+          <tr>
+            <td>Flow Controls — Baltimore</td>
+            <td>Regional Operating Unit</td>
+            <td>—</td>
+            <td>DC corridor operations since 1979; closest unit to McLean</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 3. STRATEGIC FIT -->
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Flow Control Group's Baltimore operation has served the Virginia and DC corridor since 1979 with process instrumentation and controls — but the platform currently lacks 24/7 HVAC service capability in Northern Virginia. Air Control fills that exact gap: same geography, same commercial and government customer base, different call reason.</p>
+        <p>FCG was built on the thesis that acquired companies keep their identity and culture. David Patterson made this explicit when standing up the platform, and Raymond Hoglund has maintained it since his CEO appointment in October 2023. For Fred Lowry — a founder who cares about team continuity — FCG's operating model is among the most aligned of any PE-backed buyer in this space.</p>
+        <p>Partners Group backs FCG with institutional capital and a mandate for geographic expansion. Northern Virginia is a natural next step from Baltimore, and Air Control's existing relationships with commercial building owners and government facilities managers represent immediate cross-sell opportunity into FCG's existing controls and instrumentation business.</p>
+      </div>
+    </div>
+
+    <!-- 4. APPROACH STRATEGY -->
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <div class="approach-opener">
+        <div class="opener-label">Call Opener</div>
+        <p>"Ryan, I saw you've been running corp dev at FCG since July 2022 and Flow Controls in Baltimore already covers the DC corridor — we have a controls and mechanical services business in McLean that would fill your Northern Virginia white space."</p>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text">Raymond, congratulations on the CEO appointment in October — David Patterson built FCG on the thesis that acquired companies keep their identity and culture, and our client's founder is looking for exactly that kind of transition.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text">Your Baltimore operation has served Virginia and DC since 1979 with process instrumentation — this would add 24/7 HVAC service capability to the same customer base, same geography, different call reason.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text">Partners Group's mandate for FCG is geographic expansion — Northern Virginia is the logical next step from Baltimore, and Air Control's government and commercial relationships create an immediate cross-sell opportunity into FCG's existing controls business.</div>
+      </div>
+    </div>
+
+    <!-- 5. PIPELINE HISTORY -->
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Step</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Dossier Created</td>
+            <td><span class="status-complete">Complete</span></td>
+            <td>Mar 29, 2026</td>
+            <td>Initial buyer research and profile built</td>
+          </tr>
+          <tr>
+            <td>Outreach</td>
+            <td><span class="status-next">Next</span></td>
+            <td>—</td>
+            <td>Target Ryan (Corp Dev) via LinkedIn; reference Baltimore unit geography</td>
+          </tr>
+          <tr>
+            <td>Intro Call</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>NDA / CIM Delivery</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 
   <!-- FOOTER -->

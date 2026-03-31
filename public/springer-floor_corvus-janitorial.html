@@ -38,6 +38,20 @@
   .tag-fs { background: #2a1a3a; color: #bc8cff; }
   .tag-sb { background: #1a3a3a; color: #39d353; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
+  .risk-note { background: #2e1a0b; border: 1px solid #7a3e0a; border-radius: 6px; padding: 12px 16px; margin-top: 12px; font-size: 13px; color: #f0a070; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
 </head>
@@ -69,43 +83,57 @@
   </div>
   <div class="content">
 
-    <div class="card" id="snapshot">
-      <h2>Snapshot</h2>
+    <div class="card" id="buyer-profile">
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Platform</div><div class="fact-value">Corvus Janitorial Systems</div></div>
+        <div class="fact-item"><div class="fact-label">Backer</div><div class="fact-value">Owner-operated (no PE backer)</div></div>
+        <div class="fact-item"><div class="fact-label">Headquarters</div><div class="fact-value">Chicago, IL</div></div>
+        <div class="fact-item"><div class="fact-label">Revenue</div><div class="fact-value">Est. $25M–$40M system-wide</div></div>
+        <div class="fact-item"><div class="fact-label">Verticals</div><div class="fact-value">Commercial janitorial (franchise)</div></div>
+        <div class="fact-item"><div class="fact-label">Acquisition Strategy</div><div class="fact-value">No known operator M&amp;A; franchise territory growth</div></div>
+      </div>
+    </div>
+
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
       <table>
-        <tr><th>Field</th><th>Detail</th></tr>
-        <tr><td>Headquarters</td><td>Chicago, IL</td></tr>
-        <tr><td>Revenue</td><td>Est. $25M–$40M system-wide (24 cities, 226+ franchise units)</td></tr>
-        <tr><td>Backing</td><td>Owner-operated</td></tr>
-        <tr><td>Buyer Type</td><td>Franchise System</td></tr>
-        <tr><td>Fit Score</td><td>4 / 10</td></tr>
-        <tr><td>Confidence</td><td>LOW</td></tr>
+        <tr><th>Name</th><th>Title</th><th>Email</th><th>Notes</th></tr>
+        <tr><td>Kevin Dick</td><td>CEO / Co-Founder</td><td>—</td><td>Primary decision-maker for strategic direction</td></tr>
+        <tr><td>Tim Dick</td><td>Co-Founder / President</td><td>—</td><td>Franchise development lead</td></tr>
       </table>
     </div>
 
-    <div class="card" id="buyer-profile">
-      <h2>Company Overview</h2>
-      <p>Commercial janitorial franchise operating in 24 US cities. Floor care is a natural add-on to their scope of work. Growing franchise system but thin unit economics.</p>
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Corvus operates commercial janitorial franchises across 24 US cities with 226+ franchise units. Floor care is a natural add-on service within their existing customer relationships — facility managers who already use Corvus for janitorial would logically consolidate floor cleaning under the same vendor.</p>
+        <p>Springer Floor's commercial account base in the Kansas City market would represent an immediate revenue add for any Corvus franchisee in the region, and the trained workforce and equipment base transfers cleanly into their model.</p>
+        <p>The primary constraint is financial: thin franchise unit economics (~$110K–$175K AUV) and no PE backing mean Corvus lacks the capital to execute a meaningful acquisition without outside financing. This is a strategic fit story without a credible funding mechanism today.</p>
+      </div>
     </div>
 
-    <div class="card" id="acquisition-history">
-      <h2>Acquisition History</h2>
-      <p>No known operator M&A.</p>
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <div style="background:#0d2b1a;border:1px solid #1a5c34;border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:14px;color:#5dbb8a;line-height:1.7;">
+        <strong>Call Opener:</strong> "We work with a commercial floor care company in Kansas City that already serves the type of clients your franchisees clean every day. I wanted to have a quick conversation about whether there's a way to deepen your service offering in that market — either through an acquisition or a preferred subcontractor arrangement."
+      </div>
+      <div class="talking-point"><div class="tp-num">1</div><div class="tp-text">Corvus franchisees already have the facility manager relationships — Springer Floor can plug in as the floor care specialist without adding sales cost, immediately expanding revenue per account.</div></div>
+      <div class="talking-point"><div class="tp-num">2</div><div class="tp-text">The Kansas City market is a natural fit: Springer Floor's commercial client roster maps directly to the commercial buildings Corvus franchisees service.</div></div>
+      <div class="talking-point"><div class="tp-num">3</div><div class="tp-text">Even if an outright acquisition isn't feasible, a preferred subcontractor arrangement could be structured to test the model with minimal capital commitment — and position Corvus for a future bolt-on once PE capital is in place.</div></div>
     </div>
 
-    <div class="card" id="fit-narrative">
-      <h2>Why They'd Buy Springer Floor</h2>
-      <p>Commercial janitorial with floor care as a natural add-on. Too small financially; franchise economics too thin to fund acquisitions. Would need significant outside capital to execute.</p>
-    </div>
-
-    <div class="card" id="investment-thesis">
-      <h2>Investment Thesis</h2>
-      <p>Add specialized floor care capability to deepen scope-of-work per client.</p>
-    </div>
-
-    <div class="card" id="validation">
-      <h2>Research Verdict</h2>
-      <p>Included by CII Advisors. Financial capacity is the blocker.</p>
-      <p style="margin-top:12px;font-size:12px;color:#484f58;">Source: CII Advisors Buyer Profiles PDF (March 2026) + Exa web validation (March 30, 2026)</p>
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <tr><th>Step</th><th>Status</th><th>Date</th><th>Notes</th></tr>
+        <tr><td>Identified</td><td><span class="status-complete">Complete</span></td><td>Mar 2026</td><td>Included in CII Advisors buyer list</td></tr>
+        <tr><td>Research &amp; Validation</td><td><span class="status-complete">Complete</span></td><td>Mar 30, 2026</td><td>Exa web validation; financial capacity concern confirmed</td></tr>
+        <tr><td>Initial Outreach</td><td><span class="status-next">Next Step</span></td><td>—</td><td>Reach CEO Kevin Dick via LinkedIn or corporate contact form</td></tr>
+        <tr><td>Intro Call</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>NDA / Materials</td><td>—</td><td>—</td><td>—</td></tr>
+      </table>
+      <div class="risk-note">Financial capacity is the primary blocker. Pursue as a long-term or subcontractor-first relationship rather than immediate acquisition target.</div>
     </div>
 
   </div>

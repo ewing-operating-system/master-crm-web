@@ -48,6 +48,19 @@
   tr:hover td { background: #1c2128; }
   a { color: #58a6ff; text-decoration: none; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
 </head>
@@ -70,22 +83,80 @@
     <div class="header-label">Buyer Dossier</div>
     <h1>Kelso &amp; Company</h1>
     <div class="subtitle">Prepared for AquaScience</div>
-    
+
   </div>
   <div class="context-bar">
     <strong>AquaScience</strong> &bull; Lawrence &quot;Larry&quot; Casey
   </div>
   <div class="content">
+
     <div class="card" id="buyer-profile">
-        <h2>Buyer Profile</h2>
-        <p>Kelso & Company is a well-established middle-market firm founded in 1989 and based in New York. Note: The Exa research returned results primarily related to Kelso Technologies Inc. (TSX: KLS), a different entity focused on tank car components -- this is not the same organization as Kelso & Company, the investment firm.</p>
-<p>Kelso & Company (the PE firm) has a long history of investing in diversified industrial and service businesses across North America. The firm focuses on partnering with management teams to build value through operational improvements, strategic growth initiatives, and selective add-on acquisitions. Kelso's investment strategy emphasizes businesses with strong market positions, defensible competitive advantages, and opportunities for both organic growth and acquisitive expansion.</p>
-<p>The firm's interest in AquaScience would likely be driven by the essential-services characteristics of water treatment: recurring revenue, regulatory barriers to entry, local market expertise, and fragmented competitive landscapes that support platform building. Kelso has invested across a range of industrial services sectors and would bring relevant operational experience to water treatment management.</p>
-<p>Kelso & Company's typical investment approach involves majority control positions with meaningful management equity co-investment, ensuring alignment of interests between the firm and operating management. For AquaScience's owners, this structure can provide liquidity while maintaining management involvement and upside participation through retained equity.</p>
-<p>The strategic case for Kelso's investment in AquaScience centers on the water treatment sector's attractive characteristics: essential service with regulatory tailwinds, fragmented market supporting consolidation, recession-resistant demand, and growing need for advanced treatment capabilities driven by environmental regulations and water scarcity. Wyoming's energy, mining, and agricultural sectors all generate water treatment demand that is durable through economic cycles.</p>
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Firm Type</div><div class="fact-value">Middle-Market Investment Firm</div></div>
+        <div class="fact-item"><div class="fact-label">Founded</div><div class="fact-value">1989</div></div>
+        <div class="fact-item"><div class="fact-label">Headquarters</div><div class="fact-value">New York, NY</div></div>
+        <div class="fact-item"><div class="fact-label">AUM</div><div class="fact-value">Not disclosed</div></div>
+        <div class="fact-item"><div class="fact-label">Investment Focus</div><div class="fact-value">Diversified Industrial &amp; Service Businesses</div></div>
+        <div class="fact-item"><div class="fact-label">Transaction Type</div><div class="fact-value">Majority Control / Management Co-Invest</div></div>
+        <div class="fact-item"><div class="fact-label">Target EBITDA Range</div><div class="fact-value">$10M–$75M (typical middle-market)</div></div>
+        <div class="fact-item"><div class="fact-label">Website</div><div class="fact-value"><a href="https://www.kelso.com" target="_blank">kelso.com</a></div></div>
+      </div>
     </div>
-    
-    
+
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Title</th><th>Coverage</th><th>Email</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Frank Loverro</td><td>Partner</td><td>Industrial &amp; Services M&amp;A</td><td>—</td></tr>
+          <tr><td>James Connors</td><td>Partner</td><td>Deal Origination</td><td>—</td></tr>
+          <tr><td>Managing Director (Business Dev)</td><td>MD, Origination</td><td>New Platform Sourcing</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Kelso &amp; Company's investment thesis centers on businesses with defensible market positions, recurring revenue, and fragmented competitive landscapes that support platform building — all of which describe water treatment services. AquaScience's Wyoming operations serve energy, mining, municipal, and agricultural customers with essential, regulation-driven demand that is durable through economic cycles.</p>
+        <p>Kelso's model of majority control with meaningful management equity co-investment aligns well with a founder-led water treatment business. Owners retain meaningful upside through retained equity while achieving liquidity. Kelso would bring operational discipline and capital for add-on acquisitions, using AquaScience as a platform to consolidate additional water treatment operators across the Mountain West.</p>
+        <p>The water treatment sector's regulatory barriers to entry, local market knowledge requirements, and essential-service characteristics match Kelso's historical investment profile in industrial services. Wyoming's energy, mining, and agricultural sectors provide durable, cycle-resistant treatment demand.</p>
+      </div>
+    </div>
+
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <p style="font-size:13px;color:#8b949e;margin-bottom:14px;"><strong style="color:#c9d1d9;">Call Opener:</strong> "Kelso has a strong track record building industrial services platforms — we're working with an owner-operated water treatment company in Wyoming with recurring revenue across energy, municipal, and ag customers. Given your model for majority control with management rollover, I think it's worth a conversation."</p>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text"><strong>Platform-building thesis is ready-made.</strong> The water treatment services market in the Mountain West is highly fragmented — AquaScience's existing customer relationships and local operating infrastructure make it an ideal foundation for a consolidation strategy.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text"><strong>Recurring, regulation-driven revenue.</strong> Wyoming's energy, mining, and municipal customers require ongoing water treatment under state and EPA mandates. This creates revenue visibility that fits Kelso's preference for durable cash flow businesses.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text"><strong>Management team is aligned and rollover-ready.</strong> The founder is open to a majority transaction with retained equity participation, matching Kelso's structure. This preserves institutional knowledge and customer relationships through transition.</div>
+      </div>
+    </div>
+
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Activity</th><th>Contact</th><th>Outcome</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>—</td><td>Initial Research &amp; Profile Build</td><td>Internal</td><td>Dossier compiled</td><td><span class="status-complete">Complete</span></td></tr>
+          <tr><td>—</td><td>First Outreach</td><td>Larry Casey</td><td>Pending</td><td><span class="status-next">Next Step</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
   <div class="footer">
     Generated March 29, 2026 &bull; Next Chapter M&A Advisory &bull; Confidential

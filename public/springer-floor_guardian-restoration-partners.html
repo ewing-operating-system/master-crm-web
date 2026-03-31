@@ -38,6 +38,20 @@
   .tag-fs { background: #2a1a3a; color: #bc8cff; }
   .tag-sb { background: #1a3a3a; color: #39d353; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
+  .risk-note { background: #2e1a0b; border: 1px solid #7a3e0a; border-radius: 6px; padding: 12px 16px; margin-top: 12px; font-size: 13px; color: #f0a070; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
 </head>
@@ -69,43 +83,57 @@
   </div>
   <div class="content">
 
-    <div class="card" id="snapshot">
-      <h2>Snapshot</h2>
+    <div class="card" id="buyer-profile">
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Platform</div><div class="fact-value">Guardian Restoration Partners</div></div>
+        <div class="fact-item"><div class="fact-label">Backer</div><div class="fact-value">Alpine Investors (San Francisco PE)</div></div>
+        <div class="fact-item"><div class="fact-label">Headquarters</div><div class="fact-value">Denver, CO</div></div>
+        <div class="fact-item"><div class="fact-label">Revenue</div><div class="fact-value">Est. $50M–$100M+ (rapid growth via acquisitions since Apr 2024)</div></div>
+        <div class="fact-item"><div class="fact-label">Verticals</div><div class="fact-value">Commercial property restoration (water, fire, mold remediation)</div></div>
+        <div class="fact-item"><div class="fact-label">Acquisition Strategy</div><div class="fact-value">14+ acquisitions since Apr 2024; ~1 deal/month; AZ, CA, WI, CO, IL and expanding</div></div>
+      </div>
+    </div>
+
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
       <table>
-        <tr><th>Field</th><th>Detail</th></tr>
-        <tr><td>Headquarters</td><td>Denver, CO</td></tr>
-        <tr><td>Revenue</td><td>Est. $50M–$100M+ system-wide (rapid growth via acquisitions)</td></tr>
-        <tr><td>Backing</td><td>Alpine Investors (San Francisco PE)</td></tr>
-        <tr><td>Buyer Type</td><td>Private Equity</td></tr>
-        <tr><td>Fit Score</td><td>8 / 10</td></tr>
-        <tr><td>Confidence</td><td>HIGH</td></tr>
+        <tr><th>Name</th><th>Title</th><th>Email</th><th>Notes</th></tr>
+        <tr><td>Alpine Investors Deal Team</td><td>PE Sponsor</td><td>—</td><td>San Francisco; drives acquisition pace and capital; primary contact for M&amp;A</td></tr>
+        <tr><td>Guardian Restoration CEO</td><td>Platform CEO</td><td>—</td><td>Denver, CO; operational lead for integration</td></tr>
       </table>
     </div>
 
-    <div class="card" id="buyer-profile">
-      <h2>Company Overview</h2>
-      <p>Alpine Investors-backed commercial restoration platform launched April 2024. Executing one acquisition per month across AZ, CA, WI, CO, and IL. Expanding into Boise and Seattle. Built to be the dominant multi-service restoration brand in the US.</p>
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Guardian Restoration Partners is Alpine Investors' commercial restoration roll-up, launched April 2024 with three simultaneous acquisitions (DryLux, Dry Kings, Midwest Restoration). As of January 2026 they have closed 14+ deals at an approximate pace of one per month — with geographic reach across AZ, CA, WI, CO, and IL, plus active expansion into Boise and Seattle.</p>
+        <p>Commercial floor care is a natural bolt-on to water and fire damage restoration. Hard-surface floor stripping, refinishing, and restoration after a water event is already part of what restoration contractors must provide to return a commercial property to pre-loss condition. Springer Floor's trained technicians and commercial floor care equipment would allow Guardian to bring this work in-house rather than subcontracting it, improving margins and reducing job completion time.</p>
+        <p>Beyond the service overlap, Springer Floor would add a recurring commercial floor maintenance revenue stream — predictable B2B contract revenue that balances the project-based, insurance-driven revenue of restoration work. This is exactly the kind of cash flow diversification that Alpine Investors values in a platform build.</p>
+      </div>
     </div>
 
-    <div class="card" id="acquisition-history">
-      <h2>Acquisition History</h2>
-      <p>14+ acquisitions since April 2024 — launch included DryLux, Dry Kings, and Midwest Restoration simultaneously. Quick Dry Restoration and Spartan Emergency Water Removal added August 2024. 14th deal confirmed, with Deep Water Emergency Services (January 30, 2026) as the most recent. Pace: approximately one deal per month.</p>
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <div style="background:#0d2b1a;border:1px solid #1a5c34;border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:14px;color:#5dbb8a;line-height:1.7;">
+        <strong>Call Opener:</strong> "You're acquiring restoration companies at one per month — we represent a commercial floor care company that handles the hard-surface side of every water and fire job you do. I'd like to have a quick conversation about whether there's a bolt-on acquisition that deepens your scope on every job site and adds recurring maintenance revenue."
+      </div>
+      <div class="talking-point"><div class="tp-num">1</div><div class="tp-text">Hard-surface floor restoration is already inside Guardian's scope of work — every water damage job requires it. Acquiring Springer Floor converts a subcontracted cost center into a captive margin driver across the entire platform.</div></div>
+      <div class="talking-point"><div class="tp-num">2</div><div class="tp-text">Springer Floor's commercial maintenance contracts provide recurring monthly revenue — a fundamentally different cash flow profile than project-based restoration work, which gives Alpine a portfolio revenue quality argument to lenders and future acquirers.</div></div>
+      <div class="talking-point"><div class="tp-num">3</div><div class="tp-text">Alpine is already acquiring one company per month — Guardian's integration infrastructure is built for speed. A commercial floor care acquisition is lower complexity than a full restoration operator and can be absorbed quickly.</div></div>
     </div>
 
-    <div class="card" id="fit-narrative">
-      <h2>Why They'd Buy Springer Floor</h2>
-      <p>Guardian is building a multi-service restoration platform. Commercial floor care (hard-surface restoration, stripping/refinishing post water/fire events) is a natural bolt-on to water damage remediation. Alpine has capital and explicit appetite for geographic density and service breadth. Active acquirer with the pace and backing to move fast.</p>
-    </div>
-
-    <div class="card" id="investment-thesis">
-      <h2>Investment Thesis</h2>
-      <p>Add a commercial floor care capability to their restoration platform — deepens scope-of-work per job site and adds a recurring maintenance revenue stream.</p>
-    </div>
-
-    <div class="card" id="validation">
-      <h2>Research Verdict</h2>
-      <p>VALIDATED: 14 acquisitions confirmed via multiple primary sources.</p>
-      <p style="margin-top:12px;font-size:12px;color:#484f58;">Source: CII Advisors Buyer Profiles PDF (March 2026) + Exa web validation (March 30, 2026)</p>
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <tr><th>Step</th><th>Status</th><th>Date</th><th>Notes</th></tr>
+        <tr><td>Identified</td><td><span class="status-complete">Complete</span></td><td>Mar 2026</td><td>Included in CII Advisors buyer list; flagged HIGH confidence</td></tr>
+        <tr><td>Research &amp; Validation</td><td><span class="status-complete">Complete</span></td><td>Mar 30, 2026</td><td>14 acquisitions confirmed via multiple primary sources; last deal Jan 30, 2026</td></tr>
+        <tr><td>Initial Outreach</td><td><span class="status-next">Next Step</span></td><td>—</td><td>Approach Alpine Investors deal team directly; Guardian platform CEO secondary</td></tr>
+        <tr><td>Intro Call</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>NDA / Materials</td><td>—</td><td>—</td><td>—</td></tr>
+      </table>
+      <div class="risk-note">Time-sensitive: Guardian is actively closing deals. The window to present Springer Floor as a bolt-on is open now — delays risk them deprioritizing floor care in favor of more restoration operators. Move fast on Alpine Investors outreach.</div>
     </div>
 
   </div>

@@ -48,6 +48,19 @@
   tr:hover td { background: #1c2128; }
   a { color: #58a6ff; text-decoration: none; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
 </head>
@@ -70,22 +83,82 @@
     <div class="header-label">Buyer Dossier</div>
     <h1>Bernhard Capital Partners</h1>
     <div class="subtitle">Prepared for AquaScience</div>
-    
+
   </div>
   <div class="context-bar">
     <strong>AquaScience</strong> &bull; Lawrence &quot;Larry&quot; Casey
   </div>
   <div class="content">
+
     <div class="card" id="buyer-profile">
-        <h2>Buyer Profile</h2>
-        <p>Bernhard Capital Partners (BCP) is a middle-market services and infrastructure-focused firm based in Baton Rouge, Louisiana, with deep operational experience in critical infrastructure. BCP's strategy centers on strategic investments in essential services and infrastructure, with a strong reputation for sourcing proprietary opportunities while maintaining price discipline through thorough due diligence and pre-investment value creation planning.</p>
-<p>BCP's infrastructure strategy is directly relevant to AquaScience. The firm explicitly targets investments in the electric, gas, and water/wastewater utilities market. BCP's approach involves working closely with management to reduce costs, improve capital plan execution, and increase reliability. The firm focuses on investments that generate environmental and economic benefits for communities, embody value-oriented approaches to building and consolidating critical infrastructure, and introduce innovative technologies to modernize critical systems.</p>
-<p>A standout signal of BCP's water sector commitment is National Water Infrastructure (NWI), a BCP portfolio company and one of the largest private wastewater utility operators in Louisiana, serving nearly 17,000 customers throughout Ascension, Livingston, and East Baton Rouge parishes. Under CEO Tom Pertuit, NWI operates in partnership with BCP to expand water and wastewater services. This existing water infrastructure platform demonstrates BCP's operational capability and appetite for water assets.</p>
-<p>BCP's investment thesis for AquaScience would likely center on adding AquaScience as either a complement to NWI or as a new standalone water treatment platform in the Western U.S. The firm's emphasis on consolidating critical infrastructure systems aligns perfectly with the fragmented water treatment landscape, where regional operators like AquaScience can serve as buy-and-build platforms.</p>
-<p>The firm's focus on middle-market transactions, its demonstrated expertise in water and wastewater through NWI, and its stated strategy of modernizing critical infrastructure make BCP one of the most naturally aligned buyers for AquaScience. The Wyoming geographic expansion would diversify BCP's water portfolio beyond Louisiana while maintaining the essential-services characteristics the firm targets.</p>
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Firm</div><div class="fact-value">Bernhard Capital Partners (BCP)</div></div>
+        <div class="fact-item"><div class="fact-label">Type</div><div class="fact-value">Middle-Market Infrastructure PE</div></div>
+        <div class="fact-item"><div class="fact-label">Headquarters</div><div class="fact-value">Baton Rouge, Louisiana</div></div>
+        <div class="fact-item"><div class="fact-label">Focus</div><div class="fact-value">Essential Services &amp; Critical Infrastructure</div></div>
+        <div class="fact-item"><div class="fact-label">Water Portfolio Co.</div><div class="fact-value">National Water Infrastructure (NWI)</div></div>
+        <div class="fact-item"><div class="fact-label">NWI CEO</div><div class="fact-value">Tom Pertuit</div></div>
+        <div class="fact-item"><div class="fact-label">NWI Customers</div><div class="fact-value">~17,000 (LA parishes)</div></div>
+        <div class="fact-item"><div class="fact-label">Strategy</div><div class="fact-value">Buy-and-build critical infrastructure platforms</div></div>
+      </div>
     </div>
-    
-    
+
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Title</th><th>Relevance</th><th>Email</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>BCP Investment Team</td><td>Infrastructure Group</td><td>New platform investments; water sector coverage</td><td>—</td></tr>
+          <tr><td>Tom Pertuit</td><td>CEO, National Water Infrastructure</td><td>Operating partner; insight into BCP water thesis</td><td>—</td></tr>
+          <tr><td>BCP Corp Dev</td><td>Corporate Development</td><td>Deal origination and term sheet</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Bernhard Capital Partners has already placed its conviction in water infrastructure through National Water Infrastructure — one of Louisiana's largest private wastewater utility operators. That bet demonstrates BCP isn't exploring water; they're operating in it. AquaScience fits either as a complement to NWI's geographic expansion or as a standalone Western U.S. water treatment platform seed.</p>
+        <p>BCP's stated investment thesis explicitly calls out water and wastewater utilities as target sectors. More importantly, their approach — reducing costs, improving capital plan execution, increasing reliability, introducing innovative technology to modernize critical systems — maps precisely to what a Wyoming water treatment operator needs post-acquisition to grow from regional to regional-plus.</p>
+        <p>The Mountain West geography is also strategically differentiated from BCP's current Louisiana concentration. A Wyoming water treatment platform diversifies BCP's infrastructure book by both geography and end-market (industrial/energy customers vs. residential wastewater). That portfolio logic makes AquaScience a natural next move for BCP after NWI.</p>
+      </div>
+    </div>
+
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <p style="font-size:13px;color:#8b949e;margin-bottom:14px;"><strong style="color:#c9d1d9;">Call Opener:</strong> "I know BCP has built a real water platform through NWI — we're running a process on a Wyoming-based water treatment company and wanted to get in front of your infrastructure team before we open the process more broadly. It's the kind of essential-services asset that fits your critical infrastructure thesis precisely."</p>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text"><strong>You already know how to operate this.</strong> BCP's experience through NWI means your team understands water utility economics, regulatory dynamics, and the operational levers that drive value. AquaScience is a faster integration than a first-time water investment — you know the playbook.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text"><strong>Western geography diversifies the NWI concentration.</strong> NWI is Louisiana-focused. AquaScience in Wyoming extends BCP's water infrastructure footprint into the Mountain West — a region with intensifying water scarcity and strong industrial demand — without cannibalizing NWI's market.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text"><strong>Platform seed with add-on runway.</strong> The Mountain West water treatment market is fragmented. AquaScience can serve as the platform anchor for a regional roll-up strategy — exactly the consolidation model BCP has executed successfully in other critical infrastructure sectors.</div>
+      </div>
+    </div>
+
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Activity</th><th>Outcome</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Mar 2026</td><td>Dossier prepared; BCP identified as Tier 1 financial buyer</td><td>Research complete</td><td><span class="status-complete">Complete</span></td></tr>
+          <tr><td>—</td><td>Initial outreach to BCP infrastructure team</td><td>Pending</td><td><span class="status-next">Next Step</span></td></tr>
+          <tr><td>—</td><td>NDA &amp; teaser delivery</td><td>Pending</td><td>—</td></tr>
+          <tr><td>—</td><td>Management introduction</td><td>Pending</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
   <div class="footer">
     Generated March 29, 2026 &bull; Next Chapter M&A Advisory &bull; Confidential

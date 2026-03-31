@@ -48,6 +48,19 @@
   tr:hover td { background: #1c2128; }
   a { color: #58a6ff; text-decoration: none; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
 </head>
@@ -70,22 +83,80 @@
     <div class="header-label">Buyer Dossier</div>
     <h1>H2O Innovation</h1>
     <div class="subtitle">Prepared for AquaScience</div>
-    
+
   </div>
   <div class="context-bar">
     <strong>AquaScience</strong> &bull; Lawrence &quot;Larry&quot; Casey
   </div>
   <div class="content">
+
     <div class="card" id="buyer-profile">
-        <h2>Buyer Profile</h2>
-        <p>H2O Innovation Inc. (TSX: HEO; OTCQX: HEOFF) is a Canadian water technology company specializing in water treatment solutions, with operations spanning water treatment engineering, specialty chemicals, and operation and maintenance services. The company's most recent annual report (fiscal year ended June 30, 2023) outlines a three-segment business model: Water Technologies and Services (WTS), Specialty Products, and Operation and Maintenance (O&M).</p>
-<p>H2O Innovation has built its growth on a foundation of strategic acquisitions and organic expansion in the North American water treatment market. The company's investor relations contact (investor@h2oinnovation.com) and public listing on the TSX, Paris exchange, and OTCQX provide access to public and private capital markets for acquisition funding.</p>
-<p>The strategic fit between H2O Innovation and AquaScience is among the strongest in the buyer universe. H2O Innovation is a pure-play water treatment company actively seeking North American acquisitions to build scale. AquaScience's Wyoming operations would add a new geographic market, expand H2O Innovation's customer base, and provide additional O&M contract opportunities. The companies share a core competency in water treatment, making integration straightforward.</p>
-<p>H2O Innovation's three-segment model would benefit from AquaScience in multiple ways: the WTS segment could deploy H2O's proprietary treatment technologies through AquaScience's customer relationships; the Specialty Products segment could cross-sell chemicals and consumables to AquaScience's customer base; and the O&M segment could absorb AquaScience's operational contracts into its managed services portfolio.</p>
-<p>Key considerations include H2O Innovation's Canadian headquarters and public company status, which provide transaction structure flexibility (cash, stock, or combination). The company's explicit growth-through-acquisition strategy and pure-play water treatment focus make it one of the most naturally aligned strategic buyers for AquaScience. The smaller scale of both companies relative to Xylem or Veolia could also make for a more culturally compatible integration.</p>
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Ticker</div><div class="fact-value">TSX: HEO &nbsp;|&nbsp; OTCQX: HEOFF</div></div>
+        <div class="fact-item"><div class="fact-label">Headquarters</div><div class="fact-value">Quebec City, QC, Canada</div></div>
+        <div class="fact-item"><div class="fact-label">Revenue</div><div class="fact-value">Not disclosed (public; ~CAD $200M range)</div></div>
+        <div class="fact-item"><div class="fact-label">Business Segments</div><div class="fact-value">WTS, Specialty Products, O&amp;M</div></div>
+        <div class="fact-item"><div class="fact-label">Growth Strategy</div><div class="fact-value">Active North American Acquisitions</div></div>
+        <div class="fact-item"><div class="fact-label">Fiscal Year End</div><div class="fact-value">June 30</div></div>
+        <div class="fact-item"><div class="fact-label">IR Contact</div><div class="fact-value">investor@h2oinnovation.com</div></div>
+        <div class="fact-item"><div class="fact-label">Website</div><div class="fact-value"><a href="https://www.h2oinnovation.com" target="_blank">h2oinnovation.com</a></div></div>
+      </div>
     </div>
-    
-    
+
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Title</th><th>Coverage</th><th>Email</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Frederic Dugre</td><td>President &amp; CEO</td><td>Strategic direction, M&amp;A</td><td>—</td></tr>
+          <tr><td>Marc Blanchet</td><td>CFO</td><td>Capital allocation, transactions</td><td>—</td></tr>
+          <tr><td>IR Team</td><td>Investor Relations</td><td>Shareholder &amp; deal inquiries</td><td>investor@h2oinnovation.com</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>H2O Innovation is among the highest-fit strategic buyers in AquaScience's universe. As a pure-play water treatment company with three complementary segments — Water Technologies &amp; Services, Specialty Products, and O&amp;M — it benefits from an AquaScience acquisition across all three lines simultaneously.</p>
+        <p>The WTS segment can deploy H2O's proprietary treatment technologies through AquaScience's established Wyoming customer base. The Specialty Products segment gains a new route for chemical and consumable cross-sell. The O&amp;M segment absorbs AquaScience's operational contracts into a scalable managed-services portfolio. Wyoming becomes a new geographic market with immediate installed-base revenue.</p>
+        <p>H2O Innovation's explicit buy-and-build strategy, public-market capital access, and cultural proximity as a mid-market water operator make integration straightforward compared to a large industrial conglomerate. Both companies speak the same operational language.</p>
+      </div>
+    </div>
+
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <p style="font-size:13px;color:#8b949e;margin-bottom:14px;"><strong style="color:#c9d1d9;">Call Opener:</strong> "H2O Innovation has been one of the most active acquirers in North American water treatment — we represent an owner-operated treatment company in Wyoming that fits your three-segment model cleanly. WTS, specialty chemicals cross-sell, and O&amp;M contracts are all in play. Worth a conversation?"</p>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text"><strong>Three-segment synergy from day one.</strong> AquaScience's operations feed all three of H2O Innovation's business lines — not just one. This is a rare acquisition that is immediately accretive to WTS revenue, chemical sales volume, and O&amp;M contract count.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text"><strong>Wyoming is a white-space geography.</strong> H2O Innovation's North American footprint has limited Mountain West presence. AquaScience delivers established customer relationships, local regulatory knowledge, and operational infrastructure in a new market.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text"><strong>Compatible scale and culture.</strong> Unlike Xylem or Veolia, H2O Innovation is a mid-market operator — AquaScience won't be lost inside a conglomerate. The integration would preserve local service culture while adding the resources of a public water technology company.</div>
+      </div>
+    </div>
+
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Activity</th><th>Contact</th><th>Outcome</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>—</td><td>Initial Research &amp; Profile Build</td><td>Internal</td><td>Dossier compiled</td><td><span class="status-complete">Complete</span></td></tr>
+          <tr><td>—</td><td>First Outreach</td><td>Larry Casey</td><td>Pending</td><td><span class="status-next">Next Step</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
   <div class="footer">
     Generated March 29, 2026 &bull; Next Chapter M&A Advisory &bull; Confidential

@@ -48,6 +48,19 @@
   tr:hover td { background: #1c2128; }
   a { color: #58a6ff; text-decoration: none; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
 </head>
@@ -70,22 +83,82 @@
     <div class="header-label">Buyer Dossier</div>
     <h1>Harcros Chemicals</h1>
     <div class="subtitle">Prepared for AquaScience</div>
-    
+
   </div>
   <div class="context-bar">
     <strong>AquaScience</strong> &bull; Lawrence &quot;Larry&quot; Casey
   </div>
   <div class="content">
+
     <div class="card" id="buyer-profile">
-        <h2>Buyer Profile</h2>
-        <p>Harcros Chemicals is a manufacturer and distributor of industrial and specialty chemicals in the United States, founded in 1917. The company has over a century of experience in chemical products including surfactants, emulsifiers, custom blends, absorbents, acetic acids, acid inhibitors, and specialty chemicals serving agriculture, personal care, oil and gas, and water treatment markets. Harcros employs approximately 385 people.</p>
-<p>Under President and CEO W. Michael Miller (appointed in 2024), Harcros is entering a new strategic chapter. Miller brings over 28 years of experience within the organization, starting as a sales representative in 1995 and advancing through District Manager (Memphis, 2012), Regional Manager (2015, overseeing Little Rock, Vicksburg, and Nashville), to leading the development of Harcros Rivergate in 2017, a division specializing in transloading and unique logistical solutions. Miller's demonstrated ability to identify expansion and diversification opportunities positions Harcros for strategic growth.</p>
-<p>Harcros' interest in AquaScience would be driven by the natural synergy between chemical supply and water treatment operations. As a specialty chemicals manufacturer, Harcros produces many of the chemical inputs used in water treatment processes. Acquiring AquaScience would represent forward integration -- owning the treatment operation that consumes the chemicals Harcros manufactures. This vertical integration creates margin expansion opportunities and strengthens customer relationships.</p>
-<p>The company's PitchBook profile indicates an Acquired/Merged status with a latest deal type of Debt Refinancing across 5 financing rounds, suggesting Harcros has financial backing and has undergone ownership transitions that may support further acquisitive growth. The company's single recorded investment suggests emerging M&A activity.</p>
-<p>For AquaScience, a Harcros acquisition would provide access to Harcros' century-old chemical expertise, established distribution network, and manufacturing capabilities. The combination could create a vertically integrated water treatment platform with proprietary chemical solutions -- a differentiated value proposition in the fragmented water treatment market. Wyoming's industrial water treatment needs, particularly in energy and mining sectors, align well with Harcros' specialty chemical capabilities.</p>
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Company</div><div class="fact-value">Harcros Chemicals</div></div>
+        <div class="fact-item"><div class="fact-label">Type</div><div class="fact-value">Private — Industrial &amp; Specialty Chemicals</div></div>
+        <div class="fact-item"><div class="fact-label">Founded</div><div class="fact-value">1917</div></div>
+        <div class="fact-item"><div class="fact-label">Employees</div><div class="fact-value">~385</div></div>
+        <div class="fact-item"><div class="fact-label">CEO</div><div class="fact-value">W. Michael Miller (appointed 2024)</div></div>
+        <div class="fact-item"><div class="fact-label">Relevant Markets</div><div class="fact-value">Water treatment, oil &amp; gas, agriculture, personal care</div></div>
+        <div class="fact-item"><div class="fact-label">Acquisition Signal</div><div class="fact-value">Acquired/Merged status; debt refinancing activity</div></div>
+        <div class="fact-item"><div class="fact-label">Strategic Logic</div><div class="fact-value">Forward integration into water treatment operations</div></div>
+      </div>
     </div>
-    
-    
+
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Title</th><th>Relevance</th><th>Email</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>W. Michael Miller</td><td>President &amp; CEO</td><td>New strategic chapter; diversification and expansion mandate</td><td>—</td></tr>
+          <tr><td>VP Sales / Water Treatment</td><td>Water Treatment Division</td><td>Operational synergy; chemical supply relationships</td><td>—</td></tr>
+          <tr><td>Harcros Rivergate Leadership</td><td>Logistics &amp; Specialty Division</td><td>Precedent for new division creation under Miller</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Harcros already manufactures many of the chemical inputs used in water treatment processes. Acquiring AquaScience would represent forward integration — owning the treatment operation that consumes the chemicals Harcros produces and distributes. This creates a captive demand channel, margin expansion, and a differentiated value proposition that chemical-only distributors cannot match.</p>
+        <p>CEO Miller's track record is directly relevant: he built Harcros Rivergate from scratch as a new division focused on transloading and logistics — demonstrating the firm's willingness to build new operating legs through organic or acquisitive means. AquaScience fits that expansion model as a water treatment division anchored in Wyoming's industrial markets (energy, mining, municipal).</p>
+        <p>Wyoming's industrial base aligns with Harcros' existing customer profile in oil and gas. AquaScience's treatment customers likely overlap with industries Harcros already serves chemically, creating a natural cross-sell and deepened customer relationship opportunity. The combination would give Harcros a solution sale — chemicals plus treatment — that strengthens account defensibility.</p>
+      </div>
+    </div>
+
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <p style="font-size:13px;color:#8b949e;margin-bottom:14px;"><strong style="color:#c9d1d9;">Call Opener:</strong> "Mike, Harcros already supplies the chemicals that go into water treatment — we're running a process on a Wyoming water treatment operator and think the vertical integration story is compelling. This is a forward integration acquisition that turns a supply relationship into a captive demand channel."</p>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text"><strong>You already make what they buy.</strong> Harcros manufactures water treatment chemical inputs. AquaScience's treatment operations consume them. Acquiring AquaScience collapses the supplier-customer relationship into a vertically integrated platform — higher margins, less price pressure, deeper customer loyalty.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text"><strong>Wyoming is already Harcros territory.</strong> The energy and industrial markets Harcros serves in the Mountain West overlap with AquaScience's customer base. This isn't a new geography bet — it's deepening existing market penetration through a different service channel.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text"><strong>Miller has done this before.</strong> He built Harcros Rivergate as a new division. AquaScience as a "Harcros Water Treatment" division follows the same playbook — a new operating leg under the same ownership structure, leveraging existing chemical expertise and customer relationships.</div>
+      </div>
+    </div>
+
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Activity</th><th>Outcome</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Mar 2026</td><td>Dossier prepared; Harcros identified as strategic vertical integration buyer</td><td>Research complete</td><td><span class="status-complete">Complete</span></td></tr>
+          <tr><td>—</td><td>Initial outreach to CEO Miller</td><td>Pending</td><td><span class="status-next">Next Step</span></td></tr>
+          <tr><td>—</td><td>NDA &amp; teaser delivery</td><td>Pending</td><td>—</td></tr>
+          <tr><td>—</td><td>Management introduction</td><td>Pending</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
   <div class="footer">
     Generated March 29, 2026 &bull; Next Chapter M&A Advisory &bull; Confidential

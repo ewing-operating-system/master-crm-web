@@ -38,6 +38,20 @@
   .tag-fs { background: #2a1a3a; color: #bc8cff; }
   .tag-sb { background: #1a3a3a; color: #39d353; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
+  .risk-note { background: #2e1a0b; border: 1px solid #7a3e0a; border-radius: 6px; padding: 12px 16px; margin-top: 12px; font-size: 13px; color: #f0a070; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
 </head>
@@ -69,43 +83,56 @@
   </div>
   <div class="content">
 
-    <div class="card" id="snapshot">
-      <h2>Snapshot</h2>
+    <div class="card" id="buyer-profile">
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Platform</div><div class="fact-value">Heartland Home Services</div></div>
+        <div class="fact-item"><div class="fact-label">Backer</div><div class="fact-value">The Jordan Company (Resolute Fund IV); Cobepa (minority); Carlyle Group (debt)</div></div>
+        <div class="fact-item"><div class="fact-label">Headquarters</div><div class="fact-value">Macomb, MI</div></div>
+        <div class="fact-item"><div class="fact-label">Revenue</div><div class="fact-value">Not disclosed; mid-market PE platform</div></div>
+        <div class="fact-item"><div class="fact-label">Verticals</div><div class="fact-value">Residential HVAC, plumbing, electrical</div></div>
+        <div class="fact-item"><div class="fact-label">Acquisition Strategy</div><div class="fact-value">24+ acquisitions through 2022; Midwestern mechanical services focus</div></div>
+      </div>
+    </div>
+
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
       <table>
-        <tr><th>Field</th><th>Detail</th></tr>
-        <tr><td>Headquarters</td><td>Macomb, MI</td></tr>
-        <tr><td>Revenue</td><td>Not publicly disclosed; mid-market PE platform</td></tr>
-        <tr><td>Backing</td><td>The Jordan Company (Resolute Fund IV); Cobepa (minority); Carlyle Group (debt)</td></tr>
-        <tr><td>Buyer Type</td><td>Private Equity</td></tr>
-        <tr><td>Fit Score</td><td>4 / 10</td></tr>
-        <tr><td>Confidence</td><td>LOW</td></tr>
+        <tr><th>Name</th><th>Title</th><th>Email</th><th>Notes</th></tr>
+        <tr><td>Corporate Development Team</td><td>The Jordan Company</td><td>—</td><td>PE sponsor; drives acquisition decisions for the platform</td></tr>
       </table>
     </div>
 
-    <div class="card" id="buyer-profile">
-      <h2>Company Overview</h2>
-      <p>Midwestern HVAC/plumbing/electrical roll-up with 24+ acquisitions as of end of 2021. 2022 additions include Classic Aire Care, Courtney's Heating & Cooling, Weis Comfort Systems, and Henry Smith Plumbing.</p>
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Heartland Home Services is a Jordan Company-backed residential services roll-up focused on HVAC, plumbing, and electrical. With 24+ acquisitions through 2021–2022 including Classic Aire Care, Courtney's Heating &amp; Cooling, Weis Comfort Systems, and Henry Smith Plumbing, the platform has demonstrated real acquisition velocity.</p>
+        <p>However, Heartland's thesis is tightly defined around residential mechanical services — the trades that touch homeowners' HVAC, pipes, and wiring. Commercial floor care is an entirely different service category, customer base, and operator profile. Springer Floor serves facility managers in commercial buildings; Heartland serves homeowners needing mechanical repair. There is no overlap.</p>
+        <p>This buyer was included in the CII Advisors list for PE platform awareness, not because of vertical fit. Not worth pursuing as an acquisition candidate for Springer Floor.</p>
+      </div>
     </div>
 
-    <div class="card" id="acquisition-history">
-      <h2>Acquisition History</h2>
-      <p>24+ acquisitions through 2021. Active acquirer in residential mechanical services. 2022 additions confirmed: Classic Aire Care, Courtney's Heating & Cooling, Weis Comfort Systems, Henry Smith Plumbing.</p>
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <div style="background:#0d2b1a;border:1px solid #1a5c34;border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:14px;color:#5dbb8a;line-height:1.7;">
+        <strong>Call Opener:</strong> Not recommended. Heartland's vertical focus on residential mechanical services is incompatible with Springer Floor's commercial floor care business. Do not pursue outreach unless Heartland signals a strategic expansion into commercial facility services.
+      </div>
+      <div class="talking-point"><div class="tp-num">1</div><div class="tp-text">Heartland's residential HVAC/plumbing customer base has zero overlap with Springer Floor's commercial facility manager accounts — there is no cross-sell or service adjacency to leverage.</div></div>
+      <div class="talking-point"><div class="tp-num">2</div><div class="tp-text">The Jordan Company's investment thesis is defined around Midwestern residential mechanical trades — a commercial floor care acquisition would be a thesis deviation that requires board approval and a strategic rationale that doesn't currently exist.</div></div>
+      <div class="talking-point"><div class="tp-num">3</div><div class="tp-text">Resources spent engaging Heartland are better allocated to City Wide, Guardian Restoration, or Harvard Maintenance — all of which have explicit commercial facility service mandates and active deal pipelines.</div></div>
     </div>
 
-    <div class="card" id="fit-narrative">
-      <h2>Why They'd Buy Springer Floor</h2>
-      <p>Investment thesis is residential mechanical services (HVAC, plumbing, electrical) — not commercial floor maintenance. Wrong service vertical. Heartland is an active acquirer with strong PE backing, but commercial floor care is outside their thesis.</p>
-    </div>
-
-    <div class="card" id="investment-thesis">
-      <h2>Investment Thesis</h2>
-      <p>No applicable thesis for commercial floor care. Included by CII Advisors — likely for PE platform awareness.</p>
-    </div>
-
-    <div class="card" id="validation">
-      <h2>Research Verdict</h2>
-      <p>Wrong vertical. Active acquirer but not for this type of business.</p>
-      <p style="margin-top:12px;font-size:12px;color:#484f58;">Source: CII Advisors Buyer Profiles PDF (March 2026) + Exa web validation (March 30, 2026)</p>
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <tr><th>Step</th><th>Status</th><th>Date</th><th>Notes</th></tr>
+        <tr><td>Identified</td><td><span class="status-complete">Complete</span></td><td>Mar 2026</td><td>Included in CII Advisors buyer list</td></tr>
+        <tr><td>Research &amp; Validation</td><td><span class="status-complete">Complete</span></td><td>Mar 30, 2026</td><td>Wrong vertical confirmed; residential mechanical only</td></tr>
+        <tr><td>Initial Outreach</td><td>—</td><td>—</td><td>Not recommended; do not pursue</td></tr>
+        <tr><td>Intro Call</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>NDA / Materials</td><td>—</td><td>—</td><td>—</td></tr>
+      </table>
+      <div class="risk-note">Wrong vertical entirely. Active acquirer with real PE backing, but investment thesis is residential mechanical services — not commercial floor care. Remove from active outreach queue.</div>
     </div>
 
   </div>

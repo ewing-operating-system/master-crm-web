@@ -73,6 +73,17 @@
   .card p { margin-bottom: 10px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
   .card strong { color: #f0f6fc; }
 
+  /* FACT GRID */
+  .fact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 700px) { .fact-grid { grid-template-columns: repeat(2, 1fr); } }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 14px 16px; }
+  .fact-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 14px; font-weight: 600; color: #f0f6fc; }
+
+  /* NARRATIVE BOX */
+  .narrative-box p { margin-bottom: 12px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+
   /* NARRATIVE CONTENT */
   .narrative-content p { margin-bottom: 12px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
   .narrative-content blockquote {
@@ -149,6 +160,16 @@
     padding: 18px 22px; margin-bottom: 16px;
   }
   .approach-opener p { color: #a3e4b8 !important; font-size: 14px !important; line-height: 1.7 !important; }
+  .talking-point {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: #0d1117; border: 1px solid #21262d; border-radius: 6px;
+    padding: 14px 18px; margin-bottom: 10px;
+  }
+  .tp-num {
+    font-size: 18px; font-weight: 700; color: #58a6ff;
+    line-height: 1; min-width: 24px; margin-top: 1px;
+  }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.65; }
   .outreach-step {
     background: #0d1117; border: 1px solid #21262d; border-radius: 6px;
     padding: 14px 18px; margin-bottom: 10px;
@@ -156,6 +177,16 @@
   .step-label {
     font-size: 11px; font-weight: 700; color: #58a6ff; letter-spacing: 1px;
     text-transform: uppercase; margin-bottom: 4px;
+  }
+
+  /* STATUS BADGES */
+  .status-complete {
+    display: inline-block; padding: 2px 10px; border-radius: 10px;
+    background: #0e3a1f; color: #3fb950; font-size: 11px; font-weight: 600;
+  }
+  .status-next {
+    display: inline-block; padding: 2px 10px; border-radius: 10px;
+    background: #1a2c4e; color: #58a6ff; font-size: 11px; font-weight: 600;
   }
 
   /* FOOTER */
@@ -214,32 +245,160 @@
     <div class="subtitle">Prepared for Air Control</div>
     <div class="header-meta">
       <span class='tag'>Type: PE</span>
-      
       <span class='tag'>San Francisco, CA</span>
     </div>
-    
   </div>
 
   <!-- CONTEXT BAR -->
   <div class="context-bar">
     <div>
       <strong>Air Control</strong> &bull; Fred Lowry &bull; HVAC
-      &bull; 3000000.0
+      &bull; $3M Revenue
     </div>
     <div>March 29, 2026</div>
   </div>
 
   <!-- CONTENT -->
   <div class="content">
-    
-    <div class="card" id="approach-strategy">
-        <h2>Approach Strategy</h2>
-        
-        <div class="approach-opener">
-            <div class="opener-label">CALL OPENER</div>
-            <p>**&quot;Alpine just closed a record 190 deals in 2025 — they&#x27;re not slowing down, and their two HVAC platforms are the reason they stood up a $3.4 billion continuation vehicle in the first place.&quot;** | **&quot;When Alpine launched Orion Group in November 2020 with Jackson Mechanical out of Oklahoma City, they said publicly they planned to roll up family-owned commercial HVACR businesses nationwide — McLean fits that map.&quot;** | **&quot;Alpine calls themselves a &#x27;PeopleFirst&#x27; firm and they mean it structurally — their 2025 year-in-review leads with talent sourcing alongside deal sourcing, which is the kind of message that resonates with a founder who cares about what happens to their techs post-close.&quot;**</p>
+
+    <!-- 1. BUYER PROFILE -->
+    <div class="card" id="buyer-profile">
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item">
+          <div class="fact-label">Platform</div>
+          <div class="fact-value">Alpine Investors</div>
         </div>
+        <div class="fact-item">
+          <div class="fact-label">Backer</div>
+          <div class="fact-value">Independent PE (Fund VII)</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Headquarters</div>
+          <div class="fact-value">San Francisco, CA</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Revenue (AUM)</div>
+          <div class="fact-value">~$15B AUM</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Verticals</div>
+          <div class="fact-value">Home Services, HVAC, Tech-Enabled Services</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Acquisition Strategy</div>
+          <div class="fact-value">PeopleFirst platform builds via tuck-ins</div>
+        </div>
+      </div>
     </div>
+
+    <!-- 2. KEY CONTACTS -->
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Email</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Graham Weaver</td>
+            <td>Founder &amp; CEO</td>
+            <td>—</td>
+            <td>Founded firm in 2001; leads overall strategy</td>
+          </tr>
+          <tr>
+            <td>Alex Pattis</td>
+            <td>Partner, Home Services</td>
+            <td>—</td>
+            <td>Oversees HVAC platform investments incl. Orion Group</td>
+          </tr>
+          <tr>
+            <td>Alpine Corp Dev Team</td>
+            <td>Corporate Development</td>
+            <td>—</td>
+            <td>Primary outreach channel for new deal flow</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 3. STRATEGIC FIT -->
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Alpine Investors launched Orion Group in November 2020 using Jackson Mechanical (Oklahoma City) as the platform company, with an explicit public mandate to acquire family-owned commercial HVACR businesses nationwide. McLean, VA — sitting inside the highest-density federal and government-contractor HVAC corridor on the East Coast — is a logical expansion market that Orion has not yet entered.</p>
+        <p>Alpine's PeopleFirst philosophy is structurally distinct from typical financial buyers: their 2025 year-in-review leads with talent sourcing alongside deal sourcing, and their CEO-in-Residence program places proven operators into acquired companies rather than imposing a financial overlay. For a founder like Fred Lowry who cares about what happens to his team post-close, this is a genuinely differentiated message.</p>
+        <p>Alpine closed a record 190 deals in 2025 and stood up a $3.4B continuation vehicle — the capital and acquisition velocity are both in place. Air Control's residential and light-commercial HVAC mix, established customer relationships, and trained technician base are exactly the profile Orion Group adds to fill geographic white space.</p>
+      </div>
+    </div>
+
+    <!-- 4. APPROACH STRATEGY -->
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <div class="approach-opener">
+        <div class="opener-label">Call Opener</div>
+        <p>"Alpine just closed a record 190 deals in 2025 — they're not slowing down, and their two HVAC platforms are the reason they stood up a $3.4 billion continuation vehicle in the first place."</p>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text">When Alpine launched Orion Group in November 2020 with Jackson Mechanical out of Oklahoma City, they said publicly they planned to roll up family-owned commercial HVACR businesses nationwide — McLean fits that map exactly, and Orion has no East Coast presence yet.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text">Alpine calls themselves a "PeopleFirst" firm and they mean it structurally — their 2025 year-in-review leads with talent sourcing alongside deal sourcing, which is the kind of message that resonates with a founder who cares about what happens to his techs post-close.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text">The $3.4B continuation vehicle means Alpine can hold assets longer and doesn't need a hard exit window — for a seller who wants to stay involved for 2–3 years during transition, that patient-capital structure is a significant advantage over typical 5-year fund buyers.</div>
+      </div>
+    </div>
+
+    <!-- 5. PIPELINE HISTORY -->
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Step</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Dossier Created</td>
+            <td><span class="status-complete">Complete</span></td>
+            <td>Mar 29, 2026</td>
+            <td>Initial buyer research and profile built</td>
+          </tr>
+          <tr>
+            <td>Outreach</td>
+            <td><span class="status-next">Next</span></td>
+            <td>—</td>
+            <td>Target Alex Pattis / Orion Group corp dev via LinkedIn + email</td>
+          </tr>
+          <tr>
+            <td>Intro Call</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>NDA / CIM Delivery</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 
   <!-- FOOTER -->

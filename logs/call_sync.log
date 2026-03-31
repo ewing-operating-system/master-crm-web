@@ -207,3 +207,480 @@ Traceback (most recent call last):
   File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
     prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
 KeyError: '\n  "transcript_id"'
+2026-03-30 21:30:00,954  INFO     === sync_call_intel.py  mode=poll  2026-03-30 21:30:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-30 21:45:00,918  INFO     === sync_call_intel.py  mode=poll  2026-03-30 21:45:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-30 22:00:00,577  INFO     === sync_call_intel.py  mode=poll  2026-03-30 22:00:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-30 22:15:00,325  INFO     === sync_call_intel.py  mode=poll  2026-03-30 22:15:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-30 22:30:00,526  INFO     === sync_call_intel.py  mode=poll  2026-03-30 22:30:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-30 22:45:00,447  INFO     === sync_call_intel.py  mode=poll  2026-03-30 22:45:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-30 23:00:00,648  INFO     === sync_call_intel.py  mode=poll  2026-03-30 23:00:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-30 23:15:00,350  INFO     === sync_call_intel.py  mode=poll  2026-03-30 23:15:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-30 23:30:01,140  INFO     === sync_call_intel.py  mode=poll  2026-03-30 23:30:01 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-30 23:45:00,808  INFO     === sync_call_intel.py  mode=poll  2026-03-30 23:45:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 00:00:00,512  INFO     === sync_call_intel.py  mode=poll  2026-03-31 00:00:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 00:15:00,387  INFO     === sync_call_intel.py  mode=poll  2026-03-31 00:15:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 00:30:00,581  INFO     === sync_call_intel.py  mode=poll  2026-03-31 00:30:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 00:45:00,546  INFO     === sync_call_intel.py  mode=poll  2026-03-31 00:45:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 01:00:00,571  INFO     === sync_call_intel.py  mode=poll  2026-03-31 01:00:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 01:15:00,564  INFO     === sync_call_intel.py  mode=poll  2026-03-31 01:15:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 01:30:00,849  INFO     === sync_call_intel.py  mode=poll  2026-03-31 01:30:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 01:45:00,297  INFO     === sync_call_intel.py  mode=poll  2026-03-31 01:45:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 02:00:00,292  INFO     === sync_call_intel.py  mode=poll  2026-03-31 02:00:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 02:15:00,181  INFO     === sync_call_intel.py  mode=poll  2026-03-31 02:15:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 02:30:00,279  INFO     === sync_call_intel.py  mode=poll  2026-03-31 02:30:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 02:45:00,407  INFO     === sync_call_intel.py  mode=poll  2026-03-31 02:45:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 03:51:23,605  INFO     === sync_call_intel.py  mode=poll  2026-03-31 03:51:23 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 04:46:39,204  INFO     === sync_call_intel.py  mode=poll  2026-03-31 04:46:39 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 05:15:01,081  INFO     === sync_call_intel.py  mode=poll  2026-03-31 05:15:01 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 06:00:00,352  INFO     === sync_call_intel.py  mode=sync  2026-03-31 06:00:00 ===
+2026-03-31 06:00:00,352  INFO     === sync_call_intel.py  mode=poll  2026-03-31 06:00:00 ===
+2026-03-31 06:00:00,353  ERROR    call_log.json not found at /Users/clawdbot/Projects/dossier-pipeline/data/supabase-full-dump/call_log.json
+2026-03-31 06:00:00,353  INFO     No call records found — nothing to do.
+2026-03-31 06:00:00,353  INFO     Done.
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 06:15:00,447  INFO     === sync_call_intel.py  mode=poll  2026-03-31 06:15:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 06:30:01,279  INFO     === sync_call_intel.py  mode=poll  2026-03-31 06:30:01 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 06:48:41,050  INFO     === sync_call_intel.py  mode=poll  2026-03-31 06:48:41 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 07:03:53,125  INFO     === sync_call_intel.py  mode=poll  2026-03-31 07:03:53 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 07:30:01,104  INFO     === sync_call_intel.py  mode=poll  2026-03-31 07:30:01 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 08:30:01,040  INFO     === sync_call_intel.py  mode=poll  2026-03-31 08:30:01 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 08:45:00,896  INFO     === sync_call_intel.py  mode=poll  2026-03-31 08:45:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 09:00:00,903  INFO     === sync_call_intel.py  mode=poll  2026-03-31 09:00:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 10:00:00,437  INFO     === sync_call_intel.py  mode=poll  2026-03-31 10:00:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 10:15:01,110  INFO     === sync_call_intel.py  mode=poll  2026-03-31 10:15:01 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 10:30:01,028  INFO     === sync_call_intel.py  mode=poll  2026-03-31 10:30:01 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 10:45:00,685  INFO     === sync_call_intel.py  mode=poll  2026-03-31 10:45:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 11:00:00,569  INFO     === sync_call_intel.py  mode=poll  2026-03-31 11:00:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 11:15:00,972  INFO     === sync_call_intel.py  mode=poll  2026-03-31 11:15:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 11:30:00,908  INFO     === sync_call_intel.py  mode=poll  2026-03-31 11:30:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 11:45:00,716  INFO     === sync_call_intel.py  mode=poll  2026-03-31 11:45:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'
+2026-03-31 12:00:00,602  INFO     === sync_call_intel.py  mode=poll  2026-03-31 12:00:00 ===
+Traceback (most recent call last):
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 638, in <module>
+    main()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 630, in main
+    run_poll_mode()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 541, in run_poll_mode
+    transcripts = poll_fireflies()
+  File "/Users/clawdbot/Projects/master-crm-web/scripts/sync_call_intel.py", line 361, in poll_fireflies
+    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+KeyError: '\n  "transcript_id"'

@@ -48,6 +48,19 @@
   tr:hover td { background: #1c2128; }
   a { color: #58a6ff; text-decoration: none; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
 </head>
@@ -70,22 +83,79 @@
     <div class="header-label">Buyer Dossier</div>
     <h1>Blue Water Industries</h1>
     <div class="subtitle">Prepared for AquaScience</div>
-    
+
   </div>
   <div class="context-bar">
     <strong>AquaScience</strong> &bull; Lawrence &quot;Larry&quot; Casey
   </div>
   <div class="content">
+
     <div class="card" id="buyer-profile">
-        <h2>Buyer Profile</h2>
-        <p>Blue Water Industries LLC is a significant player in the construction materials and aggregates industry, most notably having sold 20 active aggregates operations in Alabama, South Carolina, South Florida, Tennessee, and Virginia to Martin Marietta Materials (NYSE: MLM) for $2.05 billion in cash, with the transaction closing in April 2024. This landmark sale demonstrates the scale and quality of Blue Water Industries' operations.</p>
-<p>Martin Marietta's CEO Ward Nye described the acquisition as "wholly consistent with the Company's SOAR strategy," noting that BWI Southeast improved Martin Marietta's product mix, margin profile, and durability through cycles while providing balance sheet flexibility for future growth. The transaction's $2.05 billion price tag and strategic rationale illustrate the premium valuations achievable for well-run infrastructure assets.</p>
-<p>Blue Water Industries' interest in AquaScience would represent a potential diversification from aggregates into water treatment -- two related infrastructure sectors that share common end markets (construction, energy, municipal) and similar operational characteristics (distributed operations, local market knowledge, essential services). The company's experience managing 20+ geographically dispersed operations provides directly relevant expertise for water treatment operations management.</p>
-<p>Following the $2.05 billion Martin Marietta transaction, Blue Water Industries may have significant capital available for redeployment into new sectors. Water treatment represents an attractive diversification opportunity: similar operational characteristics to aggregates (distributed facilities, local relationships, essential services) but with stronger recurring revenue dynamics and less cyclical exposure.</p>
-<p>For AquaScience, a Blue Water Industries acquisition would bring experienced infrastructure operators with demonstrated ability to build and manage multi-site operations. The company's track record of creating significant value (evidenced by the Martin Marietta sale premium) suggests it would bring operational discipline and growth-oriented management to AquaScience's water treatment platform.</p>
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Company Type</div><div class="fact-value">Private Infrastructure &amp; Water Company (LLC)</div></div>
+        <div class="fact-item"><div class="fact-label">Headquarters</div><div class="fact-value">United States</div></div>
+        <div class="fact-item"><div class="fact-label">Revenue</div><div class="fact-value">Not disclosed</div></div>
+        <div class="fact-item"><div class="fact-label">Notable Transaction</div><div class="fact-value">Sold 20 aggregates ops to Martin Marietta for $2.05B (April 2024)</div></div>
+        <div class="fact-item"><div class="fact-label">Operational Model</div><div class="fact-value">Distributed, multi-site infrastructure operations</div></div>
+        <div class="fact-item"><div class="fact-label">End Markets</div><div class="fact-value">Construction, Energy, Municipal, Infrastructure</div></div>
+        <div class="fact-item"><div class="fact-label">Capital Position</div><div class="fact-value">Significant post-transaction capital for redeployment</div></div>
+        <div class="fact-item"><div class="fact-label">Martin Marietta Counterpart</div><div class="fact-value">NYSE: MLM (Ward Nye, CEO)</div></div>
+      </div>
     </div>
-    
-    
+
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Title</th><th>Coverage</th><th>Email</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Principals / Owners</td><td>Managing Partners</td><td>Capital deployment, new sector entry</td><td>—</td></tr>
+          <tr><td>Operating Management</td><td>COO / VP Operations</td><td>Multi-site operational oversight</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Blue Water Industries built its value by operating 20+ geographically dispersed infrastructure assets and selling them to a strategic buyer at a premium. Water treatment is the natural next chapter for operators with this exact skill set — distributed facilities, local market relationships, essential services, and cycle-resistant demand. The operational playbook transfers directly.</p>
+        <p>Following the $2.05 billion Martin Marietta transaction, BWI has significant capital to redeploy. Water treatment services offer an attractive reinvestment thesis: stronger recurring revenue characteristics than aggregates, less cyclical exposure to construction markets, and a highly fragmented competitive landscape that supports the same buy-and-build strategy BWI has already proven it can execute.</p>
+        <p>AquaScience provides an immediate operating foundation in Wyoming's energy, mining, and municipal sectors — markets BWI understands from its aggregates experience. The combination of BWI's multi-site operational expertise and AquaScience's water treatment knowledge creates a credible platform for consolidating additional Mountain West water treatment operators.</p>
+      </div>
+    </div>
+
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <p style="font-size:13px;color:#8b949e;margin-bottom:14px;"><strong style="color:#c9d1d9;">Call Opener:</strong> "You built a multi-site infrastructure platform and sold it at a premium — the operational model for doing that in water treatment is almost identical, with even more recurring revenue and less construction-cycle exposure. We have a Wyoming water treatment company that could be the foundation for the next platform."</p>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text"><strong>The operating model you already know.</strong> Distributed facilities, local customer relationships, essential services, regional expertise — water treatment runs on the same operational logic as aggregates. BWI's management team has the exact skills to run and grow a water treatment platform.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text"><strong>More recurring, less cyclical than aggregates.</strong> Water treatment demand is driven by regulatory mandates and operational necessity — not construction starts. AquaScience's Wyoming customers in energy, mining, and municipal sectors have durable, non-discretionary treatment needs regardless of the economic cycle.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text"><strong>Fragmented market is ripe for the same strategy.</strong> The Mountain West water treatment market mirrors what BWI saw in aggregates — hundreds of independent operators with no clear platform builder. AquaScience is the logical starting point for a consolidation play that ends in a premium sale to a Xylem, Veolia, or Suez.</div>
+      </div>
+    </div>
+
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Activity</th><th>Contact</th><th>Outcome</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>—</td><td>Initial Research &amp; Profile Build</td><td>Internal</td><td>Dossier compiled</td><td><span class="status-complete">Complete</span></td></tr>
+          <tr><td>—</td><td>First Outreach</td><td>Larry Casey</td><td>Pending</td><td><span class="status-next">Next Step</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
   <div class="footer">
     Generated March 29, 2026 &bull; Next Chapter M&A Advisory &bull; Confidential

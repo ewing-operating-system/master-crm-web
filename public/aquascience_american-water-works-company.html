@@ -48,6 +48,19 @@
   tr:hover td { background: #1c2128; }
   a { color: #58a6ff; text-decoration: none; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
 </head>
@@ -70,22 +83,82 @@
     <div class="header-label">Buyer Dossier</div>
     <h1>American Water Works Company</h1>
     <div class="subtitle">Prepared for AquaScience</div>
-    
+
   </div>
   <div class="context-bar">
     <strong>AquaScience</strong> &bull; Lawrence &quot;Larry&quot; Casey
   </div>
   <div class="content">
+
     <div class="card" id="buyer-profile">
-        <h2>Buyer Profile</h2>
-        <p>American Water Works Company (NYSE: AWK) is the largest and only pure-play, large-cap water utility in the United States. The company reported 2024 full-year earnings of $5.39 per share (up from $4.90 in 2023), with weather-normalized and adjusted EPS of $5.18 (8.6% year-over-year growth). American Water invested $3.3 billion in regulated operations in 2024, led by infrastructure renewal, and completed 13 acquisitions adding nearly 70,000 customers, achieving its 2% annual acquisition growth target.</p>
-<p>CEO M. Susan Hardwick announced her retirement effective May 2025, with President John Griffith assuming the CEO role. Griffith stated: "American Water once again successfully executed on its guidance and plan, including industry-leading earnings and dividend growth." The leadership transition signals continuity in American Water's aggressive acquisition strategy, which targets regulated water and wastewater systems across the U.S.</p>
-<p>American Water's acquisition machine is highly relevant to AquaScience. The company has a stated target of 2% annual customer growth through acquisitions, and it completed 13 deals in 2024 alone. The company's approach focuses on acquiring smaller water and wastewater systems -- often municipal systems but also including treatment operations that complement its regulated utility footprint. American Water's scale ($3.3 billion annual capex) means it has the financial capacity to acquire and invest in any water asset that fits its strategic criteria.</p>
-<p>The fit with AquaScience depends on the nature of AquaScience's customer base. If AquaScience serves municipal or quasi-municipal water treatment needs in Wyoming, American Water's interest would be strong -- the company actively seeks to expand into new states and regions. Wyoming, with its rural communities and aging water infrastructure, represents exactly the type of market where American Water's scale advantages (regulatory expertise, capital access, technical resources) create value for acquired customers.</p>
-<p>American Water's long-term growth targets affirm continued aggressive M&A activity. The company's disciplined acquisition process, strong balance sheet, and proven integration capabilities make it a highly credible buyer for water treatment assets across the U.S.</p>
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Company</div><div class="fact-value">American Water Works Company</div></div>
+        <div class="fact-item"><div class="fact-label">Ticker</div><div class="fact-value">NYSE: AWK</div></div>
+        <div class="fact-item"><div class="fact-label">Type</div><div class="fact-value">Public — Water Utility</div></div>
+        <div class="fact-item"><div class="fact-label">Headquarters</div><div class="fact-value">Camden, NJ</div></div>
+        <div class="fact-item"><div class="fact-label">2024 CapEx</div><div class="fact-value">$3.3 Billion</div></div>
+        <div class="fact-item"><div class="fact-label">2024 EPS</div><div class="fact-value">$5.39 (up from $4.90)</div></div>
+        <div class="fact-item"><div class="fact-label">Acquisitions (2024)</div><div class="fact-value">13 deals, ~70,000 new customers</div></div>
+        <div class="fact-item"><div class="fact-label">CEO (as of May 2025)</div><div class="fact-value">John Griffith (successor to M. Susan Hardwick)</div></div>
+      </div>
     </div>
-    
-    
+
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Title</th><th>Relevance</th><th>Email</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>John Griffith</td><td>President &amp; CEO</td><td>Overall M&amp;A strategy, acquisition approvals</td><td>—</td></tr>
+          <tr><td>M. Susan Hardwick</td><td>Former CEO (retired May 2025)</td><td>Architect of current acquisition strategy</td><td>—</td></tr>
+          <tr><td>Corp Dev Team</td><td>Corporate Development</td><td>Deal origination, term sheet, diligence</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>American Water Works is the largest pure-play water utility in the United States and the most natural strategic acquirer for a regulated or quasi-regulated water treatment operation. Their stated target of 2% annual customer growth through acquisitions — backed by $3.3 billion in 2024 CapEx — means the M&A engine runs continuously.</p>
+        <p>AquaScience's Wyoming presence fits AWK's pattern of entering rural and underserved markets where aging infrastructure creates consolidation opportunity. Wyoming represents a state where American Water has limited or no current footprint, giving AquaScience genuine geographic scarcity value. AWK's regulatory expertise, capital access, and integration infrastructure make it one of the few buyers that could absorb and immediately benefit from AquaScience's customer base.</p>
+        <p>The leadership transition from Hardwick to Griffith signals strategic continuity. Griffith's own statement affirming "industry-leading earnings and dividend growth" tied to acquisitions makes clear that M&A will remain central to AWK's growth thesis. AquaScience should be positioned as a Wyoming entry point that complements AWK's existing Mountain West or adjacent regulatory relationships.</p>
+      </div>
+    </div>
+
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <p style="font-size:13px;color:#8b949e;margin-bottom:14px;"><strong style="color:#c9d1d9;">Call Opener:</strong> "John, American Water has executed 13 acquisitions in the last year alone targeting rural systems — we're running a process on a Wyoming water treatment company with no AWK presence and community-essential operations. I wanted to make sure your team had a first look before we broaden the process."</p>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text"><strong>Wyoming is a white space.</strong> AquaScience operates in a state where AWK has no current regulated footprint. Entering Wyoming through a proven, community-embedded operator is lower-risk than a greenfield regulatory application — and fits the 2% growth mandate.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text"><strong>Infrastructure renewal tailwind.</strong> Wyoming's rural water systems face the same aging-infrastructure challenges that drive AWK's acquisition targets elsewhere. AquaScience already operates in that gap, serving customers who benefit from AWK's scale capital and regulatory capabilities.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text"><strong>Clean acquisition profile.</strong> AquaScience is a focused water treatment operator — no legacy liabilities, no adjacency risk. It's the type of tuck-in AWK executes with its proven integration machine: fast to close, fast to integrate, immediately accretive to customer count targets.</div>
+      </div>
+    </div>
+
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Activity</th><th>Outcome</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Mar 2026</td><td>Dossier prepared; AWK identified as Tier 1 strategic buyer</td><td>Research complete</td><td><span class="status-complete">Complete</span></td></tr>
+          <tr><td>—</td><td>Initial outreach to Corp Dev</td><td>Pending</td><td><span class="status-next">Next Step</span></td></tr>
+          <tr><td>—</td><td>NDA &amp; teaser delivery</td><td>Pending</td><td>—</td></tr>
+          <tr><td>—</td><td>Management introduction</td><td>Pending</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
   <div class="footer">
     Generated March 29, 2026 &bull; Next Chapter M&A Advisory &bull; Confidential

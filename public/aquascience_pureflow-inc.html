@@ -48,6 +48,19 @@
   tr:hover td { background: #1c2128; }
   a { color: #58a6ff; text-decoration: none; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
 </head>
@@ -70,22 +83,79 @@
     <div class="header-label">Buyer Dossier</div>
     <h1>Pureflow Inc.</h1>
     <div class="subtitle">Prepared for AquaScience</div>
-    
+
   </div>
   <div class="context-bar">
     <strong>AquaScience</strong> &bull; Lawrence &quot;Larry&quot; Casey
   </div>
   <div class="content">
+
     <div class="card" id="buyer-profile">
-        <h2>Buyer Profile</h2>
-        <p>Pureflow Inc. is a water treatment and filtration company operating in the U.S. market. The Exa research surfaced related but distinct entities in the water treatment space, including LiqTech International's PureFlow mobile filtration units and Pureflow Inc.'s own water treatment operations. Pureflow Inc. specializes in water treatment services, filtration solutions, and related environmental services.</p>
-<p>The broader water treatment and filtration market in which Pureflow operates is experiencing strong growth driven by tightening environmental regulations, industrial water reuse requirements, and increasing demand for mobile and modular treatment solutions. LiqTech International's PureFlow mobile units (a different product but indicative of market trends) secured a landmark commercial order from Razorback Direct in Houston for the oil and gas industry, demonstrating the growing demand for flexible, deployable water treatment capabilities.</p>
-<p>Pureflow Inc.'s interest in AquaScience would be driven by geographic expansion and service capability enhancement. Acquiring AquaScience would give Pureflow an established presence in Wyoming with existing customer relationships, local market knowledge, and treatment infrastructure. This type of geographic expansion through acquisition is common in the fragmented water treatment services industry.</p>
-<p>The strategic rationale for a Pureflow-AquaScience combination centers on creating a larger, more geographically diversified water treatment platform. In an industry where customer proximity and local responsiveness are competitive advantages, combining operations across multiple regions creates a stronger platform for growth. The combined entity would benefit from shared technical resources, broader service capabilities, and enhanced purchasing power for equipment and chemicals.</p>
-<p>For AquaScience's owners, a Pureflow acquisition would provide a natural home within a company that understands water treatment operations intimately. The cultural alignment between two water treatment operators would facilitate smooth integration and preserve the customer relationships and technical expertise that make AquaScience valuable.</p>
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Company Type</div><div class="fact-value">Private Water Treatment Services Company</div></div>
+        <div class="fact-item"><div class="fact-label">Headquarters</div><div class="fact-value">United States</div></div>
+        <div class="fact-item"><div class="fact-label">Revenue</div><div class="fact-value">Not disclosed</div></div>
+        <div class="fact-item"><div class="fact-label">Core Offering</div><div class="fact-value">Water Treatment, Filtration &amp; Environmental Services</div></div>
+        <div class="fact-item"><div class="fact-label">End Markets</div><div class="fact-value">Industrial, Municipal, Oil &amp; Gas</div></div>
+        <div class="fact-item"><div class="fact-label">Growth Mode</div><div class="fact-value">Geographic Expansion via Acquisition</div></div>
+        <div class="fact-item"><div class="fact-label">Mobile/Modular Capability</div><div class="fact-value">Yes — flexible, deployable treatment systems</div></div>
+        <div class="fact-item"><div class="fact-label">Website</div><div class="fact-value">—</div></div>
+      </div>
     </div>
-    
-    
+
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Title</th><th>Coverage</th><th>Email</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Leadership (CEO/President)</td><td>Chief Executive</td><td>Strategic decisions, M&amp;A</td><td>—</td></tr>
+          <tr><td>Business Development Lead</td><td>VP / Director, BD</td><td>Acquisition sourcing</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Pureflow and AquaScience are operational peers — both owner-operated water treatment businesses competing in the same fragmented U.S. market. A combination creates a larger, geographically diversified platform with enhanced purchasing leverage, shared technical resources, and a broader service menu across regions.</p>
+        <p>The strategic imperative for Pureflow is geographic coverage. Customer proximity and local responsiveness are primary competitive advantages in water treatment services. AquaScience provides Pureflow with an installed Wyoming presence — customer relationships, local regulatory standing, and operational infrastructure that would take years to build organically.</p>
+        <p>Cultural alignment is a significant advantage here. Unlike an acquisition by a large chemical company or a global engineering firm, Pureflow understands water treatment operations intimately. Integration risk is lower and employee retention is higher when the acquirer speaks the same operational language.</p>
+      </div>
+    </div>
+
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <p style="font-size:13px;color:#8b949e;margin-bottom:14px;"><strong style="color:#c9d1d9;">Call Opener:</strong> "We work with water treatment operators on exit and combination conversations. There's an owner in Wyoming — AquaScience — who's built a solid regional footprint in energy, municipal, and ag water treatment. If Pureflow is thinking about Mountain West expansion, this is the conversation to have."</p>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text"><strong>Fastest path to Wyoming market entry.</strong> Building a greenfield water treatment presence in Wyoming requires years of relationship-building and regulatory positioning. AquaScience delivers an established, operating business on day one.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text"><strong>Shared operational DNA reduces integration risk.</strong> As a fellow water treatment operator, Pureflow has the management bandwidth and technical knowledge to absorb AquaScience's operations without a steep learning curve. This is peer-to-peer, not a corporate buyout.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text"><strong>Combined scale unlocks purchasing and bid leverage.</strong> A larger combined footprint improves equipment procurement costs, chemical supply agreements, and the ability to pursue larger municipal and industrial contracts that require multi-site operational capacity.</div>
+      </div>
+    </div>
+
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Activity</th><th>Contact</th><th>Outcome</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>—</td><td>Initial Research &amp; Profile Build</td><td>Internal</td><td>Dossier compiled</td><td><span class="status-complete">Complete</span></td></tr>
+          <tr><td>—</td><td>First Outreach</td><td>Larry Casey</td><td>Pending</td><td><span class="status-next">Next Step</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
   <div class="footer">
     Generated March 29, 2026 &bull; Next Chapter M&A Advisory &bull; Confidential

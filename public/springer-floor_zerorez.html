@@ -38,6 +38,20 @@
   .tag-fs { background: #2a1a3a; color: #bc8cff; }
   .tag-sb { background: #1a3a3a; color: #39d353; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
+  .risk-note { background: #2e1a0b; border: 1px solid #7a3e0a; border-radius: 6px; padding: 12px 16px; margin-top: 12px; font-size: 13px; color: #f0a070; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
 </head>
@@ -69,43 +83,57 @@
   </div>
   <div class="content">
 
-    <div class="card" id="snapshot">
-      <h2>Snapshot</h2>
+    <div class="card" id="buyer-profile">
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Platform</div><div class="fact-value">Zerorez Franchising Systems Inc.</div></div>
+        <div class="fact-item"><div class="fact-label">Backer</div><div class="fact-value">Banner Ventures (Salt Lake City PE; majority stake Aug 2022)</div></div>
+        <div class="fact-item"><div class="fact-label">Headquarters</div><div class="fact-value">Pleasant Grove, UT</div></div>
+        <div class="fact-item"><div class="fact-label">Revenue</div><div class="fact-value">~$150M system-wide; franchisor entity ~$22M</div></div>
+        <div class="fact-item"><div class="fact-label">Verticals</div><div class="fact-value">Carpet &amp; hard-surface floor cleaning (79 locations; 22 corporate-owned)</div></div>
+        <div class="fact-item"><div class="fact-label">Acquisition Strategy</div><div class="fact-value">Banner Ventures acquired majority + corporate franchisees in Aug 2022; expanding corporate-owned operations</div></div>
+      </div>
+    </div>
+
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
       <table>
-        <tr><th>Field</th><th>Detail</th></tr>
-        <tr><td>Headquarters</td><td>Pleasant Grove, UT</td></tr>
-        <tr><td>Revenue</td><td>~$150M system-wide; franchisor entity ~$22M</td></tr>
-        <tr><td>Backing</td><td>Banner Ventures (Salt Lake City PE, majority stake Aug 2022)</td></tr>
-        <tr><td>Buyer Type</td><td>Franchise System</td></tr>
-        <tr><td>Fit Score</td><td>6 / 10</td></tr>
-        <tr><td>Confidence</td><td>MEDIUM</td></tr>
+        <tr><th>Name</th><th>Title</th><th>Email</th><th>Notes</th></tr>
+        <tr><td>Shawn Moon</td><td>CEO</td><td>—</td><td>Retained meaningful ownership post-Banner acquisition; operational lead</td></tr>
+        <tr><td>Banner Ventures Team</td><td>PE Sponsor</td><td>—</td><td>Salt Lake City; drives capital allocation and M&amp;A decisions</td></tr>
       </table>
     </div>
 
-    <div class="card" id="buyer-profile">
-      <h2>Company Overview</h2>
-      <p>PE-backed carpet and floor cleaning franchise with 79 locations (57 franchised, 22 corporate-owned) across 70+ markets. Known for patented Zr Water cleaning process — no soap, no residue. Actively expanding corporate-owned operations.</p>
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Zerorez is a PE-backed carpet and floor cleaning franchise with a patented Zr Water cleaning process. Banner Ventures acquired a majority stake in August 2022 — along with several corporate franchisee operations simultaneously — signaling an explicit intent to build corporate-owned density alongside the franchise network. KeyBank provided the financing, and CEO Shawn Moon retained meaningful ownership, indicating continuity of operational leadership.</p>
+        <p>The 22 corporate-owned locations already compete for commercial accounts in their markets. Adding Springer Floor would deepen commercial floor care capability and B2B service density without cannibalizing the 57 franchised locations. Springer Floor's established commercial account relationships and trained technician team represent exactly the kind of operational asset Banner Ventures would use to accelerate revenue per market.</p>
+        <p>The primary constraint is that Zerorez's core product is residential — commercial floor care is adjacent but not the dominant business. A Springer Floor acquisition represents a B2B diversification move, which Banner would need to underwrite as a thesis extension rather than a core-thesis bolt-on.</p>
+      </div>
     </div>
 
-    <div class="card" id="acquisition-history">
-      <h2>Acquisition History</h2>
-      <p>Banner Ventures acquired majority stake in Zerorez Franchising Systems Inc. plus several corporate franchisee operations simultaneously (August 15, 2022). Financing provided by KeyBank. CEO Shawn Moon retained meaningful ownership.</p>
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <div style="background:#0d2b1a;border:1px solid #1a5c34;border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:14px;color:#5dbb8a;line-height:1.7;">
+        <strong>Call Opener:</strong> "Banner Ventures backed Zerorez specifically to build out corporate-owned locations — we represent a commercial floor care company that could slot directly into that expansion plan, adding B2B recurring revenue to the markets where you're already operating corporate units."
+      </div>
+      <div class="talking-point"><div class="tp-num">1</div><div class="tp-text">Banner Ventures' investment thesis is built around corporate-owned density — Springer Floor's trained team and commercial accounts represent a plug-and-play asset that accelerates that build-out without the lead time of organic growth.</div></div>
+      <div class="talking-point"><div class="tp-num">2</div><div class="tp-text">Zerorez's patented Zr Water process is already marketed as superior for hard-surface cleaning — Springer Floor's commercial hard-surface accounts are a natural extension of that brand promise into the B2B segment.</div></div>
+      <div class="talking-point"><div class="tp-num">3</div><div class="tp-text">Acquiring a commercial-only floor care operator creates a B2B revenue stream that balances the seasonality of residential carpet cleaning — a portfolio diversification argument that resonates with PE sponsors managing cash flow.</div></div>
     </div>
 
-    <div class="card" id="fit-narrative">
-      <h2>Why They'd Buy Springer Floor</h2>
-      <p>Expanding hard-surface and commercial floor care capabilities. Corporate-owned locations already compete in commercial accounts. Adding Springer Floor deepens B2B service density in existing markets without cannibalizing the franchise network. Primary business is residential — commercial floor care is adjacent but not the core product.</p>
-    </div>
-
-    <div class="card" id="investment-thesis">
-      <h2>Investment Thesis</h2>
-      <p>Acquire a commercial-only floor care operator to accelerate B2B revenue in existing markets and justify Banner Ventures' expansion thesis.</p>
-    </div>
-
-    <div class="card" id="validation">
-      <h2>Research Verdict</h2>
-      <p>VALIDATED: Banner Ventures majority stake confirmed on bannercap.com and zerorez.com.</p>
-      <p style="margin-top:12px;font-size:12px;color:#484f58;">Source: CII Advisors Buyer Profiles PDF (March 2026) + Exa web validation (March 30, 2026)</p>
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <tr><th>Step</th><th>Status</th><th>Date</th><th>Notes</th></tr>
+        <tr><td>Identified</td><td><span class="status-complete">Complete</span></td><td>Mar 2026</td><td>Included in CII Advisors buyer list</td></tr>
+        <tr><td>Research &amp; Validation</td><td><span class="status-complete">Complete</span></td><td>Mar 30, 2026</td><td>Banner Ventures majority stake confirmed on bannercap.com and zerorez.com</td></tr>
+        <tr><td>Initial Outreach</td><td><span class="status-next">Next Step</span></td><td>—</td><td>Approach Banner Ventures directly; reference the corporate-owned expansion thesis</td></tr>
+        <tr><td>Intro Call</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>NDA / Materials</td><td>—</td><td>—</td><td>—</td></tr>
+      </table>
+      <div class="risk-note">Commercial is adjacent but not core to Zerorez's product. Frame the acquisition as a B2B revenue diversification play aligned with Banner's corporate-unit expansion thesis. Reach the PE sponsor directly, not just franchise management.</div>
     </div>
 
   </div>

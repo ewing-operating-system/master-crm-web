@@ -73,64 +73,6 @@
   .card p { margin-bottom: 10px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
   .card strong { color: #f0f6fc; }
 
-  /* NARRATIVE CONTENT */
-  .narrative-content p { margin-bottom: 12px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
-  .narrative-content blockquote {
-    border-left: 3px solid #58a6ff; padding-left: 16px; margin: 12px 0;
-    font-style: italic; color: #8b949e;
-  }
-
-  /* URGENCY CARD (competitive moat) */
-  .urgency-card {
-    border: 2px solid #e74c3c !important;
-    background: linear-gradient(135deg, #161b22, #1a1015) !important;
-  }
-  .urgency-card h2 { color: #e74c3c !important; border-bottom-color: #e74c3c40 !important; }
-  .urgency-card::before {
-    content: 'URGENT'; position: absolute; top: -1px; right: 24px;
-    background: #e74c3c; color: white; font-size: 10px; font-weight: 700;
-    letter-spacing: 1.5px; padding: 4px 12px; border-radius: 0 0 6px 6px;
-  }
-  .urgency-card { position: relative; }
-
-  /* GOLDEN NUGGET CARDS */
-  .nugget-card {
-    background: #0d1117; border: 1px solid #21262d; border-radius: 8px;
-    padding: 20px; margin-bottom: 16px; border-left: 4px solid #f5a623;
-  }
-  .nugget-header {
-    font-size: 13px; font-weight: 700; color: #f5a623; margin-bottom: 12px;
-    text-transform: uppercase; letter-spacing: 1px;
-  }
-  .ceo-quote {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic; font-size: 15px; line-height: 1.7;
-    color: #e6e6e6; border-left: 3px solid #58a6ff;
-    padding: 12px 0 12px 20px; margin: 12px 0;
-  }
-  .nugget-opener {
-    background: #0b2e1a; border: 1px solid #27ae60; border-radius: 6px;
-    padding: 14px 18px; margin: 12px 0;
-  }
-  .nugget-opener p { color: #a3e4b8 !important; margin: 0 !important; font-size: 13px !important; line-height: 1.65 !important; }
-  .opener-label {
-    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
-    color: #27ae60; margin-bottom: 6px; text-transform: uppercase;
-  }
-  .nugget-why {
-    font-size: 12.5px; color: #8b949e; margin-top: 10px; line-height: 1.6;
-    padding-top: 10px; border-top: 1px solid #21262d;
-  }
-
-  /* EARNINGS QUOTES */
-  .earnings-quote {
-    margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #21262d;
-  }
-  .earnings-quote:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-  .quote-attribution {
-    font-size: 12px; color: #8b949e; margin-top: 8px; font-weight: 500;
-  }
-
   /* CONTACTS TABLE */
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th {
@@ -149,14 +91,25 @@
     padding: 18px 22px; margin-bottom: 16px;
   }
   .approach-opener p { color: #a3e4b8 !important; font-size: 14px !important; line-height: 1.7 !important; }
-  .outreach-step {
-    background: #0d1117; border: 1px solid #21262d; border-radius: 6px;
-    padding: 14px 18px; margin-bottom: 10px;
+  .opener-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+    color: #27ae60; margin-bottom: 6px; text-transform: uppercase;
   }
-  .step-label {
-    font-size: 11px; font-weight: 700; color: #58a6ff; letter-spacing: 1px;
-    text-transform: uppercase; margin-bottom: 4px;
-  }
+
+  /* SAP COMPONENTS */
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
 
   /* FOOTER */
   .footer {
@@ -172,6 +125,7 @@
     .score-badge { top: 24px; right: 24px; width: 56px; height: 56px; }
     .score-badge .score-num { font-size: 22px; }
     .card { padding: 16px; }
+    .fact-grid { grid-template-columns: 1fr; }
   }
 
   /* PRINT */
@@ -182,11 +136,6 @@
     .card { background: white; border: 1px solid #ddd; break-inside: avoid; }
     .card h2 { color: #0f3460; }
     .card p { color: #333; }
-    .urgency-card { border-color: #c0392b !important; background: #fff5f5 !important; }
-    .nugget-opener { background: #f0fff4; border-color: #27ae60; }
-    .nugget-opener p { color: #166534 !important; }
-    .ceo-quote { color: #333; }
-    .narrative-content p { color: #333; }
   }
 </style>
 <link rel="stylesheet" href="section-controls.css">
@@ -214,32 +163,156 @@
     <div class="subtitle">Prepared for Air Control</div>
     <div class="header-meta">
       <span class='tag'>Type: PE</span>
-      
       <span class='tag'>Atlanta, GA</span>
     </div>
-    
   </div>
 
   <!-- CONTEXT BAR -->
   <div class="context-bar">
     <div>
       <strong>Air Control</strong> &bull; Fred Lowry &bull; HVAC
-      &bull; 3000000.0
+      &bull; McLean, VA
     </div>
     <div>March 29, 2026</div>
   </div>
 
   <!-- CONTENT -->
   <div class="content">
-    
-    <div class="card" id="approach-strategy">
-        <h2>Approach Strategy</h2>
-        
-        <div class="approach-opener">
-            <div class="opener-label">CALL OPENER</div>
-            <p>**&quot;Your team took Southern Air &amp; Heat from a single Florida shop in 2016 to a multi-state HVAC platform and exited to Gryphon in October &#x27;21 — if you&#x27;re looking to run that playbook again, we have a target in McLean that&#x27;s the Northern Virginia version of that story.&quot;** | **&quot;With MSouth Capital providing in-house debt alongside the equity fund, you&#x27;re one of the few lower middle market firms that can hand a seller a term sheet without waiting on a third-party lender — that speed matters in HVAC where deal volume hit 125 transactions in 2024 and owners have options.&quot;** | **&quot;Elle McLeod just stepped up to VP in December 2025 — congratulations to her. If she&#x27;s looking for a deal to lead, the DC metro HVAC market is $32B nationally and growing at 6.1% CAGR, and we have a business that fits your $25M–$150M sweet spot.&quot;**</p>
+
+    <!-- BUYER PROFILE -->
+    <div class="card" id="buyer-profile">
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item">
+          <div class="fact-label">Firm</div>
+          <div class="fact-value">MSouth Equity Partners</div>
         </div>
+        <div class="fact-item">
+          <div class="fact-label">Headquarters</div>
+          <div class="fact-value">Atlanta, GA</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Focus</div>
+          <div class="fact-value">Lower middle market; $25M–$150M enterprise value</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">In-House Debt</div>
+          <div class="fact-value">MSouth Capital (proprietary debt alongside equity)</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">HVAC Track Record</div>
+          <div class="fact-value">Southern Air &amp; Heat — acquired 2016 (single FL shop), exited to Gryphon Oct 2021 as multi-state platform</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Recent Promotion</div>
+          <div class="fact-value">Elle McLeod — VP (Dec 2025)</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Revenue</div>
+          <div class="fact-value">Not disclosed</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Sectors</div>
+          <div class="fact-value">Services, distribution, specialty manufacturing</div>
+        </div>
+      </div>
     </div>
+
+    <!-- KEY CONTACTS -->
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Phone</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Elle McLeod</td>
+            <td>VP (promoted Dec 2025)</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>MSouth Deal Team</td>
+            <td>Investment Professionals</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- STRATEGIC FIT -->
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>MSouth's HVAC playbook is documented: they bought Southern Air &amp; Heat as a single Florida shop in 2016, scaled it into a multi-state platform, and exited to Gryphon Investors in October 2021. Air Control in McLean is the Northern Virginia version of that original thesis — an established, founder-led operator in a high-income market with room to scale.</p>
+        <p>MSouth Capital's in-house debt capability is a structural advantage. Most lower middle market firms need a third-party lender to close; MSouth can deliver a term sheet backed by both equity and debt on their own balance sheet. In a competitive HVAC deal environment, that speed matters.</p>
+        <p>Air Control's enterprise value falls squarely within MSouth's stated $25M–$150M sweet spot. The DC metro HVAC market — part of a $32B national industry growing at 6.1% CAGR — is a more premium market than MSouth's prior Southern HVAC investments, with higher average ticket and stronger service agreement penetration potential.</p>
+      </div>
+    </div>
+
+    <!-- APPROACH STRATEGY -->
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <div class="approach-opener">
+        <div class="opener-label">CALL OPENER</div>
+        <p>"Your team took Southern Air &amp; Heat from a single Florida shop in 2016 to a multi-state HVAC platform and exited to Gryphon in October '21 — if you're looking to run that playbook again, we have a target in McLean that's the Northern Virginia version of that story."</p>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text"><strong>Lead with the Southern Air &amp; Heat exit as proof of thesis.</strong> MSouth ran this exact playbook before — they know how to build value in HVAC. Frame Air Control not as a new idea but as a second chapter to a proven strategy. The exit multiple from the Gryphon transaction gives them a clear valuation benchmark for what a well-run HVAC platform is worth at exit.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text"><strong>Leverage the in-house debt advantage explicitly.</strong> MSouth Capital means MSouth can close faster than any competitor without a bank process. In an HVAC deal environment where 125+ transactions closed in 2024, owners have options — and speed is a differentiator. Bring this up proactively; it's a genuine edge they should own in the pitch.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text"><strong>Target Elle McLeod as the deal lead.</strong> She stepped up to VP in December 2025 — a newly promoted VP looking to lead her first notable deal is a motivated counterparty. Route initial outreach through her and position this as a deal she can own from sourcing through close.</div>
+      </div>
+    </div>
+
+    <!-- PIPELINE HISTORY -->
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Stage</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Target Identified</td>
+            <td><span class="status-complete">Complete</span></td>
+            <td>2025</td>
+            <td>Added to Air Control buyer list</td>
+          </tr>
+          <tr>
+            <td>Research Complete</td>
+            <td><span class="status-complete">Complete</span></td>
+            <td>Mar 2026</td>
+            <td>Southern Air exit verified; Elle McLeod promotion confirmed Dec 2025</td>
+          </tr>
+          <tr>
+            <td>Outreach Pending</td>
+            <td><span class="status-next">Next Step</span></td>
+            <td>—</td>
+            <td>Route through Elle McLeod, VP</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 
   <!-- FOOTER -->

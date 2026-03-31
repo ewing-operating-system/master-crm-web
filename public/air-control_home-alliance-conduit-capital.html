@@ -73,64 +73,6 @@
   .card p { margin-bottom: 10px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
   .card strong { color: #f0f6fc; }
 
-  /* NARRATIVE CONTENT */
-  .narrative-content p { margin-bottom: 12px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
-  .narrative-content blockquote {
-    border-left: 3px solid #58a6ff; padding-left: 16px; margin: 12px 0;
-    font-style: italic; color: #8b949e;
-  }
-
-  /* URGENCY CARD (competitive moat) */
-  .urgency-card {
-    border: 2px solid #e74c3c !important;
-    background: linear-gradient(135deg, #161b22, #1a1015) !important;
-  }
-  .urgency-card h2 { color: #e74c3c !important; border-bottom-color: #e74c3c40 !important; }
-  .urgency-card::before {
-    content: 'URGENT'; position: absolute; top: -1px; right: 24px;
-    background: #e74c3c; color: white; font-size: 10px; font-weight: 700;
-    letter-spacing: 1.5px; padding: 4px 12px; border-radius: 0 0 6px 6px;
-  }
-  .urgency-card { position: relative; }
-
-  /* GOLDEN NUGGET CARDS */
-  .nugget-card {
-    background: #0d1117; border: 1px solid #21262d; border-radius: 8px;
-    padding: 20px; margin-bottom: 16px; border-left: 4px solid #f5a623;
-  }
-  .nugget-header {
-    font-size: 13px; font-weight: 700; color: #f5a623; margin-bottom: 12px;
-    text-transform: uppercase; letter-spacing: 1px;
-  }
-  .ceo-quote {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic; font-size: 15px; line-height: 1.7;
-    color: #e6e6e6; border-left: 3px solid #58a6ff;
-    padding: 12px 0 12px 20px; margin: 12px 0;
-  }
-  .nugget-opener {
-    background: #0b2e1a; border: 1px solid #27ae60; border-radius: 6px;
-    padding: 14px 18px; margin: 12px 0;
-  }
-  .nugget-opener p { color: #a3e4b8 !important; margin: 0 !important; font-size: 13px !important; line-height: 1.65 !important; }
-  .opener-label {
-    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
-    color: #27ae60; margin-bottom: 6px; text-transform: uppercase;
-  }
-  .nugget-why {
-    font-size: 12.5px; color: #8b949e; margin-top: 10px; line-height: 1.6;
-    padding-top: 10px; border-top: 1px solid #21262d;
-  }
-
-  /* EARNINGS QUOTES */
-  .earnings-quote {
-    margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #21262d;
-  }
-  .earnings-quote:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-  .quote-attribution {
-    font-size: 12px; color: #8b949e; margin-top: 8px; font-weight: 500;
-  }
-
   /* CONTACTS TABLE */
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th {
@@ -149,14 +91,25 @@
     padding: 18px 22px; margin-bottom: 16px;
   }
   .approach-opener p { color: #a3e4b8 !important; font-size: 14px !important; line-height: 1.7 !important; }
-  .outreach-step {
-    background: #0d1117; border: 1px solid #21262d; border-radius: 6px;
-    padding: 14px 18px; margin-bottom: 10px;
+  .opener-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+    color: #27ae60; margin-bottom: 6px; text-transform: uppercase;
   }
-  .step-label {
-    font-size: 11px; font-weight: 700; color: #58a6ff; letter-spacing: 1px;
-    text-transform: uppercase; margin-bottom: 4px;
-  }
+
+  /* SAP COMPONENTS */
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
 
   /* FOOTER */
   .footer {
@@ -172,6 +125,7 @@
     .score-badge { top: 24px; right: 24px; width: 56px; height: 56px; }
     .score-badge .score-num { font-size: 22px; }
     .card { padding: 16px; }
+    .fact-grid { grid-template-columns: 1fr; }
   }
 
   /* PRINT */
@@ -182,11 +136,6 @@
     .card { background: white; border: 1px solid #ddd; break-inside: avoid; }
     .card h2 { color: #0f3460; }
     .card p { color: #333; }
-    .urgency-card { border-color: #c0392b !important; background: #fff5f5 !important; }
-    .nugget-opener { background: #f0fff4; border-color: #27ae60; }
-    .nugget-opener p { color: #166534 !important; }
-    .ceo-quote { color: #333; }
-    .narrative-content p { color: #333; }
   }
 </style>
 <link rel="stylesheet" href="section-controls.css">
@@ -214,32 +163,156 @@
     <div class="subtitle">Prepared for Air Control</div>
     <div class="header-meta">
       <span class='tag'>Type: PE-backed platform</span>
-      
       <span class='tag'>Los Angeles, CA</span>
     </div>
-    
   </div>
 
   <!-- CONTEXT BAR -->
   <div class="context-bar">
     <div>
       <strong>Air Control</strong> &bull; Fred Lowry &bull; HVAC
-      &bull; 3000000.0
+      &bull; McLean, VA
     </div>
     <div>March 29, 2026</div>
   </div>
 
   <!-- CONTENT -->
   <div class="content">
-    
-    <div class="card" id="approach-strategy">
-        <h2>Approach Strategy</h2>
-        
-        <div class="approach-opener">
-            <div class="opener-label">CALL OPENER</div>
-            <p>**&quot;Sardor, you built Home Alliance as a marketplace — but the best platforms eventually own their own supply. Air Control&#x27;s licensed team in McLean could be your first captive operator in the Mid-Atlantic.&quot;** *(References: Umrdinov as Founder since 2018; Home Alliance model of connecting homeowners with local technicians.)* | **&quot;With Ally Services just absorbing J Hood in Manassas and Tri-County Aire in Charlotte Hall, the DMV HVAC consolidation wave is accelerating — Air Control is one of the few remaining independent operators in Northern Virginia with scale.&quot;** *(References: Ally Services&#x27; three 2025 add-ons announced February 12, 2026; creates urgency without fabricating Home Alliance facts.)* | **&quot;Your Tech Coast Angels network and Forbes Council membership suggest you think like an investor, not just an operator — Air Control&#x27;s recurring maintenance revenue in a market with 6M+ residents is exactly the kind of predictable cash flow that underwrites a platform thesis.&quot;** *(References: Umrdinov&#x27;s Tech Coast Angels membership since 2022, Forbes Councils since 2019.)*</p>
+
+    <!-- BUYER PROFILE -->
+    <div class="card" id="buyer-profile">
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item">
+          <div class="fact-label">Company</div>
+          <div class="fact-value">Home Alliance</div>
         </div>
+        <div class="fact-item">
+          <div class="fact-label">Sponsor</div>
+          <div class="fact-value">Conduit Capital</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Headquarters</div>
+          <div class="fact-value">Los Angeles, CA</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Founded</div>
+          <div class="fact-value">2018 (Sardor Umrdinov, Founder)</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Model</div>
+          <div class="fact-value">Marketplace connecting homeowners with local technicians</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Revenue</div>
+          <div class="fact-value">Not disclosed</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Founder Affiliations</div>
+          <div class="fact-value">Tech Coast Angels (2022+); Forbes Councils (2019+)</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">Geography</div>
+          <div class="fact-value">National marketplace; limited Mid-Atlantic presence</div>
+        </div>
+      </div>
     </div>
+
+    <!-- KEY CONTACTS -->
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Phone</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sardor Umrdinov</td>
+            <td>Founder &amp; CEO</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Conduit Capital Deal Team</td>
+            <td>Sponsor</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- STRATEGIC FIT -->
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Home Alliance built its platform as a marketplace model — connecting homeowners with independent technicians rather than owning the labor directly. The natural evolution of that model is owning captive operators in high-density markets. Air Control's licensed team in McLean would give Home Alliance its first company-owned supply in the Mid-Atlantic corridor.</p>
+        <p>Sardor Umrdinov's Tech Coast Angels membership and Forbes Council presence signal an investor mindset alongside the operator role. Air Control's recurring maintenance revenue in a market of 6M+ residents is the kind of predictable cash flow that underpins a platform thesis — not just a single transaction.</p>
+        <p>The Ally Services wave of 2025 acquisitions (J Hood in Manassas, Tri-County Aire in Charlotte Hall) demonstrates that the DMV HVAC consolidation is underway. Air Control is one of the remaining independent operators with scale in Northern Virginia — the window for acquisition at a reasonable price is narrowing.</p>
+      </div>
+    </div>
+
+    <!-- APPROACH STRATEGY -->
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <div class="approach-opener">
+        <div class="opener-label">CALL OPENER</div>
+        <p>"Sardor, you built Home Alliance as a marketplace — but the best platforms eventually own their own supply. Air Control's licensed team in McLean could be your first captive operator in the Mid-Atlantic."</p>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text"><strong>Frame the marketplace-to-operator evolution.</strong> Home Alliance's current model is capital-light by design. But market leadership in home services ultimately requires owning the labor. Position Air Control not as a departure from the platform thesis but as the next natural phase of it — controlling quality and margin in the highest-value geography.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text"><strong>Create urgency with the Ally consolidation wave.</strong> Ally Services' three 2025 add-ons — announced February 12, 2026 — signal that the DMV HVAC market is actively consolidating. Air Control is one of the last independent operators in Northern Virginia with an established customer base. Reference this without fabricating Home Alliance-specific facts.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text"><strong>Speak investor language to an investor-minded founder.</strong> Umrdinov's Tech Coast Angels affiliation and Forbes Council membership suggest he evaluates acquisitions with an investment lens. Lead with recurring maintenance revenue, customer retention rates, and market demographics — not just technician headcount.</div>
+      </div>
+    </div>
+
+    <!-- PIPELINE HISTORY -->
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Stage</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Target Identified</td>
+            <td><span class="status-complete">Complete</span></td>
+            <td>2025</td>
+            <td>Added to Air Control buyer list</td>
+          </tr>
+          <tr>
+            <td>Research Complete</td>
+            <td><span class="status-complete">Complete</span></td>
+            <td>Mar 2026</td>
+            <td>Founder profile and Ally wave context verified</td>
+          </tr>
+          <tr>
+            <td>Outreach Pending</td>
+            <td><span class="status-next">Next Step</span></td>
+            <td>—</td>
+            <td>Direct outreach to Sardor Umrdinov</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 
   <!-- FOOTER -->

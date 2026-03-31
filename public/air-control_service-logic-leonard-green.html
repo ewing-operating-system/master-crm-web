@@ -49,6 +49,9 @@
   }
   .score-badge .score-num { font-size: 28px; font-weight: 700; line-height: 1; color: white; }
   .score-badge .score-label { font-size: 8px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin-top: 2px; color: white; }
+  .score-high { background: #1a4731 !important; border: 2px solid #2ea043; }
+  .score-med  { background: #3d2f00 !important; border: 2px solid #d29922; }
+  .score-low  { background: #3d0c0c !important; border: 2px solid #da3633; }
 
   /* CONTEXT BAR */
   .context-bar {
@@ -73,63 +76,31 @@
   .card p { margin-bottom: 10px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
   .card strong { color: #f0f6fc; }
 
-  /* NARRATIVE CONTENT */
-  .narrative-content p { margin-bottom: 12px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
-  .narrative-content blockquote {
-    border-left: 3px solid #58a6ff; padding-left: 16px; margin: 12px 0;
-    font-style: italic; color: #8b949e;
-  }
+  /* FACT GRID */
+  .fact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: #8b949e; text-transform: uppercase; margin-bottom: 4px; }
+  .fact-value { font-size: 14px; font-weight: 500; color: #f0f6fc; }
 
-  /* URGENCY CARD (competitive moat) */
-  .urgency-card {
-    border: 2px solid #e74c3c !important;
-    background: linear-gradient(135deg, #161b22, #1a1015) !important;
-  }
-  .urgency-card h2 { color: #e74c3c !important; border-bottom-color: #e74c3c40 !important; }
-  .urgency-card::before {
-    content: 'URGENT'; position: absolute; top: -1px; right: 24px;
-    background: #e74c3c; color: white; font-size: 10px; font-weight: 700;
-    letter-spacing: 1.5px; padding: 4px 12px; border-radius: 0 0 6px 6px;
-  }
-  .urgency-card { position: relative; }
+  /* NARRATIVE BOX */
+  .narrative-box { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 18px 20px; }
+  .narrative-box p { margin-bottom: 10px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
+  .narrative-box p:last-child { margin-bottom: 0; }
 
-  /* GOLDEN NUGGET CARDS */
-  .nugget-card {
-    background: #0d1117; border: 1px solid #21262d; border-radius: 8px;
-    padding: 20px; margin-bottom: 16px; border-left: 4px solid #f5a623;
+  /* TALKING POINTS */
+  .talking-point { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+  .tp-num {
+    flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+    background: #1f3d5c; border: 1px solid #58a6ff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: #58a6ff;
   }
-  .nugget-header {
-    font-size: 13px; font-weight: 700; color: #f5a623; margin-bottom: 12px;
-    text-transform: uppercase; letter-spacing: 1px;
-  }
-  .ceo-quote {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic; font-size: 15px; line-height: 1.7;
-    color: #e6e6e6; border-left: 3px solid #58a6ff;
-    padding: 12px 0 12px 20px; margin: 12px 0;
-  }
-  .nugget-opener {
-    background: #0b2e1a; border: 1px solid #27ae60; border-radius: 6px;
-    padding: 14px 18px; margin: 12px 0;
-  }
-  .nugget-opener p { color: #a3e4b8 !important; margin: 0 !important; font-size: 13px !important; line-height: 1.65 !important; }
-  .opener-label {
-    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
-    color: #27ae60; margin-bottom: 6px; text-transform: uppercase;
-  }
-  .nugget-why {
-    font-size: 12.5px; color: #8b949e; margin-top: 10px; line-height: 1.6;
-    padding-top: 10px; border-top: 1px solid #21262d;
-  }
+  .tp-text { font-size: 14px; line-height: 1.7; color: #c9d1d9; padding-top: 3px; }
 
-  /* EARNINGS QUOTES */
-  .earnings-quote {
-    margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #21262d;
-  }
-  .earnings-quote:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-  .quote-attribution {
-    font-size: 12px; color: #8b949e; margin-top: 8px; font-weight: 500;
-  }
+  /* STATUS BADGES */
+  .status-complete { background: #1a4731; color: #3fb950; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+  .status-next     { background: #3d2f00; color: #d29922; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+  .status-pending  { background: #21262d; color: #8b949e; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
 
   /* CONTACTS TABLE */
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -142,21 +113,6 @@
   tr:hover td { background: #1c2128; }
   a { color: #58a6ff; text-decoration: none; }
   a:hover { text-decoration: underline; }
-
-  /* APPROACH */
-  .approach-opener {
-    background: #0b2e1a; border: 1px solid #27ae60; border-radius: 8px;
-    padding: 18px 22px; margin-bottom: 16px;
-  }
-  .approach-opener p { color: #a3e4b8 !important; font-size: 14px !important; line-height: 1.7 !important; }
-  .outreach-step {
-    background: #0d1117; border: 1px solid #21262d; border-radius: 6px;
-    padding: 14px 18px; margin-bottom: 10px;
-  }
-  .step-label {
-    font-size: 11px; font-weight: 700; color: #58a6ff; letter-spacing: 1px;
-    text-transform: uppercase; margin-bottom: 4px;
-  }
 
   /* FOOTER */
   .footer {
@@ -182,11 +138,6 @@
     .card { background: white; border: 1px solid #ddd; break-inside: avoid; }
     .card h2 { color: #0f3460; }
     .card p { color: #333; }
-    .urgency-card { border-color: #c0392b !important; background: #fff5f5 !important; }
-    .nugget-opener { background: #f0fff4; border-color: #27ae60; }
-    .nugget-opener p { color: #166534 !important; }
-    .ceo-quote { color: #333; }
-    .narrative-content p { color: #333; }
   }
 </style>
 <link rel="stylesheet" href="section-controls.css">
@@ -203,8 +154,6 @@
 </div>
 <!-- NAV:END -->
 
-
-
 <div class="page">
 
   <!-- HEADER -->
@@ -214,32 +163,83 @@
     <div class="subtitle">Prepared for Air Control</div>
     <div class="header-meta">
       <span class='tag'>Type: PE-backed platform</span>
-      
       <span class='tag'>Charlotte, NC</span>
     </div>
-    
+    <div class="score-badge score-high">
+      <div class="score-num">9</div>
+      <div class="score-label">Score</div>
+    </div>
   </div>
 
   <!-- CONTEXT BAR -->
   <div class="context-bar">
     <div>
       <strong>Air Control</strong> &bull; Fred Lowry &bull; HVAC
-      &bull; 3000000.0
+      &bull; McLean, VA
     </div>
     <div>March 29, 2026</div>
   </div>
 
   <!-- CONTENT -->
   <div class="content">
-    
-    <div class="card" id="approach-strategy">
-        <h2>Approach Strategy</h2>
-        
-        <div class="approach-opener">
-            <div class="opener-label">CALL OPENER</div>
-            <p>**&quot;Bain just closed the $3.1B take-private in December — Dan Smeaton&#x27;s team is sitting on fresh capital with a mandate to grow, and you don&#x27;t have a DMV platform yet.&quot;** | **&quot;You&#x27;ve built 140 locations through acquisitions since 2004 — Air Control gives you a footprint in the most government-dense HVAC market in North America, right when mission-critical is your headline.&quot;** | **&quot;Leonard Green grew you from a regional player to the largest privately held commercial HVAC platform in North America in five years — Bain and Mubadala didn&#x27;t write that check to slow down on bolt-ons.&quot;**</p>
-        </div>
+
+    <!-- BUYER PROFILE -->
+    <div class="card" id="buyer-profile">
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Platform</div><div class="fact-value">Service Logic</div></div>
+        <div class="fact-item"><div class="fact-label">Backer</div><div class="fact-value">Bain Capital / Mubadala (prev. Leonard Green)</div></div>
+        <div class="fact-item"><div class="fact-label">Headquarters</div><div class="fact-value">Charlotte, NC</div></div>
+        <div class="fact-item"><div class="fact-label">Revenue</div><div class="fact-value">Not disclosed (largest private commercial HVAC platform in NA)</div></div>
+        <div class="fact-item"><div class="fact-label">Verticals</div><div class="fact-value">Commercial HVAC, Mechanical, Mission-Critical Facilities</div></div>
+        <div class="fact-item"><div class="fact-label">Acquisition Strategy</div><div class="fact-value">140+ locations via acquisition since 2004; aggressive bolt-on</div></div>
+      </div>
     </div>
+
+    <!-- CONTACTS -->
+    <div class="card" id="contacts">
+      <h2>Key Contacts</h2>
+      <table><thead><tr><th>Name</th><th>Title</th><th>Email</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Dan Smeaton</td><td>CEO, Service Logic</td><td>—</td><td>Operator lead; platform builder since Leonard Green era</td></tr>
+        <tr><td>Bain Capital Partner</td><td>PE Sponsor</td><td>—</td><td>Closed $3.1B take-private December 2024; deployment mandate active</td></tr>
+        <tr><td>Corp Dev Lead</td><td>VP Acquisitions</td><td>—</td><td>Primary M&amp;A contact for bolt-on sourcing</td></tr>
+      </tbody></table>
+    </div>
+
+    <!-- STRATEGIC FIT -->
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Service Logic is the largest privately held commercial HVAC platform in North America, having built 140+ locations through acquisitions since 2004 under Leonard Green and now Bain Capital and Mubadala. Bain closed the $3.1B take-private in December 2024, meaning fresh institutional capital is now actively deploying. Air Control sits in the DMV — one of the most government-dense HVAC markets in North America — which Service Logic does not yet have covered at scale.</p>
+        <p>Service Logic's stated headline is "mission-critical" commercial HVAC. The Northern Virginia/McLean corridor is precisely that: federal buildings, data centers, government contractors, and defense facilities. Air Control's existing relationships in this market represent years of institutional trust that cannot be organically replicated quickly. For a platform heading toward a Bain exit story, DMV density is a gap that needs to be filled.</p>
+      </div>
+    </div>
+
+    <!-- APPROACH STRATEGY -->
+    <div class="card" id="approach">
+      <h2>Approach Strategy</h2>
+      <div style="background:#0b2e1a;border:1px solid #27ae60;border-radius:8px;padding:18px 22px;margin-bottom:18px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:#27ae60;margin-bottom:8px;text-transform:uppercase;">Call Opener</div>
+        <p style="color:#a3e4b8;font-size:14px;line-height:1.7;margin:0;">"Bain just closed the $3.1B take-private in December — Dan Smeaton's team is sitting on fresh capital with a mandate to grow, and you don't have a DMV platform yet."</p>
+      </div>
+      <div class="talking-point"><div class="tp-num">1</div><div class="tp-text"><strong>DMV is the missing market.</strong> You've built 140 locations through acquisitions since 2004 — Air Control gives you a footprint in the most government-dense HVAC market in North America, right when mission-critical is your headline to Bain and Mubadala.</div></div>
+      <div class="talking-point"><div class="tp-num">2</div><div class="tp-text"><strong>Bain capital demands deployment pace.</strong> Leonard Green grew Service Logic from a regional player to the largest privately held commercial HVAC platform in North America in five years — Bain and Mubadala didn't write that check to slow down on bolt-ons. Acquisition momentum must continue.</div></div>
+      <div class="talking-point"><div class="tp-num">3</div><div class="tp-text"><strong>Air Control's federal relationships are irreplaceable.</strong> McLean HVAC contracts with government facilities and defense contractors take years to develop. Acquiring Air Control acquires those relationships instantly — far faster and cheaper than an organic DMV buildout at current labor market rates.</div></div>
+    </div>
+
+    <!-- PIPELINE HISTORY -->
+    <div class="card" id="pipeline">
+      <h2>Pipeline History</h2>
+      <table><thead><tr><th>Step</th><th>Status</th><th>Date</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Target Identified</td><td><span class="status-complete">Complete</span></td><td>2025</td><td>Identified as top-tier commercial HVAC acquirer for Air Control</td></tr>
+        <tr><td>Research Complete</td><td><span class="status-complete">Complete</span></td><td>Mar 2026</td><td>Full dossier built; Bain take-private confirmed fresh capital</td></tr>
+        <tr><td>Outreach</td><td><span class="status-next">Next Step</span></td><td>—</td><td>Contact Dan Smeaton or Service Logic corp dev lead</td></tr>
+        <tr><td>Intro Call</td><td><span class="status-pending">Pending</span></td><td>—</td><td>Qualify DMV appetite and commercial HVAC deal criteria</td></tr>
+      </tbody></table>
+    </div>
+
   </div>
 
   <!-- FOOTER -->

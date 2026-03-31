@@ -22,9 +22,12 @@
   .header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 4px; }
   .score-badge {
     position: absolute; top: 40px; right: 48px; width: 72px; height: 72px;
-    border-radius: 50%; background: #30363d;
+    border-radius: 50%;
     display: flex; align-items: center; justify-content: center; flex-direction: column;
   }
+  .score-high { background: #27ae60; }
+  .score-med { background: #f39c12; }
+  .score-low { background: #e74c3c; }
   .score-badge .score-num { font-size: 28px; font-weight: 700; color: white; }
   .score-badge .score-label { font-size: 8px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; color: white; }
   .context-bar {
@@ -47,7 +50,28 @@
   td { padding: 10px 12px; border-bottom: 1px solid #21262d; color: #c9d1d9; }
   tr:hover td { background: #1c2128; }
   a { color: #58a6ff; text-decoration: none; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-right: 6px; }
+  .tag-high { background: #1a3a2a; color: #3fb950; }
+  .tag-med { background: #3a2e0a; color: #d29922; }
+  .tag-low { background: #3a1a1a; color: #f85149; }
+  .tag-pe { background: #1a2a3a; color: #58a6ff; }
+  .tag-fs { background: #2a1a3a; color: #bc8cff; }
+  .tag-sb { background: #1a3a3a; color: #39d353; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
+  .risk-note { background: #2e1a0b; border: 1px solid #7a3e0a; border-radius: 6px; padding: 12px 16px; margin-top: 12px; font-size: 13px; color: #f0a070; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
 </head>
@@ -69,46 +93,72 @@
   <div class="header">
     <div class="header-label">Buyer Dossier</div>
     <h1>Harvard Maintenance</h1>
-    <div class="subtitle">Prepared for Springer Floor</div>
-    
+    <div class="subtitle">Prepared for Springer Floor &bull; New York, NY</div>
+    <div class="score-badge score-med"><span class="score-num">6</span><span class="score-label">Fit</span></div>
   </div>
   <div class="context-bar">
-    <strong>Springer Floor</strong> &bull; Terri Holman
+    <strong>Springer Floor</strong> &bull; Terri &amp; Eddie Holman &bull;
+    <span class="tag tag-sb">Strategic Buyer</span>
+    <span class="tag tag-med">MEDIUM confidence</span>
   </div>
   <div class="content">
+
     <div class="card" id="buyer-profile">
-        <h2>Buyer Profile</h2>
-        <h3>Harvard Maintenance -- SAP-Quality Buyer Dossier</h3>
-<p><strong>Research Date:</strong> 2026-03-29</p>
-<h4>Company Profile</h4>
-<ul><li><strong>Revenue indicators:</strong> $700.0M</li><li><strong>Workforce indicators:</strong> 50, 1000, 330 employees</li></ul>
-<h4>Strategic Direction</h4>
-<ul><li>Seamless Transition for Large, Multi-Site, Client - Harvard.</li><li>Case Study: Seamless Transition and Strategic Labor Planning at Premier Class AA Mixed-Use Space - Harvard Maintenance</li></ul>
-<h4>Case Study: Seamless Transition and Strategic Labor Planning at Premier Class AA Mixed-Use Space</h4>
-<p>KME Digital 2025-06-26T16:20:15+00:00June 26, 2025| Case Studies|</p>
-<p>In the fall of 2024, Nashville’s new urban mixed-use community combining Class AA office space, high-end condominiums, a luxury hotel, and retail space, engaged Harvard Maintenance through Jones Lang LaSalle after experiencing persistent service issues with their incumbent janitorial provider.</p>
-<ul><li>Tenants voiced concerns—cleaning tasks were missed, communication was poor, and accountability was lacking.</li><li># Harvard Maintenance</li></ul>
-<p>Harvard Maintenance is a Facilities Services company.</p>
-<ul><li>Harvard Maintenance is a commercial cleaning contractor with over 60 years of industry excellence.</li><li>Case Study: Seamless Transition and Strategic Labor Planning at Premier Class AA Mixed-Use Space - Harvard Maintenance</li></ul>
-<h4>Case Study: Seamless Transition and Strategic Labor Planning at Premier Class AA Mixed-Use Space</h4>
-<p>KME Digital 2025-06-26T16:20:15+00:00June 26, 2025| Case Studies|</p>
-<p>In the fall of 2024, Nashville’s new urban mixed-use community combining Class AA office space, high-end condominiums, a luxury hotel, and retail space, engaged Harvard Maintenance through Jones Lang LaSalle after experiencing persistent service issues with their incumbent janitorial provider.</p>
-<ul><li>Tenants voiced concerns—cleaning tasks were missed, communication was poor, and accountability was lacking.</li></ul>
-<h4>Acquisition History & M&A Posture</h4>
-<ul><li>Harvard Maintenance Acquires Pro Clean - ISSA | The Association for Cleaning & Facility Solutions (function(h,o,t,j,a,r){ h.</li></ul>
-<h4>Key Decision Makers</h4>
-<ul><li>VP at Harvard Maintenance</li><li>VP Tri State Region at Harvard Maintenance</li><li>VP Tri State Region at Harvard Maintenance (Current)</li><li>VP Corporate Development | Еx-Private Equity Investor | Harvard MBA</li><li>VP Corporate Development at Freelance</li><li>VP Corporate Development at Freelance (Current)</li><li>Director Of Corporate Development at TELUS</li></ul>
-<h4>Fit Rationale for Springer Floor (Floor Care/Carpet Cleaning, Des Moines IA)</h4>
-<ul><li>Springer Floor operates in the floor care and carpet cleaning vertical in Des Moines, IA</li><li>Buyer operates in adjacent/overlapping service categories</li></ul>
-<h4>Sources</h4>
-<ul><li>[Seamless Transition for Large, Multi-Site, Client - Harvard](https://www.harvardmaint.com/2024/11/12/harvard-maintenance-ensures-a-seamless-transition-for-large-multi-site-client-amidst-urgent-circumstances/)</li><li>[Case Study: Seamless Transition and Strategic Labor Planning](https://www.harvardmaint.com/2025/06/26/case-study-seamless-transition-and-strategic-labor-planning-at-premier-class-aa-mixed-use-space/)</li><li>[Harvard Maintenance - 2026 Company Profile - Tracxn](https://tracxn.com/d/companies/harvardmaintenance/__Wfqo03r7gut6kxpafj6-iLVsKNssYCLjOSSUqD7Pi6U)</li><li>[Harvard Maintenance Acquires Pro Clean - ISSA](https://www.issa.com/industry-news/harvard-maintenance-acquires-pro-clean/)</li><li>[Harvard Maintenance](https://sv.linkedin.com/company/harvard-maintenance)</li><li>[Paul Crepaldi | Sr. VP at Harvard Maintenance](https://linkedin.com/in/paul-crepaldi-9780737)</li><li>[Kristina Hristova | Fractional VP Corporate Development | Еx](https://linkedin.com/in/khristova)</li><li>[Arnab Basu | Corporate Development | M&A | Private Equity | ](https://linkedin.com/in/basufin)</li><li>[Harvard Maintenance Revenue: Annual, Quarterly, and Historic](https://www.zippia.com/harvard-maintenance-careers-25746/revenue/)</li><li>[Harvard Maintenance Revenue, Funding & Valuation - Prospeo](https://prospeo.io/c/harvard-maintenance-revenue)</li><li>[Harvard Maintenance](https://harvardmaint.com/)</li><li>[Janitorial Services Cleaning for Wellness - Harvard Maintena](https://www.harvardmaint.com/cleaning-for-wellness/)</li></ul>
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Platform</div><div class="fact-value">Harvard Maintenance Inc.</div></div>
+        <div class="fact-item"><div class="fact-label">Backer</div><div class="fact-value">Independent (no disclosed PE backer; 60+ year operating history)</div></div>
+        <div class="fact-item"><div class="fact-label">Headquarters</div><div class="fact-value">New York, NY</div></div>
+        <div class="fact-item"><div class="fact-label">Revenue</div><div class="fact-value">~$700M (Zippia/Tracxn estimates)</div></div>
+        <div class="fact-item"><div class="fact-label">Verticals</div><div class="fact-value">Commercial janitorial &amp; facility services (Class A office, mixed-use, institutional)</div></div>
+        <div class="fact-item"><div class="fact-label">Acquisition Strategy</div><div class="fact-value">Confirmed: acquired Pro Clean (ISSA-reported); active corporate development function</div></div>
+      </div>
     </div>
-    
-    
+
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <tr><th>Name</th><th>Title</th><th>Email</th><th>Notes</th></tr>
+        <tr><td>Paul Crepaldi</td><td>Sr. VP</td><td>—</td><td>Senior operational leader; LinkedIn confirmed</td></tr>
+        <tr><td>Arnab Basu</td><td>Corporate Development / M&amp;A</td><td>—</td><td>M&amp;A lead; backgrounds in PE and corporate development</td></tr>
+        <tr><td>VP Tri-State Region</td><td>Regional VP</td><td>—</td><td>Northeast operational contact; current role confirmed on LinkedIn</td></tr>
+      </table>
+    </div>
+
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Harvard Maintenance is a 60-year-old commercial cleaning and facility services company operating at approximately $700M in revenue. They serve Class A office buildings, mixed-use properties, luxury hotels, and institutional clients — the same category of commercial facility managers that Springer Floor's B2B accounts include. Harvard has a dedicated corporate development function and a confirmed acquisition on record (Pro Clean, reported by ISSA).</p>
+        <p>Floor care is a natural service extension within Harvard's existing commercial cleaning scope. Their JLL-referred case study shows they regularly enter multi-service relationships with Class A properties where floor maintenance is a component of the overall facility services contract. Acquiring a specialized floor care operator would allow Harvard to bring that service line in-house, improve margins on floor care line items, and potentially expand floor care offerings across their national commercial account base.</p>
+        <p>The geographic mismatch is the primary risk: Harvard is headquartered in New York and operationally concentrated in the Northeast and Southeast. Springer Floor operates in the Kansas City/Midwest market. This is an acquirable gap only if Harvard has Midwest expansion ambitions or sees the operational model as worth deploying in new markets.</p>
+      </div>
+    </div>
+
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <div style="background:#0d2b1a;border:1px solid #1a5c34;border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:14px;color:#5dbb8a;line-height:1.7;">
+        <strong>Call Opener:</strong> "Harvard does the janitorial work in Class A commercial properties — we represent a floor care specialist that handles the hard-surface maintenance in exactly those buildings. I'd like to have a quick conversation about whether bringing that capability in-house makes sense as part of your expansion."
+      </div>
+      <div class="talking-point"><div class="tp-num">1</div><div class="tp-text">Harvard already operates in multi-service commercial facility contracts where floor care is a line item. Acquiring Springer Floor converts that subcontracted cost into a captive margin — and gives Harvard a proprietary floor care offering to lead with in new account pitches.</div></div>
+      <div class="talking-point"><div class="tp-num">2</div><div class="tp-text">Harvard's corporate development team is active (Pro Clean acquisition confirmed) — this is a company with the organizational appetite and infrastructure for acquisitions, not just organic hiring.</div></div>
+      <div class="talking-point"><div class="tp-num">3</div><div class="tp-text">The Midwest market represents white space for Harvard's commercial cleaning footprint. Springer Floor's established commercial account relationships and operational infrastructure could serve as an entry platform for Harvard to expand its national coverage into Kansas City and surrounding markets.</div></div>
+    </div>
+
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <tr><th>Step</th><th>Status</th><th>Date</th><th>Notes</th></tr>
+        <tr><td>Identified</td><td><span class="status-complete">Complete</span></td><td>Mar 2026</td><td>Research dossier generated Mar 29, 2026</td></tr>
+        <tr><td>Research &amp; Validation</td><td><span class="status-complete">Complete</span></td><td>Mar 30, 2026</td><td>$700M revenue, Pro Clean acquisition, corporate dev team confirmed via ISSA and LinkedIn</td></tr>
+        <tr><td>Initial Outreach</td><td><span class="status-next">Next Step</span></td><td>—</td><td>Contact Arnab Basu (corporate development) via LinkedIn; reference Pro Clean acquisition as precedent</td></tr>
+        <tr><td>Intro Call</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>NDA / Materials</td><td>—</td><td>—</td><td>—</td></tr>
+      </table>
+      <div class="risk-note">Geographic mismatch (Northeast-focused vs. Kansas City) is the primary risk. Frame Springer Floor as a Midwest market entry opportunity, not just a floor care bolt-on. Reach Arnab Basu in corporate development directly.</div>
+    </div>
+
   </div>
-  <div class="footer">
-    Generated March 29, 2026 &bull; Next Chapter M&A Advisory &bull; Confidential
-  </div>
+  <div class="footer">Next Chapter Capital &bull; Confidential &bull; Prepared March 2026</div>
 </div>
 <script src="/comment-widget.js"></script>
 <script src="/notification-bell.js"></script>

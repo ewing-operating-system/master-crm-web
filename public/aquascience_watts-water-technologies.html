@@ -48,6 +48,19 @@
   tr:hover td { background: #1c2128; }
   a { color: #58a6ff; text-decoration: none; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
 </head>
@@ -70,22 +83,80 @@
     <div class="header-label">Buyer Dossier</div>
     <h1>Watts Water Technologies</h1>
     <div class="subtitle">Prepared for AquaScience</div>
-    
+
   </div>
   <div class="context-bar">
     <strong>AquaScience</strong> &bull; Lawrence &quot;Larry&quot; Casey
   </div>
   <div class="content">
+
     <div class="card" id="buyer-profile">
-        <h2>Buyer Profile</h2>
-        <p>Watts Water Technologies (NYSE: WTS) is a global provider of water products and solutions for residential, commercial, and industrial applications. The company reported outstanding Q4 2025 results: EPS of $2.62 (beating expectations by $0.28) and revenue of $625.1 million (up 15.67% year-over-year, beating estimates by $14.59 million). Under Chairman, President and CEO Robert Pagano and CFO Diane McClintock, Watts has delivered consistent above-market growth.</p>
-<p>The Q4 2025 earnings call drew significant analyst interest from top-tier firms including Stifel (Nathan Jones), Baird (Michael Halloran), KeyBanc (Jeffrey Hammond), Jefferies (Jae Hyun Ko), RBC (Jeffrey Reive), Deutsche Bank (Andrew Krill), Northcoast Research (Ryan Connors), TD Cowen (Christopher Grenga), and Goldman Sachs (Brian Lee). RBC raised its price target on Watts to $337 from $288, maintaining a Sector Perform rating, while the stock traded at $329.31 as of February 2026.</p>
-<p>Watts' strategic interest in AquaScience would be driven by the company's expansion from water products (valves, regulators, flow control) into broader water management solutions. The company has been investing in smart water technology, leak detection, water quality monitoring, and connected water management systems. AquaScience's treatment capabilities would add a service and solutions dimension to Watts' primarily product-focused business model.</p>
-<p>The company's 15.67% year-over-year revenue growth signals an aggressive growth posture, likely driven by both organic execution and selective acquisitions. Watts has historically grown through acquisition of complementary water technology companies, and AquaScience's treatment expertise in Wyoming would extend Watts' reach into the industrial and municipal treatment markets of the Mountain West.</p>
-<p>Key decision-makers include CEO Pagano, who has driven Watts' transformation from a traditional valve manufacturer into a diversified water technology platform, and CFO McClintock, who oversees capital allocation including M&A investment. Watts' market cap and strong cash flow generation provide ample acquisition capacity for a tuck-in like AquaScience.</p>
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Ticker</div><div class="fact-value">NYSE: WTS</div></div>
+        <div class="fact-item"><div class="fact-label">Headquarters</div><div class="fact-value">North Andover, MA</div></div>
+        <div class="fact-item"><div class="fact-label">Q4 2025 Revenue</div><div class="fact-value">$625.1M (+15.67% YoY)</div></div>
+        <div class="fact-item"><div class="fact-label">Q4 2025 EPS</div><div class="fact-value">$2.62 (beat by $0.28)</div></div>
+        <div class="fact-item"><div class="fact-label">CEO</div><div class="fact-value">Robert Pagano</div></div>
+        <div class="fact-item"><div class="fact-label">CFO</div><div class="fact-value">Diane McClintock</div></div>
+        <div class="fact-item"><div class="fact-label">Stock Price (Feb 2026)</div><div class="fact-value">$329.31 &nbsp;|&nbsp; RBC PT: $337</div></div>
+        <div class="fact-item"><div class="fact-label">Website</div><div class="fact-value"><a href="https://www.wattswater.com" target="_blank">wattswater.com</a></div></div>
+      </div>
     </div>
-    
-    
+
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Title</th><th>Coverage</th><th>Email</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Robert Pagano</td><td>Chairman, President &amp; CEO</td><td>Strategic direction, M&amp;A</td><td>—</td></tr>
+          <tr><td>Diane McClintock</td><td>CFO</td><td>Capital allocation, acquisitions</td><td>—</td></tr>
+          <tr><td>Corp. Development Team</td><td>VP, Corporate Development</td><td>Tuck-in acquisition sourcing</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Watts Water Technologies has been executing a deliberate transformation from traditional valve/flow-control manufacturer into a diversified water technology platform. The company's investment in smart water technology, leak detection, water quality monitoring, and connected water management systems signals an appetite to extend into treatment operations — the logical next step in the water value chain.</p>
+        <p>AquaScience offers Watts a treatment and solutions dimension that its product-heavy portfolio currently lacks. Wyoming's industrial and municipal treatment customers generate recurring service revenue that is structurally different — and complementary — to Watts' equipment and product sales. An acquisition extends Watts' reach into the Mountain West's energy, mining, and agricultural water treatment markets.</p>
+        <p>Watts' 15.67% YoY revenue growth and strong analyst coverage (Goldman, RBC, Deutsche Bank) indicate aggressive capital deployment capacity. As a tuck-in acquisition, AquaScience fits well within Watts' demonstrated M&amp;A playbook of acquiring complementary water technology companies to build segment depth.</p>
+      </div>
+    </div>
+
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <p style="font-size:13px;color:#8b949e;margin-bottom:14px;"><strong style="color:#c9d1d9;">Call Opener:</strong> "Watts has been building out its water technology platform beyond products into solutions and services — we represent an operating water treatment company in Wyoming that could add the treatment and services dimension to your Mountain West footprint. Given your Q4 growth trajectory and M&amp;A track record, this is worth a look."</p>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text"><strong>Treatment operations extend the platform beyond products.</strong> Watts manufactures the hardware that goes into water systems — AquaScience operates those systems for customers. Acquiring treatment operations creates a solutions business that drives recurring service revenue alongside product sales.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text"><strong>Wyoming fills a strategic geography gap.</strong> The Mountain West's energy and mining sectors are high-intensity water treatment users. AquaScience's existing customer relationships provide Watts with immediate market presence and reference accounts for expanding its connected water management offerings.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text"><strong>Tuck-in scale matches Watts' acquisition history.</strong> AquaScience is sized appropriately for a bolt-on — large enough to be meaningful, small enough for rapid integration. Watts has the operational and financial infrastructure to absorb and scale the business efficiently.</div>
+      </div>
+    </div>
+
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Activity</th><th>Contact</th><th>Outcome</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>—</td><td>Initial Research &amp; Profile Build</td><td>Internal</td><td>Dossier compiled</td><td><span class="status-complete">Complete</span></td></tr>
+          <tr><td>—</td><td>First Outreach</td><td>Larry Casey</td><td>Pending</td><td><span class="status-next">Next Step</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
   <div class="footer">
     Generated March 29, 2026 &bull; Next Chapter M&A Advisory &bull; Confidential

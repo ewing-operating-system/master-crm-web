@@ -48,6 +48,19 @@
   tr:hover td { background: #1c2128; }
   a { color: #58a6ff; text-decoration: none; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
+  .narrative-box { background: #0d1f3c; border: 1px solid #1f4080; border-radius: 8px; padding: 18px 22px; margin-top: 4px; }
+  .narrative-box p { color: #a8c4e8; font-size: 14px; line-height: 1.75; margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .fact-item { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; }
+  .fact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 4px; }
+  .fact-value { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+  .talking-point { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #21262d; }
+  .talking-point:last-child { border-bottom: none; }
+  .tp-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #1f4080; color: #58a6ff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tp-text { font-size: 14px; color: #c9d1d9; line-height: 1.7; }
+  .status-complete { color: #27ae60; font-weight: 600; font-size: 12px; }
+  .status-next { color: #f5a623; font-weight: 600; font-size: 12px; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
 </head>
@@ -76,16 +89,76 @@
     <strong>AquaScience</strong> &bull; Lawrence &quot;Larry&quot; Casey
   </div>
   <div class="content">
+
     <div class="card" id="buyer-profile">
-        <h2>Buyer Profile</h2>
-        <p>Capstone Partners is one of the largest and most active independent investment banking firms in the United States, headquartered with approximately 51-200 employees. Founded in 2001, the firm specializes in merger and acquisition advisory, private placement, and business consulting services across the middle market. Capstone's role as an Advisory Lead on the AquaScience engagement positions it as a critical facilitator of the transaction process.</p>
-<p>Capstone has deep sector expertise in water and environmental services. The firm advised Barclay Water Management on its sale to Ecolab -- Barclay being a provider of water safety and digital monitoring solutions founded in 1932 and based in Massachusetts, including the proprietary iChlor Monochloramine System for Legionella treatment. Additionally, Capstone advised Aquatech International LLC, a global leader in water purification technology for industrial and infrastructure markets, on its recapitalization and JV partnership with Upwell. Aquatech's technology focuses on desalination, water recycle and reuse, and zero liquid discharge.</p>
-<p>Capstone's August 2025 Industrial and Environmental Services Market Update highlighted heightened demand for water remediation services following new state-level regulatory updates requiring more strict testing and documentation. The report noted rising M&A activity filling capability gaps across the industrial environmental services landscape. This market intelligence directly informs AquaScience's positioning as a sought-after water treatment platform.</p>
-<p>Key personnel include Jack Wagner, Vice President of Business Development; Sam Matlin, Managing Director with deep M&A execution experience across numerous market verticals; and John Rhea, Vice President within the Sponsor Coverage Group specializing in buy-side M&A coverage, previously an Associate at Great Range Capital. The firm's water sector transaction experience -- spanning Barclay Water Management, Aquatech International, and broader environmental services -- provides deep buyer relationships and valuation benchmarks directly relevant to AquaScience's transaction process.</p>
-<p>Capstone's advisory role means it brings not just market knowledge but active buyer relationships in the water treatment space, making it an invaluable partner in identifying and engaging the most strategically aligned acquirers for AquaScience.</p>
+      <h2>Buyer Profile</h2>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-label">Firm</div><div class="fact-value">Capstone Partners</div></div>
+        <div class="fact-item"><div class="fact-label">Role</div><div class="fact-value">M&amp;A Advisory Lead</div></div>
+        <div class="fact-item"><div class="fact-label">Founded</div><div class="fact-value">2001</div></div>
+        <div class="fact-item"><div class="fact-label">Focus</div><div class="fact-value">Middle-Market M&amp;A Advisory</div></div>
+        <div class="fact-item"><div class="fact-label">Water Transactions</div><div class="fact-value">Barclay Water Mgmt → Ecolab; Aquatech Int'l JV</div></div>
+        <div class="fact-item"><div class="fact-label">Market Signal</div><div class="fact-value">Aug 2025: Heightened water remediation M&amp;A demand</div></div>
+        <div class="fact-item"><div class="fact-label">Key Team</div><div class="fact-value">Sam Matlin (MD), Jack Wagner (VP BD), John Rhea (VP Sponsor)</div></div>
+        <div class="fact-item"><div class="fact-label">Engagement Type</div><div class="fact-value">Advisory — not a direct buyer</div></div>
+      </div>
     </div>
-    
-    
+
+    <div class="card" id="key-contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Title</th><th>Relevance</th><th>Email</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Sam Matlin</td><td>Managing Director</td><td>M&amp;A execution; water sector deal lead</td><td>—</td></tr>
+          <tr><td>Jack Wagner</td><td>VP, Business Development</td><td>Relationship development; buyer introductions</td><td>—</td></tr>
+          <tr><td>John Rhea</td><td>VP, Sponsor Coverage</td><td>Buy-side coverage; PE firm relationships</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>Capstone Partners is the advisory lead on the AquaScience engagement — they are the transaction execution partner, not a buyer. Their value in this dossier is as a force multiplier: Capstone's water sector transaction experience (Barclay Water Management to Ecolab, Aquatech International recapitalization) means they bring pre-warmed buyer relationships and water-specific valuation benchmarks to the process.</p>
+        <p>Capstone's August 2025 Industrial and Environmental Services Market Update specifically highlighted rising M&A activity in water remediation driven by new state-level regulatory requirements — this is the market intelligence that positions AquaScience's timing as favorable. Buyers are looking for capability acquisitions precisely when AquaScience is going to market.</p>
+        <p>The Sponsor Coverage group's relationships with PE firms that have active environmental services mandates will be central to surfacing financial buyers. Capstone's ability to move from buyer identification to NDA to IOI is the operational machinery that makes the broader buyer outreach in this dossier executable.</p>
+      </div>
+    </div>
+
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <p style="font-size:13px;color:#8b949e;margin-bottom:14px;"><strong style="color:#c9d1d9;">Internal Alignment Note:</strong> Capstone is the advisory partner — the "approach" here is an internal alignment conversation about process priorities, buyer targeting, and outreach sequencing. The goal is to ensure Capstone's water-sector relationships are fully activated for AquaScience's process.</p>
+      <div class="talking-point">
+        <div class="tp-num">1</div>
+        <div class="tp-text"><strong>Leverage the Barclay/Ecolab buyer network.</strong> The PE firms and strategics that engaged on the Barclay Water Management process are pre-qualified water treatment buyers. Capstone should prioritize re-engaging those relationships with the AquaScience opportunity.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">2</div>
+        <div class="tp-text"><strong>Use the market update as a warm intro vehicle.</strong> Capstone's own August 2025 market intelligence on rising water M&A activity gives a natural conversation starter with buyers: the market condition they described is exactly what AquaScience represents — a positioned asset in a hot subsector.</div>
+      </div>
+      <div class="talking-point">
+        <div class="tp-num">3</div>
+        <div class="tp-text"><strong>Coordinate sponsor outreach through John Rhea.</strong> Rhea's PE firm relationships are the fastest path to financial buyers with dry powder. Priority: funds with active infrastructure or environmental services platforms where AquaScience is an add-on rather than a new sector bet.</div>
+      </div>
+    </div>
+
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Activity</th><th>Outcome</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Mar 2026</td><td>Capstone engaged as advisory lead; dossier prepared</td><td>Engagement active</td><td><span class="status-complete">Complete</span></td></tr>
+          <tr><td>—</td><td>Buyer list finalization with Capstone</td><td>Pending</td><td><span class="status-next">Next Step</span></td></tr>
+          <tr><td>—</td><td>Teaser + NDA distribution to Tier 1 buyers</td><td>Pending</td><td>—</td></tr>
+          <tr><td>—</td><td>IOI deadline</td><td>Pending</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
   <div class="footer">
     Generated March 29, 2026 &bull; Next Chapter M&A Advisory &bull; Confidential
