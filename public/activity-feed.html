@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activity Feed — Next Chapter Master CRM</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#c9d1d9}
+
+/* ── Top nav ─────────────────────────────────────────────────────────────── */
+.nc-nav{background:#f6f8fa;border-bottom:1px solid #d0d7de;padding:8px 20px;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:999}
+.nc-nav span.brand{font-weight:700;color:#0d1117;margin-right:8px}
+.nc-nav a{color:#0969da;text-decoration:none;font-weight:500}
+.nc-nav a:hover{text-decoration:underline}
+.nc-nav .sep{color:#d0d7de}
+
+/* ── Breadcrumb ──────────────────────────────────────────────────────────── */
+.breadcrumb{background:#161b22;padding:8px 20px;border-bottom:1px solid #30363d;font-size:13px;display:flex;align-items:center;gap:8px}
+.breadcrumb a{color:#58a6ff;text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.breadcrumb .sep{color:#484f58}
+.breadcrumb .current{color:#8b949e}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.header{background:linear-gradient(135deg,#161b22,#1a5276);padding:24px 30px}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.header h1{color:#58a6ff;font-size:24px;display:flex;align-items:center;gap:10px}
+.header-controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.btn{padding:8px 16px;border-radius:6px;border:1px solid #30363d;background:#21262d;color:#c9d1d9;font-size:13px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:all 0.2s}
+.btn:hover{border-color:#58a6ff;color:#58a6ff}
+.btn.primary{background:#1a3a5c;border-color:#58a6ff;color:#58a6ff}
+select.filter{padding:7px 12px;border-radius:6px;border:1px solid #30363d;background:#21262d;color:#c9d1d9;font-size:13px;cursor:pointer}
+select.filter:focus{outline:none;border-color:#58a6ff}
+
+/* ── Summary bar ─────────────────────────────────────────────────────────── */
+.summary-bar{background:#161b22;border-bottom:1px solid #30363d;padding:12px 30px}
+.summary-bar-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.summary-text{font-size:13px;color:#8b949e}
+.summary-text .count{color:#f0f6fc;font-weight:700;font-size:15px}
+.summary-text .since{color:#58a6ff}
+.cat-pills{display:flex;gap:8px;flex-wrap:wrap}
+.cat-pill{font-size:11px;padding:3px 10px;border-radius:10px;border:1px solid;font-weight:600;cursor:pointer;transition:opacity 0.15s}
+.cat-pill:hover{opacity:0.8}
+.refresh-indicator{font-size:11px;color:#484f58;display:flex;align-items:center;gap:5px}
+.refresh-dot{width:7px;height:7px;border-radius:50%;background:#27ae60;display:inline-block}
+.refresh-dot.stale{background:#f39c12;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* ── Tabs ────────────────────────────────────────────────────────────────── */
+.tabs{max-width:1200px;margin:20px auto 0;padding:0 20px;display:flex;gap:4px}
+.tab{padding:10px 20px;border-radius:8px 8px 0 0;border:1px solid #30363d;border-bottom:none;background:#161b22;color:#8b949e;font-size:14px;cursor:pointer;transition:all 0.2s}
+.tab.active{background:#21262d;color:#f0f6fc;border-color:#58a6ff;border-bottom-color:#21262d}
+.tab:hover:not(.active){color:#c9d1d9;background:#1c2333}
+.tab-badge{font-size:11px;padding:1px 6px;border-radius:8px;background:#30363d;color:#8b949e;margin-left:6px}
+.tab.active .tab-badge{background:#1a3a5c;color:#58a6ff}
+.tab.has-alert .tab-badge{background:#2d0d0d;color:#e74c3c}
+
+/* ── Tab content ─────────────────────────────────────────────────────────── */
+.tab-content{display:none;max-width:1200px;margin:0 auto;padding:0 20px 40px}
+.tab-content.active{display:block}
+.tab-border{background:#21262d;border:1px solid #58a6ff;border-top:none;border-radius:0 8px 8px 8px;padding:20px;margin-bottom:20px}
+
+/* ── Feed cards ──────────────────────────────────────────────────────────── */
+.feed{display:flex;flex-direction:column;gap:10px}
+.feed-card{background:#161b22;border:1px solid #30363d;border-left:3px solid transparent;border-radius:8px;padding:14px 16px;display:flex;align-items:flex-start;gap:14px;transition:border-color 0.2s}
+.feed-card:hover{border-color:#30363d;border-left-color:inherit}
+.feed-card .icon{font-size:18px;min-width:24px;text-align:center;margin-top:1px}
+.feed-card .body{flex:1;min-width:0}
+.feed-card .card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.feed-card .desc{font-size:13px;color:#f0f6fc;font-weight:500;line-height:1.4}
+.feed-card .meta-row{display:flex;align-items:center;gap:8px;margin-top:5px;flex-wrap:wrap}
+.feed-card .ts{font-size:11px;color:#484f58}
+.feed-card .entity-badge{font-size:10px;padding:2px 7px;border-radius:8px;background:#21262d;border:1px solid #30363d;color:#8b949e;font-weight:600;text-transform:uppercase}
+.feed-card .notes{font-size:12px;color:#8b949e;margin-top:6px;line-height:1.4}
+.feed-card .card-link{font-size:11px;color:#58a6ff;text-decoration:none;white-space:nowrap}
+.feed-card .card-link:hover{text-decoration:underline}
+.highlight-flag{font-size:10px;padding:2px 8px;border-radius:8px;background:#2d1a00;border:1px solid #f39c12;color:#f39c12;font-weight:600;margin-left:6px}
+
+/* ── Category group header ───────────────────────────────────────────────── */
+.group-header{display:flex;align-items:center;gap:8px;padding:6px 0;margin:16px 0 8px;border-bottom:1px solid #21262d}
+.group-header .gh-icon{font-size:16px}
+.group-header .gh-label{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
+.group-header .gh-count{font-size:11px;padding:1px 7px;border-radius:8px;background:#21262d;color:#8b949e;margin-left:4px}
+
+/* ── Guardrail tab ───────────────────────────────────────────────────────── */
+.severity-badge{font-size:10px;padding:2px 8px;border-radius:8px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px}
+.sev-critical{background:#2d0d0d;color:#e74c3c;border:1px solid #e74c3c}
+.sev-warning{background:#2d1a00;color:#f39c12;border:1px solid #f39c12}
+.sev-info{background:#21262d;color:#8b949e;border:1px solid #30363d}
+
+.viol-card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:14px 16px;margin-bottom:10px}
+.viol-card.sev-critical{border-left:3px solid #e74c3c}
+.viol-card.sev-warning{border-left:3px solid #f39c12}
+.viol-card.sev-info{border-left:3px solid #484f58}
+.viol-header{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.viol-type{font-size:13px;color:#f0f6fc;font-weight:600;font-family:monospace}
+.viol-body{font-size:12px;color:#8b949e;line-height:1.6}
+.viol-meta{display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap;font-size:11px;color:#484f58}
+.viol-meta .entity-badge{font-size:10px;padding:2px 7px;border-radius:8px;background:#21262d;border:1px solid #30363d;color:#8b949e;font-weight:600;text-transform:uppercase}
+
+/* ── Trend chart ─────────────────────────────────────────────────────────── */
+.chart-card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px;margin-bottom:20px}
+.chart-card h3{font-size:14px;color:#58a6ff;margin-bottom:16px}
+.chart-bars{display:flex;align-items:flex-end;gap:8px;height:80px;padding:0 4px}
+.chart-col{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1}
+.chart-stack{display:flex;flex-direction:column-reverse;align-items:center;width:100%;gap:1px;flex:1}
+.chart-bar-seg{width:100%;border-radius:2px 2px 0 0;min-height:2px;transition:all 0.3s}
+.chart-date{font-size:10px;color:#484f58;white-space:nowrap}
+.chart-legend{display:flex;gap:16px;margin-top:10px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:#8b949e}
+.legend-dot{width:10px;height:10px;border-radius:2px}
+
+/* ── Empty + loading states ──────────────────────────────────────────────── */
+.empty{text-align:center;padding:50px 20px;color:#484f58}
+.empty .icon{font-size:40px;margin-bottom:12px}
+.empty p{font-size:14px}
+.loading-spinner{text-align:center;padding:40px;color:#8b949e;font-size:13px}
+.error-msg{background:#2d0d0d;border:1px solid #e74c3c;border-radius:8px;padding:14px 16px;color:#e74c3c;font-size:13px;margin-bottom:16px}
+
+/* ── Stats row ───────────────────────────────────────────────────────────── */
+.stats-row{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:20px}
+.stat-box{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:14px;text-align:center}
+.stat-box .num{font-size:22px;font-weight:700;color:#f0f6fc}
+.stat-box .lbl{font-size:10px;color:#8b949e;text-transform:uppercase;margin-top:4px}
+
+/* ── Footer ──────────────────────────────────────────────────────────────── */
+.footer{text-align:center;padding:20px;color:#484f58;font-size:11px}
+
+@media(max-width:900px){
+  .stats-row{grid-template-columns:repeat(3,1fr)}
+  .cat-pills{display:none}
+}
+@media(max-width:600px){
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .header-inner{flex-direction:column;align-items:flex-start}
+  .tab{padding:8px 14px;font-size:12px}
+}
+</style>
+</head>
+<body>
+
+<!-- Top nav -->
+<div class="nc-nav">
+  <span class="brand">Next Chapter M&amp;A</span>
+  <span class="sep">|</span>
+  <a href="index.html">Home</a>
+  <a href="system-overview.html">System Overview</a>
+</div>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+  <a href="index.html">Home</a>
+  <span class="sep">/</span>
+  <a href="dashboard.html">Dashboard</a>
+  <span class="sep">/</span>
+  <span class="current">Activity Feed</span>
+</div>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-inner">
+    <h1>📋 Activity Feed</h1>
+    <div class="header-controls">
+      <select class="filter" id="entityFilter" onchange="applyFilters()">
+        <option value="">All entities</option>
+        <option value="next_chapter">Next Chapter</option>
+        <option value="and_capital">AND Capital</option>
+        <option value="revsup">RevsUp</option>
+        <option value="the_forge">The Forge</option>
+      </select>
+      <button class="btn primary" onclick="markAllRead()" id="markReadBtn">
+        ✓ Mark all as read
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Summary bar -->
+<div class="summary-bar">
+  <div class="summary-bar-inner">
+    <div class="summary-text" id="summaryText">
+      <span class="count" id="totalCount">—</span>
+      events since you were last here
+      (<span class="since" id="sinceText">loading…</span>)
+    </div>
+    <div class="cat-pills" id="catPills"></div>
+    <div class="refresh-indicator">
+      <span class="refresh-dot" id="refreshDot"></span>
+      <span id="refreshLabel">Loading…</span>
+    </div>
+  </div>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('activity')" id="tab-activity">
+    Activity
+    <span class="tab-badge" id="badge-activity">0</span>
+  </div>
+  <div class="tab" onclick="switchTab('guardrails')" id="tab-guardrails">
+    Guardrails
+    <span class="tab-badge" id="badge-guardrails">0</span>
+  </div>
+</div>
+
+<!-- ── Activity tab ──────────────────────────────────────────────────────── -->
+<div class="tab-content active" id="content-activity">
+  <div class="tab-border">
+
+    <!-- Per-category stats -->
+    <div class="stats-row" id="statsRow">
+      <div class="stat-box"><div class="num" id="stat-letters">—</div><div class="lbl">Letters</div></div>
+      <div class="stat-box"><div class="num" id="stat-calls">—</div><div class="lbl">Calls</div></div>
+      <div class="stat-box"><div class="num" id="stat-research">—</div><div class="lbl">Research</div></div>
+      <div class="stat-box"><div class="num" id="stat-plays">—</div><div class="lbl">Plays</div></div>
+      <div class="stat-box"><div class="num" id="stat-costs">—</div><div class="lbl">Cost Events</div></div>
+      <div class="stat-box"><div class="num" id="stat-alerts">—</div><div class="lbl">Alerts</div></div>
+    </div>
+
+    <div id="activityFeed" class="feed">
+      <div class="loading-spinner">Loading activity…</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Guardrails tab ────────────────────────────────────────────────────── -->
+<div class="tab-content" id="content-guardrails">
+  <div class="tab-border">
+
+    <!-- Trend chart -->
+    <div class="chart-card">
+      <h3>Violations — Last 7 Days</h3>
+      <div class="chart-bars" id="trendChart">
+        <div class="loading-spinner" style="width:100%">Loading chart…</div>
+      </div>
+      <div class="chart-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#e74c3c"></div>Critical</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#f39c12"></div>Warning</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#484f58"></div>Info</div>
+      </div>
+    </div>
+
+    <!-- Severity filter -->
+    <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+      <button class="btn primary" onclick="filterSeverity(null)" id="sev-all">All</button>
+      <button class="btn" onclick="filterSeverity('critical')" id="sev-critical">🔴 Critical</button>
+      <button class="btn" onclick="filterSeverity('warning')" id="sev-warning">🟠 Warning</button>
+      <button class="btn" onclick="filterSeverity('info')" id="sev-info">⚪ Info</button>
+    </div>
+
+    <div id="guardrailFeed">
+      <div class="loading-spinner">Loading violations…</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer" id="footer">
+  Activity Feed · Next Chapter Master CRM · Auto-refreshes every 60 seconds
+</div>
+
+<script>
+/* ────────────────────────────────────────────────────────────────────────────
+   CONFIG
+───────────────────────────────────────────────────────────────────────────── */
+const SUPA_URL = 'https://dwrnfpjcvydhmhnvyzov.supabase.co';
+const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NTcyOTAsImV4cCI6MjA5MDMzMzI5MH0.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY';
+const REFRESH_INTERVAL_MS = 60_000;
+const USER_ID = 'ewing'; // default user
+
+const CATEGORIES = {
+  letters:  { label: 'Letters',  color: '#27ae60', icon: '✉'  },
+  calls:    { label: 'Calls',    color: '#58a6ff', icon: '📞' },
+  research: { label: 'Research', color: '#a855f7', icon: '🔬' },
+  plays:    { label: 'Plays',    color: '#f39c12', icon: '🎯' },
+  costs:    { label: 'Costs',    color: '#e74c3c', icon: '💰' },
+  alerts:   { label: 'Alerts',   color: '#dc3545', icon: '🚨' },
+};
+
+const VIOLATION_LABELS = {
+  dnc_bypass:        'DNC Bypass',
+  entity_misroute:   'Entity Misroute',
+  cost_overspend:    'Cost Overspend',
+  hallucination_flag:'Hallucination Flag',
+  trust_threshold:   'Trust Threshold',
+  rate_limit:        'Rate Limit',
+  schema_violation:  'Schema Violation',
+};
+
+/* ────────────────────────────────────────────────────────────────────────────
+   STATE
+───────────────────────────────────────────────────────────────────────────── */
+let lastSeenAt = null;     // Date object
+let allActivity = {};      // { letters:[], calls:[], ... }
+let allViolations = [];
+let activeEntityFilter = '';
+let activeSeverityFilter = null;
+let refreshTimer = null;
+let isLoading = false;
+
+/* ────────────────────────────────────────────────────────────────────────────
+   SUPABASE FETCH HELPER
+───────────────────────────────────────────────────────────────────────────── */
+async function sbGet(table, params = '') {
+  const url = `${SUPA_URL}/rest/v1/${table}?${params}`;
+  const res = await fetch(url, {
+    headers: {
+      'apikey': ANON_KEY,
+      'Authorization': `Bearer ${ANON_KEY}`,
+    }
+  });
+  if (!res.ok) {
+    const txt = await res.text();
+    // 404 / 42P01 = table doesn't exist yet — return empty array silently
+    if (res.status === 404 || txt.includes('42P01')) return [];
+    throw new Error(`${table}: ${res.status} ${txt.slice(0, 120)}`);
+  }
+  return res.json();
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+   LAST-SEEN MANAGEMENT  (localStorage + Supabase user_sessions)
+───────────────────────────────────────────────────────────────────────────── */
+function getLocalLastSeen() {
+  const stored = localStorage.getItem('activity_feed_last_seen');
+  if (stored) return new Date(stored);
+  // Default: 24 hours ago
+  const d = new Date();
+  d.setHours(d.getHours() - 24);
+  return d;
+}
+
+async function fetchLastSeenFromSupabase() {
+  try {
+    const rows = await sbGet('user_sessions', `user_id=eq.${USER_ID}&select=last_seen_at`);
+    if (rows.length && rows[0].last_seen_at) {
+      return new Date(rows[0].last_seen_at);
+    }
+  } catch (_) {}
+  return null;
+}
+
+async function saveLastSeen(dt) {
+  const iso = dt.toISOString();
+  localStorage.setItem('activity_feed_last_seen', iso);
+  // Best-effort upsert via RPC or direct insert — table may not exist yet
+  try {
+    await fetch(`${SUPA_URL}/rest/v1/user_sessions`, {
+      method: 'POST',
+      headers: {
+        'apikey': ANON_KEY,
+        'Authorization': `Bearer ${ANON_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal,resolution=merge-duplicates',
+      },
+      body: JSON.stringify({ user_id: USER_ID, last_seen_at: iso }),
+    });
+  } catch (_) {}
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+   DATA FETCH
+───────────────────────────────────────────────────────────────────────────── */
+async function fetchActivity() {
+  const since = lastSeenAt.toISOString();
+  const entityFilter = activeEntityFilter ? `&entity=eq.${activeEntityFilter}` : '';
+
+  const cats = { letters: [], calls: [], research: [], plays: [], costs: [], alerts: [] };
+
+  // ── step_log → Letters / Calls / Research ──────────────────────────────
+  try {
+    const rows = await sbGet('step_log',
+      `created_at=gt.${since}${entityFilter}` +
+      `&select=id,created_at,step_type,status,entity,target_id,notes` +
+      `&order=created_at.desc&limit=200`
+    );
+    for (const row of rows) {
+      const step = (row.step_type || '').toLowerCase();
+      const status = (row.status || '').toLowerCase();
+      let cat = null;
+      let desc = '';
+      if (step.includes('letter') || step.includes('mail') || step.includes('lob')) {
+        cat = 'letters';
+        desc = `Letter ${status}` + (row.target_id ? ` for ${row.target_id}` : '');
+      } else if (step.includes('call') || step.includes('dial') || step.includes('salesfinity')) {
+        cat = 'calls';
+        desc = `Call ${status}` + (row.target_id ? ` — ${row.target_id}` : '');
+      } else if (step.includes('research') || step.includes('page') || step.includes('exa') || step.includes('buyer')) {
+        cat = 'research';
+        desc = `${row.step_type} [${status}]` + (row.target_id ? ` — ${row.target_id}` : '');
+      }
+      if (cat) cats[cat].push(makeEvent(row.created_at, cat, desc, row.entity, row.target_id, row.notes));
+    }
+  } catch (e) { console.warn('step_log:', e.message); }
+
+  // ── plays ──────────────────────────────────────────────────────────────
+  try {
+    const rows = await sbGet('plays',
+      `created_at=gt.${since}${entityFilter}` +
+      `&select=id,created_at,play_type,status,entity,target_id,urgency` +
+      `&order=created_at.desc&limit=100`
+    );
+    for (const row of rows) {
+      const desc = `Play: ${row.play_type || 'unknown'}` +
+        (row.status ? ` [${row.status}]` : '') +
+        (row.target_id ? ` — ${row.target_id}` : '');
+      const ev = makeEvent(row.created_at, 'plays', desc, row.entity, row.target_id);
+      if ((row.urgency || '').match(/high|urgent/i)) ev.highlight = `High-urgency: ${row.play_type}`;
+      cats.plays.push(ev);
+    }
+  } catch (e) { console.warn('plays:', e.message); }
+
+  // ── page_versions → Research ───────────────────────────────────────────
+  try {
+    const rows = await sbGet('page_versions',
+      `created_at=gt.${since}${entityFilter}` +
+      `&select=id,created_at,page_slug,version,entity` +
+      `&order=created_at.desc&limit=100`
+    );
+    for (const row of rows) {
+      const desc = `Page rebuilt: ${row.page_slug} (v${row.version})`;
+      cats.research.push(makeEvent(row.created_at, 'research', desc, row.entity, row.page_slug));
+    }
+  } catch (e) { console.warn('page_versions:', e.message); }
+
+  // ── cost_ledger / cost_log → Costs ─────────────────────────────────────
+  for (const tbl of ['cost_ledger', 'cost_log']) {
+    try {
+      const rows = await sbGet(tbl,
+        `created_at=gt.${since}${entityFilter}` +
+        `&select=id,created_at,service,tool,cost_usd,cost,entity,notes` +
+        `&order=created_at.desc&limit=200`
+      );
+      for (const row of rows) {
+        const svc = row.service || row.tool || 'unknown';
+        const cost = parseFloat(row.cost_usd || row.cost || 0);
+        const desc = `Cost: ${svc} $${cost.toFixed(4)}`;
+        const ev = makeEvent(row.created_at, 'costs', desc, row.entity, svc, row.notes);
+        if (cost > 1.0) ev.highlight = `Cost spike: ${svc} $${cost.toFixed(2)}`;
+        cats.costs.push(ev);
+      }
+      break;
+    } catch (_) {}
+  }
+
+  // ── guardrail_violations → Alerts ─────────────────────────────────────
+  try {
+    const rows = await sbGet('guardrail_violations',
+      `created_at=gt.${since}${entityFilter}` +
+      `&order=created_at.desc&limit=200`
+    );
+    for (const row of rows) {
+      const desc = `Guardrail: ${VIOLATION_LABELS[row.violation_type] || row.violation_type} [${row.severity}]` +
+        (row.target_id ? ` — ${row.target_id}` : '');
+      const ev = makeEvent(row.created_at, 'alerts', desc, row.entity, row.target_id, row.details);
+      ev.severity = row.severity;
+      ev.violation_type = row.violation_type;
+      if (row.severity === 'critical') ev.highlight = `Critical violation: ${row.violation_type}`;
+      cats.alerts.push(ev);
+    }
+  } catch (e) { console.warn('guardrail_violations:', e.message); }
+
+  // ── DNC hits ───────────────────────────────────────────────────────────
+  try {
+    const rows = await sbGet('step_log',
+      `created_at=gt.${since}&status=eq.dnc_blocked${entityFilter}` +
+      `&select=id,created_at,entity,target_id,notes` +
+      `&order=created_at.desc&limit=50`
+    );
+    for (const row of rows) {
+      const desc = `DNC hit — outreach blocked: ${row.target_id}`;
+      const ev = makeEvent(row.created_at, 'alerts', desc, row.entity, row.target_id);
+      ev.highlight = 'DNC hit';
+      cats.alerts.push(ev);
+    }
+  } catch (_) {}
+
+  return cats;
+}
+
+async function fetchViolations() {
+  try {
+    const entityFilter = activeEntityFilter ? `&entity=eq.${activeEntityFilter}` : '';
+    const sevFilter = activeSeverityFilter ? `&severity=eq.${activeSeverityFilter}` : '';
+    return await sbGet('guardrail_violations',
+      `order=created_at.desc&limit=500${entityFilter}${sevFilter}`
+    );
+  } catch (e) {
+    console.warn('guardrail_violations fetch:', e.message);
+    return [];
+  }
+}
+
+async function fetchTrend() {
+  const since = new Date();
+  since.setDate(since.getDate() - 7);
+  try {
+    const rows = await sbGet('guardrail_violations',
+      `created_at=gt.${since.toISOString()}&order=created_at.asc&limit=500`
+    );
+    const buckets = {};
+    for (let i = 0; i < 7; i++) {
+      const d = new Date();
+      d.setDate(d.getDate() - (6 - i));
+      const key = d.toISOString().slice(0, 10);
+      buckets[key] = { date: key, critical: 0, warning: 0, info: 0 };
+    }
+    for (const row of rows) {
+      const key = (row.created_at || '').slice(0, 10);
+      if (buckets[key]) {
+        const sev = row.severity || 'info';
+        if (sev in buckets[key]) buckets[key][sev]++;
+      }
+    }
+    return Object.values(buckets).sort((a, b) => a.date.localeCompare(b.date));
+  } catch (_) {
+    return [];
+  }
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+   MAKE EVENT OBJECT
+───────────────────────────────────────────────────────────────────────────── */
+function makeEvent(ts, cat, desc, entity, targetId, notes) {
+  return { ts, cat, desc, entity: entity || '', targetId: targetId || '', notes: notes || '' };
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+   RENDER — ACTIVITY TAB
+───────────────────────────────────────────────────────────────────────────── */
+function renderActivity(cats) {
+  // Update stat boxes
+  for (const [key] of Object.entries(CATEGORIES)) {
+    const el = document.getElementById(`stat-${key}`);
+    if (el) el.textContent = (cats[key] || []).length;
+  }
+
+  // Build cat pills
+  const pillsEl = document.getElementById('catPills');
+  if (pillsEl) {
+    pillsEl.innerHTML = Object.entries(CATEGORIES).map(([key, cfg]) => {
+      const n = (cats[key] || []).length;
+      return `<span class="cat-pill" style="color:${cfg.color};border-color:${cfg.color};background:${cfg.color}18"
+                onclick="scrollToGroup('group-${key}')">${cfg.icon} ${cfg.label} ${n}</span>`;
+    }).join('');
+  }
+
+  const feed = document.getElementById('activityFeed');
+  if (!feed) return;
+
+  let html = '';
+  let hasAny = false;
+
+  // Highlights section
+  const highlights = [];
+  for (const events of Object.values(cats)) {
+    for (const ev of events) {
+      if (ev.highlight) highlights.push(ev);
+    }
+  }
+  if (highlights.length) {
+    html += `<div class="group-header">
+      <span class="gh-icon">⚠️</span>
+      <span class="gh-label" style="color:#f39c12">Needs Attention</span>
+      <span class="gh-count">${highlights.length}</span>
+    </div>`;
+    for (const ev of highlights) {
+      html += renderEventCard(ev, true);
+    }
+    hasAny = true;
+  }
+
+  // Per-category groups
+  for (const [key, cfg] of Object.entries(CATEGORIES)) {
+    const events = cats[key] || [];
+    if (!events.length) continue;
+    hasAny = true;
+    html += `<div class="group-header" id="group-${key}">
+      <span class="gh-icon">${cfg.icon}</span>
+      <span class="gh-label" style="color:${cfg.color}">${cfg.label}</span>
+      <span class="gh-count">${events.length}</span>
+    </div>`;
+    for (const ev of events) {
+      html += renderEventCard(ev);
+    }
+  }
+
+  if (!hasAny) {
+    html = `<div class="empty">
+      <div class="icon">✓</div>
+      <p>All caught up. No activity since your last visit.</p>
+    </div>`;
+  }
+
+  feed.innerHTML = html;
+}
+
+function renderEventCard(ev, showHighlight = false) {
+  const cfg = CATEGORIES[ev.cat] || CATEGORIES.alerts;
+  const tsLabel = formatTs(ev.ts);
+  const entityBadge = ev.entity
+    ? `<span class="entity-badge">${ev.entity.replace(/_/g, ' ')}</span>` : '';
+  const highlightBadge = (showHighlight && ev.highlight)
+    ? `<span class="highlight-flag">⚠ ${ev.highlight}</span>` : '';
+  const notes = ev.notes
+    ? `<div class="notes">${escHtml(ev.notes).slice(0, 160)}${ev.notes.length > 160 ? '…' : ''}</div>` : '';
+
+  return `
+  <div class="feed-card" style="border-left-color:${cfg.color}">
+    <div class="icon">${cfg.icon}</div>
+    <div class="body">
+      <div class="card-top">
+        <span class="desc">${escHtml(ev.desc)}</span>
+        ${highlightBadge}
+      </div>
+      <div class="meta-row">
+        <span class="ts">${tsLabel}</span>
+        ${entityBadge}
+      </div>
+      ${notes}
+    </div>
+  </div>`;
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+   RENDER — GUARDRAILS TAB
+───────────────────────────────────────────────────────────────────────────── */
+function renderViolations(rows) {
+  const feed = document.getElementById('guardrailFeed');
+  if (!feed) return;
+
+  if (!rows.length) {
+    feed.innerHTML = `<div class="empty">
+      <div class="icon">🛡️</div>
+      <p>No violations on record.</p>
+    </div>`;
+    return;
+  }
+
+  let html = '';
+  for (const row of rows) {
+    const sev = row.severity || 'info';
+    const sevBadge = `<span class="severity-badge sev-${sev}">${sev}</span>`;
+    const vtLabel = VIOLATION_LABELS[row.violation_type] || row.violation_type || '—';
+    const entityBadge = row.entity
+      ? `<span class="entity-badge">${(row.entity || '').replace(/_/g, ' ')}</span>` : '';
+    const details = row.details
+      ? `<div class="viol-body">${escHtml(row.details).slice(0, 300)}${(row.details || '').length > 300 ? '…' : ''}</div>` : '';
+
+    html += `
+    <div class="viol-card sev-${sev}">
+      <div class="viol-header">
+        ${sevBadge}
+        <span class="viol-type">${escHtml(vtLabel)}</span>
+        ${row.target_id ? `<span style="font-size:12px;color:#8b949e">→ ${escHtml(row.target_id)}</span>` : ''}
+      </div>
+      ${details}
+      <div class="viol-meta">
+        <span>${formatTs(row.created_at)}</span>
+        ${entityBadge}
+      </div>
+    </div>`;
+  }
+
+  feed.innerHTML = html;
+}
+
+function renderTrend(trend) {
+  const container = document.getElementById('trendChart');
+  if (!container || !trend.length) return;
+
+  const maxVal = Math.max(1, ...trend.map(d => d.critical + d.warning + d.info));
+
+  let html = '';
+  for (const day of trend) {
+    const total = day.critical + day.warning + day.info;
+    const hC = Math.round((day.critical / maxVal) * 70);
+    const hW = Math.round((day.warning  / maxVal) * 70);
+    const hI = Math.round((day.info     / maxVal) * 70);
+    const label = day.date.slice(5); // MM-DD
+
+    html += `<div class="chart-col" title="${day.date}: ${total} violations">
+      <div class="chart-stack">
+        ${hC ? `<div class="chart-bar-seg" style="background:#e74c3c;height:${hC}px"></div>` : ''}
+        ${hW ? `<div class="chart-bar-seg" style="background:#f39c12;height:${hW}px"></div>` : ''}
+        ${hI ? `<div class="chart-bar-seg" style="background:#484f58;height:${hI}px"></div>` : ''}
+        ${!total ? `<div class="chart-bar-seg" style="background:#21262d;height:4px"></div>` : ''}
+      </div>
+      <span class="chart-date">${label}</span>
+    </div>`;
+  }
+  container.innerHTML = html;
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+   SUMMARY BAR UPDATE
+───────────────────────────────────────────────────────────────────────────── */
+function updateSummary(cats, violations) {
+  const total = Object.values(cats).reduce((s, arr) => s + arr.length, 0);
+  document.getElementById('totalCount').textContent = total;
+
+  const ago = timeSince(lastSeenAt);
+  document.getElementById('sinceText').textContent = ago;
+
+  document.getElementById('badge-activity').textContent = total;
+
+  const critCount = violations.filter(v => v.severity === 'critical').length;
+  const badgeEl = document.getElementById('badge-guardrails');
+  badgeEl.textContent = violations.length;
+  const tabEl = document.getElementById('tab-guardrails');
+  if (critCount > 0) {
+    tabEl.classList.add('has-alert');
+    badgeEl.textContent = `${violations.length} (${critCount} critical)`;
+  } else {
+    tabEl.classList.remove('has-alert');
+  }
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+   MAIN LOAD
+───────────────────────────────────────────────────────────────────────────── */
+async function loadAll() {
+  if (isLoading) return;
+  isLoading = true;
+  setRefreshState('loading');
+
+  try {
+    // Resolve last-seen
+    const remote = await fetchLastSeenFromSupabase();
+    const local = getLocalLastSeen();
+    lastSeenAt = remote && remote > local ? remote : local;
+
+    const [cats, violations, trend] = await Promise.all([
+      fetchActivity(),
+      fetchViolations(),
+      fetchTrend(),
+    ]);
+
+    allActivity = cats;
+    allViolations = violations;
+
+    renderActivity(cats);
+    renderViolations(violations);
+    renderTrend(trend);
+    updateSummary(cats, violations);
+
+    setRefreshState('live');
+  } catch (err) {
+    console.error('loadAll error:', err);
+    showError('activityFeed', err.message);
+    setRefreshState('stale');
+  } finally {
+    isLoading = false;
+  }
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+   CONTROLS
+───────────────────────────────────────────────────────────────────────────── */
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.getElementById(`tab-${name}`).classList.add('active');
+  document.getElementById(`content-${name}`).classList.add('active');
+}
+
+function applyFilters() {
+  activeEntityFilter = document.getElementById('entityFilter').value;
+  loadAll();
+}
+
+function filterSeverity(sev) {
+  activeSeverityFilter = sev;
+  document.querySelectorAll('[id^="sev-"]').forEach(b => b.classList.remove('primary'));
+  document.getElementById(sev ? `sev-${sev}` : 'sev-all').classList.add('primary');
+  loadAll();
+}
+
+function markAllRead() {
+  const now = new Date();
+  saveLastSeen(now);
+  lastSeenAt = now;
+  document.getElementById('totalCount').textContent = '0';
+  document.getElementById('sinceText').textContent = 'just now';
+  document.getElementById('activityFeed').innerHTML =
+    `<div class="empty"><div class="icon">✓</div><p>Marked as read.</p></div>`;
+}
+
+function scrollToGroup(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+   HELPERS
+───────────────────────────────────────────────────────────────────────────── */
+function setRefreshState(state) {
+  const dot = document.getElementById('refreshDot');
+  const lbl = document.getElementById('refreshLabel');
+  if (state === 'loading') {
+    dot.className = 'refresh-dot stale';
+    lbl.textContent = 'Loading…';
+  } else if (state === 'live') {
+    dot.className = 'refresh-dot';
+    const t = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    lbl.textContent = `Live · updated ${t}`;
+  } else {
+    dot.className = 'refresh-dot stale';
+    lbl.textContent = 'Stale — retrying…';
+  }
+}
+
+function formatTs(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso);
+  if (isNaN(d)) return iso;
+  const now = new Date();
+  const diff = (now - d) / 1000;
+  if (diff < 60)  return 'just now';
+  if (diff < 3600) return `${Math.round(diff / 60)}m ago`;
+  if (diff < 86400) return `${Math.round(diff / 3600)}h ago`;
+  return d.toLocaleDateString([], { month: 'short', day: 'numeric' }) + ' ' +
+         d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+
+function timeSince(d) {
+  if (!d) return 'unknown';
+  const diff = (new Date() - d) / 1000;
+  if (diff < 60)    return 'just now';
+  if (diff < 3600)  return `${Math.round(diff / 60)} minutes ago`;
+  if (diff < 86400) return `${Math.round(diff / 3600)} hours ago`;
+  return `${Math.round(diff / 86400)} days ago`;
+}
+
+function escHtml(str) {
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function showError(containerId, msg) {
+  const el = document.getElementById(containerId);
+  if (el) el.innerHTML = `<div class="error-msg">Error loading data: ${escHtml(msg)}</div>`;
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+   BOOT
+───────────────────────────────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  loadAll();
+  refreshTimer = setInterval(loadAll, REFRESH_INTERVAL_MS);
+});
+</script>
+</body>
+</html>

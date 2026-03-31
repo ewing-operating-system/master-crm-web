@@ -1,116 +1,541 @@
-/* Next Chapter M&A Advisory — Shared Mobile Responsive CSS
-   Import in every client-facing page just before </head>
-   All rules scoped to max-width 768px — zero impact on desktop. */
+/* Mobile Fixes — Client-Facing Pages Only */
+/* Applied to: interactive-*, dataroom-*, *-hub, meeting-*, *_target_*, buyer 1-pagers */
 
-/* 1. Wide table horizontal scroll */
+/* Touch targets: minimum 44x44px */
+/* Font sizing: minimum 16px body to prevent iOS zoom */
+/* Grid: collapse to single column below 768px */
+/* Tables: horizontal scroll wrapper below 640px */
+/* Sliders: larger thumb for touch */
+/* Cards: full-width, increased padding */
+/* Navigation: hamburger or stacked */
+/* Images: max-width 100%, lazy-load ready */
+/* Print: hide nav, full-width content */
+
+/* ============================================================
+   UTILITY CLASSES (applied at any viewport)
+   ============================================================ */
+
+/* Force flex/grid children to stack in a single column */
+.mobile-stack {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px;
+}
+
+/* Horizontal scroll wrapper for wide tables */
+.mobile-scroll-x {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+    display: block;
+}
+
+/* Minimum 44×44px tap target (WCAG 2.5.5) */
+.touch-target {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+/* Images — responsive baseline */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ============================================================
+   TABLET & PHONE — max-width: 768px
+   ============================================================ */
+
 @media (max-width: 768px) {
-    .data-table, .target-table {
-        display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%;
+
+    /* --- Base readability ---------------------------------- */
+    body {
+        font-size: 15px;
+        line-height: 1.65;
+        -webkit-text-size-adjust: 100%;
     }
-    .data-table thead, .data-table tbody, .target-table thead, .target-table tbody {
-        display: table; width: 100%;
+
+    /* Prevent iOS from bumping font size on landscape */
+    html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
     }
-}
 
-/* 2. Container & section padding */
-@media (max-width: 768px) {
-    .container { padding-left: 12px !important; padding-right: 12px !important; }
-    .section { padding: 20px 16px !important; }
-    .toc { padding: 16px !important; }
-    .card { padding: 20px !important; }
-}
+    /* --- Layout containers -------------------------------- */
+    .container {
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+        max-width: 100% !important;
+    }
 
-/* 3. Header sizing */
-@media (max-width: 768px) {
-    .header { padding: 24px 16px !important; }
-    .header h1 { font-size: 22px !important; }
-}
+    .section {
+        padding: 20px 16px !important;
+    }
 
-/* 4. Multi-column grid collapse */
-@media (max-width: 768px) {
-    .valuation-grid, .levers-grid, .fee-grid, .phase-grid, .toc-list,
-    .grid2, .grid3, .grid4 { grid-template-columns: 1fr !important; }
-    .snapshot-grid { grid-template-columns: 1fr 1fr !important; }
-}
+    .toc {
+        padding: 16px !important;
+    }
 
-/* Override inline 2-col grid styles (ebitda-levers page) */
-@media (max-width: 768px) {
+    /* --- Cards -------------------------------------------- */
+    .card {
+        padding: 20px 16px !important;
+        border-radius: 8px !important;
+    }
+
+    /* --- Headers ------------------------------------------ */
+    .header {
+        padding: 24px 16px !important;
+    }
+
+    .header h1 {
+        font-size: 22px !important;
+        line-height: 1.3 !important;
+    }
+
+    .header-meta {
+        gap: 10px !important;
+        flex-wrap: wrap;
+    }
+
+    .header-inner {
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+
+    /* --- Page headers (hub layout) ----------------------- */
+    .page-header {
+        padding: 16px !important;
+    }
+
+    .main-content {
+        padding: 12px 16px !important;
+    }
+
+    /* --- Multi-column grid collapse ----------------------- */
+    .valuation-grid,
+    .levers-grid,
+    .fee-grid,
+    .phase-grid,
+    .toc-list,
+    .grid2,
+    .grid3,
+    .grid4 {
+        grid-template-columns: 1fr !important;
+    }
+
+    .snapshot-grid {
+        grid-template-columns: 1fr 1fr !important;
+    }
+
+    /* Override inline 2-col grid styles */
     [style*="grid-template-columns:1fr 1fr"],
-    [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
-}
+    [style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+    }
 
-/* 5. Slider row — stack on mobile */
-@media (max-width: 768px) {
-    .slider-row { flex-direction: column; align-items: stretch; }
-    .slider-row input[type="number"], .slider-row select { width: 100%; min-width: 0; }
-    .slider-value { min-width: auto !important; text-align: left !important; }
-}
+    /* --- Tables — hub buyer tables as card layout --------- */
+    /* Wrap tables that aren't already in a scroll wrapper */
+    table:not(.no-mobile-card) {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        max-width: 100%;
+        font-size: 13px;
+    }
 
-/* 6. Valuation box flex stack */
-@media (max-width: 768px) {
-    .val-box { flex-direction: column; }
-    .val-amount { font-size: 24px !important; }
-}
+    .data-table,
+    .target-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        max-width: 100%;
+    }
 
-/* 7. Email gate modal */
-@media (max-width: 768px) {
-    .gate { margin: 32px auto !important; padding: 24px !important; width: calc(100% - 32px); }
-    .gate input[type="email"] { font-size: 16px; }
-}
+    .data-table thead,
+    .data-table tbody,
+    .target-table thead,
+    .target-table tbody {
+        display: table;
+        width: 100%;
+    }
 
-/* 8. Attack plan pipeline — stack vertically */
-@media (max-width: 768px) {
-    .attack-pipeline { grid-template-columns: 1fr !important; gap: 16px; }
-    .pipeline-phase { padding: 0 !important; }
-    .pipeline-phase::after, .pipeline-phase::before { display: none !important; }
-    .phase-card { min-height: auto !important; }
-}
+    /* Buyer table card conversion — hub pages */
+    .buyer-table-wrap table,
+    .buyers-section table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
 
-/* 9. Match counter */
-@media (max-width: 768px) {
-    .match-counter { flex-direction: column !important; text-align: center; gap: 8px; }
-}
+    /* --- Interactive proposal sliders (touch-optimized) --- */
+    .slider-group {
+        margin-bottom: 24px;
+    }
 
-/* 10. Hub page layout */
-@media (max-width: 768px) {
-    .page-header { padding: 16px !important; }
-    .main-content { padding: 12px 16px !important; }
-    .top-nav a { padding: 12px; font-size: 12px; }
-}
+    .slider-row {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+    }
 
-/* 11. CTA / Next step boxes */
-@media (max-width: 768px) {
-    .cta-section { padding: 24px 16px !important; }
-    .cta-btn { padding: 16px 24px !important; font-size: 16px !important; width: 100%; box-sizing: border-box; }
-    .next-step-box { padding: 24px 16px !important; }
-}
+    .slider-row input[type="range"] {
+        width: 100%;
+        min-width: 0;
+        height: 6px;
+        -webkit-appearance: none;
+        appearance: none;
+        cursor: pointer;
+    }
 
-/* 12. EBITDA lever cards — wrap inline flex children */
-@media (max-width: 768px) {
+    /* Larger thumb for touch — WebKit */
+    .slider-row input[type="range"]::-webkit-slider-thumb,
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 28px !important;
+        height: 28px !important;
+        border-radius: 50% !important;
+        cursor: pointer;
+        margin-top: -11px;
+    }
+
+    /* Larger thumb for touch — Firefox */
+    .slider-row input[type="range"]::-moz-range-thumb,
+    input[type="range"]::-moz-range-thumb {
+        width: 28px !important;
+        height: 28px !important;
+        border-radius: 50% !important;
+        cursor: pointer;
+        border: none;
+    }
+
+    /* Larger thumb for touch — Edge/IE */
+    .slider-row input[type="range"]::-ms-thumb,
+    input[type="range"]::-ms-thumb {
+        width: 28px !important;
+        height: 28px !important;
+        border-radius: 50% !important;
+        cursor: pointer;
+    }
+
+    .slider-row input[type="number"],
+    .slider-row select {
+        width: 100% !important;
+        min-width: 0 !important;
+        font-size: 16px; /* prevent iOS zoom */
+        padding: 10px 12px;
+        box-sizing: border-box;
+    }
+
+    .slider-value {
+        min-width: auto !important;
+        text-align: left !important;
+    }
+
+    /* --- Data room email gate form (full-width inputs) ----- */
+    .gate {
+        margin: 24px auto !important;
+        padding: 24px 20px !important;
+        width: calc(100% - 28px) !important;
+        box-sizing: border-box;
+    }
+
+    .gate input[type="email"],
+    .gate input[type="text"],
+    .gate input {
+        width: 100% !important;
+        font-size: 16px !important; /* prevent iOS zoom */
+        padding: 14px 12px !important;
+        box-sizing: border-box;
+    }
+
+    .gate button {
+        width: 100% !important;
+        min-height: 44px;
+        font-size: 16px !important;
+        padding: 14px !important;
+    }
+
+    /* --- Meeting page tabs (full-width stacked) ------------ */
+    .top-nav {
+        padding: 0 12px !important;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
+    .top-nav a {
+        padding: 12px 14px !important;
+        font-size: 13px !important;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    /* Stacked tab variant — pages using .tab-btn class */
+    .tab-btn,
+    .tab-button {
+        width: 100%;
+        min-height: 44px;
+        font-size: 15px !important;
+        text-align: left;
+        padding: 12px 16px !important;
+        box-sizing: border-box;
+    }
+
+    /* --- Valuation box flex stack ------------------------- */
+    .val-box {
+        flex-direction: column !important;
+    }
+
+    .val-item {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .val-amount,
+    .val-item .amount {
+        font-size: 24px !important;
+    }
+
+    /* --- Attack plan pipeline — stack vertically ----------- */
+    .attack-pipeline {
+        grid-template-columns: 1fr !important;
+        gap: 16px;
+    }
+
+    .pipeline-phase {
+        padding: 0 !important;
+    }
+
+    .pipeline-phase::after,
+    .pipeline-phase::before {
+        display: none !important;
+    }
+
+    .phase-card {
+        min-height: auto !important;
+    }
+
+    /* --- Match counter ------------------------------------- */
+    .match-counter {
+        flex-direction: column !important;
+        text-align: center;
+        gap: 8px;
+    }
+
+    /* --- CTA / Next step boxes ---------------------------- */
+    .cta-section {
+        padding: 24px 16px !important;
+    }
+
+    .cta-btn,
+    .cta-box a {
+        display: block !important;
+        width: 100% !important;
+        min-height: 44px;
+        padding: 16px 24px !important;
+        font-size: 16px !important;
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+    .next-step-box {
+        padding: 24px 16px !important;
+    }
+
+    /* --- TOC list — full-width tap targets ---------------- */
+    .toc-list {
+        display: block !important;
+    }
+
+    .toc-list a {
+        padding: 10px 0 !important;
+        display: block;
+        font-size: 15px;
+        min-height: 44px;
+    }
+
+    /* --- Checkbox tap targets ----------------------------- */
+    .checkbox-label {
+        padding: 10px 14px !important;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* --- EBITDA lever cards — wrap inline flex children --- */
     [style*="display:flex"][style*="gap:15px"],
     [style*="display:flex"][style*="gap: 15px"],
     [style*="display:flex"][style*="gap:10px"],
-    [style*="display:flex"][style*="gap: 10px"] { flex-wrap: wrap !important; }
-}
+    [style*="display:flex"][style*="gap: 10px"] {
+        flex-wrap: wrap !important;
+    }
 
-/* 13. TOC list — full-width tap targets */
-@media (max-width: 768px) {
-    .toc-list { display: block !important; }
-    .toc-list a { padding: 8px 0; display: block; font-size: 15px; }
-}
+    /* --- Split display ------------------------------------ */
+    .split-display {
+        flex-direction: column;
+        gap: 8px !important;
+        align-items: center;
+    }
 
-/* 14. Checkbox tap targets */
-@media (max-width: 768px) {
-    .checkbox-label { padding: 10px 14px !important; min-height: 44px; }
-}
+    /* --- Section titles ----------------------------------- */
+    .section-title {
+        font-size: 19px !important;
+    }
 
-/* 15. Very small screens */
+} /* end max-width: 768px */
+
+
+/* ============================================================
+   SMALL PHONE — max-width: 480px
+   ============================================================ */
+
 @media (max-width: 480px) {
-    body { font-size: 14px; }
-    .snapshot-grid { grid-template-columns: 1fr !important; }
-    .header h1 { font-size: 20px !important; }
-    .section-title { font-size: 18px !important; }
-    .val-amount { font-size: 22px !important; }
-    .header-meta { gap: 10px !important; }
-    .split-display { flex-direction: column; gap: 8px !important; align-items: center; }
+
+    /* Body baseline — prevent iOS zoom on any input */
+    body {
+        font-size: 14px;
+    }
+
+    /* All inputs/selects/textareas: 16px minimum to prevent iOS auto-zoom */
+    input,
+    select,
+    textarea,
+    input[type="email"],
+    input[type="text"],
+    input[type="number"],
+    input[type="tel"],
+    input[type="password"],
+    input[type="search"] {
+        font-size: 16px !important;
+    }
+
+    /* Single-column everywhere at small phone */
+    .snapshot-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .header h1 {
+        font-size: 20px !important;
+    }
+
+    .section-title {
+        font-size: 18px !important;
+    }
+
+    .val-amount,
+    .val-item .amount {
+        font-size: 22px !important;
+    }
+
+    .header-meta {
+        gap: 10px !important;
+    }
+
+    /* Cards: tighter but still breathable */
+    .card {
+        padding: 16px 14px !important;
+    }
+
+    /* Gate modal: full-bleed with small margin */
+    .gate {
+        margin: 16px auto !important;
+        width: calc(100% - 20px) !important;
+        padding: 20px 16px !important;
+    }
+
+    /* Tables: ensure scroll is accessible */
+    table:not(.no-mobile-card) {
+        font-size: 12px;
+    }
+
+    td,
+    th {
+        padding: 8px 10px !important;
+    }
+
+    /* Navigation: hide desktop sidebar, keep top-nav scrollable */
+    .sidebar {
+        display: none !important;
+    }
+
+    .top-nav a {
+        font-size: 12px !important;
+        padding: 10px 12px !important;
+    }
+
+    /* Buttons: full-width, generous tap target */
+    button,
+    .btn,
+    .cta-btn {
+        min-height: 44px;
+        font-size: 15px !important;
+    }
+
+    /* Narrative/script boxes: slightly smaller text */
+    .narrative-box,
+    .script-box {
+        font-size: 13px !important;
+        padding: 14px !important;
+    }
+
+} /* end max-width: 480px */
+
+
+/* ============================================================
+   PRINT — hide nav, full-width content
+   ============================================================ */
+
+@media print {
+    .top-nav,
+    .sidebar,
+    .nc-nav,
+    .cta-section,
+    .cta-btn,
+    .gate {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+        color: #1a1a2e;
+        font-size: 12pt;
+    }
+
+    .container,
+    .main-content {
+        max-width: 100% !important;
+        padding: 0 !important;
+    }
+
+    .card {
+        background: white !important;
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+    }
+
+    .header,
+    .page-header {
+        background: white !important;
+        color: #1a1a2e !important;
+        border-bottom: 2px solid #1a1a2e !important;
+        position: static !important;
+    }
+
+    a {
+        color: #1a1a2e !important;
+        text-decoration: underline !important;
+    }
 }

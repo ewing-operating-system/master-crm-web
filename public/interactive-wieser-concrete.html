@@ -821,7 +821,7 @@ input[type="range"]::-moz-range-thumb {
             <div>
                 <div class="count" id="match-count">10 of 10</div>
                 <div class="label">Matching Targets</div>
-                <div class="fee-est" id="fee-estimate">Estimated advisory fee at 2.5%: <strong>$250,000</strong></div>
+                <div class="fee-est" id="fee-estimate">Estimated advisory fee at 2% of acquired company value: <strong>$200,000</strong></div>
             </div>
         </div>
     </div>
@@ -1118,6 +1118,7 @@ input[type="range"]::-moz-range-thumb {
                 <div class="fee-option-subtitle">Pay-as-you-go search</div>
                 <div class="fee-detail"><div class="label">Monthly Retainer</div><div class="value">$5,000</div></div>
                 <div class="fee-detail"><div class="label">Success Fee</div><div class="value">2%</div></div>
+                <div class="fee-detail"><div class="label">Fee Basis</div><div class="value" style="font-size:13px;">Acquired Company Value</div></div>
                 <div class="fee-tagline">"Lowest commitment &mdash; ideal for exploratory searches"</div>
             </div>
             <div class="fee-card popular" data-option="B" onclick="selectFee('B')">
@@ -1125,7 +1126,8 @@ input[type="range"]::-moz-range-thumb {
                 <div class="fee-option-name">Standard</div>
                 <div class="fee-option-subtitle">Active acquisition campaign</div>
                 <div class="fee-detail"><div class="label">Engagement Fee</div><div class="value">$10,000</div></div>
-                <div class="fee-detail"><div class="label">Success Fee</div><div class="value">2.5%</div></div>
+                <div class="fee-detail"><div class="label">Success Fee</div><div class="value">2%</div></div>
+                <div class="fee-detail"><div class="label">Fee Basis</div><div class="value" style="font-size:13px;">Acquired Company Value</div></div>
                 <div class="fee-tagline">"Best value &mdash; dedicated outreach to vetted targets"</div>
             </div>
             <div class="fee-card" data-option="C" onclick="selectFee('C')">
@@ -1133,7 +1135,8 @@ input[type="range"]::-moz-range-thumb {
                 <div class="fee-option-name">Full Service</div>
                 <div class="fee-option-subtitle">White-glove acquisition support</div>
                 <div class="fee-detail"><div class="label">Engagement Fee</div><div class="value">$15,000</div></div>
-                <div class="fee-detail"><div class="label">Success Fee</div><div class="value">3%</div></div>
+                <div class="fee-detail"><div class="label">Success Fee</div><div class="value">2%</div></div>
+                <div class="fee-detail"><div class="label">Fee Basis</div><div class="value" style="font-size:13px;">Acquired Company Value</div></div>
                 <div class="fee-detail"><div class="label">Includes</div><div class="value" style="font-size:13px;">Monthly Reporting</div></div>
                 <div class="fee-tagline">"Full white-glove &mdash; we manage the entire acquisition process"</div>
             </div>
@@ -1281,8 +1284,8 @@ function recalculateMatches() {
     });
 
     document.getElementById('match-count').textContent = matching + ' of ' + TOTAL_TARGETS;
-    const advisoryFee = maxPrice * 0.025;
-    document.getElementById('fee-estimate').innerHTML = 'Estimated advisory fee at 2.5%: <strong>' + formatCurrency(advisoryFee) + '</strong>';
+    const advisoryFee = maxPrice * 0.02;
+    document.getElementById('fee-estimate').innerHTML = 'Estimated advisory fee at 2% of acquired company value: <strong>' + formatCurrency(advisoryFee) + '</strong>';
 }
 
 function onVerticalChange() {
@@ -1314,9 +1317,9 @@ function selectFee(option) {
     logInteraction('fee_selection', 'fee_option', oldSelection, option, {
         deal_side: 'buy_side',
         option_details: {
-            'A': { monthly_retainer: 5000, success_fee: '2%', name: 'Retainer Only' },
-            'B': { engagement_fee: 10000, success_fee: '2.5%', name: 'Standard' },
-            'C': { engagement_fee: 15000, success_fee: '3%', name: 'Full Service' }
+            'A': { monthly_retainer: 5000, success_fee: '2%', fee_basis: 'acquired_company_value', name: 'Retainer Only' },
+            'B': { engagement_fee: 10000, success_fee: '2%', fee_basis: 'acquired_company_value', name: 'Standard' },
+            'C': { engagement_fee: 15000, success_fee: '2%', fee_basis: 'acquired_company_value', name: 'Full Service' }
         }[option]
     });
 }

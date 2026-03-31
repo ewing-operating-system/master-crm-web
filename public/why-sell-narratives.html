@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Sell Narratives — Next Chapter M&A</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #0d1117;
+    color: #c9d1d9;
+    line-height: 1.6;
+}
+
+/* ── Nav ── */
+.nc-nav {
+    background: #f6f8fa;
+    border-bottom: 1px solid #d0d7de;
+    padding: 8px 20px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+.nc-nav-brand { font-weight: 700; color: #0d1117; margin-right: 8px; }
+.nc-nav-sep { color: #d0d7de; }
+.nc-nav a { color: #0969da; text-decoration: none; font-weight: 500; }
+.nc-nav a:hover { text-decoration: underline; }
+
+.breadcrumb {
+    background: #161b22;
+    padding: 8px 20px;
+    border-bottom: 1px solid #30363d;
+    font-size: 13px;
+}
+.breadcrumb a { color: #58a6ff; text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.breadcrumb span { color: #8b949e; margin: 0 6px; }
+
+/* ── Header ── */
+.header {
+    background: linear-gradient(135deg, #161b22, #1a3a5c);
+    padding: 24px 30px;
+    border-bottom: 1px solid #30363d;
+}
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.header h1 { color: #58a6ff; font-size: 22px; margin-bottom: 4px; }
+.header .sub { color: #8b949e; font-size: 13px; }
+.header-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+/* ── Buttons ── */
+.btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid #30363d;
+    background: #21262d;
+    color: #c9d1d9;
+    transition: all 0.2s;
+}
+.btn:hover { border-color: #58a6ff; color: #58a6ff; }
+.btn.primary { background: #1f6feb; border-color: #1f6feb; color: #fff; }
+.btn.primary:hover { background: #388bfd; border-color: #388bfd; }
+.btn.active { background: #1f3a5f; border-color: #58a6ff; color: #58a6ff; }
+.btn.success { background: #238636; border-color: #238636; color: #fff; }
+.btn.success:hover { background: #2ea043; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Controls ── */
+.controls {
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+.control-group { display: flex; flex-direction: column; gap: 4px; }
+.control-group label { font-size: 11px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.04em; }
+select, input {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    color: #c9d1d9;
+    padding: 8px 12px;
+    font-size: 13px;
+    min-width: 220px;
+}
+select:focus, input:focus { outline: none; border-color: #58a6ff; }
+
+/* ── Status bar ── */
+.status-bar {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px 12px;
+    font-size: 12px;
+    color: #8b949e;
+    min-height: 20px;
+}
+.status-bar .ok { color: #3fb950; }
+.status-bar .warn { color: #d29922; }
+.status-bar .err { color: #f85149; }
+
+/* ── Container ── */
+.container { max-width: 1100px; margin: 0 auto; padding: 0 20px 40px; }
+
+/* ── Toggle strip ── */
+.view-toggle {
+    display: flex;
+    gap: 4px;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 4px;
+    width: fit-content;
+    margin-bottom: 20px;
+}
+.view-toggle .tab {
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #8b949e;
+    transition: all 0.15s;
+    border: none;
+    background: transparent;
+}
+.view-toggle .tab.active { background: #1f6feb; color: #fff; }
+
+/* ── Narrative sections ── */
+.section-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+.narrative-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+}
+.narrative-card:hover { border-color: #444c56; }
+.narrative-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    cursor: pointer;
+    user-select: none;
+}
+.narrative-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.narrative-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+.narrative-label { font-size: 14px; font-weight: 600; color: #f0f6fc; }
+.narrative-sublabel { font-size: 11px; color: #8b949e; margin-top: 1px; }
+.narrative-chevron {
+    color: #8b949e;
+    font-size: 12px;
+    transition: transform 0.2s;
+}
+.narrative-card.open .narrative-chevron { transform: rotate(180deg); }
+.narrative-body {
+    display: none;
+    padding: 0 18px 18px;
+    border-top: 1px solid #21262d;
+}
+.narrative-card.open .narrative-body { display: block; }
+.narrative-text {
+    font-size: 14px;
+    line-height: 1.75;
+    color: #c9d1d9;
+    margin-top: 14px;
+    white-space: pre-wrap;
+}
+.narrative-text.client-view {
+    font-size: 15px;
+    line-height: 1.85;
+    color: #e6edf3;
+}
+.narrative-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+}
+.placeholder-text {
+    color: #484f58;
+    font-style: italic;
+    font-size: 13px;
+    margin-top: 14px;
+}
+
+/* ── Buyer pitch cards ── */
+.section-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #f0f6fc;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #30363d;
+}
+.buyer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 14px;
+}
+.buyer-pitch-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 18px;
+    transition: border-color 0.2s;
+}
+.buyer-pitch-card:hover { border-color: #58a6ff; }
+.buyer-pitch-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #f0f6fc;
+    margin-bottom: 4px;
+}
+.buyer-pitch-meta {
+    font-size: 11px;
+    color: #8b949e;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 12px;
+}
+.buyer-pitch-score {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-left: 8px;
+}
+.score-high { background: #238636; color: #fff; }
+.score-mid { background: #9e6a03; color: #fff; }
+.score-low { background: #b62324; color: #fff; }
+.buyer-pitch-text {
+    font-size: 13px;
+    line-height: 1.7;
+    color: #c9d1d9;
+    white-space: pre-wrap;
+}
+.buyer-pitch-text.client-view {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #e6edf3;
+}
+.buyer-pitch-placeholder {
+    color: #484f58;
+    font-style: italic;
+    font-size: 13px;
+}
+.generate-badge {
+    display: inline-block;
+    background: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 3px 10px;
+    font-size: 11px;
+    color: #8b949e;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 10px;
+}
+.generate-badge:hover { border-color: #58a6ff; color: #58a6ff; }
+
+/* ── Empty / Loading states ── */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #8b949e;
+    font-size: 14px;
+}
+.empty-state .big { font-size: 40px; margin-bottom: 12px; }
+.loading-spinner {
+    display: inline-block;
+    width: 18px; height: 18px;
+    border: 2px solid #30363d;
+    border-top-color: #58a6ff;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Company info bar ── */
+.company-info-bar {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 14px;
+}
+.info-item .label { font-size: 11px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.04em; }
+.info-item .value { font-size: 14px; font-weight: 600; color: #f0f6fc; margin-top: 3px; }
+
+/* ── Client view overlay ── */
+body.client-mode .admin-only { display: none !important; }
+body.client-mode .narrative-card { border-color: #1f6feb33; }
+body.client-mode .narrative-label { color: #58a6ff; }
+
+/* ── Shareable link toast ── */
+.toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #238636;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s;
+    pointer-events: none;
+    z-index: 9999;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+    .controls { flex-direction: column; }
+    .header-row { flex-direction: column; }
+    .buyer-grid { grid-template-columns: 1fr; }
+}
+</style>
+<link rel="stylesheet" href="section-controls.css">
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nc-nav">
+    <span class="nc-nav-brand">Next Chapter M&A</span>
+    <span class="nc-nav-sep">|</span>
+    <a href="system-overview.html">System Overview</a>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span>/</span>
+    <a href="dashboard.html">Dashboard</a>
+    <span>/</span>
+    <span style="color:#c9d1d9">Why Sell Narratives</span>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="header-row">
+        <div>
+            <h1>Why Sell Narratives</h1>
+            <div class="sub">Buyer-facing pitch narratives — market timing, owner lifecycle, buyer fit</div>
+        </div>
+        <div class="header-actions">
+            <button class="btn admin-only" id="btn-client-toggle" onclick="toggleClientView()">Client View</button>
+            <button class="btn success admin-only" id="btn-copy-link" onclick="copyLink()">Copy Link</button>
+            <button class="btn primary" id="btn-generate" onclick="triggerGenerate()" disabled>Generate Narratives</button>
+        </div>
+    </div>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+    <div class="control-group">
+        <label>Company</label>
+        <select id="company-select" onchange="onCompanyChange()">
+            <option value="">— Select a company —</option>
+        </select>
+    </div>
+    <div class="control-group admin-only">
+        <label>Proposal (optional)</label>
+        <select id="proposal-select" onchange="onProposalChange()">
+            <option value="">— All buyers on record —</option>
+        </select>
+    </div>
+</div>
+
+<div class="status-bar" id="status-bar">Select a company to load narratives.</div>
+
+<!-- MAIN CONTENT -->
+<div class="container" id="main-container">
+    <div class="empty-state" id="empty-state">
+        <div class="big">&#9997;</div>
+        <div>Choose a company above to view or generate Why Sell narratives.</div>
+    </div>
+    <div id="content-area" style="display:none;">
+        <!-- View toggle -->
+        <div class="view-toggle admin-only" id="view-toggle">
+            <button class="tab active" onclick="setView('internal')" id="tab-internal">Internal View</button>
+            <button class="tab" onclick="setView('client')" id="tab-client">Client View</button>
+        </div>
+
+        <!-- Company info -->
+        <div class="company-info-bar" id="company-info-bar">
+            <div class="info-item"><div class="label">Company</div><div class="value" id="info-name">—</div></div>
+            <div class="info-item"><div class="label">Vertical</div><div class="value" id="info-vertical">—</div></div>
+            <div class="info-item"><div class="label">Location</div><div class="value" id="info-location">—</div></div>
+            <div class="info-item"><div class="label">Revenue</div><div class="value" id="info-revenue">—</div></div>
+            <div class="info-item"><div class="label">Owner</div><div class="value" id="info-owner">—</div></div>
+            <div class="info-item"><div class="label">Narrative Status</div><div class="value" id="info-status">—</div></div>
+        </div>
+
+        <!-- 5 narrative sections -->
+        <div class="section-grid" id="narrative-sections">
+            <!-- injected by JS -->
+        </div>
+
+        <!-- Buyer pitches -->
+        <div id="buyer-section" style="display:none;">
+            <div class="section-title">Per-Buyer Pitch Cards</div>
+            <div class="buyer-grid" id="buyer-grid">
+                <!-- injected by JS -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast">Link copied to clipboard</div>
+
+<script src="/comment-widget.js"></script>
+<script src="/notification-bell.js"></script>
+<script src="/conflict-resolver.js"></script>
+<script src="/version-widget.js"></script>
+
+<script>
+(function() {
+    'use strict';
+
+    const SUPABASE_URL = 'https://dwrnfpjcvydhmhnvyzov.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NTcyOTAsImV4cCI6MjA5MDMzMzI5MH0.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY';
+    const SB_HEADERS = {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json'
+    };
+
+    // ── State ──────────────────────────────────────────────────────────────
+    let selectedCompanyId = null;
+    let selectedCompanyRow = null;
+    let selectedProposalId = null;
+    let currentNarratives = null;
+    let currentBuyers = [];
+    let currentBuyerPitches = {};
+    let isClientView = false;
+
+    const NARRATIVE_DEFS = [
+        {
+            key: 'market_timing',
+            label: 'Market Timing',
+            sublabel: 'Industry consolidation trends & current valuation multiples',
+            icon: '&#128200;',
+            iconBg: '#1a3a5c'
+        },
+        {
+            key: 'owner_lifecycle',
+            label: 'Owner Lifecycle',
+            sublabel: 'Succession planning, retirement timeline & life after the sale',
+            icon: '&#128336;',
+            iconBg: '#1a3a2c'
+        },
+        {
+            key: 'competitive_pressure',
+            label: 'Competitive Pressure',
+            sublabel: 'Operator roll-ups in this vertical & shrinking independents',
+            icon: '&#128248;',
+            iconBg: '#3a1a1a'
+        },
+        {
+            key: 'value_maximization',
+            label: 'Value Maximization',
+            sublabel: 'Current EBITDA multiples vs historical & buyer demand',
+            icon: '&#128176;',
+            iconBg: '#2a1a3a'
+        },
+        {
+            key: 'risk_of_waiting',
+            label: 'Risk of Waiting',
+            sublabel: 'Market cycles, regulatory changes & key-person risk',
+            icon: '&#9888;&#65039;',
+            iconBg: '#3a2a1a'
+        }
+    ];
+
+    // ── URL param support ──────────────────────────────────────────────────
+    const urlParams = new URLSearchParams(window.location.search);
+    const initCompanyId = urlParams.get('company_id') || urlParams.get('company');
+    if (urlParams.get('view') === 'client') {
+        isClientView = true;
+    }
+
+    // ── Init ───────────────────────────────────────────────────────────────
+    async function init() {
+        await loadCompanyList();
+        if (initCompanyId) {
+            const sel = document.getElementById('company-select');
+            if (sel.querySelector(`option[value="${initCompanyId}"]`)) {
+                sel.value = initCompanyId;
+            } else {
+                sel.value = initCompanyId;
+            }
+            await onCompanyChange();
+        }
+        if (isClientView) {
+            applyClientView();
+        }
+    }
+
+    // ── Fetch company list from deal_research ─────────────────────────────
+    async function loadCompanyList() {
+        setStatus('Loading companies…');
+        try {
+            const res = await fetch(
+                SUPABASE_URL + '/rest/v1/deal_research?select=id,company_name,category,city,state,owner_name&order=company_name.asc&limit=200',
+                { headers: SB_HEADERS }
+            );
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const rows = await res.json();
+            const sel = document.getElementById('company-select');
+            rows.forEach(r => {
+                const opt = document.createElement('option');
+                opt.value = r.id;
+                opt.textContent = r.company_name + (r.city ? ` — ${r.city}, ${r.state || ''}` : '');
+                opt.dataset.row = JSON.stringify(r);
+                sel.appendChild(opt);
+            });
+            setStatus(`${rows.length} companies loaded.`, 'ok');
+        } catch (e) {
+            setStatus(`Could not load companies: ${e.message}`, 'err');
+        }
+    }
+
+    // ── Company change ─────────────────────────────────────────────────────
+    window.onCompanyChange = async function() {
+        const sel = document.getElementById('company-select');
+        const opt = sel.options[sel.selectedIndex];
+        selectedCompanyId = sel.value || null;
+
+        if (!selectedCompanyId) {
+            showEmpty();
+            document.getElementById('btn-generate').disabled = true;
+            return;
+        }
+
+        try { selectedCompanyRow = JSON.parse(opt.dataset.row); } catch(e) { selectedCompanyRow = {}; }
+        document.getElementById('btn-generate').disabled = false;
+        setStatus('Loading narratives…');
+        updateUrlParam('company_id', selectedCompanyId);
+
+        await loadProposalsForCompany();
+        await loadAllNarratives();
+    };
+
+    // ── Load proposals for company ─────────────────────────────────────────
+    async function loadProposalsForCompany() {
+        const pSel = document.getElementById('proposal-select');
+        // Clear existing
+        while (pSel.options.length > 1) pSel.remove(1);
+
+        try {
+            const companyName = selectedCompanyRow.company_name || '';
+            const res = await fetch(
+                SUPABASE_URL + '/rest/v1/proposals?select=id,company_name,status&company_name=ilike.*' +
+                encodeURIComponent(companyName.replace(/[^a-zA-Z0-9 ]/g, '')) +
+                '*&order=created_at.desc&limit=10',
+                { headers: SB_HEADERS }
+            );
+            if (!res.ok) return;
+            const rows = await res.json();
+            rows.forEach(r => {
+                const opt = document.createElement('option');
+                opt.value = r.id;
+                opt.textContent = `${r.company_name} (${r.status || 'unknown'})`;
+                pSel.appendChild(opt);
+            });
+            if (rows.length > 0) {
+                selectedProposalId = rows[0].id;
+                pSel.value = selectedProposalId;
+                await loadBuyersForProposal(selectedProposalId);
+            }
+        } catch(e) { /* proposals not required */ }
+    }
+
+    // ── Proposal change ────────────────────────────────────────────────────
+    window.onProposalChange = async function() {
+        const sel = document.getElementById('proposal-select');
+        selectedProposalId = sel.value || null;
+        if (selectedProposalId) {
+            await loadBuyersForProposal(selectedProposalId);
+        }
+    };
+
+    async function loadBuyersForProposal(proposalId) {
+        try {
+            const res = await fetch(
+                SUPABASE_URL + '/rest/v1/engagement_buyers?proposal_id=eq.' + proposalId +
+                '&select=id,buyer_company_name,buyer_type,fit_score,investment_thesis,approach_script&order=fit_score.desc.nullslast&limit=20',
+                { headers: SB_HEADERS }
+            );
+            if (!res.ok) return;
+            currentBuyers = await res.json();
+            // Also fetch any saved buyer pitches
+            await loadBuyerPitches();
+            renderBuyerSection();
+        } catch(e) { /* non-fatal */ }
+    }
+
+    async function loadBuyerPitches() {
+        if (!selectedCompanyId) return;
+        try {
+            const res = await fetch(
+                SUPABASE_URL + '/rest/v1/why_sell_buyer_pitches?company_id=eq.' + selectedCompanyId,
+                { headers: SB_HEADERS }
+            );
+            if (!res.ok) return;
+            const rows = await res.json();
+            currentBuyerPitches = {};
+            rows.forEach(r => { currentBuyerPitches[r.buyer_id] = r.buyer_pitch; });
+        } catch(e) { /* table may not exist yet */ }
+    }
+
+    // ── Load all narratives ────────────────────────────────────────────────
+    async function loadAllNarratives() {
+        currentNarratives = null;
+        showContent();
+
+        // Populate company info bar
+        const cr = selectedCompanyRow || {};
+        document.getElementById('info-name').textContent = cr.company_name || '—';
+        document.getElementById('info-vertical').textContent = (cr.category || '—').replace(/_/g, ' ');
+        document.getElementById('info-location').textContent = [cr.city, cr.state].filter(Boolean).join(', ') || '—';
+        document.getElementById('info-revenue').textContent = '—';
+        document.getElementById('info-owner').textContent = cr.owner_name || '—';
+        document.getElementById('info-status').textContent = 'Checking…';
+
+        // Fetch full deal_research row for revenue
+        try {
+            const res = await fetch(
+                SUPABASE_URL + '/rest/v1/deal_research?id=eq.' + selectedCompanyId + '&select=*&limit=1',
+                { headers: SB_HEADERS }
+            );
+            if (res.ok) {
+                const rows = await res.json();
+                if (rows.length > 0) {
+                    const full = rows[0];
+                    selectedCompanyRow = full;
+                    let rev = full.revenue || '';
+                    if (rev) {
+                        const n = parseFloat(String(rev).replace(/[^0-9.]/g, ''));
+                        if (!isNaN(n) && n > 0) {
+                            rev = n >= 1000000 ? `$${(n/1000000).toFixed(1)}M` : `$${(n/1000).toFixed(0)}K`;
+                        }
+                    }
+                    document.getElementById('info-revenue').textContent = rev || '—';
+                }
+            }
+        } catch(e) {}
+
+        // Fetch why_sell_narratives
+        try {
+            const res = await fetch(
+                SUPABASE_URL + '/rest/v1/why_sell_narratives?company_id=eq.' + selectedCompanyId + '&limit=1',
+                { headers: SB_HEADERS }
+            );
+            if (res.ok) {
+                const rows = await res.json();
+                if (rows.length > 0) {
+                    currentNarratives = rows[0];
+                    document.getElementById('info-status').textContent = 'Generated ' + fmtDate(rows[0].generated_at);
+                    setStatus('Narratives loaded.', 'ok');
+                } else {
+                    document.getElementById('info-status').textContent = 'Not yet generated';
+                    setStatus('No narratives found for this company. Click "Generate Narratives" to create them.', 'warn');
+                }
+            } else {
+                document.getElementById('info-status').textContent = 'Table not found';
+                setStatus('why_sell_narratives table not yet created — click Generate to populate.', 'warn');
+            }
+        } catch(e) {
+            setStatus('Error loading narratives: ' + e.message, 'err');
+        }
+
+        renderNarrativeSections();
+    }
+
+    // ── Render 5 narrative accordion cards ────────────────────────────────
+    function renderNarrativeSections() {
+        const container = document.getElementById('narrative-sections');
+        container.innerHTML = '';
+
+        NARRATIVE_DEFS.forEach((def, i) => {
+            const text = currentNarratives ? (currentNarratives[def.key] || '') : '';
+            const hasContent = text && !text.startsWith('[') && text.length > 30;
+            const card = document.createElement('div');
+            card.className = 'narrative-card' + (i === 0 ? ' open' : '');
+            card.id = 'card-' + def.key;
+
+            card.innerHTML = `
+                <div class="narrative-header" onclick="toggleCard('${def.key}')">
+                    <div class="narrative-title">
+                        <div class="narrative-icon" style="background:${def.iconBg}">${def.icon}</div>
+                        <div>
+                            <div class="narrative-label">${def.label}</div>
+                            <div class="narrative-sublabel">${def.sublabel}</div>
+                        </div>
+                    </div>
+                    <span class="narrative-chevron">&#9660;</span>
+                </div>
+                <div class="narrative-body">
+                    ${hasContent
+                        ? `<div class="narrative-text ${isClientView ? 'client-view' : ''}" id="text-${def.key}">${escHtml(text)}</div>
+                           <div class="narrative-actions admin-only">
+                               <button class="btn" onclick="copyNarrative('${def.key}')">Copy Text</button>
+                           </div>`
+                        : `<div class="placeholder-text" id="text-${def.key}">No narrative yet. Click "Generate Narratives" above to create content for this section.</div>`
+                    }
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // ── Render buyer pitch cards ───────────────────────────────────────────
+    function renderBuyerSection() {
+        const section = document.getElementById('buyer-section');
+        const grid = document.getElementById('buyer-grid');
+
+        if (!currentBuyers || currentBuyers.length === 0) {
+            section.style.display = 'none';
+            return;
+        }
+
+        section.style.display = 'block';
+        grid.innerHTML = '';
+
+        currentBuyers.forEach(buyer => {
+            const pitch = currentBuyerPitches[buyer.id] || '';
+            const hasContent = pitch && !pitch.startsWith('[') && pitch.length > 30;
+            const score = parseInt(buyer.fit_score) || 0;
+            const scoreClass = score >= 75 ? 'score-high' : score >= 50 ? 'score-mid' : 'score-low';
+            const scoreLabel = score > 0 ? `<span class="buyer-pitch-score ${scoreClass}">${score}</span>` : '';
+
+            const card = document.createElement('div');
+            card.className = 'buyer-pitch-card';
+            card.innerHTML = `
+                <div class="buyer-pitch-name">${escHtml(buyer.buyer_company_name || 'Unknown Buyer')}${scoreLabel}</div>
+                <div class="buyer-pitch-meta">${escHtml(buyer.buyer_type || 'strategic acquirer')}</div>
+                ${hasContent
+                    ? `<div class="buyer-pitch-text ${isClientView ? 'client-view' : ''}" id="bp-${buyer.id}">${escHtml(pitch)}</div>`
+                    : `<div class="buyer-pitch-placeholder" id="bp-${buyer.id}">Pitch not yet generated.</div>
+                       <div class="generate-badge admin-only" onclick="generateSingleBuyerPitch('${buyer.id}', '${escAttr(buyer.buyer_company_name)}')">Generate pitch</div>`
+                }
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    // ── Toggle narrative card ─────────────────────────────────────────────
+    window.toggleCard = function(key) {
+        const card = document.getElementById('card-' + key);
+        if (card) card.classList.toggle('open');
+    };
+
+    // ── Client view toggle ────────────────────────────────────────────────
+    window.toggleClientView = function() {
+        isClientView = !isClientView;
+        applyClientView();
+    };
+
+    function applyClientView() {
+        const btn = document.getElementById('btn-client-toggle');
+        if (isClientView) {
+            document.body.classList.add('client-mode');
+            btn.classList.add('active');
+            btn.textContent = 'Internal View';
+            document.querySelectorAll('.narrative-text').forEach(el => el.classList.add('client-view'));
+            document.querySelectorAll('.buyer-pitch-text').forEach(el => el.classList.add('client-view'));
+        } else {
+            document.body.classList.remove('client-mode');
+            btn.classList.remove('active');
+            btn.textContent = 'Client View';
+            document.querySelectorAll('.narrative-text').forEach(el => el.classList.remove('client-view'));
+            document.querySelectorAll('.buyer-pitch-text').forEach(el => el.classList.remove('client-view'));
+        }
+    }
+
+    // ── Copy link ─────────────────────────────────────────────────────────
+    window.copyLink = function() {
+        const base = window.location.origin + window.location.pathname;
+        const params = new URLSearchParams();
+        if (selectedCompanyId) params.set('company_id', selectedCompanyId);
+        if (isClientView) params.set('view', 'client');
+        const url = base + '?' + params.toString();
+        navigator.clipboard.writeText(url).then(() => showToast('Link copied to clipboard')).catch(() => {
+            prompt('Copy this link:', url);
+        });
+    };
+
+    // ── Copy individual narrative ─────────────────────────────────────────
+    window.copyNarrative = function(key) {
+        const el = document.getElementById('text-' + key);
+        if (el) {
+            navigator.clipboard.writeText(el.textContent).then(() => showToast('Copied to clipboard'));
+        }
+    };
+
+    // ── Generate narratives (triggers backend job) ────────────────────────
+    window.triggerGenerate = async function() {
+        if (!selectedCompanyId) return;
+        const btn = document.getElementById('btn-generate');
+        btn.disabled = true;
+        btn.textContent = 'Generating…';
+        setStatus('Triggering narrative generation via API…', 'warn');
+
+        // Call the generate endpoint (or Supabase edge function if available)
+        try {
+            const res = await fetch(
+                SUPABASE_URL + '/functions/v1/generate-why-sell',
+                {
+                    method: 'POST',
+                    headers: { ...SB_HEADERS, 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        company_id: selectedCompanyId,
+                        proposal_id: selectedProposalId || null,
+                        entity: 'next_chapter'
+                    })
+                }
+            );
+            if (res.ok) {
+                setStatus('Generation triggered. Refreshing in 5 seconds…', 'ok');
+                setTimeout(async () => {
+                    await loadAllNarratives();
+                    btn.disabled = false;
+                    btn.textContent = 'Generate Narratives';
+                }, 5000);
+            } else {
+                throw new Error(`Edge function returned ${res.status} — run why_sell_engine.py locally`);
+            }
+        } catch(e) {
+            setStatus('Edge function not deployed. Run locally: python lib/why_sell_engine.py why_sell ' + selectedCompanyId, 'warn');
+            btn.disabled = false;
+            btn.textContent = 'Generate Narratives';
+        }
+    };
+
+    // ── Generate single buyer pitch inline ────────────────────────────────
+    window.generateSingleBuyerPitch = async function(buyerId, buyerName) {
+        if (!selectedCompanyId) return;
+        const el = document.getElementById('bp-' + buyerId);
+        if (el) el.textContent = 'Generating…';
+
+        try {
+            const res = await fetch(
+                SUPABASE_URL + '/functions/v1/generate-why-sell',
+                {
+                    method: 'POST',
+                    headers: { ...SB_HEADERS, 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ company_id: selectedCompanyId, buyer_id: buyerId, mode: 'buyer_pitch' })
+                }
+            );
+            if (res.ok) {
+                const data = await res.json();
+                if (el && data.buyer_pitch) {
+                    el.textContent = data.buyer_pitch;
+                    el.className = `buyer-pitch-text ${isClientView ? 'client-view' : ''}`;
+                }
+            } else {
+                if (el) el.textContent = 'Could not generate — run: python lib/why_sell_engine.py buyer_pitch ' + selectedCompanyId + ' ' + buyerId;
+            }
+        } catch(e) {
+            if (el) el.textContent = 'Generation unavailable via browser. Run locally.';
+        }
+    };
+
+    // ── Helpers ───────────────────────────────────────────────────────────
+    function showEmpty() {
+        document.getElementById('empty-state').style.display = 'block';
+        document.getElementById('content-area').style.display = 'none';
+    }
+    function showContent() {
+        document.getElementById('empty-state').style.display = 'none';
+        document.getElementById('content-area').style.display = 'block';
+    }
+    function setStatus(msg, cls) {
+        const el = document.getElementById('status-bar');
+        el.innerHTML = `<span class="${cls || ''}">${msg}</span>`;
+    }
+    function fmtDate(iso) {
+        if (!iso) return '—';
+        try { return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); }
+        catch(e) { return iso.slice(0, 10); }
+    }
+    function escHtml(s) {
+        return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    function escAttr(s) {
+        return String(s || '').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2500);
+    }
+    function updateUrlParam(key, val) {
+        if (!window.history || !window.history.replaceState) return;
+        const p = new URLSearchParams(window.location.search);
+        if (val) p.set(key, val); else p.delete(key);
+        window.history.replaceState({}, '', window.location.pathname + '?' + p.toString());
+    }
+
+    // Set view toggle button actions
+    window.setView = function(v) {
+        isClientView = (v === 'client');
+        document.getElementById('tab-internal').className = 'tab' + (v === 'internal' ? ' active' : '');
+        document.getElementById('tab-client').className = 'tab' + (v === 'client' ? ' active' : '');
+        applyClientView();
+    };
+
+    // ── Boot ──────────────────────────────────────────────────────────────
+    init();
+})();
+</script>
+</body>
+</html>

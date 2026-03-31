@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diff Viewer — Master CRM</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#c9d1d9;min-height:100vh}
+
+/* ---- Nav / breadcrumb ---- */
+.breadcrumb{background:#161b22;border-bottom:1px solid #30363d;padding:8px 20px;font-size:13px;display:flex;align-items:center;gap:8px}
+.breadcrumb a{color:#58a6ff;text-decoration:none}.breadcrumb a:hover{text-decoration:underline}
+.breadcrumb .sep{color:#484f58}
+
+/* ---- Header ---- */
+.header{background:linear-gradient(135deg,#161b22,#1a3a5c);padding:22px 30px;border-bottom:1px solid #30363d}
+.header h1{color:#58a6ff;font-size:22px;font-weight:700}
+.header .meta{color:#8b949e;font-size:13px;margin-top:4px}
+
+/* ---- KPI strip ---- */
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:18px 24px;max-width:1200px;margin:0 auto}
+.kpi{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px;text-align:center}
+.kpi .num{font-size:28px;font-weight:700;color:#f0f6fc}
+.kpi .label{font-size:11px;color:#8b949e;text-transform:uppercase;margin-top:4px;letter-spacing:.04em}
+.kpi.blue .num{color:#58a6ff}
+.kpi.green .num{color:#3fb950}
+.kpi.yellow .num{color:#d29922}
+
+/* ---- Main layout ---- */
+.main{max-width:1200px;margin:0 auto;padding:0 24px 40px}
+
+/* ---- Controls ---- */
+.controls{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px 18px;margin-bottom:18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.controls label{font-size:12px;color:#8b949e;text-transform:uppercase;letter-spacing:.04em;margin-right:4px}
+select{background:#0d1117;border:1px solid #30363d;color:#c9d1d9;padding:7px 10px;border-radius:6px;font-size:13px;cursor:pointer}
+select:focus{outline:none;border-color:#58a6ff}
+
+/* ---- Timeline ---- */
+.card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:18px;margin-bottom:18px}
+.card h2{font-size:14px;color:#58a6ff;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #30363d;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+
+.timeline{list-style:none}
+.timeline li{position:relative;padding:10px 12px 10px 36px;border-bottom:1px solid #21262d;cursor:pointer;transition:background .15s}
+.timeline li:last-child{border-bottom:none}
+.timeline li:hover,.timeline li.active{background:#21262d;border-radius:6px}
+.timeline li::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;background:#30363d;border:2px solid #484f58}
+.timeline li.active::before{background:#58a6ff;border-color:#58a6ff}
+.timeline .v-num{font-size:12px;font-weight:700;color:#58a6ff}
+.timeline .v-time{font-size:11px;color:#8b949e;margin-left:8px}
+.timeline .v-stats{font-size:11px;color:#8b949e;margin-top:3px}
+.timeline .badge{display:inline-block;padding:1px 7px;border-radius:10px;font-size:10px;font-weight:600;margin-left:6px}
+.badge-add{background:#0d4429;color:#3fb950}
+.badge-rem{background:#4d1515;color:#f85149}
+.badge-chg{background:#2d2208;color:#d29922}
+
+.revert-btn{float:right;background:transparent;border:1px solid #30363d;color:#8b949e;padding:3px 10px;border-radius:5px;font-size:11px;cursor:pointer;transition:all .15s}
+.revert-btn:hover{border-color:#f85149;color:#f85149}
+
+/* ---- Side-by-side diff ---- */
+.diff-header{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#30363d;border-radius:6px 6px 0 0;overflow:hidden;margin-bottom:1px}
+.diff-header div{background:#161b22;padding:8px 14px;font-size:12px;font-weight:600;color:#8b949e;text-transform:uppercase;letter-spacing:.04em}
+
+.diff-section{margin-bottom:14px;border:1px solid #30363d;border-radius:6px;overflow:hidden}
+.diff-section-title{background:#21262d;padding:8px 14px;font-size:13px;font-weight:600;color:#f0f6fc;border-bottom:1px solid #30363d;display:flex;justify-content:space-between;align-items:center}
+.diff-section-title .change-type{font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px}
+.type-added{background:#0d4429;color:#3fb950}
+.type-removed{background:#4d1515;color:#f85149}
+.type-changed{background:#2d2208;color:#d29922}
+
+.diff-cols{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.diff-old,.diff-new{padding:12px 14px;font-size:12px;line-height:1.6;min-height:60px;word-break:break-word}
+.diff-old{background:#160a0a;border-right:1px solid #30363d;color:#ffa8a8}
+.diff-old .del{text-decoration:line-through;opacity:.7}
+.diff-new{background:#061a0e;color:#a8ffc4}
+.diff-new .ins{font-weight:500}
+
+.diff-added-full .diff-old{background:#0d1117;color:#484f58;font-style:italic}
+.diff-removed-full .diff-new{background:#0d1117;color:#484f58;font-style:italic}
+
+/* ---- Empty states ---- */
+.empty{text-align:center;padding:40px 20px;color:#484f58;font-size:14px}
+.empty .icon{font-size:32px;margin-bottom:10px}
+.loading{text-align:center;padding:30px;color:#8b949e;font-size:13px}
+
+/* ---- Responsive ---- */
+@media(max-width:700px){
+  .kpis{grid-template-columns:1fr 1fr}
+  .diff-cols{grid-template-columns:1fr}
+  .diff-header{grid-template-columns:1fr}
+  .diff-header div:last-child{display:none}
+  .diff-old{border-right:none;border-bottom:1px solid #30363d}
+}
+</style>
+</head>
+<body>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+  <a href="dashboard.html">Dashboard</a>
+  <span class="sep">/</span>
+  <span style="color:#c9d1d9">Diff Viewer</span>
+</div>
+
+<!-- Header -->
+<div class="header">
+  <h1>Diff Viewer — Page Version History</h1>
+  <div class="meta">Section-level diffs for every generated page &nbsp;|&nbsp; Click a version to inspect changes</div>
+</div>
+
+<!-- KPI strip -->
+<div class="kpis">
+  <div class="kpi blue"><div class="num" id="kpi-pages">—</div><div class="label">Pages Tracked</div></div>
+  <div class="kpi green"><div class="num" id="kpi-versions">—</div><div class="label">Total Versions</div></div>
+  <div class="kpi yellow"><div class="num" id="kpi-recent">—</div><div class="label">Changes (24h)</div></div>
+</div>
+
+<!-- Controls -->
+<div class="main">
+  <div class="controls">
+    <div>
+      <label for="page-select">Page</label>
+      <select id="page-select"><option value="">— select a page —</option></select>
+    </div>
+    <div id="version-count-label" style="color:#8b949e;font-size:12px"></div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="card">
+    <h2>Version Timeline</h2>
+    <ul class="timeline" id="timeline"><li class="empty"><div class="icon">📋</div>Select a page above to load its history</li></ul>
+  </div>
+
+  <!-- Diff view -->
+  <div class="card" id="diff-card" style="display:none">
+    <h2>Section Diff — <span id="diff-title">—</span></h2>
+    <div class="diff-header"><div>Previous Version</div><div>New Version</div></div>
+    <div id="diff-container"></div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = "https://dwrnfpjcvydhmhnvyzov.supabase.co";
+const ANON_KEY     = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NTcyOTAsImV4cCI6MjA5MDMzMzI5MH0.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY";
+
+// ---- helpers ----
+async function sbGet(table, params = "") {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${params}`, {
+    headers: { apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}` }
+  });
+  if (!res.ok) throw new Error(`Supabase error ${res.status}`);
+  return res.json();
+}
+
+function fmtTime(iso) {
+  if (!iso) return "—";
+  const d = new Date(iso);
+  return d.toLocaleString("en-US", { month:"short", day:"numeric", year:"numeric",
+    hour:"numeric", minute:"2-digit", hour12:true });
+}
+
+function parseDiff(raw) {
+  try { return typeof raw === "string" ? JSON.parse(raw) : (raw || {}); }
+  catch(e) { return {}; }
+}
+
+function diffStats(diff) {
+  const a = (diff.added  || []).length;
+  const r = (diff.removed|| []).length;
+  const c = (diff.changed|| []).length;
+  const parts = [];
+  if (a) parts.push(`<span class="badge badge-add">+${a}</span>`);
+  if (r) parts.push(`<span class="badge badge-rem">-${r}</span>`);
+  if (c) parts.push(`<span class="badge badge-chg">~${c}</span>`);
+  return parts.join(" ") || '<span style="color:#484f58;font-size:11px">no sections changed</span>';
+}
+
+// ---- state ----
+let allVersions  = [];
+let activeVIdx   = null;
+
+// ---- init ----
+async function init() {
+  // Populate KPIs
+  try {
+    const counts = await sbGet("page_versions",
+      "select=page_path,created_at&order=created_at.desc");
+    const pages   = new Set(counts.map(r => r.page_path));
+    const cutoff  = new Date(Date.now() - 86400000).toISOString();
+    const recent  = counts.filter(r => r.created_at > cutoff);
+
+    document.getElementById("kpi-pages").textContent    = pages.size;
+    document.getElementById("kpi-versions").textContent = counts.length;
+    document.getElementById("kpi-recent").textContent   = recent.length;
+
+    // Populate page selector
+    const sel = document.getElementById("page-select");
+    [...pages].sort().forEach(p => {
+      const opt = document.createElement("option");
+      opt.value = p;
+      opt.textContent = p.split("/").pop(); // basename
+      sel.appendChild(opt);
+    });
+
+    // Auto-select if ?page= param present
+    const qp = new URLSearchParams(location.search);
+    if (qp.get("page")) {
+      const match = [...pages].find(p => p.includes(qp.get("page")));
+      if (match) { sel.value = match; loadPage(match); }
+    }
+  } catch(e) {
+    console.error("Init error", e);
+  }
+}
+
+document.getElementById("page-select").addEventListener("change", e => {
+  if (e.target.value) loadPage(e.target.value);
+});
+
+async function loadPage(pagePath) {
+  const timeline = document.getElementById("timeline");
+  timeline.innerHTML = '<li class="loading">Loading versions…</li>';
+  document.getElementById("diff-card").style.display = "none";
+
+  try {
+    const encoded = encodeURIComponent(pagePath);
+    allVersions = await sbGet("page_versions",
+      `page_path=eq.${encoded}&select=id,version_number,html_hash,diff_summary,entity,created_at&order=version_number.desc&limit=50`);
+
+    document.getElementById("version-count-label").textContent =
+      allVersions.length ? `${allVersions.length} version${allVersions.length !== 1 ? "s" : ""} found` : "";
+
+    if (!allVersions.length) {
+      timeline.innerHTML = '<li class="empty"><div class="icon">📭</div>No versions recorded yet for this page</li>';
+      return;
+    }
+
+    renderTimeline();
+    // Auto-load the latest version's diff
+    selectVersion(0);
+  } catch(e) {
+    timeline.innerHTML = `<li class="empty" style="color:#f85149">Error loading versions: ${e.message}</li>`;
+  }
+}
+
+function renderTimeline() {
+  const timeline = document.getElementById("timeline");
+  timeline.innerHTML = "";
+  allVersions.forEach((v, i) => {
+    const diff = parseDiff(v.diff_summary);
+    const li   = document.createElement("li");
+    li.className = i === activeVIdx ? "active" : "";
+    li.innerHTML = `
+      <button class="revert-btn" onclick="revertVersion('${v.id}', event)">Revert</button>
+      <span class="v-num">v${v.version_number}</span>
+      <span class="v-time">${fmtTime(v.created_at)}</span>
+      ${v.entity ? `<span class="badge" style="background:#161b22;color:#8b949e;margin-left:4px">${v.entity}</span>` : ""}
+      <div class="v-stats">${diffStats(diff)}</div>`;
+    li.addEventListener("click", e => { if (!e.target.classList.contains("revert-btn")) selectVersion(i); });
+    timeline.appendChild(li);
+  });
+}
+
+function selectVersion(idx) {
+  activeVIdx = idx;
+  // Update active class
+  document.querySelectorAll(".timeline li").forEach((li, i) => {
+    li.className = i === idx ? "active" : "";
+  });
+
+  const version = allVersions[idx];
+  const diff    = parseDiff(version.diff_summary);
+
+  document.getElementById("diff-card").style.display = "block";
+  document.getElementById("diff-title").textContent  =
+    `v${version.version_number} — ${fmtTime(version.created_at)}`;
+
+  renderDiff(diff);
+}
+
+function renderDiff(diff) {
+  const container = document.getElementById("diff-container");
+  container.innerHTML = "";
+
+  const added   = diff.added   || [];
+  const removed = diff.removed || [];
+  const changed = diff.changed || [];
+
+  if (!added.length && !removed.length && !changed.length) {
+    container.innerHTML = `<div class="empty" style="padding:30px">
+      <div class="icon">✔</div>No section changes recorded for this version</div>`;
+    return;
+  }
+
+  // Added sections
+  added.forEach(title => {
+    container.appendChild(buildDiffBlock(title, "", "[section added]", "added"));
+  });
+
+  // Removed sections
+  removed.forEach(title => {
+    container.appendChild(buildDiffBlock(title, "[section removed]", "", "removed"));
+  });
+
+  // Changed sections
+  changed.forEach(c => {
+    container.appendChild(buildDiffBlock(c.section, c.old_text, c.new_text, "changed"));
+  });
+}
+
+function buildDiffBlock(title, oldText, newText, type) {
+  const typeLabel = { added:"Added", removed:"Removed", changed:"Changed" }[type] || type;
+  const typeClass = { added:"type-added", removed:"type-removed", changed:"type-changed" }[type] || "";
+  const colClass  = type === "added" ? "diff-added-full" : type === "removed" ? "diff-removed-full" : "";
+
+  const wrap = document.createElement("div");
+  wrap.className = "diff-section";
+  wrap.innerHTML = `
+    <div class="diff-section-title">
+      <span>${esc(title === "__preamble__" ? "(Page Preamble)" : title)}</span>
+      <span class="change-type ${typeClass}">${typeLabel}</span>
+    </div>
+    <div class="diff-cols ${colClass}">
+      <div class="diff-old">${oldText ? `<span class="del">${esc(truncate(oldText))}</span>` : '<span style="color:#484f58;font-style:italic">—</span>'}</div>
+      <div class="diff-new">${newText ? `<span class="ins">${esc(truncate(newText))}</span>` : '<span style="color:#484f58;font-style:italic">—</span>'}</div>
+    </div>`;
+  return wrap;
+}
+
+function esc(s) {
+  return String(s)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;");
+}
+
+function truncate(s, max=600) {
+  return s.length > max ? s.slice(0, max) + "…" : s;
+}
+
+async function revertVersion(versionId, e) {
+  e.stopPropagation();
+  if (!confirm("Revert this page to that version? A new version record will be created.")) return;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/revert-page`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": ANON_KEY,
+        "Authorization": `Bearer ${ANON_KEY}`
+      },
+      body: JSON.stringify({ version_id: versionId })
+    });
+    if (res.ok) {
+      alert("Revert queued. Reload in a moment to see the new version.");
+    } else {
+      // Fallback: show the version ID for manual CLI revert
+      alert(`Revert via CLI:\n\npython3 lib/diff_engine.py revert ${versionId}`);
+    }
+  } catch(err) {
+    alert(`Revert via CLI:\n\npython3 -c "from lib.diff_engine import revert_to_version; revert_to_version('<page_path>', '${versionId}')"`);
+  }
+}
+
+// ---- start ----
+init();
+</script>
+</body>
+</html>

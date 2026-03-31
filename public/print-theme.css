@@ -1,0 +1,419 @@
+/*
+ * Master CRM Print Theme — print-theme.css
+ * ==========================================
+ * Applied via <link media="print"> and/or @media print blocks.
+ * Designed for letterhead-quality output across all page types.
+ *
+ * Load order: master-theme.css first, then print-theme.css.
+ * This file supplements (never conflicts with) the @media print
+ * block already embedded in master-theme.css.
+ */
+
+@media print {
+
+  /* ============================================================
+     1. PAGE SETUP — LETTERHEAD MARGINS & ORIENTATION
+     ============================================================ */
+
+  @page {
+    size: letter portrait;
+    margin: 0.75in 0.85in 0.85in 0.85in;
+  }
+
+  @page :first {
+    /* Extra top margin on first page for letterhead area */
+    margin-top: 1.1in;
+  }
+
+  /* ============================================================
+     2. RESET — WHITE PAPER, BLACK INK
+     ============================================================ */
+
+  * {
+    background: transparent !important;
+    color: #1a1a2e !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 11pt;
+    line-height: 1.55;
+    color: #1a1a2e !important;
+    background: white !important;
+  }
+
+  /* ============================================================
+     3. HIDE INTERACTIVE / CHROME ELEMENTS
+     ============================================================ */
+
+  /* Navigation and UI chrome */
+  .top-nav,
+  .page-header,
+  .sidebar,
+  .view-mode-bar,
+  .nc-btn,
+  button,
+  input,
+  select,
+  textarea,
+  .notification-bell,
+  .comment-widget,
+  .version-widget,
+  [data-no-print],
+  .no-print,
+  .nc-btn,
+  nav,
+  .nav,
+  .toolbar,
+  .action-bar,
+  .breadcrumb,
+  .pagination,
+  .back-link,
+  #comment-widget-container,
+  #version-widget-container,
+  script,
+  style {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* ============================================================
+     4. LETTERHEAD AREA (first page)
+     ============================================================ */
+
+  .print-letterhead {
+    display: block !important;
+    position: running(header);
+    height: 0.9in;
+    border-bottom: 2pt solid #1a1a2e;
+    padding-bottom: 8pt;
+    margin-bottom: 16pt;
+  }
+
+  /* Entity logo placeholder regions */
+  .print-logo-area {
+    display: block !important;
+    width: 2in;
+    height: 0.6in;
+    border: 1pt dashed #ccc;
+    background: #f8f8f8 !important;
+    margin-bottom: 4pt;
+  }
+
+  /* NC logo placeholder */
+  .theme-nc .print-logo-area::after {
+    content: 'Next Chapter M&A Advisory';
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 10pt;
+    font-weight: 700;
+    color: #1f6feb !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  /* AND Capital logo placeholder */
+  .theme-and .print-logo-area::after {
+    content: 'AND Capital';
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 11pt;
+    font-weight: 700;
+    color: #1a1a2e !important;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  /* RevsUp logo placeholder */
+  .theme-ru .print-logo-area::after {
+    content: 'RevsUp';
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 11pt;
+    font-weight: 700;
+    color: #a71d2a !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  /* Confidentiality line */
+  .print-confidential {
+    display: block !important;
+    font-size: 8pt;
+    color: #888 !important;
+    text-align: right;
+    margin-top: 4pt;
+  }
+
+  /* Running header on subsequent pages */
+  @page :left  { margin-left: 0.75in; }
+  @page :right { margin-right: 0.75in; }
+
+  /* ============================================================
+     5. PAGE FOOTER
+     ============================================================ */
+
+  .page-footer {
+    display: block !important;
+    font-size: 8pt;
+    color: #888 !important;
+    text-align: center;
+    border-top: 1pt solid #ccc;
+    padding-top: 6pt;
+    margin-top: 24pt;
+  }
+
+  /* Auto page number */
+  .print-page-number::after {
+    content: counter(page) ' of ' counter(pages);
+  }
+
+  /* ============================================================
+     6. LAYOUT ADJUSTMENTS
+     ============================================================ */
+
+  .page-layout {
+    display: block !important;
+    max-width: 100% !important;
+  }
+
+  .main-content {
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .grid2 { grid-template-columns: 1fr 1fr !important; }
+  .grid3 { grid-template-columns: 1fr 1fr 1fr !important; }
+  .grid4 { grid-template-columns: 1fr 1fr !important; }  /* 4-col too tight for letter */
+
+  /* ============================================================
+     7. TYPOGRAPHY ADJUSTMENTS FOR PRINT
+     ============================================================ */
+
+  h1 { font-size: 20pt; margin-bottom: 8pt; }
+  h2 { font-size: 15pt; margin-bottom: 6pt; margin-top: 16pt; }
+  h3 { font-size: 12pt; margin-bottom: 4pt; margin-top: 12pt; }
+  h4 { font-size: 11pt; }
+  h5, h6 { font-size: 10pt; }
+
+  p   { margin-bottom: 6pt; orphans: 3; widows: 3; }
+  li  { margin: 2pt 0; }
+  ul, ol { padding-left: 18pt; }
+
+  a::after {
+    /* Show URLs after links — disable for buyer-facing docs by adding .no-url-print class */
+    content: '';
+  }
+  .show-urls a[href^="http"]::after,
+  .show-urls a[href^="https"]::after {
+    content: ' (' attr(href) ')';
+    font-size: 8pt;
+    color: #666 !important;
+  }
+
+  /* ============================================================
+     8. CARD / SURFACE STYLES
+     ============================================================ */
+
+  .nc-card,
+  .card,
+  .highlight-card {
+    background: white !important;
+    border: 1pt solid #ccc !important;
+    border-radius: 0 !important;
+    padding: 8pt 10pt !important;
+    margin-bottom: 10pt !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .nc-card__header,
+  .card h2 {
+    border-bottom: 1pt solid #ddd !important;
+    padding-bottom: 4pt;
+    margin-bottom: 6pt;
+  }
+
+  .nc-card__title,
+  .card h2 {
+    font-size: 12pt;
+    font-weight: 700;
+    color: #1a1a2e !important;
+  }
+
+  /* Accent border — entity-colored left rule */
+  .theme-nc  .nc-card--accent,
+  .theme-nc  .narrative-box    { border-left: 3pt solid #1f6feb !important; }
+  .theme-and .nc-card--accent,
+  .theme-and .narrative-box    { border-left: 3pt solid #c4a020 !important; }
+  .theme-ru  .nc-card--accent,
+  .theme-ru  .narrative-box    { border-left: 3pt solid #a71d2a !important; }
+
+  /* ============================================================
+     9. TABLES
+     ============================================================ */
+
+  .nc-table {
+    font-size: 10pt;
+    width: 100%;
+    border-collapse: collapse;
+    page-break-inside: auto;
+  }
+  .nc-table th {
+    background: #f0f2f5 !important;
+    color: #333 !important;
+    font-size: 8pt;
+    padding: 5pt 7pt;
+    border: 1pt solid #ccc;
+  }
+  .nc-table td {
+    color: #1a1a2e !important;
+    padding: 5pt 7pt;
+    border: 1pt solid #ddd;
+    border-bottom: 1pt solid #ddd !important;
+  }
+  .nc-table thead { display: table-header-group; } /* repeat header on each page */
+  .nc-table tbody tr { page-break-inside: avoid; break-inside: avoid; }
+
+  /* ============================================================
+     10. STAT BOXES
+     ============================================================ */
+
+  .nc-stat,
+  .stat {
+    background: #f8f9fa !important;
+    border: 1pt solid #ddd !important;
+    border-radius: 0 !important;
+    padding: 8pt !important;
+  }
+  .nc-stat__num,
+  .stat .num { font-size: 22pt !important; color: #1a1a2e !important; }
+  .nc-stat__label,
+  .stat .label { font-size: 8pt !important; color: #555 !important; }
+
+  /* ============================================================
+     11. BADGES
+     ============================================================ */
+
+  .nc-badge,
+  .badge,
+  .deal-badge {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    font-size: 8pt;
+    padding: 2pt 6pt;
+    border: 1pt solid #ccc;
+    border-radius: 0 !important;
+  }
+
+  /* Entity badges keep their colors */
+  .theme-nc  .deal-badge { background: #1f6feb !important; color: white !important; }
+  .theme-and .deal-badge { background: #d4af37 !important; color: #1a1a2e !important; }
+  .theme-ru  .deal-badge { background: #a71d2a !important; color: white !important; }
+
+  /* Semantic badge colors */
+  .nc-badge--success { background: #d4edda !important; color: #155724 !important; }
+  .nc-badge--warning { background: #fff3cd !important; color: #856404 !important; }
+  .nc-badge--danger  { background: #f8d7da !important; color: #721c24 !important; }
+
+  /* ============================================================
+     12. PROGRESS BARS
+     ============================================================ */
+
+  .nc-progress__track {
+    background: #e9ecef !important;
+    border: 1pt solid #ddd !important;
+    height: 8pt !important;
+    border-radius: 0 !important;
+  }
+  .nc-progress__fill {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .theme-nc  .nc-progress__fill { background: #1f6feb !important; }
+  .theme-and .nc-progress__fill { background: #d4af37 !important; }
+  .theme-ru  .nc-progress__fill { background: #a71d2a !important; }
+
+  /* ============================================================
+     13. TIMELINE
+     ============================================================ */
+
+  .nc-timeline::before { background: #ccc !important; }
+  .nc-timeline__dot    { background: #aaa !important; border-color: white !important; }
+  .nc-timeline__item--active  .nc-timeline__dot { background: #1f6feb !important; }
+  .nc-timeline__item--success .nc-timeline__dot { background: #155724 !important; }
+  .nc-timeline__item--warning .nc-timeline__dot { background: #856404 !important; }
+  .nc-timeline__item--danger  .nc-timeline__dot { background: #721c24 !important; }
+
+  /* ============================================================
+     14. PAGE BREAKS
+     ============================================================ */
+
+  /* Force breaks between major sections */
+  .dossier-section          { page-break-before: auto; break-before: auto; }
+  .dossier-section + .dossier-section { page-break-before: always; break-before: always; }
+  .proposal-section         { page-break-inside: avoid; break-inside: avoid; }
+  .page-break-before        { page-break-before: always !important; break-before: always !important; }
+  .page-break-after         { page-break-after: always !important; break-after: always !important; }
+  .no-page-break            { page-break-inside: avoid !important; break-inside: avoid !important; }
+
+  /* Keep headings with their content */
+  h1, h2, h3 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  /* ============================================================
+     15. PAGE TYPE ADJUSTMENTS
+     ============================================================ */
+
+  /* Dossier cover page */
+  .page-dossier .dossier-cover {
+    background: white !important;
+    border: 2pt solid #1a1a2e !important;
+    padding: 24pt !important;
+    text-align: center;
+    page-break-after: always;
+    break-after: always;
+  }
+  .page-dossier .dossier-cover h1  { font-size: 24pt; color: #1a1a2e !important; }
+  .page-dossier .dossier-cover .dossier-meta { color: #555 !important; }
+
+  /* Proposal fee table */
+  .page-proposal .fee-table {
+    background: #f8f9fa !important;
+    border: 2pt solid #1a1a2e !important;
+    padding: 16pt !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Meeting action items */
+  .page-meeting .action-row {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Dashboard stats */
+  .page-dashboard .kpi-row { flex-wrap: wrap; }
+  .page-dashboard .kpi-row .nc-stat {
+    flex: 0 0 calc(25% - 8pt);
+    min-width: auto;
+  }
+
+  /* Target score */
+  .page-target .target-scorecard {
+    grid-template-columns: 1fr 200pt !important;
+  }
+  .page-target .target-score-number { font-size: 36pt !important; }
+
+} /* end @media print */

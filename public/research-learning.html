@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research Learning — Next Chapter Master CRM</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#c9d1d9;min-height:100vh}
+
+/* Nav */
+.nc-nav{background:#f6f8fa;border-bottom:1px solid #d0d7de;padding:8px 20px;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:999}
+.nc-nav a{color:#0969da;text-decoration:none;font-weight:500}
+.nc-nav a:hover{text-decoration:underline}
+.nc-nav .brand{font-weight:700;color:#0d1117;margin-right:8px}
+.nc-nav .sep{color:#d0d7de}
+
+/* Breadcrumb */
+.breadcrumb{background:#161b22;padding:8px 20px;border-bottom:1px solid #30363d;font-size:13px}
+.breadcrumb a{color:#58a6ff;text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.breadcrumb span{color:#8b949e;margin:0 6px}
+
+/* Header */
+.header{background:linear-gradient(135deg,#161b22,#1a3a2a);padding:30px;text-align:center}
+.header h1{color:#56d364;font-size:26px;margin-bottom:6px}
+.header .sub{color:#8b949e;font-size:13px}
+.stats-row{display:flex;justify-content:center;gap:30px;margin-top:18px;flex-wrap:wrap}
+.stat{text-align:center}
+.stat .num{font-size:32px;font-weight:700;color:#f0f6fc}
+.stat .label{font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:.5px}
+.stat.green .num{color:#56d364}
+.stat.yellow .num{color:#f39c12}
+.stat.blue .num{color:#58a6ff}
+
+/* Container */
+.container{max-width:1100px;margin:24px auto;padding:0 20px}
+
+/* Section headers */
+.section-title{font-size:16px;color:#f0f6fc;font-weight:600;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #30363d;display:flex;justify-content:space-between;align-items:center}
+.section-title .count{font-size:13px;color:#8b949e;font-weight:400}
+
+/* Card */
+.card{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:20px;margin-bottom:20px}
+
+/* Leaderboard table */
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:10px 8px;color:#8b949e;border-bottom:1px solid #30363d;font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+td{padding:10px 8px;border-bottom:1px solid #21262d;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#1c2130}
+.rank-cell{color:#484f58;font-weight:700;width:36px}
+.rank-1{color:#f39c12}
+.rank-2{color:#8b949e}
+.rank-3{color:#c07a3f}
+.method-code{font-family:monospace;font-size:12px;color:#79b8ff}
+.method-name{color:#f0f6fc;font-weight:500}
+.tool-tag{display:inline-block;background:#21262d;color:#8b949e;font-size:11px;padding:2px 7px;border-radius:4px;font-family:monospace}
+.category-tag{display:inline-block;background:#1a2744;color:#58a6ff;font-size:11px;padding:2px 7px;border-radius:4px}
+
+/* Progress bar cell */
+.rate-cell{min-width:120px}
+.rate-bar-bg{background:#21262d;border-radius:10px;height:8px;overflow:hidden;margin-top:3px}
+.rate-bar-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,#196119,#27ae60)}
+.rate-label{font-size:12px;font-weight:700}
+
+/* Staged cards */
+.staged-card{background:#0d1117;border:1px solid #2d1b00;border-radius:8px;padding:16px;margin-bottom:12px;transition:border-color .2s}
+.staged-card:hover{border-color:#a0600a}
+.staged-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.staged-title{color:#f0f6fc;font-size:14px;font-weight:600}
+.staged-code{font-family:monospace;font-size:12px;color:#79b8ff;margin-top:2px}
+.staged-meta{font-size:12px;color:#8b949e;margin-top:6px}
+.staged-description{font-size:13px;color:#c9d1d9;margin-top:8px;line-height:1.55}
+.staged-query{background:#161b22;border:1px solid #30363d;border-radius:4px;padding:8px 10px;font-family:monospace;font-size:12px;color:#79b8ff;margin-top:8px;word-break:break-word}
+.badge-staged{display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:10px;background:#2d1b00;color:#f39c12;border:1px solid #a0600a}
+
+/* Correction list */
+.correction-item{padding:12px 0;border-bottom:1px solid #21262d;display:flex;gap:12px;align-items:flex-start}
+.correction-item:last-child{border-bottom:none}
+.correction-dot{width:8px;height:8px;border-radius:50%;background:#f39c12;flex-shrink:0;margin-top:4px}
+.correction-company{font-size:13px;font-weight:600;color:#f0f6fc}
+.correction-text{font-size:12px;color:#8b949e;margin-top:2px;line-height:1.5}
+.correction-ts{font-size:11px;color:#484f58;margin-top:2px}
+
+/* Action buttons */
+.btn{padding:7px 15px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all .2s}
+.btn-approve{background:#196119;color:#56d364;border:1px solid #1e5c1e}
+.btn-approve:hover{background:#27ae60;color:#fff}
+.btn-reject{background:#2d1a1a;color:#f85149;border:1px solid #6e2222}
+.btn-reject:hover{background:#c0392b;color:#fff}
+.btn-refresh{background:#1c2333;color:#58a6ff;border:1px solid #1f5799}
+.btn-refresh:hover{background:#1f4e79;color:#fff}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;right:24px;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px 18px;font-size:13px;color:#c9d1d9;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.success{border-color:#27ae60;color:#56d364}
+.toast.error{border-color:#f85149;color:#f85149}
+
+/* Empty */
+.empty{text-align:center;padding:40px 20px;color:#484f58}
+
+/* Loading */
+.loading{text-align:center;padding:40px;color:#8b949e;font-size:14px}
+
+/* Footer */
+.footer{text-align:center;padding:24px;color:#484f58;font-size:11px;margin-top:20px}
+.footer a{color:#8b949e;text-decoration:none}
+
+@media(max-width:700px){
+  .stats-row{gap:20px}
+  table{font-size:12px}
+  th,td{padding:8px 4px}
+  .rate-cell{min-width:80px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nc-nav">
+  <span class="brand">Next Chapter M&amp;A</span>
+  <span class="sep">|</span>
+  <a href="index.html">Home</a>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="feature-roadmap.html">Roadmap</a>
+  <a href="feedback-conversations.html">Feedback</a>
+  <a href="research-learning.html" style="color:#0d1117;font-weight:700">Research Learning</a>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">Home</a>
+  <span>›</span>
+  <a href="dashboard.html">Dashboard</a>
+  <span>›</span>
+  Research Learning
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <h1>Research Method Learning</h1>
+  <div class="sub">Feature #46 — Methods staged for review before auto-applying · Corrections drive the learning loop</div>
+  <div class="stats-row">
+    <div class="stat green"><div class="num" id="stat-active">—</div><div class="label">Active Methods</div></div>
+    <div class="stat yellow"><div class="num" id="stat-staged">—</div><div class="label">Staged for Review</div></div>
+    <div class="stat blue"><div class="num" id="stat-corrections">—</div><div class="label">Corrections Logged</div></div>
+    <div class="stat"><div class="num" id="stat-avg-rate" style="color:#56d364">—</div><div class="label">Avg Success Rate</div></div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="container">
+
+  <!-- Staged for Review -->
+  <div class="card" id="staged-section">
+    <div class="section-title">
+      Staged for Review
+      <span>
+        <span class="count" id="staged-count">—</span>
+        <button class="btn btn-refresh" style="margin-left:10px" onclick="loadData()">Refresh</button>
+      </span>
+    </div>
+    <div id="staged-list"><div class="loading">Loading…</div></div>
+  </div>
+
+  <!-- Leaderboard -->
+  <div class="card">
+    <div class="section-title">
+      Method Leaderboard — Active
+      <span class="count" id="leaderboard-count">—</span>
+    </div>
+    <div id="leaderboard-table"><div class="loading">Loading…</div></div>
+  </div>
+
+  <!-- Recent corrections -->
+  <div class="card">
+    <div class="section-title">
+      Recent Fact Corrections
+      <span class="count" id="corrections-count">—</span>
+    </div>
+    <div id="corrections-list"><div class="loading">Loading…</div></div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Feature #46 · Master CRM ·
+  <a href="feature-roadmap.html">Roadmap</a> ·
+  <a href="feedback-conversations.html">Feedback Conversations (#45)</a>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SUPA_URL = 'https://dwrnfpjcvydhmhnvyzov.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NTcyOTAsImV4cCI6MjA5MDMzMzI5MH0.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY';
+
+const STAGED_PREFIX = '[STAGED]';
+
+let allMethods = [];
+let allCorrections = [];
+
+// ── Fetch ────────────────────────────────────────────────────────────────────
+async function supaGet(table, params) {
+  const resp = await fetch(`${SUPA_URL}/rest/v1/${table}?${params}`, {
+    headers: { apikey: SUPA_KEY, Authorization: `Bearer ${SUPA_KEY}` }
+  });
+  if (!resp.ok) throw new Error(`${table} HTTP ${resp.status}`);
+  return resp.json();
+}
+
+async function supaPost(table, body) {
+  const resp = await fetch(`${SUPA_URL}/rest/v1/${table}`, {
+    method: 'POST',
+    headers: {
+      apikey: SUPA_KEY,
+      Authorization: `Bearer ${SUPA_KEY}`,
+      'Content-Type': 'application/json',
+      Prefer: 'return=representation',
+    },
+    body: JSON.stringify(body),
+  });
+  if (!resp.ok) throw new Error(`${table} POST HTTP ${resp.status}`);
+  return resp.json();
+}
+
+async function supaPatch(table, filter, body) {
+  const resp = await fetch(`${SUPA_URL}/rest/v1/${table}?${filter}`, {
+    method: 'PATCH',
+    headers: {
+      apikey: SUPA_KEY,
+      Authorization: `Bearer ${SUPA_KEY}`,
+      'Content-Type': 'application/json',
+      Prefer: 'return=representation',
+    },
+    body: JSON.stringify(body),
+  });
+  if (!resp.ok) throw new Error(`${table} PATCH HTTP ${resp.status}`);
+  return resp.json();
+}
+
+async function loadData() {
+  try {
+    [allMethods, allCorrections] = await Promise.all([
+      supaGet('research_methods', 'select=*&order=success_rate.desc,times_used.desc&limit=200'),
+      supaGet('page_comments', 'comment_type=eq.fact_correction&select=*&order=created_at.desc&limit=50'),
+    ]);
+    renderAll();
+  } catch(e) {
+    showToast(`Load error: ${e.message}`, 'error');
+  }
+}
+
+// ── Classify staged vs active ─────────────────────────────────────────────
+function isStagedMethod(m) {
+  return !m.is_active && (m.discovery_context || '').startsWith(STAGED_PREFIX);
+}
+
+function isActiveMethod(m) {
+  return m.is_active === true;
+}
+
+// ── Render all ────────────────────────────────────────────────────────────────
+function renderAll() {
+  const staged = allMethods.filter(isStagedMethod);
+  const active = allMethods.filter(isActiveMethod);
+  const corrections = allCorrections;
+
+  // Stats
+  document.getElementById('stat-active').textContent = active.length;
+  document.getElementById('stat-staged').textContent = staged.length;
+  document.getElementById('stat-corrections').textContent = corrections.length;
+  const avgRate = active.length
+    ? (active.reduce((s, m) => s + (m.success_rate || 0), 0) / active.length * 100).toFixed(0) + '%'
+    : '—';
+  document.getElementById('stat-avg-rate').textContent = avgRate;
+
+  // Staged
+  document.getElementById('staged-count').textContent = `${staged.length} pending`;
+  renderStaged(staged);
+
+  // Leaderboard
+  document.getElementById('leaderboard-count').textContent = `${active.length} methods`;
+  renderLeaderboard(active);
+
+  // Corrections
+  document.getElementById('corrections-count').textContent = `${corrections.length} logged`;
+  renderCorrections(corrections);
+}
+
+// ── Staged for Review ─────────────────────────────────────────────────────────
+function renderStaged(staged) {
+  const el = document.getElementById('staged-list');
+  if (!staged.length) {
+    el.innerHTML = '<div class="empty">No methods staged for review. Corrections will propose methods here when they are analyzed.</div>';
+    return;
+  }
+  el.innerHTML = staged.map(m => renderStagedCard(m)).join('');
+}
+
+function renderStagedCard(m) {
+  const context = (m.discovery_context || '').replace(STAGED_PREFIX,'').trim();
+  const ts = formatTs(m.created_at);
+  return `<div class="staged-card" id="staged-${m.id}">
+    <div class="staged-header">
+      <div>
+        <div class="staged-title">${esc(m.method_name || m.method_code)}</div>
+        <div class="staged-code">${esc(m.method_code)}</div>
+        <div class="staged-meta">
+          <span class="tool-tag">${esc(m.tool || '?')}</span>
+          &nbsp;
+          <span class="category-tag">${esc(m.category || '?')}</span>
+          &nbsp;·&nbsp;
+          Discovered ${ts}
+        </div>
+      </div>
+      <span class="badge-staged">Staged</span>
+    </div>
+    ${m.description ? `<div class="staged-description">${esc(m.description)}</div>` : ''}
+    ${m.query_template ? `<div class="staged-query">${esc(m.query_template)}</div>` : ''}
+    ${context ? `<div style="margin-top:8px;font-size:12px;color:#8b949e">${esc(context)}</div>` : ''}
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button class="btn btn-approve" onclick="approveMethod('${m.id}')">Approve — Make Active</button>
+      <button class="btn btn-reject" onclick="rejectMethod('${m.id}')">Reject</button>
+    </div>
+  </div>`;
+}
+
+// ── Leaderboard ──────────────────────────────────────────────────────────────
+function renderLeaderboard(active) {
+  const el = document.getElementById('leaderboard-table');
+  if (!active.length) {
+    el.innerHTML = '<div class="empty">No active methods yet.</div>';
+    return;
+  }
+
+  const rows = active.map((m, i) => {
+    const rank = i + 1;
+    const rankClass = rank === 1 ? 'rank-1' : rank === 2 ? 'rank-2' : rank === 3 ? 'rank-3' : '';
+    const rate = (m.success_rate || 0) * 100;
+    const rateLabel = m.times_used > 0 ? rate.toFixed(0) + '%' : '—';
+    const barWidth = Math.min(100, rate).toFixed(0);
+    const barColor = rate >= 70 ? '#27ae60' : rate >= 40 ? '#f39c12' : '#c0392b';
+
+    return `<tr>
+      <td class="rank-cell ${rankClass}">${rank}</td>
+      <td>
+        <div class="method-name">${esc(m.method_name || m.method_code)}</div>
+        <div class="method-code">${esc(m.method_code)}</div>
+      </td>
+      <td><span class="tool-tag">${esc(m.tool || '?')}</span></td>
+      <td><span class="category-tag">${esc(m.category || '?')}</span></td>
+      <td class="rate-cell">
+        <div class="rate-label" style="color:${barColor}">${rateLabel}</div>
+        <div class="rate-bar-bg"><div class="rate-bar-fill" style="width:${barWidth}%;background:${barColor}"></div></div>
+      </td>
+      <td style="color:#8b949e">${m.times_used || 0}</td>
+      <td style="color:#8b949e">${m.times_succeeded || 0}</td>
+      <td style="font-size:12px;color:#484f58">${esc(m.discovered_by || '—')}</td>
+    </tr>`;
+  }).join('');
+
+  el.innerHTML = `<table>
+    <thead><tr>
+      <th>#</th>
+      <th>Method</th>
+      <th>Tool</th>
+      <th>Category</th>
+      <th>Success Rate</th>
+      <th>Used</th>
+      <th>Succeeded</th>
+      <th>Discovered By</th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
+// ── Recent Corrections ────────────────────────────────────────────────────────
+function renderCorrections(corrections) {
+  const el = document.getElementById('corrections-list');
+  if (!corrections.length) {
+    el.innerHTML = '<div class="empty">No fact corrections logged yet.</div>';
+    return;
+  }
+
+  el.innerHTML = corrections.map(c => {
+    const ts = formatTs(c.created_at);
+    const hasResponse = !!c.user_response;
+    return `<div class="correction-item">
+      <div class="correction-dot"></div>
+      <div style="flex:1">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px">
+          <span class="correction-company">${esc(c.company_name || '—')}</span>
+          <span style="font-size:11px;color:${hasResponse ? '#27ae60' : '#8b949e'}">${hasResponse ? 'responded' : 'awaiting response'}</span>
+        </div>
+        <div style="font-size:12px;color:#58a6ff;margin-top:2px">${esc(c.section_id || '')}</div>
+        <div class="correction-text">${esc(c.comment_text || '').substring(0,160)}${(c.comment_text||'').length>160?'…':''}</div>
+        <div class="correction-ts">${esc(c.commenter || 'unknown')} · ${ts}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Approve / Reject staged methods ──────────────────────────────────────────
+async function approveMethod(id) {
+  try {
+    const method = allMethods.find(m => m.id === id);
+    if (!method) return;
+
+    let context = (method.discovery_context || '');
+    if (context.startsWith(STAGED_PREFIX)) context = context.slice(STAGED_PREFIX.length).trim();
+
+    await supaPatch('research_methods', `id=eq.${id}`, {
+      is_active: true,
+      discovery_context: context,
+      updated_at: new Date().toISOString(),
+    });
+
+    showToast(`Method approved — now active`, 'success');
+    await loadData();
+  } catch(e) {
+    showToast(`Approve failed: ${e.message}`, 'error');
+  }
+}
+
+async function rejectMethod(id) {
+  try {
+    const method = allMethods.find(m => m.id === id);
+    if (!method) return;
+
+    let context = (method.discovery_context || '');
+    if (!context.startsWith('[RETIRED]')) context = `[RETIRED] ${context}`;
+
+    await supaPatch('research_methods', `id=eq.${id}`, {
+      is_active: false,
+      discovery_context: context,
+      updated_at: new Date().toISOString(),
+    });
+
+    showToast('Method rejected and retired', '');
+    await loadData();
+  } catch(e) {
+    showToast(`Reject failed: ${e.message}`, 'error');
+  }
+}
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+function esc(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function formatTs(ts) {
+  if (!ts) return '';
+  try {
+    return new Date(ts).toLocaleString('en-US', {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+  } catch { return ts; }
+}
+
+let toastTimer;
+function showToast(msg, type) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = `toast show ${type || ''}`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.className = 'toast'; }, 3200);
+}
+
+// ── Init ─────────────────────────────────────────────────────────────────────
+loadData();
+</script>
+</body>
+</html>
