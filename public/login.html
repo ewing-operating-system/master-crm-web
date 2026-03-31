@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Portal — Next Chapter M&A</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #0d1117;
+    color: #c9d1d9;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .login-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 16px;
+    padding: 48px 40px;
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .logo {
+    font-size: 28px;
+    font-weight: 700;
+    color: #58a6ff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+
+  .subtitle {
+    color: #8b949e;
+    font-size: 14px;
+    margin-bottom: 36px;
+  }
+
+  .input-group {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+
+  .input-group label {
+    display: block;
+    color: #8b949e;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+
+  .input-group input {
+    width: 100%;
+    padding: 14px 16px;
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    color: #f0f6fc;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .input-group input:focus {
+    border-color: #58a6ff;
+    box-shadow: 0 0 0 3px rgba(88,166,255,0.15);
+  }
+
+  .input-group input::placeholder {
+    color: #484f58;
+  }
+
+  .login-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #1f6feb, #58a6ff);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 4px;
+  }
+
+  .login-btn:hover {
+    background: linear-gradient(135deg, #388bfd, #79c0ff);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(88,166,255,0.3);
+  }
+
+  .login-btn:active {
+    transform: translateY(0);
+  }
+
+  .login-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .error-msg {
+    color: #f85149;
+    font-size: 13px;
+    margin-top: 16px;
+    display: none;
+    padding: 10px;
+    background: rgba(248,81,73,0.1);
+    border-radius: 6px;
+    border: 1px solid rgba(248,81,73,0.2);
+  }
+
+  .error-msg.visible {
+    display: block;
+  }
+
+  .success-msg {
+    color: #3fb950;
+    font-size: 14px;
+    margin-top: 16px;
+    display: none;
+    padding: 10px;
+    background: rgba(63,185,80,0.1);
+    border-radius: 6px;
+    border: 1px solid rgba(63,185,80,0.2);
+  }
+
+  .success-msg.visible {
+    display: block;
+  }
+
+  .footer-text {
+    color: #484f58;
+    font-size: 11px;
+    margin-top: 32px;
+  }
+
+  @media (max-width: 480px) {
+    .login-card {
+      margin: 20px;
+      padding: 36px 28px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="login-card">
+  <div class="logo">Next Chapter M&A</div>
+  <div class="subtitle">Client Portal</div>
+
+  <form id="loginForm" onsubmit="handleLogin(event)">
+    <div class="input-group">
+      <label for="password">Access Code</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        placeholder="Enter your access code"
+        autocomplete="current-password"
+        autofocus
+        required
+      >
+    </div>
+    <button type="submit" class="login-btn" id="loginBtn">Sign In</button>
+  </form>
+
+  <div class="error-msg" id="errorMsg"></div>
+  <div class="success-msg" id="successMsg"></div>
+
+  <div class="footer-text">
+    Access code provided by your Next Chapter advisor
+  </div>
+</div>
+
+<script>
+async function handleLogin(e) {
+  e.preventDefault();
+
+  const btn = document.getElementById('loginBtn');
+  const errorEl = document.getElementById('errorMsg');
+  const successEl = document.getElementById('successMsg');
+  const password = document.getElementById('password').value.trim();
+
+  // Get redirect from URL params
+  const params = new URLSearchParams(window.location.search);
+  const redirect = params.get('redirect') || '/';
+
+  // Reset state
+  errorEl.classList.remove('visible');
+  successEl.classList.remove('visible');
+  btn.disabled = true;
+  btn.textContent = 'Signing in...';
+
+  try {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password, redirect }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      errorEl.textContent = data.error || 'Invalid access code. Please try again.';
+      errorEl.classList.add('visible');
+      btn.disabled = false;
+      btn.textContent = 'Sign In';
+      document.getElementById('password').select();
+      return;
+    }
+
+    // Success
+    successEl.textContent = 'Welcome! Redirecting to ' + data.company + '...';
+    successEl.classList.add('visible');
+
+    // Redirect after brief pause so they see the welcome message
+    setTimeout(() => {
+      window.location.href = data.redirect || redirect;
+    }, 800);
+
+  } catch (err) {
+    errorEl.textContent = 'Connection error. Please try again.';
+    errorEl.classList.add('visible');
+    btn.disabled = false;
+    btn.textContent = 'Sign In';
+  }
+}
+</script>
+
+</body>
+</html>
