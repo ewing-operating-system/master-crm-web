@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Portal — Next Chapter M&A</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0d1117; color: #c9d1d9; line-height: 1.6; min-height: 100vh; }
+
+/* Breadcrumb */
+.breadcrumb { background: #161b22; padding: 8px 20px; border-bottom: 1px solid #30363d; font-size: 13px; }
+.breadcrumb a { color: #58a6ff; text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.breadcrumb span { color: #8b949e; margin: 0 8px; }
+
+/* Header */
+.portal-header { background: linear-gradient(135deg, #161b22, #1a3a5c); padding: 28px 40px; display: flex; justify-content: space-between; align-items: center; }
+.portal-header .company-name { font-size: 22px; font-weight: 700; color: #f0f6fc; }
+.portal-header .tagline { font-size: 13px; color: #8b949e; margin-top: 4px; }
+.portal-header .nc-badge { font-size: 12px; color: #58a6ff; font-weight: 600; background: #0d2137; border: 1px solid #1a4a7a; padding: 4px 12px; border-radius: 20px; }
+
+/* Main layout */
+.main { max-width: 900px; margin: 0 auto; padding: 32px 24px 60px; }
+
+/* Engagement summary card */
+.summary-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 24px 28px; margin-bottom: 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.summary-card .field { }
+.summary-card .field-label { font-size: 11px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.summary-card .field-val { font-size: 15px; color: #f0f6fc; font-weight: 500; }
+
+/* Progress timeline */
+.timeline-wrap { margin-bottom: 28px; }
+.section-label { font-size: 14px; font-weight: 600; color: #f0f6fc; margin-bottom: 16px; }
+.timeline { display: flex; align-items: flex-start; gap: 0; }
+.tl-step { flex: 1; text-align: center; position: relative; }
+.tl-step:not(:last-child)::after { content: ''; position: absolute; top: 14px; left: 50%; width: 100%; height: 2px; background: #30363d; z-index: 0; }
+.tl-step.done:not(:last-child)::after { background: #27ae60; }
+.tl-dot { width: 28px; height: 28px; border-radius: 50%; background: #21262d; border: 2px solid #30363d; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-size: 12px; position: relative; z-index: 1; }
+.tl-step.done .tl-dot { background: #27ae60; border-color: #27ae60; color: #fff; }
+.tl-step.current .tl-dot { background: #58a6ff; border-color: #58a6ff; color: #fff; animation: pulse 2s infinite; }
+.tl-step.pending .tl-dot { background: #0d1117; border-color: #30363d; color: #484f58; }
+@keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(88,166,255,0.4)} 50%{box-shadow:0 0 0 6px rgba(88,166,255,0)} }
+.tl-label { font-size: 11px; color: #8b949e; }
+.tl-step.done .tl-label { color: #27ae60; }
+.tl-step.current .tl-label { color: #58a6ff; font-weight: 600; }
+.tl-date { font-size: 10px; color: #484f58; margin-top: 2px; }
+
+/* Buyers table */
+.card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 20px 24px; margin-bottom: 24px; }
+.card h2 { font-size: 14px; font-weight: 600; color: #f0f6fc; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid #30363d; display: flex; justify-content: space-between; align-items: center; }
+.card h2 .count { font-size: 12px; color: #8b949e; font-weight: 400; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; padding: 9px 10px; color: #8b949e; border-bottom: 1px solid #30363d; font-size: 11px; text-transform: uppercase; font-weight: 600; }
+td { padding: 10px 10px; border-bottom: 1px solid #21262d; vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #21262d; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+.badge-strategic { background: #1a3a5c; color: #58a6ff; }
+.badge-financial { background: #1a0d2e; color: #a855f7; }
+.badge-interested { background: #0d2e18; color: #27ae60; }
+
+/* CTA */
+.cta-wrap { text-align: center; margin: 32px 0 16px; }
+.btn-cta { display: inline-block; background: #58a6ff; color: #0d1117; font-size: 15px; font-weight: 700; padding: 14px 36px; border-radius: 8px; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s; }
+.btn-cta:hover { background: #79b8ff; }
+.cta-sub { font-size: 12px; color: #8b949e; margin-top: 8px; }
+
+/* States */
+.loading { text-align: center; padding: 40px; color: #8b949e; font-size: 13px; }
+.empty { text-align: center; padding: 28px; color: #8b949e; font-size: 13px; }
+.error { color: #e74c3c; font-size: 12px; padding: 20px; text-align: center; background: #1a0d0d; border: 1px solid #4a1a1a; border-radius: 8px; margin-bottom: 20px; }
+
+/* No-company state */
+.no-company { text-align: center; padding: 80px 20px; }
+.no-company h2 { color: #58a6ff; font-size: 20px; margin-bottom: 10px; }
+.no-company p { color: #8b949e; font-size: 14px; }
+
+@media(max-width:600px) {
+  .summary-card { grid-template-columns: 1fr; }
+  .portal-header { flex-direction: column; gap: 12px; }
+  .tl-label { font-size: 10px; }
+}
+</style>
+</head>
+<body>
+
+<div class="breadcrumb">
+  <a href="dashboard.html">Dashboard</a>
+  <span>/</span>
+  <a href="feature-roadmap.html">Roadmap</a>
+  <span>/</span>
+  <span style="color:#c9d1d9">Client Portal</span>
+</div>
+
+<div class="portal-header">
+  <div>
+    <div class="company-name" id="header-company">Client Portal</div>
+    <div class="tagline">Next Chapter M&A — Your Transaction Overview</div>
+  </div>
+  <div class="nc-badge">Next Chapter M&A</div>
+</div>
+
+<div class="main" id="main-content">
+  <div class="loading">Loading your engagement...</div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://dwrnfpjcvydhmhnvyzov.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NTcyOTAsImV4cCI6MjA5MDMzMzI5MH0.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY';
+
+const STAGES = [
+  { key: 'letter_sent',       label: 'Letter Sent' },
+  { key: 'call_scheduled',    label: 'Call Scheduled' },
+  { key: 'meeting',           label: 'Meeting' },
+  { key: 'proposal',          label: 'Proposal' },
+  { key: 'engagement',        label: 'Engagement' }
+];
+
+function params() {
+  const p = new URLSearchParams(window.location.search);
+  return {
+    company: p.get('company') || '',
+    stage:   p.get('stage')   || ''
+  };
+}
+
+function q(path) {
+  return fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+    headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+  }).then(r => r.ok ? r.json() : Promise.reject(`HTTP ${r.status}`));
+}
+
+function fmtDate(d) {
+  if (!d) return '';
+  return new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function renderTimeline(currentStage) {
+  const stageKeys = STAGES.map(s => s.key);
+  const currentIdx = stageKeys.indexOf(currentStage);
+  return `
+    <div class="timeline-wrap">
+      <div class="section-label">Progress</div>
+      <div class="timeline">
+        ${STAGES.map((s, i) => {
+          const state = i < currentIdx ? 'done' : i === currentIdx ? 'current' : 'pending';
+          const icon = state === 'done' ? '✓' : i + 1;
+          return `<div class="tl-step ${state}">
+            <div class="tl-dot">${icon}</div>
+            <div class="tl-label">${s.label}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderSummary(proposal, companyName, currentStage) {
+  const stageLabel = STAGES.find(s => s.key === currentStage)?.label || currentStage || 'Active';
+  return `
+    <div class="summary-card">
+      <div class="field">
+        <div class="field-label">Company</div>
+        <div class="field-val">${companyName}</div>
+      </div>
+      <div class="field">
+        <div class="field-label">Engagement Status</div>
+        <div class="field-val" style="color:#58a6ff">${stageLabel}</div>
+      </div>
+      <div class="field">
+        <div class="field-label">Advisor</div>
+        <div class="field-val">${proposal?.advisor || proposal?.contact_name || 'Next Chapter Team'}</div>
+      </div>
+      <div class="field">
+        <div class="field-label">Engagement Started</div>
+        <div class="field-val">${fmtDate(proposal?.created_at) || '—'}</div>
+      </div>
+      ${proposal?.target_value || proposal?.deal_value ? `
+      <div class="field">
+        <div class="field-label">Target Value</div>
+        <div class="field-val" style="color:#27ae60">${proposal?.target_value || proposal?.deal_value}</div>
+      </div>` : ''}
+      ${proposal?.industry || proposal?.sector ? `
+      <div class="field">
+        <div class="field-label">Industry</div>
+        <div class="field-val">${proposal?.industry || proposal?.sector}</div>
+      </div>` : ''}
+    </div>
+  `;
+}
+
+function renderBuyers(buyers) {
+  if (!buyers || buyers.length === 0) {
+    return `<div class="card">
+      <h2>Potential Buyers & Partners <span class="count">0 identified</span></h2>
+      <div class="empty">Buyer research in progress — check back soon.</div>
+    </div>`;
+  }
+  return `<div class="card">
+    <h2>Potential Buyers & Partners <span class="count">${buyers.length} identified</span></h2>
+    <table>
+      <thead><tr><th>Buyer / Acquirer</th><th>Type</th><th>Status</th><th>Notes</th></tr></thead>
+      <tbody>${buyers.map(b => `<tr>
+        <td style="color:#f0f6fc;font-weight:500">${b.buyer_name || b.name || b.company || '—'}</td>
+        <td><span class="badge badge-${(b.buyer_type||'strategic').toLowerCase() === 'financial' ? 'financial' : 'strategic'}">${b.buyer_type || 'Strategic'}</span></td>
+        <td><span class="badge badge-${b.status === 'interested' ? 'interested' : 'strategic'}">${b.status || 'Identified'}</span></td>
+        <td style="color:#8b949e;font-size:12px">${b.notes || b.rationale || '—'}</td>
+      </tr>`).join('')}</tbody>
+    </table>
+  </div>`;
+}
+
+function renderCTA() {
+  return `<div class="cta-wrap">
+    <a href="mailto:info@nextchapterma.com?subject=Schedule%20a%20Call" class="btn-cta">Schedule a Call</a>
+    <div class="cta-sub">Our team typically responds within one business day.</div>
+  </div>`;
+}
+
+async function load() {
+  const { company, stage: stageParam } = params();
+  const main = document.getElementById('main-content');
+
+  if (!company) {
+    main.innerHTML = `<div class="no-company">
+      <h2>Welcome to Your Client Portal</h2>
+      <p>Please access this portal using the link provided by your Next Chapter advisor.<br>
+      The URL should include your company name, e.g. <code style="color:#58a6ff">?company=YourCompany</code></p>
+    </div>`;
+    return;
+  }
+
+  document.getElementById('header-company').textContent = decodeURIComponent(company);
+  document.title = `${decodeURIComponent(company)} — Client Portal`;
+
+  try {
+    // Try to find the proposal matching this company
+    const encodedCompany = encodeURIComponent(company);
+    const proposals = await q(`proposals?or=(company.ilike.*${encodedCompany}*,title.ilike.*${encodedCompany}*)&order=created_at.desc&limit=5`);
+    const proposal = proposals[0] || null;
+
+    // Determine current stage
+    let currentStage = stageParam || proposal?.stage || proposal?.status || 'letter_sent';
+    // Normalize
+    const stageKeys = STAGES.map(s => s.key);
+    if (!stageKeys.includes(currentStage)) currentStage = 'letter_sent';
+
+    // Try to fetch buyers from engagement_buyers
+    let buyers = [];
+    if (proposal?.id) {
+      try {
+        buyers = await q(`engagement_buyers?proposal_id=eq.${proposal.id}&order=created_at.desc&limit=50`);
+      } catch(_) {}
+    }
+    // Fallback: search by company name
+    if (!buyers.length) {
+      try {
+        buyers = await q(`engagement_buyers?company.ilike.*${encodedCompany}*&order=created_at.desc&limit=50`);
+      } catch(_) {}
+    }
+
+    main.innerHTML = `
+      ${renderSummary(proposal, decodeURIComponent(company), currentStage)}
+      ${renderTimeline(currentStage)}
+      ${renderBuyers(buyers)}
+      ${renderCTA()}
+    `;
+  } catch(err) {
+    main.innerHTML = `
+      <div class="error">Could not load engagement data: ${err}<br>
+        <span style="font-size:11px;opacity:0.7">Please contact your Next Chapter advisor if this persists.</span>
+      </div>
+      ${renderTimeline(stageParam || 'letter_sent')}
+      ${renderCTA()}
+    `;
+  }
+}
+
+load();
+</script>
+</body>
+</html>

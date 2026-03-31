@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RevSup Dashboard — Next Chapter M&A</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0d1117; color: #c9d1d9; line-height: 1.6; min-height: 100vh; }
+  .top-nav { background: #161b22; padding: 8px 20px; border-bottom: 1px solid #30363d; }
+  .top-nav a { color: #58a6ff; text-decoration: none; font-size: 13px; }
+  .top-nav a + a { color: #8b949e; margin-left: 15px; }
+  .header { background: #161b22; border-bottom: 1px solid #30363d; padding: 20px 32px; }
+  .header h1 { font-size: 20px; font-weight: 700; color: #f0f6fc; }
+  .header p { font-size: 13px; color: #8b949e; margin-top: 3px; }
+  .main { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
+  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
+  .kpi { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 14px 18px; }
+  .kpi .label { font-size: 11px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; }
+  .kpi .val { font-size: 26px; font-weight: 700; color: #f0f6fc; }
+  .kpi .sub { font-size: 11px; color: #8b949e; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .section-title { font-size: 14px; font-weight: 600; color: #f0f6fc; margin-bottom: 12px; }
+  table { width: 100%; border-collapse: collapse; background: #161b22; border: 1px solid #30363d; border-radius: 8px; overflow: hidden; margin-bottom: 24px; }
+  th { background: #0d1117; color: #8b949e; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; padding: 9px 14px; text-align: left; border-bottom: 1px solid #30363d; }
+  td { padding: 10px 14px; font-size: 13px; border-bottom: 1px solid #21262d; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #1c2128; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .badge-active { background: #1a3a1a; color: #27ae60; }
+  .badge-sourcing { background: #21262d; color: #8b949e; }
+  .badge-screening { background: #1a2a3a; color: #58a6ff; }
+  .badge-interviewing { background: #3a2a10; color: #f39c12; }
+  .badge-offer { background: #2a1a3a; color: #a78bfa; }
+  .badge-placed { background: #1a3a1a; color: #27ae60; }
+  .badge-stalled { background: #3a1a1a; color: #e74c3c; }
+  .pipeline-stage { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; }
+  .stage-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid #21262d; }
+  .stage-row:last-child { border-bottom: none; }
+  .stage-label { width: 110px; font-size: 12px; color: #8b949e; }
+  .stage-bar-wrap { flex: 1; background: #21262d; border-radius: 4px; height: 8px; overflow: hidden; }
+  .stage-bar { height: 100%; border-radius: 4px; }
+  .stage-num { width: 40px; text-align: right; font-size: 13px; font-weight: 700; color: #f0f6fc; }
+  .revenue-tag { color: #27ae60; font-weight: 600; }
+  .loading { color: #8b949e; font-size: 13px; padding: 32px; text-align: center; }
+  .empty { color: #8b949e; font-size: 13px; padding: 24px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <a href="index.html">← Home</a>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="feature-roadmap.html">Roadmap</a>
+</div>
+<div class="header">
+  <h1>RevSup Dashboard</h1>
+  <p>Revenue leadership placements — active engagements, candidate pipeline, and placement revenue</p>
+</div>
+<div class="main">
+  <div class="kpi-row">
+    <div class="kpi"><div class="label">Active Engagements</div><div class="val" id="kpiActive">—</div><div class="sub">open searches</div></div>
+    <div class="kpi"><div class="label">Candidates in Pipeline</div><div class="val" id="kpiCandidates">—</div><div class="sub">total active</div></div>
+    <div class="kpi"><div class="label">Placements YTD</div><div class="val" id="kpiPlacements">—</div><div class="sub">closed this year</div></div>
+    <div class="kpi"><div class="label">Revenue YTD</div><div class="val" id="kpiRevenue">—</div><div class="sub">placement fees</div></div>
+  </div>
+  <div class="section-title">Candidate Pipeline by Stage</div>
+  <div class="pipeline-stage" id="pipelineStages"><div class="loading">Loading...</div></div>
+  <div class="two-col">
+    <div>
+      <div class="section-title">Active Engagements</div>
+      <div id="engagementTable"><div class="loading">Loading...</div></div>
+    </div>
+    <div>
+      <div class="section-title">Recent Placements</div>
+      <div id="placementTable"><div class="loading">Loading...</div></div>
+    </div>
+  </div>
+  <div class="section-title">Candidate Pipeline</div>
+  <div id="candidateTable"><div class="loading">Loading...</div></div>
+</div>
+<script>
+const SB = 'https://dwrnfpjcvydhmhnvyzov.supabase.co';
+const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NTcyOTAsImV4cCI6MjA5MDMzMzI5MH0.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY';
+const STAGES = ['sourcing','screening','interviewing','offer','placed'];
+const COLORS = { sourcing:'#8b949e', screening:'#58a6ff', interviewing:'#f39c12', offer:'#a78bfa', placed:'#27ae60' };
+
+async function load() {
+  const [engRes, candRes, placeRes] = await Promise.all([
+    fetch(SB+'/rest/v1/revsup_engagements?select=*&order=created_at.desc&limit=50', { headers: { apikey: KEY, Authorization: 'Bearer '+KEY } }),
+    fetch(SB+'/rest/v1/revsup_candidates?select=*&order=updated_at.desc&limit=100', { headers: { apikey: KEY, Authorization: 'Bearer '+KEY } }),
+    fetch(SB+'/rest/v1/revsup_placements?select=*&order=placed_at.desc&limit=30', { headers: { apikey: KEY, Authorization: 'Bearer '+KEY } })
+  ]);
+  const eng = engRes.ok ? await engRes.json() : [];
+  const cand = candRes.ok ? await candRes.json() : [];
+  const placed = placeRes.ok ? await placeRes.json() : [];
+  const ytd = new Date().getFullYear();
+  const ytdP = placed.filter(p => p.placed_at && new Date(p.placed_at).getFullYear() === ytd);
+  const ytdRev = ytdP.reduce((s,p)=>s+(p.fee||p.placement_fee||0),0);
+
+  document.getElementById('kpiActive').textContent = eng.filter(e=>e.status==='active').length;
+  document.getElementById('kpiCandidates').textContent = cand.filter(c=>c.stage!=='placed'&&c.stage!=='declined').length;
+  document.getElementById('kpiPlacements').textContent = ytdP.length;
+  document.getElementById('kpiRevenue').textContent = ytdRev ? '$'+ytdRev.toLocaleString() : '—';
+
+  const counts = {}; STAGES.forEach(s=>{counts[s]=cand.filter(c=>c.stage===s).length;});
+  const max = Math.max(...Object.values(counts),1);
+  document.getElementById('pipelineStages').innerHTML = STAGES.map(s=>`
+    <div class="stage-row">
+      <div class="stage-label">${s.charAt(0).toUpperCase()+s.slice(1)}</div>
+      <div class="stage-bar-wrap"><div class="stage-bar" style="width:${counts[s]/max*100}%;background:${COLORS[s]}"></div></div>
+      <div class="stage-num">${counts[s]}</div>
+    </div>`).join('');
+
+  document.getElementById('engagementTable').innerHTML = eng.length ? `<table><thead><tr><th>Client</th><th>Role</th><th>Status</th><th>Candidates</th></tr></thead><tbody>
+    ${eng.map(e=>`<tr><td>${e.client_name||e.company||'—'}</td><td>${e.role||e.title||'—'}</td>
+    <td><span class="badge badge-${e.status||'active'}">${e.status||'active'}</span></td>
+    <td>${cand.filter(c=>c.engagement_id===e.id).length}</td></tr>`).join('')}</tbody></table>` : '<div class="empty">No active engagements.</div>';
+
+  document.getElementById('placementTable').innerHTML = ytdP.length ? `<table><thead><tr><th>Candidate</th><th>Client</th><th>Fee</th><th>Date</th></tr></thead><tbody>
+    ${ytdP.map(p=>`<tr><td>${p.candidate_name||'—'}</td><td>${p.client_name||'—'}</td>
+    <td class="revenue-tag">${(p.fee||p.placement_fee)?'$'+(p.fee||p.placement_fee).toLocaleString():'—'}</td>
+    <td style="color:#8b949e;font-size:12px">${p.placed_at?new Date(p.placed_at).toLocaleDateString():'—'}</td></tr>`).join('')}</tbody></table>` : '<div class="empty">No placements yet this year.</div>';
+
+  document.getElementById('candidateTable').innerHTML = cand.length ? `<table><thead><tr><th>Candidate</th><th>Current Role</th><th>Target Role</th><th>Stage</th></tr></thead><tbody>
+    ${cand.map(c=>`<tr><td>${c.name||c.candidate_name||'—'}</td><td>${c.current_title||'—'}</td>
+    <td>${c.target_role||c.role||'—'}</td>
+    <td><span class="badge badge-${c.stage||'sourcing'}">${c.stage||'sourcing'}</span></td></tr>`).join('')}</tbody></table>` : '<div class="empty">No candidates in pipeline.</div>';
+}
+load();
+</script>
+</body>
+</html>

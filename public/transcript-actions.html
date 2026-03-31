@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transcript Actions — Next Chapter M&A</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0d1117; color: #c9d1d9; line-height: 1.6; min-height: 100vh; }
+  .top-nav { background: #161b22; padding: 8px 20px; border-bottom: 1px solid #30363d; }
+  .top-nav a { color: #58a6ff; text-decoration: none; font-size: 13px; }
+  .top-nav a + a { color: #8b949e; margin-left: 15px; }
+  .header { background: #161b22; border-bottom: 1px solid #30363d; padding: 20px 32px; display: flex; justify-content: space-between; align-items: center; }
+  .header h1 { font-size: 20px; font-weight: 700; color: #f0f6fc; }
+  .header p { font-size: 13px; color: #8b949e; margin-top: 3px; }
+  .filters { padding: 14px 32px; border-bottom: 1px solid #21262d; display: flex; gap: 12px; }
+  select { background: #161b22; border: 1px solid #30363d; color: #c9d1d9; padding: 6px 12px; border-radius: 6px; font-size: 13px; }
+  .main { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
+  .transcript-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
+  .transcript-header { padding: 14px 20px; border-bottom: 1px solid #30363d; display: flex; justify-content: space-between; align-items: center; }
+  .transcript-header h3 { font-size: 14px; font-weight: 600; color: #f0f6fc; }
+  .transcript-meta { font-size: 12px; color: #8b949e; }
+  .transcript-body { padding: 16px 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .action-col h4 { font-size: 12px; color: #58a6ff; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+  .checklist { list-style: none; }
+  .checklist-item { display: flex; gap: 10px; align-items: flex-start; padding: 6px 0; border-bottom: 1px solid #21262d; font-size: 13px; }
+  .checklist-item:last-child { border-bottom: none; }
+  .checklist-item input[type=checkbox] { width: 15px; height: 15px; accent-color: #27ae60; flex-shrink: 0; margin-top: 2px; }
+  .checklist-item label { cursor: pointer; flex: 1; }
+  .checklist-item label.done { text-decoration: line-through; color: #8b949e; }
+  .priority-high { color: #e74c3c; font-size: 10px; font-weight: 700; margin-left: 6px; }
+  .priority-med { color: #f39c12; font-size: 10px; font-weight: 700; margin-left: 6px; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .badge-processed { background: #1a3a1a; color: #27ae60; }
+  .badge-pending { background: #3a2a10; color: #f39c12; }
+  .loading { color: #8b949e; font-size: 13px; padding: 40px; text-align: center; }
+  .empty { color: #8b949e; font-size: 13px; padding: 32px; text-align: center; background: #161b22; border: 1px solid #30363d; border-radius: 8px; }
+  .summary-box { background: #0d1117; border-radius: 6px; padding: 12px 14px; font-size: 12px; color: #8b949e; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <a href="index.html">← Home</a>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="feature-roadmap.html">Roadmap</a>
+</div>
+<div class="header">
+  <div>
+    <h1>Transcript Actions</h1>
+    <p>AI-extracted action items from processed call transcripts</p>
+  </div>
+  <select id="statusFilter" onchange="load()"><option value="">All Transcripts</option><option value="processed">Processed</option><option value="pending">Pending</option></select>
+</div>
+<div class="filters">
+  <select id="entityFilter" onchange="load()"><option value="">All Entities</option></select>
+</div>
+<div class="main" id="main"><div class="loading">Loading transcripts...</div></div>
+<script>
+const SB = 'https://dwrnfpjcvydhmhnvyzov.supabase.co';
+const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NTcyOTAsImV4cCI6MjA5MDMzMzI5MH0.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY';
+
+function parseActions(raw) {
+  if (Array.isArray(raw)) return raw;
+  if (typeof raw === 'string') { try { return JSON.parse(raw); } catch { return raw.split('\n').filter(Boolean).map(s => ({ text: s.replace(/^[-*]\s*/, ''), priority: 'medium', done: false })); } }
+  return [];
+}
+
+async function load() {
+  const entity = document.getElementById('entityFilter').value;
+  const status = document.getElementById('statusFilter').value;
+  let url = `${SB}/rest/v1/transcripts?select=*&order=created_at.desc&limit=30`;
+  if (entity) url += `&entity_id=eq.${entity}`;
+  if (status) url += `&status=eq.${status}`;
+  const res = await fetch(url, { headers: { apikey: KEY, Authorization: `Bearer ${KEY}` } });
+  const rows = res.ok ? await res.json() : [];
+  if (!rows.length) { document.getElementById('main').innerHTML = '<div class="empty">No transcripts found. Processed call transcripts with extracted action items appear here.</div>'; return; }
+  document.getElementById('main').innerHTML = rows.map((t, ti) => {
+    const actions = parseActions(t.action_items || t.actions || []);
+    return `<div class="transcript-card">
+      <div class="transcript-header">
+        <div>
+          <h3>${t.title || t.meeting_title || 'Call — ' + (t.entity_id || 'Unknown')}</h3>
+          <div class="transcript-meta">${t.entity_id || '—'} | ${t.created_at ? new Date(t.created_at).toLocaleDateString() : '—'} | ${actions.length} action items</div>
+        </div>
+        <span class="badge badge-${t.status === 'processed' ? 'processed' : 'pending'}">${t.status || 'pending'}</span>
+      </div>
+      <div class="transcript-body">
+        <div class="action-col">
+          <h4>Action Items</h4>
+          ${actions.length ? '<ul class="checklist">' + actions.map((a, i) => {
+            const text = typeof a === 'string' ? a : (a.text || a.action || String(a));
+            const pri = typeof a === 'object' ? a.priority : null;
+            return `<li class="checklist-item"><input type="checkbox" id="t${ti}a${i}"><label for="t${ti}a${i}">${text}${pri === 'high' ? '<span class="priority-high">HIGH</span>' : pri === 'medium' ? '<span class="priority-med">MED</span>' : ''}</label></li>`;
+          }).join('') + '</ul>' : '<div style="color:#8b949e;font-size:13px">No actions extracted yet.</div>'}
+        </div>
+        <div class="action-col">
+          <h4>AI Summary</h4>
+          <div class="summary-box">${t.summary || t.ai_summary || '<span style="color:#8b949e">No summary available.</span>'}</div>
+          ${t.sentiment ? `<div style="margin-top:10px;font-size:12px;color:#8b949e">Sentiment: <strong style="color:${t.sentiment==='positive'?'#27ae60':t.sentiment==='negative'?'#e74c3c':'#f39c12'}">${t.sentiment}</strong></div>` : ''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function init() {
+  const res = await fetch(`${SB}/rest/v1/entities?select=id,name&order=name.asc`, { headers: { apikey: KEY, Authorization: `Bearer ${KEY}` } });
+  if (res.ok) {
+    const ents = await res.json();
+    const sel = document.getElementById('entityFilter');
+    ents.forEach(e => { const o = document.createElement('option'); o.value = e.id; o.textContent = e.name; sel.appendChild(o); });
+  }
+  load();
+}
+init();
+</script>
+</body>
+</html>

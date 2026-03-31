@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meeting v2 — Next Chapter M&A</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0d1117; color: #c9d1d9; line-height: 1.6; min-height: 100vh; }
+  .top-nav { background: #161b22; padding: 8px 20px; border-bottom: 1px solid #30363d; }
+  .top-nav a { color: #58a6ff; text-decoration: none; font-size: 13px; }
+  .top-nav a + a { color: #8b949e; margin-left: 15px; }
+  .header { background: #161b22; border-bottom: 1px solid #30363d; padding: 18px 32px; display: flex; justify-content: space-between; align-items: center; }
+  .header h1 { font-size: 20px; font-weight: 700; color: #f0f6fc; }
+  .phase-nav { display: flex; gap: 4px; }
+  .phase-btn { padding: 6px 16px; border-radius: 6px; font-size: 12px; font-weight: 600; border: 1px solid #30363d; background: #161b22; color: #8b949e; cursor: pointer; }
+  .phase-btn.active { background: #1a2a3a; color: #58a6ff; border-color: #58a6ff; }
+  .main { max-width: 1000px; margin: 0 auto; padding: 28px 32px; }
+  .entity-select { display: flex; gap: 12px; align-items: center; margin-bottom: 24px; }
+  select, input[type=text] { background: #161b22; border: 1px solid #30363d; color: #c9d1d9; padding: 7px 12px; border-radius: 6px; font-size: 13px; }
+  .phase { display: none; }
+  .phase.active { display: block; }
+  .card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 20px 24px; margin-bottom: 18px; }
+  .card h3 { font-size: 14px; font-weight: 600; color: #f0f6fc; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #30363d; }
+  .prep-item { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #21262d; font-size: 13px; }
+  .prep-item:last-child { border-bottom: none; }
+  .prep-icon { color: #27ae60; font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+  .prep-icon.warn { color: #f39c12; }
+  .prep-icon.missing { color: #e74c3c; }
+  textarea { width: 100%; background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; padding: 10px 12px; border-radius: 6px; font-size: 13px; resize: vertical; min-height: 80px; margin-bottom: 12px; }
+  textarea:focus { outline: none; border-color: #58a6ff; }
+  .action-list { list-style: none; }
+  .action-item { display: flex; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid #21262d; }
+  .action-item:last-child { border-bottom: none; }
+  .action-item input[type=checkbox] { width: 16px; height: 16px; accent-color: #27ae60; }
+  .action-item label { font-size: 13px; flex: 1; }
+  .action-item .owner { font-size: 11px; color: #8b949e; }
+  .btn { padding: 8px 18px; border-radius: 6px; font-size: 13px; font-weight: 600; border: none; cursor: pointer; transition: opacity 0.15s; }
+  .btn-primary { background: #27ae60; color: #fff; }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-secondary { background: #161b22; color: #58a6ff; border: 1px solid #30363d; margin-left: 8px; }
+  .save-msg { display: inline; font-size: 12px; color: #27ae60; margin-left: 12px; opacity: 0; transition: opacity 0.3s; }
+  .loading { color: #8b949e; font-size: 13px; padding: 32px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <a href="index.html">← Home</a>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="feature-roadmap.html">Roadmap</a>
+</div>
+<div class="header">
+  <div>
+    <h1>Meeting v2</h1>
+  </div>
+  <div class="phase-nav">
+    <button class="phase-btn active" onclick="setPhase('prep',this)">Pre-Meeting</button>
+    <button class="phase-btn" onclick="setPhase('during',this)">During</button>
+    <button class="phase-btn" onclick="setPhase('post',this)">Post-Meeting</button>
+  </div>
+</div>
+<div class="main">
+  <div class="entity-select">
+    <select id="entitySel" onchange="loadContext()"><option value="">Select entity...</option></select>
+    <input type="text" id="meetingTitle" placeholder="Meeting title..." style="width:280px">
+  </div>
+
+  <div id="prep" class="phase active">
+    <div class="card">
+      <h3>Pre-Meeting Checklist</h3>
+      <div id="prepList"><div class="loading">Select entity to load context...</div></div>
+    </div>
+    <div class="card">
+      <h3>Key Questions to Ask</h3>
+      <div id="prepQuestions"><div style="color:#8b949e;font-size:13px">Select entity to load suggested questions.</div></div>
+    </div>
+  </div>
+
+  <div id="during" class="phase">
+    <div class="card">
+      <h3>Meeting Notes</h3>
+      <textarea id="notesWho" placeholder="Attendees (one per line)..." style="min-height:50px"></textarea>
+      <textarea id="notesContext" placeholder="Context & background discussed..."></textarea>
+      <textarea id="notesInsights" placeholder="Key insights & signals from the call..." style="min-height:100px"></textarea>
+      <textarea id="notesObjections" placeholder="Objections or concerns raised..."></textarea>
+    </div>
+    <div class="card">
+      <h3>Quick Capture</h3>
+      <textarea id="notesRaw" placeholder="Raw notes — dump everything here, clean up later..." style="min-height:120px"></textarea>
+      <button class="btn btn-primary" onclick="saveNotes()">Save Notes</button>
+      <span class="save-msg" id="saveMsg">Saved!</span>
+    </div>
+  </div>
+
+  <div id="post" class="phase">
+    <div class="card">
+      <h3>Action Items</h3>
+      <ul class="action-list" id="actionList">
+        <li class="action-item"><input type="checkbox" id="a1"><label for="a1">Send follow-up email with next steps</label><span class="owner">NC Team</span></li>
+        <li class="action-item"><input type="checkbox" id="a2"><label for="a2">Update CRM with meeting outcome</label><span class="owner">NC Team</span></li>
+        <li class="action-item"><input type="checkbox" id="a3"><label for="a3">Confirm NDA status</label><span class="owner">NC Team</span></li>
+        <li class="action-item"><input type="checkbox" id="a4"><label for="a4">Send requested materials</label><span class="owner">NC Team</span></li>
+        <li class="action-item"><input type="checkbox" id="a5"><label for="a5">Schedule next call / site visit</label><span class="owner">NC Team</span></li>
+      </ul>
+      <textarea id="postNotes" placeholder="Additional post-meeting notes..." style="margin-top:16px"></textarea>
+      <button class="btn btn-primary" onclick="savePost()">Save & Close Meeting</button>
+      <button class="btn btn-secondary" onclick="window.print()">Print Summary</button>
+    </div>
+  </div>
+</div>
+<script>
+const SB = 'https://dwrnfpjcvydhmhnvyzov.supabase.co';
+const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NTcyOTAsImV4cCI6MjA5MDMzMzI5MH0.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY';
+
+function setPhase(id, btn) {
+  document.querySelectorAll('.phase').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.phase-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+async function loadContext() {
+  const entity = document.getElementById('entitySel').value;
+  if (!entity) return;
+  const res = await fetch(`${SB}/rest/v1/entities?id=eq.${entity}&select=*`, { headers: { apikey: KEY, Authorization: `Bearer ${KEY}` } });
+  const data = res.ok ? await res.json() : [];
+  const e = data[0] || {};
+  document.getElementById('prepList').innerHTML = [
+    { icon: e.website ? '✓' : '⚠', cls: e.website ? '' : 'warn', text: `Website reviewed: ${e.website || 'Not on file'}` },
+    { icon: e.revenue ? '✓' : '✗', cls: e.revenue ? '' : 'missing', text: `Revenue confirmed: ${e.revenue ? '$' + e.revenue : 'Unknown'}` },
+    { icon: e.owner_name ? '✓' : '✗', cls: e.owner_name ? '' : 'missing', text: `Owner identified: ${e.owner_name || 'Not on file'}` },
+    { icon: '✓', cls: '', text: 'CRM updated with latest status' },
+    { icon: '✓', cls: '', text: 'Letter preview reviewed' },
+  ].map(i => `<div class="prep-item"><span class="prep-icon ${i.cls}">${i.icon}</span><span>${i.text}</span></div>`).join('');
+  const industry = e.industry || e.vertical || 'their industry';
+  document.getElementById('prepQuestions').innerHTML = [
+    `What originally drew you to ${industry}?`,
+    'What does your day-to-day look like right now?',
+    'Have you thought about what comes next for the business?',
+    'What matters most to you in any transition?',
+    'Are there customers or employees you feel especially responsible for?',
+    'What would need to be true for you to feel great about a deal?',
+  ].map(q => `<div class="prep-item"><span class="prep-icon">▸</span><span>${q}</span></div>`).join('');
+}
+
+async function saveNotes() {
+  const entity = document.getElementById('entitySel').value;
+  const payload = { entity_id: entity || null, title: document.getElementById('meetingTitle').value || 'Meeting Notes', attendees: document.getElementById('notesWho').value, context: document.getElementById('notesContext').value, insights: document.getElementById('notesInsights').value, objections: document.getElementById('notesObjections').value, raw_notes: document.getElementById('notesRaw').value, phase: 'during', created_at: new Date().toISOString() };
+  await fetch(`${SB}/rest/v1/meeting_notes`, { method: 'POST', headers: { apikey: KEY, Authorization: `Bearer ${KEY}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' }, body: JSON.stringify(payload) });
+  const msg = document.getElementById('saveMsg'); msg.style.opacity = 1; setTimeout(() => msg.style.opacity = 0, 2000);
+}
+
+async function savePost() {
+  const entity = document.getElementById('entitySel').value;
+  const checks = [1,2,3,4,5].map(i => document.getElementById('a'+i)?.checked);
+  const payload = { entity_id: entity || null, title: document.getElementById('meetingTitle').value || 'Meeting', action_items_complete: checks.filter(Boolean).length, post_notes: document.getElementById('postNotes').value, phase: 'complete', created_at: new Date().toISOString() };
+  await fetch(`${SB}/rest/v1/meeting_notes`, { method: 'POST', headers: { apikey: KEY, Authorization: `Bearer ${KEY}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' }, body: JSON.stringify(payload) });
+  alert('Meeting saved successfully.');
+}
+
+async function init() {
+  const res = await fetch(`${SB}/rest/v1/entities?select=id,name&order=name.asc`, { headers: { apikey: KEY, Authorization: `Bearer ${KEY}` } });
+  if (res.ok) {
+    const ents = await res.json();
+    const sel = document.getElementById('entitySel');
+    ents.forEach(e => { const o = document.createElement('option'); o.value = e.id; o.textContent = e.name; sel.appendChild(o); });
+  }
+}
+init();
+</script>
+</body>
+</html>

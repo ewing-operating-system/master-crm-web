@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AND Capital Dashboard — Next Chapter M&A</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0d1117; color: #c9d1d9; line-height: 1.6; min-height: 100vh; }
+  .top-nav { background: #161b22; padding: 8px 20px; border-bottom: 1px solid #30363d; }
+  .top-nav a { color: #58a6ff; text-decoration: none; font-size: 13px; }
+  .top-nav a + a { color: #8b949e; margin-left: 15px; }
+  .header { background: #161b22; border-bottom: 1px solid #30363d; padding: 20px 32px; }
+  .header h1 { font-size: 20px; font-weight: 700; color: #f0f6fc; }
+  .header p { font-size: 13px; color: #8b949e; margin-top: 3px; }
+  .main { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
+  .fund-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+  .fund-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 18px 22px; }
+  .fund-card .label { font-size: 11px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; }
+  .fund-card .value { font-size: 28px; font-weight: 700; color: #f0f6fc; margin: 6px 0 2px; }
+  .fund-card .sub { font-size: 12px; color: #8b949e; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .section-title { font-size: 14px; font-weight: 600; color: #f0f6fc; margin-bottom: 12px; }
+  table { width: 100%; border-collapse: collapse; background: #161b22; border: 1px solid #30363d; border-radius: 8px; overflow: hidden; margin-bottom: 24px; }
+  th { background: #0d1117; color: #8b949e; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; padding: 9px 14px; text-align: left; border-bottom: 1px solid #30363d; }
+  td { padding: 10px 14px; font-size: 13px; border-bottom: 1px solid #21262d; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #1c2128; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .badge-prospect { background: #21262d; color: #8b949e; }
+  .badge-intro { background: #1a2a3a; color: #58a6ff; }
+  .badge-diligence { background: #3a2a10; color: #f39c12; }
+  .badge-committed { background: #1a3a1a; color: #27ae60; }
+  .badge-closed { background: #2a1a3a; color: #a78bfa; }
+  .stage-funnel { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; }
+  .stage-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid #21262d; }
+  .stage-row:last-child { border-bottom: none; }
+  .stage-name { width: 100px; font-size: 12px; color: #8b949e; }
+  .stage-bar-wrap { flex: 1; background: #21262d; border-radius: 4px; height: 8px; overflow: hidden; }
+  .stage-bar { height: 100%; border-radius: 4px; }
+  .stage-count { width: 40px; text-align: right; font-size: 13px; font-weight: 600; color: #f0f6fc; }
+  .loading { color: #8b949e; font-size: 13px; padding: 32px; text-align: center; }
+  .empty { color: #8b949e; font-size: 13px; padding: 24px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <a href="index.html">← Home</a>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="feature-roadmap.html">Roadmap</a>
+</div>
+<div class="header">
+  <h1>AND Capital Dashboard</h1>
+  <p>Fund overview, LP pipeline, and deck distribution tracking</p>
+</div>
+<div class="main">
+  <div class="fund-cards">
+    <div class="fund-card"><div class="label">Fund Target</div><div class="value" id="fundTarget">—</div><div class="sub">target raise</div></div>
+    <div class="fund-card"><div class="label">Committed</div><div class="value" id="fundCommitted">—</div><div class="sub">from LPs</div></div>
+    <div class="fund-card"><div class="label">Active LP Prospects</div><div class="value" id="lpCount">—</div><div class="sub">in pipeline</div></div>
+    <div class="fund-card"><div class="label">Decks Sent</div><div class="value" id="decksSent">—</div><div class="sub">total distributed</div></div>
+    <div class="fund-card"><div class="label">Deck Opens</div><div class="value" id="decksOpened">—</div><div class="sub">tracked opens</div></div>
+    <div class="fund-card"><div class="label">LP Meetings</div><div class="value" id="meetingsCount">—</div><div class="sub">scheduled</div></div>
+  </div>
+  <div class="section-title">LP Pipeline by Stage</div>
+  <div class="stage-funnel" id="stageFunnel"><div class="loading">Loading...</div></div>
+  <div class="two-col">
+    <div>
+      <div class="section-title">LP Contacts</div>
+      <div id="lpTable"><div class="loading">Loading...</div></div>
+    </div>
+    <div>
+      <div class="section-title">Deck Distribution</div>
+      <div id="deckTable"><div class="loading">Loading...</div></div>
+    </div>
+  </div>
+</div>
+<script>
+const SB = 'https://dwrnfpjcvydhmhnvyzov.supabase.co';
+const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NTcyOTAsImV4cCI6MjA5MDMzMzI5MH0.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY';
+const STAGES = ['prospect','intro','diligence','committed','closed'];
+const COLORS = { prospect:'#8b949e', intro:'#58a6ff', diligence:'#f39c12', committed:'#27ae60', closed:'#a78bfa' };
+
+async function load() {
+  const [lpRes, deckRes, fundRes] = await Promise.all([
+    fetch(`${SB}/rest/v1/and_capital_lps?select=*&order=created_at.desc&limit=100`, { headers: { apikey: KEY, Authorization: `Bearer ${KEY}` } }),
+    fetch(`${SB}/rest/v1/and_capital_decks?select=*&order=sent_at.desc&limit=50`, { headers: { apikey: KEY, Authorization: `Bearer ${KEY}` } }),
+    fetch(`${SB}/rest/v1/and_capital_fund?select=*&limit=1`, { headers: { apikey: KEY, Authorization: `Bearer ${KEY}` } })
+  ]);
+  const lps = lpRes.ok ? await lpRes.json() : [];
+  const decks = deckRes.ok ? await deckRes.json() : [];
+  const funds = fundRes.ok ? await fundRes.json() : [];
+  const fund = funds[0] || {};
+
+  document.getElementById('fundTarget').textContent = fund.target_raise ? '$' + fund.target_raise : '—';
+  document.getElementById('fundCommitted').textContent = fund.committed ? '$' + fund.committed : '—';
+  document.getElementById('lpCount').textContent = lps.filter(l => l.stage !== 'closed' && l.stage !== 'passed').length;
+  document.getElementById('decksSent').textContent = decks.length;
+  document.getElementById('decksOpened').textContent = decks.filter(d => d.opened || d.viewed).length;
+  document.getElementById('meetingsCount').textContent = lps.filter(l => l.meeting_scheduled || l.stage === 'diligence' || l.stage === 'committed').length;
+
+  const counts = {};
+  STAGES.forEach(s => { counts[s] = lps.filter(l => l.stage === s).length; });
+  const max = Math.max(...Object.values(counts), 1);
+  document.getElementById('stageFunnel').innerHTML = STAGES.map(s => `
+    <div class="stage-row">
+      <div class="stage-name">${s.charAt(0).toUpperCase() + s.slice(1)}</div>
+      <div class="stage-bar-wrap"><div class="stage-bar" style="width:${counts[s]/max*100}%;background:${COLORS[s]}"></div></div>
+      <div class="stage-count">${counts[s]}</div>
+    </div>`).join('');
+
+  document.getElementById('lpTable').innerHTML = lps.length ? `<table><thead><tr><th>Name</th><th>Firm</th><th>Stage</th><th>Target</th></tr></thead><tbody>
+    ${lps.map(l => `<tr><td>${l.name || l.contact_name || '—'}</td><td>${l.firm || '—'}</td>
+    <td><span class="badge badge-${l.stage || 'prospect'}">${l.stage || 'prospect'}</span></td>
+    <td style="color:#27ae60">${l.target_commitment ? '$' + l.target_commitment : '—'}</td></tr>`).join('')}
+    </tbody></table>` : '<div class="empty">No LP contacts yet.</div>';
+
+  document.getElementById('deckTable').innerHTML = decks.length ? `<table><thead><tr><th>Recipient</th><th>Sent</th><th>Opened</th><th>Views</th></tr></thead><tbody>
+    ${decks.map(d => `<tr><td>${d.recipient_name || d.recipient || '—'}</td>
+    <td style="color:#8b949e;font-size:12px">${d.sent_at ? new Date(d.sent_at).toLocaleDateString() : '—'}</td>
+    <td>${d.opened || d.viewed ? '<span style="color:#27ae60">Yes</span>' : '<span style="color:#8b949e">No</span>'}</td>
+    <td>${d.view_count || 0}</td></tr>`).join('')}
+    </tbody></table>` : '<div class="empty">No deck records yet.</div>';
+}
+load();
+</script>
+</body>
+</html>
