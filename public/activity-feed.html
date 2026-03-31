@@ -443,9 +443,9 @@ async function fetchActivity() {
     } catch (_) {}
   }
 
-  // ── guardrail_violations → Alerts ─────────────────────────────────────
+  // ── guardrail_log → Alerts ─────────────────────────────────────
   try {
-    const rows = await sbGet('guardrail_violations',
+    const rows = await sbGet('guardrail_log',
       `created_at=gt.${since}${entityFilter}` +
       `&order=created_at.desc&limit=200`
     );
@@ -458,7 +458,7 @@ async function fetchActivity() {
       if (row.severity === 'critical') ev.highlight = `Critical violation: ${row.violation_type}`;
       cats.alerts.push(ev);
     }
-  } catch (e) { console.warn('guardrail_violations:', e.message); }
+  } catch (e) { console.warn('guardrail_log:', e.message); }
 
   // ── DNC hits ───────────────────────────────────────────────────────────
   try {
@@ -482,11 +482,11 @@ async function fetchViolations() {
   try {
     const entityFilter = activeEntityFilter ? `&entity=eq.${activeEntityFilter}` : '';
     const sevFilter = activeSeverityFilter ? `&severity=eq.${activeSeverityFilter}` : '';
-    return await sbGet('guardrail_violations',
+    return await sbGet('guardrail_log',
       `order=created_at.desc&limit=500${entityFilter}${sevFilter}`
     );
   } catch (e) {
-    console.warn('guardrail_violations fetch:', e.message);
+    console.warn('guardrail_log fetch:', e.message);
     return [];
   }
 }
@@ -495,7 +495,7 @@ async function fetchTrend() {
   const since = new Date();
   since.setDate(since.getDate() - 7);
   try {
-    const rows = await sbGet('guardrail_violations',
+    const rows = await sbGet('guardrail_log',
       `created_at=gt.${since.toISOString()}&order=created_at.asc&limit=500`
     );
     const buckets = {};
