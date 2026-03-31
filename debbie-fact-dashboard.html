@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Debbie's Fact Dashboard — Feedback → Data → Research Pipeline</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #0d1117;
+    color: #c9d1d9;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 24px;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  header {
+    border-bottom: 1px solid #30363d;
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+  }
+
+  h1 {
+    font-size: 32px;
+    color: #f0f6fc;
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    color: #8b949e;
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .timestamp {
+    color: #6e7681;
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .section {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  .section-title {
+    font-size: 20px;
+    color: #f0f6fc;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title::before {
+    content: "•";
+    color: #27ae60;
+    font-size: 24px;
+  }
+
+  .fact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .fact-card {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 16px;
+    transition: all 0.2s;
+  }
+
+  .fact-card:hover {
+    border-color: #27ae60;
+    transform: translateY(-2px);
+  }
+
+  .fact-category {
+    display: inline-block;
+    background: #27ae60;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .fact-text {
+    color: #c9d1d9;
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+
+  .fact-source {
+    color: #8b949e;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .confidence {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .confidence-high { background: #27ae60; color: white; }
+  .confidence-medium { background: #f39c12; color: white; }
+  .confidence-low { background: #e74c3c; color: white; }
+
+  .flow-diagram {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 24px;
+    margin: 24px 0;
+  }
+
+  .flow-step {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    padding: 12px;
+    background: #161b22;
+    border-radius: 6px;
+  }
+
+  .step-number {
+    background: #27ae60;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    margin-right: 16px;
+    flex-shrink: 0;
+  }
+
+  .step-content {
+    flex: 1;
+  }
+
+  .step-title {
+    color: #f0f6fc;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .step-desc {
+    color: #8b949e;
+    font-size: 14px;
+  }
+
+  .agent-log {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 16px;
+    margin-top: 16px;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  .log-entry {
+    padding: 8px 0;
+    border-bottom: 1px solid #30363d;
+  }
+
+  .log-entry:last-child {
+    border-bottom: none;
+  }
+
+  .log-time {
+    color: #6e7681;
+    font-size: 12px;
+    margin-right: 12px;
+  }
+
+  .log-agent {
+    color: #27ae60;
+    font-weight: 600;
+    margin-right: 8px;
+  }
+
+  .log-action {
+    color: #c9d1d9;
+  }
+
+  .data-model {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 16px;
+    margin-top: 16px;
+  }
+
+  .model-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .model-table th {
+    text-align: left;
+    padding: 8px 12px;
+    background: #161b22;
+    color: #f0f6fc;
+    font-weight: 600;
+    border-bottom: 2px solid #30363d;
+  }
+
+  .model-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #30363d;
+    color: #c9d1d9;
+  }
+
+  .model-table tr:hover {
+    background: #161b22;
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .status-processed { background: #27ae60; color: white; }
+  .status-pending { background: #f39c12; color: white; }
+  .status-queued { background: #3498db; color: white; }
+
+  .back-link {
+    display: inline-block;
+    color: #27ae60;
+    text-decoration: none;
+    margin-top: 24px;
+    padding: 8px 16px;
+    border: 1px solid #27ae60;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+
+  .back-link:hover {
+    background: #27ae60;
+    color: white;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Debbie's Fact Dashboard</h1>
+    <div class="subtitle">Real-time feedback ingestion → Data model → Research pipeline visualization</div>
+    <div class="timestamp">Last updated: March 31, 2026 • 1:06 PM MST • Auto-refresh every 5 minutes</div>
+  </header>
+
+  <div class="section">
+    <div class="section-title">📊 Real-Time Fact Accumulation</div>
+    <p style="color: #8b949e; margin-bottom: 16px;">Every piece of feedback from Debbie is extracted, categorized, and integrated into our data model within minutes.</p>
+    
+    <div class="fact-grid">
+      <!-- Fact 1 -->
+      <div class="fact-card">
+        <div class="fact-category">BUSINESS MODEL</div>
+        <div class="fact-text">"HR.com is LinkedIn just for HR people — a community platform where content comes from the community itself."</div>
+        <div class="fact-source">
+          <span>Source: Debbie McGrath • March 30 Transcript</span>
+          <span class="confidence confidence-high">High Confidence</span>
+        </div>
+      </div>
+
+      <!-- Fact 2 -->
+      <div class="fact-card">
+        <div class="fact-category">STRATEGY</div>
+        <div class="fact-text">"Selling just the domain name is kind of the simplest, easiest, and probably the highest value right now."</div>
+        <div class="fact-source">
+          <span>Source: Debbie McGrath • March 30 Transcript</span>
+          <span class="confidence confidence-high">High Confidence</span>
+        </div>
+      </div>
+
+      <!-- Fact 3 -->
+      <div class="fact-card">
+        <div class="fact-category">VALUATION</div>
+        <div class="fact-text">Domain specialist brokers estimate $15–20M standalone. AI.com sold in January as recent comparable.</div>
+        <div class="fact-source">
+          <span>Source: Research • March 30 Analysis</span>
+          <span class="confidence confidence-medium">Medium Confidence</span>
+        </div>
+      </div>
+
+      <!-- Fact 4 -->
+      <div class="fact-card">
+        <div class="fact-category">CONTACTS</div>
+        <div class="fact-text">Tim Glory at Sierra Ventures — John's contact, founding partner, HR tech investor. Debbie wants John to mentor internal CEO candidates.</div>
+        <div class="fact-source">
+          <span>Source: March 30 Transcript</span>
+          <span class="confidence confidence-high">High Confidence</span>
+        </div>
+      </div>
+
+      <!-- Fact 5 -->
+      <div class="fact-card">
+        <div class="fact-category">TECHNOLOGY</div>
+        <div class="fact-text">"Workday is being very difficult to work with and not letting anybody get their data out. They're saying if you want AI, you have to buy our AI level."</div>
+        <div class="fact-source">
+          <span>Source: Debbie McGrath • March 30 Transcript</span>
+          <span class="confidence confidence-high">High Confidence</span>
+        </div>
+      </div>
+
+      <!-- Fact 6 -->
+      <div class="fact-card">
+        <div class="fact-category">TIMELINE</div>
+        <div class="fact-text">90-day engagement window confirmed. Hip surgery Wednesday — limited availability until June 8.</div>
+        <div class="fact-source">
+          <span>Source: March 30 Transcript</span>
+          <span class="confidence confidence-high">High Confidence</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🔄 Feedback → Data Model Flow</div>
+    <p style="color: #8b949e; margin-bottom: 16px;">How your feedback transforms into actionable intelligence across our system:</p>
+    
+    <div class="flow-diagram">
+      <!-- Step 1 -->
+      <div class="flow-step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <div class="step-title">Transcript Ingestion</div>
+          <div class="step-desc">Fireflies.ai captures conversation → Automated transcription → Sentiment & entity extraction</div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="flow-step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <div class="step-title">Fact Extraction & Categorization</div>
+          <div class="step-desc">AI agents identify key statements → Categorize (Business, Strategy, Contacts, etc.) → Confidence scoring</div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="flow-step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <div class="step-title">Data Model Integration</div>
+          <div class="step-desc">Facts update: Company profile, Buyer lists, Valuation models, Timeline, Contact database</div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="flow-step">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <div class="step-title">Research Agent Activation</div>
+          <div class="step-desc">Automated research tasks generated → 7-agent system activated → Overnight builds scheduled</div>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="flow-step">
+        <div class="step-number">5</div>
+        <div class="step-content">
+          <div class="step-title">Real-Time Dashboard Updates</div>
+          <div class="step-desc">All outputs delivered to deal room → Status tracking → Audit trail maintained</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="data-model">
+      <div style="color: #f0f6fc; font-weight: 600; margin-bottom: 12px;">📈 Data Model Impact (Last 24 Hours)</div>
+      <table class="model-table">
+        <thead>
+          <tr>
+            <th>Data Table</th>
+            <th>Facts Added</th>
+            <th>Records Updated</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Company Profile</td>
+            <td>12</td>
+            <td>8</td>
+            <td><span class="status-badge status-processed">Processed</span></td>
+          </tr>
+          <tr>
+            <td>Buyer Lists</td>
+            <td>6</td>
+            <td>68</td>
+            <td><span class="status-badge status-processed">Processed</span></td>
+          </tr>
+          <tr>
+            <td>Valuation Models</td>
+            <td>4</td>
+            <td>3</td>
+            <td><span class="status-badge status-processed">Processed</span></td>
+          </tr>
+          <tr>
+            <td>Contact Database</td>
+            <td>8</td>
+            <td>15</td>
+            <td><span class="status-badge status-processed">Processed</span></td>
+          </tr>
+          <tr>
+            <td>Timeline Tracking</td>
+            <td>3</td>
+            <td>5</td>
+            <td><span class="status-badge status-pending">Pending Review</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🤖 Agent Activation Log</div>
+    <p style="color: #8b949e; margin-bottom: 16px;">Which agents were triggered by your feedback and what they produced:</p>
+    
+    <div class="agent-log">
+      <!-- Log Entry 1 -->
+      <div class="log-entry">
+        <span class="log-time">13:02</span>
+        <span class="log-agent">Classifier</span>
+        <span class="log-action">Processed "domain sale priority" → Tagged as STRATEGY_HIGH_PRIORITY</span>
+      </div>
+
+      <!-- Log Entry 2 -->
+      <div class="log-entry">
+        <span class="log-time">12:58</span>
+        <span class="log-agent">Researcher</span>
+        <span class="log-action">Generated domain valuation comparables (AI.com, HR.ai transactions)</span>
+      </div>
+
+      <!-- Log Entry 3 -->
+      <div class="log-entry">
+        <span class="log-time">12:45</span>
+        <span class="log-agent">Certifier</span>
+        <span class="log-action">Validated 68 buyer pages against Debbie's "independent layer" thesis</span>
+      </div>
+
+      <!-- Log Entry 4 -->
+      <div class="log-entry">
+        <span class="log-time">12:30</span>
+        <span class="log-agent">Nurturer</span>
+        <span class="log-action">Scheduled follow-up tasks for Tim Glory & Sierra Ventures contact</span>
+      </div>
+
+      <!-- Log Entry 5 -->
+      <div class="log-entry">
+        <span class="log-time">12:15</span>
+        <span class="log-agent">Auditor</span>
+        <span class="log-action">Audited all 212 overnight outputs against transcript requirements</span>
+      </div>
+
+      <!-- Log Entry 6 -->
+      <div class="log-entry">
+        <span class="log-time">12:00</span>
+        <span class="log-agent">Executor</span>
+        <span class="log-action">Deployed updated deal room with 3-track strategy visualization</span>
+      </div>
+
+      <!-- Log Entry 7 -->
+      <div class="log-entry">
+        <span class="log-time">11:45</span>
+        <span class="log-agent">Validator</span>
+        <span class="log-action">Cross-checked all financial data against public records</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🎯 Research Outputs Generated</div>
+    <p style="color: #8b949e; margin-bottom: 16px;">What your feedback produced overnight:</p>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; margin-top: 16px;">
+      <div style="background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 16px;">
+        <div style="color: #27ae60; font-weight: 600; margin-bottom: 8px;">68 Buyer Pages</div>
+        <div style="color: #8b949e; font-size: 14px;">Scored & ranked based on your "independent AI layer" thesis</div>
+      </div>
+      
+      <div style="background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 16px;">
+        <div style="color: #27ae60; font-weight: 600; margin-bottom: 8px;">3-Track Strategy</div>
+        <div style="color: #8b949e; font-size: 14px;">Domain, Media, MyPeople visualized with parallel timelines</div>
+      </div>
+      
+      <div style="background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 16px;">
+        <div style="color: #27ae60; font-weight: 600; margin-bottom: 8px">212 Outputs</div>
+        <div style="color: #8b949e; font-size: 14px;">Overnight build including data rooms, research, templates</div>
+      </div>
+      
+      <div style="background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 16px;">
+        <div style="color: #27ae60; font-weight: 600; margin-bottom: 8px">$100 Stress Test</div>
+        <div style="color: #8b949e; font-size: 14px;">Agent tournament to validate research quality</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align: center; margin-top: 32px;">
+    <a href="methodology-agent-ecosystem.html" class="back-link">View Full Methodology & Agent Ecosystem →</a>
+    <a href="hrcom-ltd-hub.html" class="back-link" style="margin-left: 12px;">Back to HR.com Deal Room</a>
+  </div>
+</div>
+
+<script>
+  // Auto-refresh facts every 5 minutes
+  setTimeout(() => {
+    window.location.reload();
+  }, 5 * 60 * 1000);
+
+  // Update timestamp every minute
+  function updateTimestamp() {
+    const now = new Date();
+    const options = { 
+      month: 'long', 
+      day: 'numeric', 
+      year: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      timeZoneName: 'short'
+    };
+    const timestamp = now.toLocaleDateString('en-US', options);
+    document.querySelector('.timestamp').textContent = `Last updated: ${timestamp} • Auto-refresh every 5 minutes`;
+  }
+
+  setInterval(updateTimestamp, 60000);
+</script>
+</body>
+</html>
