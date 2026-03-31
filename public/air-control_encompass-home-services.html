@@ -43,7 +43,7 @@
   }
   .score-badge {
     position: absolute; top: 40px; right: 48px; width: 72px; height: 72px;
-    border-radius: 50%; background: #30363d;
+    border-radius: 50%; background: #e67e22;
     display: flex; align-items: center; justify-content: center; flex-direction: column;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   }
@@ -73,63 +73,26 @@
   .card p { margin-bottom: 10px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
   .card strong { color: #f0f6fc; }
 
+  /* WARNING CARD */
+  .warning-card {
+    border: 2px solid #e67e22 !important;
+    background: linear-gradient(135deg, #161b22, #1a1208) !important;
+  }
+  .warning-card h2 { color: #e67e22 !important; border-bottom-color: #e67e2240 !important; }
+  .warning-banner {
+    background: #e67e22; color: white; font-size: 11px; font-weight: 700;
+    letter-spacing: 1.5px; padding: 6px 16px; border-radius: 6px;
+    display: inline-block; margin-bottom: 16px; text-transform: uppercase;
+  }
+  .warning-body {
+    background: #0d1117; border: 1px solid #e67e2250; border-radius: 8px;
+    padding: 16px 20px; margin-bottom: 0;
+  }
+  .warning-body p { color: #f0c27f !important; margin-bottom: 8px !important; }
+  .warning-body p:last-child { margin-bottom: 0 !important; }
+
   /* NARRATIVE CONTENT */
   .narrative-content p { margin-bottom: 12px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
-  .narrative-content blockquote {
-    border-left: 3px solid #58a6ff; padding-left: 16px; margin: 12px 0;
-    font-style: italic; color: #8b949e;
-  }
-
-  /* URGENCY CARD (competitive moat) */
-  .urgency-card {
-    border: 2px solid #e74c3c !important;
-    background: linear-gradient(135deg, #161b22, #1a1015) !important;
-  }
-  .urgency-card h2 { color: #e74c3c !important; border-bottom-color: #e74c3c40 !important; }
-  .urgency-card::before {
-    content: 'URGENT'; position: absolute; top: -1px; right: 24px;
-    background: #e74c3c; color: white; font-size: 10px; font-weight: 700;
-    letter-spacing: 1.5px; padding: 4px 12px; border-radius: 0 0 6px 6px;
-  }
-  .urgency-card { position: relative; }
-
-  /* GOLDEN NUGGET CARDS */
-  .nugget-card {
-    background: #0d1117; border: 1px solid #21262d; border-radius: 8px;
-    padding: 20px; margin-bottom: 16px; border-left: 4px solid #f5a623;
-  }
-  .nugget-header {
-    font-size: 13px; font-weight: 700; color: #f5a623; margin-bottom: 12px;
-    text-transform: uppercase; letter-spacing: 1px;
-  }
-  .ceo-quote {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic; font-size: 15px; line-height: 1.7;
-    color: #e6e6e6; border-left: 3px solid #58a6ff;
-    padding: 12px 0 12px 20px; margin: 12px 0;
-  }
-  .nugget-opener {
-    background: #0b2e1a; border: 1px solid #27ae60; border-radius: 6px;
-    padding: 14px 18px; margin: 12px 0;
-  }
-  .nugget-opener p { color: #a3e4b8 !important; margin: 0 !important; font-size: 13px !important; line-height: 1.65 !important; }
-  .opener-label {
-    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
-    color: #27ae60; margin-bottom: 6px; text-transform: uppercase;
-  }
-  .nugget-why {
-    font-size: 12.5px; color: #8b949e; margin-top: 10px; line-height: 1.6;
-    padding-top: 10px; border-top: 1px solid #21262d;
-  }
-
-  /* EARNINGS QUOTES */
-  .earnings-quote {
-    margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #21262d;
-  }
-  .earnings-quote:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-  .quote-attribution {
-    font-size: 12px; color: #8b949e; margin-top: 8px; font-weight: 500;
-  }
 
   /* CONTACTS TABLE */
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -148,7 +111,11 @@
     background: #0b2e1a; border: 1px solid #27ae60; border-radius: 8px;
     padding: 18px 22px; margin-bottom: 16px;
   }
-  .approach-opener p { color: #a3e4b8 !important; font-size: 14px !important; line-height: 1.7 !important; }
+  .approach-opener p { color: #a3e4b8 !important; font-size: 14px !important; line-height: 1.7 !important; margin-bottom: 0 !important; }
+  .opener-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+    color: #27ae60; margin-bottom: 6px; text-transform: uppercase;
+  }
   .outreach-step {
     background: #0d1117; border: 1px solid #21262d; border-radius: 6px;
     padding: 14px 18px; margin-bottom: 10px;
@@ -157,6 +124,14 @@
     font-size: 11px; font-weight: 700; color: #58a6ff; letter-spacing: 1px;
     text-transform: uppercase; margin-bottom: 4px;
   }
+
+  /* PIPELINE TABLE */
+  .pipeline-status {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    padding: 3px 10px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .status-pending { background: #2d2d00; color: #f5a623; border: 1px solid #f5a62340; }
+  .status-needed  { background: #1a0d00; color: #e67e22; border: 1px solid #e67e2240; }
 
   /* FOOTER */
   .footer {
@@ -182,11 +157,11 @@
     .card { background: white; border: 1px solid #ddd; break-inside: avoid; }
     .card h2 { color: #0f3460; }
     .card p { color: #333; }
-    .urgency-card { border-color: #c0392b !important; background: #fff5f5 !important; }
-    .nugget-opener { background: #f0fff4; border-color: #27ae60; }
-    .nugget-opener p { color: #166534 !important; }
-    .ceo-quote { color: #333; }
-    .narrative-content p { color: #333; }
+    .warning-card { border-color: #e67e22 !important; background: #fffbf5 !important; }
+    .warning-body { background: #fff8ec; border-color: #e67e2250; }
+    .warning-body p { color: #7c4a00 !important; }
+    .approach-opener { background: #f0fff4; border-color: #27ae60; }
+    .approach-opener p { color: #166534 !important; }
   }
 </style>
 <link rel="stylesheet" href="section-controls.css">
@@ -203,8 +178,6 @@
 </div>
 <!-- NAV:END -->
 
-
-
 <div class="page">
 
   <!-- HEADER -->
@@ -213,38 +186,135 @@
     <h1>Encompass Home Services</h1>
     <div class="subtitle">Prepared for Air Control</div>
     <div class="header-meta">
-      <span class='tag'>Type: strategic</span>
-      
-      <span class='tag'>Louisville, KY</span>
+      <span class="tag">Residential HVAC Platform</span>
+      <span class="tag">Louisville, KY</span>
     </div>
-    
+    <div class="score-badge">
+      <span class="score-num">5</span>
+      <span class="score-label">Fit</span>
+    </div>
   </div>
 
   <!-- CONTEXT BAR -->
   <div class="context-bar">
     <div>
-      <strong>Air Control</strong> &bull; Fred Lowry &bull; HVAC
-      &bull; 3000000.0
+      <strong>Air Control</strong> &bull; Research Needs Verification
     </div>
-    <div>March 29, 2026</div>
+    <div>March 30, 2026</div>
   </div>
 
   <!-- CONTENT -->
   <div class="content">
-    
-    <div class="card" id="approach-strategy">
-        <h2>Approach Strategy</h2>
-        
-        <div class="approach-opener">
-            <div class="opener-label">CALL OPENER</div>
-            <p>**&quot;Your September 2024 hire of Scott Pierson as VP of HVAC and Market Strategy signals you&#x27;re serious about HVAC growth — Air Control&#x27;s established McLean operation could accelerate that push into the mid-Atlantic.&quot;** *(Source: Encompass Supply Chain Solutions press release, Sept. 5, 2024 — caveat: this is the parts distribution entity, not confirmed as the same buyer.)* | **&quot;Your December 2023 integration with Mr. Appliance (Neighborly) shows you know how to partner with franchise service networks — Air Control&#x27;s direct-service model in the DC metro would give you owned capacity rather than channel dependency.&quot;** *(Source: Encompass Supply Chain Solutions press release, Dec. 5, 2023 — same entity caveat.)* | **&quot;Andrew DeCastro&#x27;s corporate development background in M&amp;A oversight and deal sourcing at ARS suggests your team is actively building a thesis around residential services density — Air Control&#x27;s government-adjacent customer base in Northern Virginia is a differentiator no other target in the market offers.&quot;** *(Source: LinkedIn profile — caveat: DeCastro is at ARS, not confirmed as the same entity.)*</p>
-        </div>
+
+    <!-- WARNING CARD -->
+    <div class="card warning-card" id="verification-warning">
+      <h2>Research Verification Needed</h2>
+      <div class="warning-banner">Verification Required Before Outreach</div>
+      <div class="warning-body">
+        <p><strong>Initial research may have targeted the wrong company.</strong> The prior dossier sourced data from Encompass Supply Chain Solutions — a parts distributor unrelated to residential home services — and flagged this error three times in its own call opener. That content has been removed.</p>
+        <p>The intended target is <strong>Encompass Home Services</strong>, a residential HVAC platform based in Louisville, KY. These are two distinct entities. No verified buyer profile, acquisition history, or confirmed contacts for the HVAC platform have been established.</p>
+        <p><strong>Next step:</strong> Manual verification required. Confirm the correct legal entity, website, and ownership structure for Encompass Home Services before any outreach is initiated.</p>
+      </div>
     </div>
+
+    <!-- BUYER PROFILE -->
+    <div class="card" id="buyer-profile">
+      <h2>Buyer Profile</h2>
+      <p><strong>Entity:</strong> Encompass Home Services</p>
+      <p><strong>Reported HQ:</strong> Louisville, KY</p>
+      <p><strong>Business Type:</strong> Residential HVAC platform (reported)</p>
+      <p><strong>Ownership:</strong> Not verified — private equity backing unconfirmed</p>
+      <p><strong>M&A Activity:</strong> No verified acquisition history on file. Prior research attributed press releases and LinkedIn contacts to Encompass Supply Chain Solutions, a separate parts-distribution business. None of that data has been carried forward.</p>
+      <p style="color:#8b949e;font-size:13px;margin-top:12px;">This section will be populated once entity verification is complete.</p>
+    </div>
+
+    <!-- CONTACTS -->
+    <div class="card" id="contacts">
+      <h2>Contacts</h2>
+      <p style="color:#8b949e;font-size:13px;margin-bottom:16px;">No verified contacts on file. Contacts from the prior research were linked to Encompass Supply Chain Solutions and have been removed.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Source</th>
+            <th>Confidence</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="4" style="color:#484f58;font-style:italic;text-align:center;padding:20px 12px;">Pending verification</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- STRATEGIC FIT -->
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <p>If Encompass Home Services is confirmed as a residential HVAC acquirer operating in the mid-Atlantic or Southeast, Air Control would be a strong fit candidate:</p>
+      <p><strong>Geography:</strong> Air Control operates in the DC/Northern Virginia metro — a high-density residential market that HVAC platform builders consistently target for owned capacity.</p>
+      <p><strong>Customer base:</strong> Government-adjacent residential and light commercial accounts in Northern Virginia represent a defensible, recurring-revenue customer profile.</p>
+      <p><strong>Revenue:</strong> Air Control at approximately $3M revenue is squarely in the range most residential HVAC platforms acquire as add-ons to an established local anchor.</p>
+      <p style="color:#8b949e;font-size:13px;margin-top:12px;">Strategic fit analysis is provisional and based on Air Control's known profile. It will be updated once Encompass Home Services' acquisition thesis is confirmed.</p>
+    </div>
+
+    <!-- APPROACH STRATEGY -->
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+      <p style="color:#8b949e;font-size:13px;margin-bottom:16px;">Call opener is held pending entity verification. Do not initiate outreach until the correct Encompass Home Services contacts are confirmed.</p>
+      <div class="approach-opener">
+        <div class="opener-label">Draft Opener — Hold Until Verified</div>
+        <p>"We represent Air Control — an established HVAC operator in the Northern Virginia market. If you're building residential services density in the mid-Atlantic, we'd like to walk you through why their customer base and market position are a strong fit for what you're building."</p>
+      </div>
+      <div class="outreach-step">
+        <div class="step-label">Step 1 — Verify Entity</div>
+        <p style="font-size:13px;color:#c9d1d9;margin:0;">Confirm legal name, website, ownership, and decision-maker for Encompass Home Services (Louisville, KY). Distinguish from Encompass Supply Chain Solutions.</p>
+      </div>
+      <div class="outreach-step">
+        <div class="step-label">Step 2 — Source Contacts</div>
+        <p style="font-size:13px;color:#c9d1d9;margin:0;">Identify VP of Corporate Development, CEO, or M&A lead at the confirmed entity. Run Exa or LinkedIn enrichment once entity is verified.</p>
+      </div>
+      <div class="outreach-step">
+        <div class="step-label">Step 3 — Rebuild Dossier</div>
+        <p style="font-size:13px;color:#c9d1d9;margin:0;">Once correct entity confirmed, run full research pass: acquisition history, investment thesis, geographic footprint, and call-ready opener.</p>
+      </div>
+    </div>
+
+    <!-- PIPELINE HISTORY -->
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Event</th>
+            <th>Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Mar 29, 2026</td>
+            <td>Initial dossier generated</td>
+            <td><span class="pipeline-status status-needed">Wrong Entity</span></td>
+            <td>Research sourced from Encompass Supply Chain Solutions (parts distributor). Dossier flagged and withdrawn.</td>
+          </tr>
+          <tr>
+            <td>Mar 30, 2026</td>
+            <td>Dossier rewritten</td>
+            <td><span class="pipeline-status status-pending">Verification Pending</span></td>
+            <td>Wrong-company content removed. Entity verification required before outreach. Score held at 5 until confirmed.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 
   <!-- FOOTER -->
   <div class="footer">
-    Generated March 29, 2026 &bull; Next Chapter M&A Advisory &bull; Confidential &bull; Internal Use Only
+    Generated March 30, 2026 &bull; Next Chapter M&A Advisory &bull; Confidential &bull; Internal Use Only
   </div>
 
 </div>

@@ -13,6 +13,9 @@
   .header-label { text-transform: uppercase; font-size: 11px; letter-spacing: 3px; color: rgba(255,255,255,0.5); margin-bottom: 8px; }
   .header h1 { font-size: 28px; font-weight: 700; color: #f0f6fc; }
   .header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 4px; }
+  .header-meta { display: flex; gap: 24px; margin-top: 16px; flex-wrap: wrap; }
+  .header-meta-item { font-size: 12px; color: rgba(255,255,255,0.55); }
+  .header-meta-item strong { color: rgba(255,255,255,0.85); font-weight: 600; }
   .score-badge { position: absolute; top: 40px; right: 48px; width: 72px; height: 72px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column; }
   .score-high { background: #27ae60; }
   .score-med { background: #f39c12; }
@@ -25,9 +28,11 @@
   .card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 24px; margin-bottom: 24px; }
   .card h2 { font-size: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: #58a6ff; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid #21262d; }
   .card p { margin-bottom: 10px; font-size: 14px; line-height: 1.75; }
+  .card p:last-child { margin-bottom: 0; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th { text-align: left; padding: 10px 12px; background: #0d1117; font-weight: 600; color: #8b949e; font-size: 11px; text-transform: uppercase; border-bottom: 1px solid #30363d; }
-  td { padding: 10px 12px; border-bottom: 1px solid #21262d; color: #c9d1d9; }
+  td { padding: 10px 12px; border-bottom: 1px solid #21262d; color: #c9d1d9; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
   tr:hover td { background: #1c2128; }
   a { color: #58a6ff; text-decoration: none; }
   .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-right: 6px; }
@@ -37,6 +42,18 @@
   .tag-pe { background: #1a2a3a; color: #58a6ff; }
   .tag-fs { background: #2a1a3a; color: #bc8cff; }
   .tag-sb { background: #1a3a3a; color: #39d353; }
+  .narrative-box { background: #0d1117; border-left: 3px solid #58a6ff; border-radius: 0 8px 8px 0; padding: 18px 20px; margin-bottom: 0; font-size: 14px; line-height: 1.8; color: #c9d1d9; }
+  .narrative-box p { margin-bottom: 12px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .talking-point { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 16px 18px; margin-bottom: 12px; }
+  .talking-point:last-child { margin-bottom: 0; }
+  .talking-point-num { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #58a6ff; margin-bottom: 6px; }
+  .talking-point-text { font-size: 14px; line-height: 1.75; color: #c9d1d9; }
+  .pipeline-status { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+  .status-pending { background: #3a2e0a; color: #d29922; }
+  .status-cold { background: #1a2a3a; color: #8b949e; }
+  .status-active { background: #1a3a2a; color: #3fb950; }
+  .contact-notes { color: #8b949e; font-size: 12px; font-style: italic; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
@@ -48,27 +65,32 @@
   <span style="color:#d0d7de">|</span>
   <style>.nc-nav a{color:#0969da;text-decoration:none;font-weight:500}.nc-nav a:hover{text-decoration:underline}</style>
   <a href="index.html">Home</a>
-      <a href="system-overview.html">System Overview</a>
-      <a href="springer-floor-hub.html">Springer Floor Hub</a>
+  <a href="system-overview.html">System Overview</a>
+  <a href="springer-floor-hub.html">Springer Floor Hub</a>
 </div>
 <!-- NAV:END -->
 
-
-
 <div class="page">
   <div class="header">
-    <div class="header-label">Buyer Dossier</div>
+    <div class="header-label">Sell-Side Buyer Dossier</div>
     <h1>SERVPRO Industries</h1>
-    <div class="subtitle">Prepared for Springer Floor &bull; Gallatin, TN</div>
+    <div class="subtitle">Prepared for Springer Floor Care &bull; Des Moines, IA</div>
+    <div class="header-meta">
+      <div class="header-meta-item"><strong>Seller:</strong> Terri &amp; Eddie Holman</div>
+      <div class="header-meta-item"><strong>Seller Revenue:</strong> ~$900K</div>
+      <div class="header-meta-item"><strong>Buyer HQ:</strong> Gallatin, TN</div>
+      <div class="header-meta-item"><strong>Buyer Revenue:</strong> $4.5B system-wide</div>
+    </div>
     <div class="score-badge score-med"><span class="score-num">6</span><span class="score-label">Fit</span></div>
   </div>
   <div class="context-bar">
-    <strong>Springer Floor</strong> &bull; Terri &amp; Eddie Holman &bull;
+    <strong>Springer Floor Care</strong> &bull; Terri (68) &amp; Eddie Holman (70) &bull; Forever Kleen franchise &bull; Eddie is IICRC instructor &bull;
     <span class="tag tag-fs">Franchise System</span>
     <span class="tag tag-med">MEDIUM confidence</span>
   </div>
   <div class="content">
 
+    <!-- SNAPSHOT -->
     <div class="card" id="snapshot">
       <h2>Snapshot</h2>
       <table>
@@ -77,34 +99,139 @@
         <tr><td>Revenue</td><td>$4.50B system-wide (2024)</td></tr>
         <tr><td>Backing</td><td>Blackstone (acquired 2019 for ~$1.75B)</td></tr>
         <tr><td>Buyer Type</td><td>Franchise System</td></tr>
+        <tr><td>Franchise Units</td><td>2,313 U.S. locations</td></tr>
         <tr><td>Fit Score</td><td>6 / 10</td></tr>
         <tr><td>Confidence</td><td>MEDIUM</td></tr>
+        <tr><td>Primary Risk</td><td>Scale mismatch — SERVPRO typically engages multi-market platforms, not single-market operators</td></tr>
       </table>
     </div>
 
+    <!-- BUYER OVERVIEW -->
     <div class="card" id="buyer-profile">
       <h2>Company Overview</h2>
-      <p>Largest restoration franchise in the US with 2,313 franchise units. Owned by Blackstone since 2019. Franchisees already perform commercial floor care as part of post-restoration services. Blackstone creates financial appetite for capability acquisitions.</p>
+      <p>Largest restoration franchise in the US with 2,313 franchise units spanning fire, water, and mold remediation. Owned by Blackstone since 2019 in a ~$1.75B deal. Franchisees already perform commercial floor care as a standard post-restoration service line. Blackstone ownership creates financial appetite for capability acquisitions that can be packaged across the franchise network at scale.</p>
     </div>
 
+    <!-- CONTACTS -->
+    <div class="card" id="contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Title</th>
+          <th>Email</th>
+          <th>Notes</th>
+        </tr>
+        <tr>
+          <td>Rick Isaacson</td>
+          <td>CEO, SERVPRO Industries</td>
+          <td><span class="contact-notes">Not public</span></td>
+          <td>Primary decision-maker on any strategic platform acquisition; Blackstone liaison</td>
+        </tr>
+        <tr>
+          <td>Lou Fiore</td>
+          <td>Chief Development Officer</td>
+          <td><span class="contact-notes">Not public</span></td>
+          <td>Franchise expansion and new service-line integration; right person for floor care pitch</td>
+        </tr>
+        <tr>
+          <td>Brad Smith</td>
+          <td>VP of Franchise Development</td>
+          <td><span class="contact-notes">Not public</span></td>
+          <td>Oversees franchisee onboarding and bolt-on capability rollouts across network</td>
+        </tr>
+        <tr>
+          <td>IICRC Training Contact</td>
+          <td>National Trainer / Academy Lead</td>
+          <td><span class="contact-notes">Via IICRC registry</span></td>
+          <td>Eddie Holman's IICRC instructor credential is a direct warm-entry point to SERVPRO's training org</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ACQUISITION HISTORY -->
     <div class="card" id="acquisition-history">
       <h2>Acquisition History</h2>
-      <p>SERVPRO Industries acquired by Blackstone in 2019 for ~$1.75B. The franchise system itself does not regularly acquire individual operators.</p>
+      <p>SERVPRO Industries acquired by Blackstone in 2019 for ~$1.75B. Post-Blackstone, the corporate entity has invested in operational infrastructure, franchise support systems, and adjacent service capabilities rather than acquiring individual operators. The franchise system itself does not regularly acquire owner-operated businesses — the typical path is new franchisee onboarding, not M&amp;A. This is the primary structural hurdle for Springer Floor.</p>
     </div>
 
+    <!-- STRATEGIC FIT -->
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>SERVPRO's core restoration franchisees already pull out wet carpet, perform subfloor drying, and reinstall flooring — but they do not hold a dedicated commercial floor care capability. Eddie Holman's background as an IICRC-certified instructor gives Springer Floor a credentialing angle that resonates with SERVPRO's emphasis on trained, certified technicians across its network.</p>
+        <p>Iowa is underpenetrated by dedicated commercial floor care at the franchise level. SERVPRO has franchise density in Iowa but no stand-alone floor care service partner. Acquiring or affiliating with a Des Moines operator with an established commercial roster (Forever Kleen franchise) would let SERVPRO upsell a post-restoration floor care package to existing Iowa franchisees without building the capability from scratch.</p>
+        <p>The Forever Kleen franchise license adds a second angle: SERVPRO could absorb the brand, retool it as a SERVPRO sub-brand floor care offering, and use Eddie's IICRC instructor status to run a national training pipeline for franchisees who want to offer certified floor care. The revenue isn't in Springer Floor's $900K — it's in deploying that playbook across 2,300+ units.</p>
+      </div>
+    </div>
+
+    <!-- APPROACH STRATEGY -->
+    <div class="card" id="approach-strategy">
+      <h2>Approach Strategy</h2>
+
+      <div class="talking-point">
+        <div class="talking-point-num">Talking Point 1 — Franchise Network Leverage</div>
+        <div class="talking-point-text">SERVPRO's franchise system already produces floor care revenue as a post-restoration byproduct — but none of it is certified, structured, or priced as a dedicated service line. Springer Floor's Forever Kleen franchise license and Eddie's IICRC instructor credential represent a turn-key certification and training infrastructure that could be rolled out network-wide. The pitch is not "buy a $900K floor care shop" — it's "acquire the training and licensing platform that standardizes floor care across 2,300 units."</div>
+      </div>
+
+      <div class="talking-point">
+        <div class="talking-point-num">Talking Point 2 — Iowa as a Franchise Pilot Market</div>
+        <div class="talking-point-text">SERVPRO has multiple franchise locations in the Des Moines metro but no coordinated floor care offering. Springer Floor's existing commercial accounts (property managers, facilities, post-construction clean) are exactly the accounts SERVPRO franchisees are already touching during and after restoration jobs. A structured acquisition or referral-to-acquisition path in Iowa gives Blackstone a model to replicate in other Midwest markets before committing to a full national rollout — low-risk proof-of-concept framing that resonates with how Blackstone evaluates operational experiments inside portfolio companies.</div>
+      </div>
+
+      <div class="talking-point">
+        <div class="talking-point-num">Talking Point 3 — Transition Risk Is Minimal, Timeline Is Now</div>
+        <div class="talking-point-text">Terri and Eddie are 68 and 70 — transition readiness is genuine, not forced. The business has institutional knowledge (Eddie's certifications, the Forever Kleen franchise SOPs) that can be documented and transferred cleanly. SERVPRO's franchise development team is accustomed to onboarding operators and absorbing their workflows. The ask is a structured handoff at a fair valuation, not an earnout-heavy deal with founders who aren't ready to leave. That simplicity has real value to a Blackstone-backed platform that does not want integration drag.</div>
+      </div>
+    </div>
+
+    <!-- FIT NARRATIVE (existing, kept) -->
     <div class="card" id="fit-narrative">
       <h2>Why They'd Buy Springer Floor</h2>
-      <p>Franchisees already perform commercial floor care post-restoration. Blackstone ownership creates strategic and financial appetite. Primary concern: scale mismatch — Blackstone/SERVPRO would likely only engage if Springer Floor had a multi-market or multi-state footprint.</p>
+      <p>Franchisees already perform commercial floor care post-restoration. Blackstone ownership creates strategic and financial appetite. Primary concern: scale mismatch — Blackstone/SERVPRO would likely only engage if Springer Floor had a multi-market or multi-state footprint. The strongest entry angle is the IICRC training credential and the Forever Kleen franchise license as deployable assets across the network, not the single-market revenue base.</p>
     </div>
 
+    <!-- INVESTMENT THESIS (existing, kept) -->
     <div class="card" id="investment-thesis">
       <h2>Investment Thesis</h2>
-      <p>Absorb a commercial floor care platform as a corporate-owned revenue stream or add-on service for the franchise network.</p>
+      <p>Absorb a commercial floor care platform as a corporate-owned revenue stream or add-on service for the franchise network. Secondary thesis: acquire Eddie Holman's IICRC instructor credential and the Forever Kleen franchise license as training infrastructure for certifying franchisees in floor care — then charge franchisees a per-technician certification fee, creating a recurring revenue layer on top of the existing unit economics.</p>
     </div>
 
+    <!-- PIPELINE HISTORY -->
+    <div class="card" id="pipeline-history">
+      <h2>Pipeline History</h2>
+      <table>
+        <tr>
+          <th>Date</th>
+          <th>Event</th>
+          <th>Status</th>
+          <th>Notes</th>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap">Mar 2026</td>
+          <td>Initial dossier built; SERVPRO identified by CII Advisors as strategic buyer candidate</td>
+          <td><span class="pipeline-status status-cold">Research</span></td>
+          <td>Exa web validation confirmed franchise scale and Iowa presence. Scale mismatch flagged as primary risk.</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap">Mar 2026</td>
+          <td>IICRC instructor angle identified — Eddie Holman's credential maps to SERVPRO's national training org</td>
+          <td><span class="pipeline-status status-pending">Pending Outreach</span></td>
+          <td>Warm entry via IICRC registry is the recommended first contact vector, not cold corporate email.</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap">—</td>
+          <td>Franchise Development outreach — target Lou Fiore (CDO) or Brad Smith (VP Franchise Dev)</td>
+          <td><span class="pipeline-status status-cold">Not Started</span></td>
+          <td>Frame as "network capability conversation," not a business-for-sale pitch. Blackstone-backed buyers respond to capability narratives.</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- RESEARCH VERDICT -->
     <div class="card" id="validation">
       <h2>Research Verdict</h2>
-      <p>Included by CII Advisors. Scale mismatch is the primary risk.</p>
+      <p>Included by CII Advisors. Scale mismatch is the primary structural risk — SERVPRO corporate does not routinely acquire single-market operators. Strongest path is framing Springer Floor as a training and licensing asset, not a revenue acquisition. Eddie's IICRC instructor status is the highest-value credential in the room and should lead every SERVPRO conversation.</p>
       <p style="margin-top:12px;font-size:12px;color:#484f58;">Source: CII Advisors Buyer Profiles PDF (March 2026) + Exa web validation (March 30, 2026)</p>
     </div>
 

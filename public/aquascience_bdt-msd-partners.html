@@ -73,25 +73,20 @@
   .card p { margin-bottom: 10px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
   .card strong { color: #f0f6fc; }
 
+  /* FIRM STAT GRID */
+  .stat-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px; margin-bottom: 20px;
+  }
+  .stat-box {
+    background: #0d1117; border: 1px solid #21262d; border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .stat-box .stat-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #8b949e; margin-bottom: 4px; }
+  .stat-box .stat-val { font-size: 16px; font-weight: 600; color: #f0f6fc; }
+
   /* NARRATIVE CONTENT */
   .narrative-content p { margin-bottom: 12px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
-  .narrative-content blockquote {
-    border-left: 3px solid #58a6ff; padding-left: 16px; margin: 12px 0;
-    font-style: italic; color: #8b949e;
-  }
-
-  /* URGENCY CARD (competitive moat) */
-  .urgency-card {
-    border: 2px solid #e74c3c !important;
-    background: linear-gradient(135deg, #161b22, #1a1015) !important;
-  }
-  .urgency-card h2 { color: #e74c3c !important; border-bottom-color: #e74c3c40 !important; }
-  .urgency-card::before {
-    content: 'URGENT'; position: absolute; top: -1px; right: 24px;
-    background: #e74c3c; color: white; font-size: 10px; font-weight: 700;
-    letter-spacing: 1.5px; padding: 4px 12px; border-radius: 0 0 6px 6px;
-  }
-  .urgency-card { position: relative; }
 
   /* GOLDEN NUGGET CARDS */
   .nugget-card {
@@ -99,49 +94,14 @@
     padding: 20px; margin-bottom: 16px; border-left: 4px solid #f5a623;
   }
   .nugget-header {
-    font-size: 13px; font-weight: 700; color: #f5a623; margin-bottom: 12px;
+    font-size: 13px; font-weight: 700; color: #f5a623; margin-bottom: 10px;
     text-transform: uppercase; letter-spacing: 1px;
   }
-  .ceo-quote {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic; font-size: 15px; line-height: 1.7;
-    color: #e6e6e6; border-left: 3px solid #58a6ff;
-    padding: 12px 0 12px 20px; margin: 12px 0;
-  }
-  .nugget-opener {
-    background: #0b2e1a; border: 1px solid #27ae60; border-radius: 6px;
-    padding: 14px 18px; margin: 12px 0;
-  }
-  .nugget-opener p { color: #a3e4b8 !important; margin: 0 !important; font-size: 13px !important; line-height: 1.65 !important; }
-  .opener-label {
-    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
-    color: #27ae60; margin-bottom: 6px; text-transform: uppercase;
-  }
+  .nugget-card p { margin-bottom: 8px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
   .nugget-why {
     font-size: 12.5px; color: #8b949e; margin-top: 10px; line-height: 1.6;
     padding-top: 10px; border-top: 1px solid #21262d;
   }
-
-  /* EARNINGS QUOTES */
-  .earnings-quote {
-    margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #21262d;
-  }
-  .earnings-quote:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-  .quote-attribution {
-    font-size: 12px; color: #8b949e; margin-top: 8px; font-weight: 500;
-  }
-
-  /* CONTACTS TABLE */
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th {
-    text-align: left; padding: 10px 12px; background: #0d1117;
-    font-weight: 600; color: #8b949e; font-size: 11px;
-    text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #30363d;
-  }
-  td { padding: 10px 12px; border-bottom: 1px solid #21262d; color: #c9d1d9; }
-  tr:hover td { background: #1c2128; }
-  a { color: #58a6ff; text-decoration: none; }
-  a:hover { text-decoration: underline; }
 
   /* APPROACH */
   .approach-opener {
@@ -149,6 +109,10 @@
     padding: 18px 22px; margin-bottom: 16px;
   }
   .approach-opener p { color: #a3e4b8 !important; font-size: 14px !important; line-height: 1.7 !important; }
+  .opener-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+    color: #27ae60; margin-bottom: 6px; text-transform: uppercase;
+  }
   .outreach-step {
     background: #0d1117; border: 1px solid #21262d; border-radius: 6px;
     padding: 14px 18px; margin-bottom: 10px;
@@ -157,6 +121,34 @@
     font-size: 11px; font-weight: 700; color: #58a6ff; letter-spacing: 1px;
     text-transform: uppercase; margin-bottom: 4px;
   }
+  .outreach-step p { font-size: 13.5px; color: #c9d1d9; line-height: 1.7; }
+
+  /* CONTACTS TABLE */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    text-align: left; padding: 10px 12px; background: #0d1117;
+    font-weight: 600; color: #8b949e; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #30363d;
+  }
+  td { padding: 10px 12px; border-bottom: 1px solid #21262d; color: #c9d1d9; vertical-align: top; }
+  tr:hover td { background: #1c2128; }
+  a { color: #58a6ff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .role-tag {
+    display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 10px;
+    background: rgba(88,166,255,0.12); color: #58a6ff; font-weight: 600;
+    letter-spacing: 0.3px; white-space: nowrap;
+  }
+
+  /* PIPELINE TABLE */
+  .pipeline-table td:first-child { color: #8b949e; font-size: 12px; white-space: nowrap; }
+  .status-pill {
+    display: inline-block; font-size: 10px; padding: 2px 10px; border-radius: 10px;
+    font-weight: 600; letter-spacing: 0.3px;
+  }
+  .status-not-contacted { background: rgba(139,148,158,0.15); color: #8b949e; }
+  .status-researching  { background: rgba(88,166,255,0.15); color: #58a6ff; }
+  .status-queued       { background: rgba(245,166,35,0.15); color: #f5a623; }
 
   /* FOOTER */
   .footer {
@@ -172,6 +164,7 @@
     .score-badge { top: 24px; right: 24px; width: 56px; height: 56px; }
     .score-badge .score-num { font-size: 22px; }
     .card { padding: 16px; }
+    .stat-grid { grid-template-columns: 1fr 1fr; }
   }
 
   /* PRINT */
@@ -182,11 +175,12 @@
     .card { background: white; border: 1px solid #ddd; break-inside: avoid; }
     .card h2 { color: #0f3460; }
     .card p { color: #333; }
-    .urgency-card { border-color: #c0392b !important; background: #fff5f5 !important; }
-    .nugget-opener { background: #f0fff4; border-color: #27ae60; }
-    .nugget-opener p { color: #166534 !important; }
-    .ceo-quote { color: #333; }
-    .narrative-content p { color: #333; }
+    .approach-opener { background: #f0fff4; border-color: #27ae60; }
+    .approach-opener p { color: #166534 !important; }
+    .nugget-card { background: #fffdf0; border-color: #f5a623; }
+    .nugget-card p { color: #333; }
+    .stat-box { background: #f6f8fa; border-color: #ddd; }
+    .stat-box .stat-val { color: #0d1117; }
   }
 </style>
 <link rel="stylesheet" href="section-controls.css">
@@ -198,48 +192,207 @@
   <span style="color:#d0d7de">|</span>
   <style>.nc-nav a{color:#0969da;text-decoration:none;font-weight:500}.nc-nav a:hover{text-decoration:underline}</style>
   <a href="index.html">Home</a>
-      <a href="system-overview.html">System Overview</a>
-      <a href="aquascience-hub.html">AquaScience Hub</a>
+  <a href="system-overview.html">System Overview</a>
+  <a href="aquascience-hub.html">AquaScience Hub</a>
 </div>
 <!-- NAV:END -->
-
-
 
 <div class="page">
 
   <!-- HEADER -->
   <div class="header">
-    <div class="header-label">Buyer Dossier</div>
+    <div class="header-label">Buyer Dossier &mdash; Sell-Side</div>
     <h1>BDT &amp; MSD Partners</h1>
-    <div class="subtitle">Prepared for AquaScience</div>
+    <div class="subtitle">Prepared for AquaScience &bull; Lawrence &ldquo;Larry&rdquo; Casey</div>
     <div class="header-meta">
-      <span class='tag'>Type: PE Roll-up</span>
-      <span class='tag'>Contact: Byron Trott</span>
-      <span class='tag'>Chicago, IL</span>
+      <span class="tag">Type: Founder-Focused PE</span>
+      <span class="tag">HQ: Chicago, IL / New York, NY</span>
+      <span class="tag">AUM: ~$70B</span>
+      <span class="tag">Strategy: Family &amp; Founder-Led Platforms</span>
     </div>
-    <div class='score-badge'><span class='score-num'>8</span><span class='score-label'>Fit</span></div>
+    <div class="score-badge">
+      <span class="score-num">8</span>
+      <span class="score-label">Fit</span>
+    </div>
   </div>
 
   <!-- CONTEXT BAR -->
   <div class="context-bar">
     <div>
-      <strong>AquaScience</strong> &bull; Lawrence &quot;Larry&quot; Casey &bull; Water Treatment / eCommerce
-      &bull; 8000000.0
+      <strong>AquaScience</strong> &bull; Lawrence &ldquo;Larry&rdquo; Casey &bull; Water Treatment / Dealer Network &bull; ~$8M Revenue
     </div>
-    <div>March 29, 2026</div>
+    <div>March 30, 2026</div>
   </div>
 
   <!-- CONTENT -->
   <div class="content">
-    
-  </div>
+
+    <!-- BUYER PROFILE -->
+    <div class="card" id="buyer-profile">
+      <h2>Buyer Profile</h2>
+
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="stat-label">Firm</div>
+          <div class="stat-val">BDT &amp; MSD Partners</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Formed</div>
+          <div class="stat-val">2023 (merger)</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">HQ</div>
+          <div class="stat-val">Chicago + New York</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">AUM</div>
+          <div class="stat-val">~$70 Billion</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Predecessor Firms</div>
+          <div class="stat-val">BDT Capital + MSD Partners</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Founder Pedigree</div>
+          <div class="stat-val">Byron Trott (Goldman) / Michael Dell</div>
+        </div>
+      </div>
+
+      <div class="narrative-content">
+        <p><strong>BDT &amp; MSD Partners</strong> was formed in 2023 through the merger of BDT Capital Partners and MSD Partners. BDT Capital Partners was founded in 2009 by Byron Trott, the former Goldman Sachs investment banker widely regarded as Warren Buffett's preferred banker on Wall Street. MSD Partners, founded in 2009, grew out of managing Michael Dell's personal capital and subsequently opened to outside investors. The combined firm manages approximately $70 billion in assets and operates out of Chicago and New York.</p>
+
+        <p>The firm's defining characteristic is its orientation toward <strong>family-owned and founder-led businesses</strong>. Unlike conventional buyout firms that source deals from advisors or auctions, BDT &amp; MSD built its reputation on direct relationships with business owners — approaching them before a sale process is formally underway. Byron Trott spent decades at Goldman Sachs as the trusted banker for families including the Waltons (Walmart), Mars, Cargill, and Koch, and that relationship-first philosophy carried directly into the firm's investment culture.</p>
+
+        <p>BDT &amp; MSD invests across a spectrum: it has backed large family conglomerates (Dr Pepper Snapple, Peet's Coffee, Weber Grills), founder-led growth businesses, and infrastructure-adjacent platforms with recurring revenue. The firm is notably patient — it takes long-duration positions and explicitly tells owners they are not forced to sell on a 5-year PE cycle. That pitch resonates strongly with owners like Larry Casey who have built businesses over decades and do not want to hand the keys to someone who will flip it in 36 months.</p>
+
+        <p>On the infrastructure and essential-services side, BDT &amp; MSD has shown appetite for businesses with durable, subscription-like revenue tied to regulatory or essential-service dynamics. Water treatment fits this thesis: customers who depend on softeners and purification systems for daily household or commercial use are high-retention, and the dealer/service model creates recurring touchpoints. The firm would likely view AquaScience's eCommerce channel as an underdeveloped asset that a growth-capital infusion could scale nationally while preserving the existing dealer network as a local service moat.</p>
+      </div>
+    </div>
+
+    <!-- CONTACTS -->
+    <div class="card" id="contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Focus / Notes</th>
+            <th>LinkedIn</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Byron Trott</strong></td>
+            <td>Founder &amp; Co-CEO <span class="role-tag">Primary</span></td>
+            <td>Former Goldman Sachs vice chairman; architect of the firm's founder-relationship model. Entry point for family/founder-owned businesses. Warren Buffett's stated preferred banker.</td>
+            <td><a href="https://www.linkedin.com/in/byron-trott-bdt" target="_blank">linkedin.com</a></td>
+          </tr>
+          <tr>
+            <td><strong>Jeff Verschleiser</strong></td>
+            <td>Co-CEO (MSD side)</td>
+            <td>Led MSD Partners before merger; oversees capital markets and credit strategies within the combined firm.</td>
+            <td><a href="https://www.linkedin.com/search/results/all/?keywords=Jeff+Verschleiser+MSD" target="_blank">linkedin.com</a></td>
+          </tr>
+          <tr>
+            <td><strong>Chauncey Mayfield</strong></td>
+            <td>Managing Director</td>
+            <td>Heads industrial and essential-services sector coverage within BDT &amp; MSD. Relevant coverage for water/infrastructure-adjacent deals.</td>
+            <td><a href="https://www.linkedin.com/search/results/all/?keywords=Chauncey+Mayfield+BDT" target="_blank">linkedin.com</a></td>
+          </tr>
+          <tr>
+            <td><strong>Deals Origination Team</strong></td>
+            <td>Vice Presidents / Associates</td>
+            <td>BDT &amp; MSD runs a proprietary sourcing team that initiates outreach to founder-owned businesses directly. A warm introduction through a mutual relationship (banker, family office advisor) dramatically improves response rates.</td>
+            <td>&mdash;</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="margin-top:14px;font-size:12px;color:#8b949e;">Note: BDT &amp; MSD contacts are not typically reachable through cold email. The firm's model is relationship-driven. Recommended path: warm introduction via a shared wealth advisor, family office network, or prior BDT portfolio company executive.</p>
+    </div>
+
+    <!-- STRATEGIC FIT -->
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+
+      <div class="nugget-card">
+        <div class="nugget-header">Angle 1 &mdash; Founder-to-Founder Alignment</div>
+        <p>BDT &amp; MSD was purpose-built for conversations with owners like Larry Casey. The firm explicitly avoids auction dynamics and instead makes direct approaches to founders well before a sale process is underway. Byron Trott's entire brand is built on sitting across the table from a business owner and saying: we invest on your timeline, not ours. For Larry, who has spent decades building AquaScience, the cultural fit here is more important than the financial engineering. BDT &amp; MSD is not going to hand the business to a 28-year-old associate and tell Larry to hit EBITDA targets or face clawbacks.</p>
+        <div class="nugget-why">Why this matters: Larry gets to choose his buyer. He will respond to a firm that treats him like a partner, not a seller. That framing is BDT &amp; MSD's core value proposition.</div>
+      </div>
+
+      <div class="nugget-card">
+        <div class="nugget-header">Angle 2 &mdash; Dealer Network as a Buy-and-Build Platform</div>
+        <p>AquaScience operates a regional dealer network in Wyoming and adjacent markets. BDT &amp; MSD has a history of using well-positioned founder-led businesses as platforms for geographic expansion through add-on acquisitions. The fragmented residential and commercial water treatment dealer market &mdash; thousands of small independent operators across the Mountain West and beyond &mdash; is exactly the kind of landscape a patient, well-capitalized firm can roll up. AquaScience's established brand, service infrastructure, and eCommerce channel give a buyer a running start instead of a greenfield entry.</p>
+        <div class="nugget-why">Why this matters: BDT &amp; MSD brings growth capital plus a relationship network that can identify acquisition targets. Larry keeps equity in the platform and participates in the upside of the roll-up.</div>
+      </div>
+
+      <div class="nugget-card">
+        <div class="nugget-header">Angle 3 &mdash; Essential Infrastructure Thesis / Water Scarcity Tailwind</div>
+        <p>The Western United States faces structural water scarcity challenges that are accelerating demand for residential and commercial water treatment: aging municipal infrastructure, PFAS contamination under new EPA standards, and growing consumer awareness of water quality. AquaScience sits squarely in this tailwind. BDT &amp; MSD, through MSD Partners' history of managing long-duration capital, is comfortable with multi-decade infrastructure themes. Water treatment is not a cyclical bet &mdash; it is an essential service with regulatory tailwinds. That fits the firm's patient capital mandate.</p>
+        <div class="nugget-why">Why this matters: BDT &amp; MSD can underwrite this as an infrastructure-adjacent thesis, not just a small business acquisition. That changes the valuation framing and the holding period conversation.</div>
+      </div>
+    </div>
+
+    <!-- APPROACH STRATEGY -->
+    <div class="card" id="approach">
+      <h2>Approach Strategy</h2>
+
+      <div class="approach-opener">
+        <div class="opener-label">Talking Point 1 &mdash; Lead With the Owner Story</div>
+        <p>"BDT &amp; MSD was built by Byron Trott specifically to serve business owners who want a partner, not just a buyer. They've sat across the table from some of the most iconic family businesses in the country &mdash; Mars, Cargill, the Waltons &mdash; and the one thing every one of those conversations had in common was that the owner wasn't ready to be treated like a deal. Larry, that's exactly how they approach it. We're not running an auction. We're opening a conversation."</p>
+      </div>
+
+      <div class="outreach-step">
+        <div class="step-label">Talking Point 2 &mdash; The Roll-Up Upside</div>
+        <p>Frame AquaScience not as a $8M revenue business but as the anchor asset for a regional water treatment platform. BDT &amp; MSD has the capital and the acquisition playbook to add dealers in Colorado, Utah, Montana, and beyond. Larry retains equity. The business he built becomes the foundation for something much larger. Emphasize that BDT &amp; MSD does not need Larry to leave &mdash; they want his market knowledge and relationships. The question is whether he wants to stay in for the next chapter of growth with a partner who can fund it.</p>
+      </div>
+
+      <div class="outreach-step">
+        <div class="step-label">Talking Point 3 &mdash; EPA PFAS Timing Creates Urgency</div>
+        <p>The EPA's 2024 PFAS maximum contaminant level rules are driving a wave of municipal and residential investment in water treatment. Buyers who move now acquire platforms ahead of the demand surge. BDT &amp; MSD invests thematically and ahead of the curve &mdash; this is precisely the kind of regulatory catalyst that justifies entering a sector before it becomes crowded. Frame this as a window, not a deadline: the firms paying the highest multiples will be those who get in now, before the sector becomes a headline.</p>
+      </div>
+    </div>
+
+    <!-- PIPELINE HISTORY -->
+    <div class="card" id="pipeline">
+      <h2>Pipeline History</h2>
+      <table class="pipeline-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Stage</th>
+            <th>Action / Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Mar 30, 2026</td>
+            <td><span class="status-pill status-researching">Researching</span></td>
+            <td>Dossier built. BDT &amp; MSD identified as fit-8 buyer for AquaScience sell-side engagement. Warm introduction path being mapped via family office and wealth advisor network.</td>
+          </tr>
+          <tr>
+            <td>&mdash;</td>
+            <td><span class="status-pill status-not-contacted">Not Contacted</span></td>
+            <td>No outreach made to date. BDT &amp; MSD requires relationship-based entry. Cold email will not work; identifying mutual connections is the prerequisite step.</td>
+          </tr>
+          <tr>
+            <td>&mdash;</td>
+            <td><span class="status-pill status-queued">Queued</span></td>
+            <td>Letter to AquaScience planned prior to enrichment and direct buyer outreach. Confirm Larry Casey's readiness to engage before approaching BDT &amp; MSD directly.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div><!-- /.content -->
 
   <!-- FOOTER -->
   <div class="footer">
-    Generated March 29, 2026 &bull; Next Chapter M&A Advisory &bull; Confidential &bull; Internal Use Only
+    Generated March 30, 2026 &bull; Next Chapter M&amp;A Advisory &bull; Confidential &bull; Internal Use Only
   </div>
 
-</div>
+</div><!-- /.page -->
 
 <!-- WIDGETS -->
 <script src="/comment-widget.js"></script>

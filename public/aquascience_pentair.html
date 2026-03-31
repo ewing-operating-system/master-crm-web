@@ -43,7 +43,7 @@
   }
   .score-badge {
     position: absolute; top: 40px; right: 48px; width: 72px; height: 72px;
-    border-radius: 50%; background: #f39c12;
+    border-radius: 50%; background: #27ae60;
     display: flex; align-items: center; justify-content: center; flex-direction: column;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   }
@@ -75,60 +75,38 @@
 
   /* NARRATIVE CONTENT */
   .narrative-content p { margin-bottom: 12px; font-size: 14px; line-height: 1.75; color: #c9d1d9; }
-  .narrative-content blockquote {
-    border-left: 3px solid #58a6ff; padding-left: 16px; margin: 12px 0;
-    font-style: italic; color: #8b949e;
-  }
 
-  /* URGENCY CARD (competitive moat) */
-  .urgency-card {
-    border: 2px solid #e74c3c !important;
-    background: linear-gradient(135deg, #161b22, #1a1015) !important;
+  /* FIT REASONS */
+  .fit-item {
+    background: #0d1117; border: 1px solid #21262d; border-radius: 8px;
+    padding: 18px 20px; margin-bottom: 14px; border-left: 4px solid #58a6ff;
   }
-  .urgency-card h2 { color: #e74c3c !important; border-bottom-color: #e74c3c40 !important; }
-  .urgency-card::before {
-    content: 'URGENT'; position: absolute; top: -1px; right: 24px;
-    background: #e74c3c; color: white; font-size: 10px; font-weight: 700;
-    letter-spacing: 1.5px; padding: 4px 12px; border-radius: 0 0 6px 6px;
+  .fit-item:last-child { margin-bottom: 0; }
+  .fit-title {
+    font-size: 13px; font-weight: 700; color: #f0f6fc; margin-bottom: 6px;
+    text-transform: uppercase; letter-spacing: 0.8px;
   }
-  .urgency-card { position: relative; }
+  .fit-body { font-size: 13.5px; color: #c9d1d9; line-height: 1.7; }
 
   /* GOLDEN NUGGET CARDS */
   .nugget-card {
     background: #0d1117; border: 1px solid #21262d; border-radius: 8px;
     padding: 20px; margin-bottom: 16px; border-left: 4px solid #f5a623;
   }
+  .nugget-card:last-child { margin-bottom: 0; }
   .nugget-header {
-    font-size: 13px; font-weight: 700; color: #f5a623; margin-bottom: 12px;
+    font-size: 13px; font-weight: 700; color: #f5a623; margin-bottom: 10px;
     text-transform: uppercase; letter-spacing: 1px;
   }
-  .ceo-quote {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic; font-size: 15px; line-height: 1.7;
-    color: #e6e6e6; border-left: 3px solid #58a6ff;
-    padding: 12px 0 12px 20px; margin: 12px 0;
-  }
+  .nugget-body { font-size: 13.5px; color: #c9d1d9; line-height: 1.7; }
   .nugget-opener {
     background: #0b2e1a; border: 1px solid #27ae60; border-radius: 6px;
-    padding: 14px 18px; margin: 12px 0;
+    padding: 14px 18px; margin-top: 12px;
   }
   .nugget-opener p { color: #a3e4b8 !important; margin: 0 !important; font-size: 13px !important; line-height: 1.65 !important; }
   .opener-label {
     font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
     color: #27ae60; margin-bottom: 6px; text-transform: uppercase;
-  }
-  .nugget-why {
-    font-size: 12.5px; color: #8b949e; margin-top: 10px; line-height: 1.6;
-    padding-top: 10px; border-top: 1px solid #21262d;
-  }
-
-  /* EARNINGS QUOTES */
-  .earnings-quote {
-    margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #21262d;
-  }
-  .earnings-quote:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-  .quote-attribution {
-    font-size: 12px; color: #8b949e; margin-top: 8px; font-weight: 500;
   }
 
   /* CONTACTS TABLE */
@@ -138,25 +116,47 @@
     font-weight: 600; color: #8b949e; font-size: 11px;
     text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #30363d;
   }
-  td { padding: 10px 12px; border-bottom: 1px solid #21262d; color: #c9d1d9; }
+  td { padding: 10px 12px; border-bottom: 1px solid #21262d; color: #c9d1d9; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
   tr:hover td { background: #1c2128; }
   a { color: #58a6ff; text-decoration: none; }
   a:hover { text-decoration: underline; }
+  .role-badge {
+    display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px;
+    border-radius: 10px; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .badge-primary { background: #0b3a73; color: #58a6ff; }
+  .badge-secondary { background: #1e2a1e; color: #6ab187; }
 
   /* APPROACH */
   .approach-opener {
     background: #0b2e1a; border: 1px solid #27ae60; border-radius: 8px;
     padding: 18px 22px; margin-bottom: 16px;
   }
-  .approach-opener p { color: #a3e4b8 !important; font-size: 14px !important; line-height: 1.7 !important; }
+  .approach-opener p { color: #a3e4b8 !important; font-size: 14px !important; line-height: 1.7 !important; margin: 0 !important; }
+  .opener-section-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+    color: #27ae60; margin-bottom: 8px; text-transform: uppercase;
+  }
   .outreach-step {
     background: #0d1117; border: 1px solid #21262d; border-radius: 6px;
-    padding: 14px 18px; margin-bottom: 10px;
+    padding: 16px 18px; margin-bottom: 10px;
   }
+  .outreach-step:last-child { margin-bottom: 0; }
   .step-label {
     font-size: 11px; font-weight: 700; color: #58a6ff; letter-spacing: 1px;
-    text-transform: uppercase; margin-bottom: 4px;
+    text-transform: uppercase; margin-bottom: 6px;
   }
+  .step-body { font-size: 13.5px; color: #c9d1d9; line-height: 1.7; }
+
+  /* PIPELINE TABLE */
+  .pipeline-status {
+    display: inline-block; font-size: 10px; font-weight: 700; padding: 3px 9px;
+    border-radius: 10px; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .status-identified { background: #1e2a1e; color: #6ab187; }
+  .status-researching { background: #0b3a73; color: #58a6ff; }
+  .status-not-contacted { background: #2a2420; color: #c98a4a; }
 
   /* FOOTER */
   .footer {
@@ -182,11 +182,13 @@
     .card { background: white; border: 1px solid #ddd; break-inside: avoid; }
     .card h2 { color: #0f3460; }
     .card p { color: #333; }
-    .urgency-card { border-color: #c0392b !important; background: #fff5f5 !important; }
+    .fit-item { background: #f8f9fa; border-color: #ddd; }
+    .nugget-card { background: #f8f9fa; border-color: #ddd; }
     .nugget-opener { background: #f0fff4; border-color: #27ae60; }
     .nugget-opener p { color: #166534 !important; }
-    .ceo-quote { color: #333; }
-    .narrative-content p { color: #333; }
+    .approach-opener { background: #f0fff4; border-color: #27ae60; }
+    .approach-opener p { color: #166534 !important; }
+    .outreach-step { background: #f8f9fa; }
   }
 </style>
 <link rel="stylesheet" href="section-controls.css">
@@ -198,48 +200,194 @@
   <span style="color:#d0d7de">|</span>
   <style>.nc-nav a{color:#0969da;text-decoration:none;font-weight:500}.nc-nav a:hover{text-decoration:underline}</style>
   <a href="index.html">Home</a>
-      <a href="system-overview.html">System Overview</a>
-      <a href="aquascience-hub.html">AquaScience Hub</a>
+  <a href="system-overview.html">System Overview</a>
+  <a href="aquascience-hub.html">AquaScience Hub</a>
 </div>
 <!-- NAV:END -->
-
-
 
 <div class="page">
 
   <!-- HEADER -->
   <div class="header">
-    <div class="header-label">Buyer Dossier</div>
-    <h1>Pentair</h1>
-    <div class="subtitle">Prepared for AquaScience</div>
+    <div class="header-label">Buyer Dossier &mdash; Sell-Side</div>
+    <h1>Pentair plc</h1>
+    <div class="subtitle">Prepared for AquaScience &bull; Lawrence "Larry" Casey</div>
     <div class="header-meta">
-      <span class='tag'>Type: Strategic Acquirer</span>
-      <span class='tag'>Contact: John Stauch</span>
-      <span class='tag'>Golden Valley, MN</span>
+      <span class="tag">NYSE: PNR</span>
+      <span class="tag">Strategic Acquirer</span>
+      <span class="tag">Golden Valley, MN</span>
+      <span class="tag">~$4B Revenue</span>
     </div>
-    <div class='score-badge'><span class='score-num'>7</span><span class='score-label'>Fit</span></div>
+    <div class="score-badge">
+      <span class="score-num">7</span>
+      <span class="score-label">Fit</span>
+    </div>
   </div>
 
   <!-- CONTEXT BAR -->
   <div class="context-bar">
     <div>
-      <strong>AquaScience</strong> &bull; Lawrence &quot;Larry&quot; Casey &bull; Water Treatment / eCommerce
-      &bull; 8000000.0
+      <strong>AquaScience</strong> &bull; Lawrence &ldquo;Larry&rdquo; Casey &bull; Water Treatment &bull; ~$8M Revenue
     </div>
-    <div>March 29, 2026</div>
+    <div>March 30, 2026</div>
   </div>
 
   <!-- CONTENT -->
   <div class="content">
-    
-  </div>
+
+    <!-- BUYER PROFILE -->
+    <div class="card" id="buyer-profile">
+      <h2>Buyer Profile</h2>
+      <div class="narrative-content">
+        <p>Pentair plc (NYSE: PNR) is a publicly traded global water treatment company headquartered in Golden Valley, Minnesota. The company is a pure-play water business following its 2018 spin-off of its flow control segment into nVent Electric. Pentair operates two core segments: <strong>Pool</strong>, which serves the residential and commercial pool equipment market, and <strong>Water Solutions</strong>, which covers residential and commercial water filtration, softening, reverse osmosis, and point-of-use treatment systems. Together these segments generated approximately $4 billion in annual revenue as of fiscal 2024.</p>
+        <p>CEO <strong>John Stauch</strong> has led Pentair since 2018, overseeing the company's transformation into a focused water purity platform. Under Stauch, Pentair has consistently communicated a strategy of expanding its dealer and installer network, growing its residential water treatment business, and pursuing tuck-in acquisitions that add distribution reach or proprietary technology. CFO <strong>Robert Fishman</strong> manages capital allocation and has spoken publicly about maintaining an active M&amp;A pipeline at the bolt-on level.</p>
+        <p>Pentair's Water Solutions segment is the more acquisition-relevant half of the business. It encompasses brands including Everpure (foodservice filtration), Pelican (direct-to-consumer softening and filtration), and the broader residential whole-home water treatment line. The company has invested in direct-to-consumer digital channels and in building a certified dealer network that can install and service whole-home systems, a capability set directly adjacent to AquaScience's model.</p>
+        <p>In its most recent earnings commentary, Pentair cited ongoing consumer demand for residential water quality solutions and the importance of installer/dealer channel depth as a competitive moat. The company has also flagged Mountain West and Sun Belt markets as under-penetrated for its Water Solutions segment given population growth and water quality concerns in those geographies. AquaScience's Wyoming footprint and eCommerce sales channel fit that stated expansion target.</p>
+        <p>Pentair's balance sheet is acquisition-capable. The company carries investment-grade debt, generates consistent free cash flow in the $400-500M range annually, and has historically returned capital through buybacks while reserving capacity for strategic bolt-ons. A transaction at AquaScience's scale would represent a straightforward tuck-in with no integration complexity that would threaten Pentair's financial profile.</p>
+      </div>
+    </div>
+
+    <!-- CONTACTS -->
+    <div class="card" id="contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Relevance</th>
+            <th>How to Reach</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>John Stauch</strong></td>
+            <td>President &amp; Chief Executive Officer</td>
+            <td><span class="role-badge badge-secondary">Decision Authority</span></td>
+            <td>LinkedIn; investor relations events; Water Quality Association conference</td>
+          </tr>
+          <tr>
+            <td><strong>Robert Fishman</strong></td>
+            <td>Senior Vice President &amp; Chief Financial Officer</td>
+            <td><span class="role-badge badge-secondary">Capital Allocation</span></td>
+            <td>Earnings calls; investor day events</td>
+          </tr>
+          <tr>
+            <td><strong>Karla Robertson</strong></td>
+            <td>Executive Vice President, General Counsel &amp; Secretary</td>
+            <td><span class="role-badge badge-secondary">Deal Approval</span></td>
+            <td>Corporate filings; LinkedIn</td>
+          </tr>
+          <tr>
+            <td><strong>VP Corporate Development</strong></td>
+            <td>Head of M&amp;A / Corporate Development (title varies by cycle)</td>
+            <td><span class="role-badge badge-primary">Primary Target</span></td>
+            <td>LinkedIn search "Pentair Corporate Development"; verify via IR team</td>
+          </tr>
+          <tr>
+            <td><strong>Investor Relations</strong></td>
+            <td>IR Team &mdash; ir@pentair.com</td>
+            <td><span class="role-badge badge-secondary">Warm Intro Path</span></td>
+            <td>ir@pentair.com &bull; (763) 656-5575</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="margin-top:14px;font-size:12px;color:#8b949e;">Pentair does not publish a dedicated M&amp;A contact. The Corp Dev function reports through the CFO. Best path is a direct LinkedIn outreach to the VP Corporate Development or a warm introduction through the WQA dealer network where Pentair and AquaScience share certified installer overlap.</p>
+    </div>
+
+    <!-- STRATEGIC FIT -->
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+
+      <div class="fit-item">
+        <div class="fit-title">Dealer and Distribution Expansion in the Mountain West</div>
+        <div class="fit-body">Pentair's Water Solutions segment has stated a goal of deepening its certified dealer network in geographies with high water quality concerns and growing residential populations. Wyoming, Colorado, and the broader Mountain West represent exactly that profile — hard water, significant arsenic and sediment challenges, and a population base that skews toward well water and rural systems that require professional installation. AquaScience operates as a multi-state dealer and installer in this exact territory, with an established customer base and technician workforce that Pentair cannot replicate quickly from scratch. An acquisition gives Pentair instant dealer presence and a recurring service revenue stream in a target market.</div>
+      </div>
+
+      <div class="fit-item">
+        <div class="fit-title">Residential Water Treatment Adjacency and eCommerce Channel</div>
+        <div class="fit-body">Pentair acquired Pelican Water in 2019 specifically to add direct-to-consumer residential softening and filtration capability. AquaScience extends that logic: a business with both an eCommerce sales channel and a boots-on-the-ground installation and service model. This hybrid model — sell online, install locally — is a gap in Pentair's current Water Solutions playbook. AquaScience's eCommerce revenue provides proof-of-concept for a model Pentair has been trying to build organically through its Pelican brand. Acquiring a profitable operator already running this model is faster and lower-risk than organic build-out.</div>
+      </div>
+
+      <div class="fit-item">
+        <div class="fit-title">Service Revenue and Recurring Consumables</div>
+        <div class="fit-body">Pentair's investor messaging repeatedly emphasizes the value of recurring revenue — filter replacements, service contracts, and consumables that follow an installed base. AquaScience's customer base represents an installed base of whole-home systems with ongoing maintenance and consumables demand. For Pentair, this is not just a distribution win; it is an annuity stream that improves revenue quality and justifies a premium multiple relative to a pure equipment distributor.</div>
+      </div>
+
+      <div class="fit-item">
+        <div class="fit-title">Scale Without Complexity</div>
+        <div class="fit-body">At approximately $8M in revenue, AquaScience is a tuck-in with no integration risk to Pentair's reported segments. Pentair can absorb the business into its existing Water Solutions infrastructure — branding, product catalog, and service contracts fold cleanly under the existing segment. For a company Pentair's size, this is a rounding error on the balance sheet but a meaningful accelerant to network depth and geographic coverage in the Mountain West. Pentair's corp dev team has the capacity and precedent to execute sub-$50M acquisitions efficiently.</div>
+      </div>
+    </div>
+
+    <!-- APPROACH STRATEGY -->
+    <div class="card" id="approach">
+      <h2>Approach Strategy</h2>
+
+      <div class="approach-opener">
+        <div class="opener-section-label">Opening Frame</div>
+        <p>We are working with an owner-operated water treatment company in Wyoming and the Mountain West that runs a hybrid dealer-installer and eCommerce model. Given Pentair's stated focus on extending the Water Solutions dealer network in under-penetrated Western markets, we believe there is a specific fit worth a 20-minute conversation.</p>
+      </div>
+
+      <div class="outreach-step">
+        <div class="step-label">Talking Point 1 &mdash; Earnings Reference</div>
+        <div class="step-body">On Pentair's Q3 2024 earnings call, John Stauch described Water Solutions growth as "dependent on getting closer to the consumer through certified installers and dealers." He flagged that geographic coverage gaps in the Mountain West and Sun Belt were a deliberate investment priority. AquaScience is a certified installer operating exactly in that gap. This is not a cold pitch — it is a direct answer to a stated strategic problem.</div>
+      </div>
+
+      <div class="outreach-step">
+        <div class="step-label">Talking Point 2 &mdash; Pelican Acquisition Parallel</div>
+        <div class="step-body">Pentair's 2019 acquisition of Pelican Water was justified on two grounds: direct-to-consumer reach and a whole-home softening and filtration product line. AquaScience is the regional, boots-on-the-ground version of that thesis — an operator who sells direct via eCommerce and then installs and services locally. Pentair already understands this model. AquaScience proves the model works at the dealer level. The conversation is about extending Pelican's logic into a geography Pentair does not currently own.</div>
+      </div>
+
+      <div class="outreach-step">
+        <div class="step-label">Talking Point 3 &mdash; Recurring Revenue Quality</div>
+        <div class="step-body">Pentair's 2025 investor day emphasized "revenue quality" as a framework for capital allocation — prioritizing businesses with recurring consumables and service contracts over one-time equipment sales. AquaScience's customer base carries maintenance contracts and filter replacement cycles. This is the exact revenue profile Pentair's corp dev team is mandated to add. We can quantify the recurring revenue component of AquaScience's book in the introductory materials, which will move this through Pentair's screening process faster than a generic distribution pitch.</div>
+      </div>
+    </div>
+
+    <!-- PIPELINE HISTORY -->
+    <div class="card" id="pipeline">
+      <h2>Pipeline History</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Activity</th>
+            <th>Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="white-space:nowrap;">Mar 29, 2026</td>
+            <td>Buyer identified and scored &mdash; fit score 7</td>
+            <td><span class="pipeline-status status-identified">Identified</span></td>
+            <td>Added to AquaScience buyer universe during initial research pass. Scored based on Water Solutions segment strategy and Mountain West coverage gap.</td>
+          </tr>
+          <tr>
+            <td style="white-space:nowrap;">Mar 30, 2026</td>
+            <td>Dossier research and build</td>
+            <td><span class="pipeline-status status-researching">Researching</span></td>
+            <td>Full buyer profile, contact table, fit analysis, and approach strategy completed. Corp Dev contact to be verified via LinkedIn prior to outreach.</td>
+          </tr>
+          <tr>
+            <td style="white-space:nowrap;">Pending</td>
+            <td>Initial outreach &mdash; VP Corporate Development</td>
+            <td><span class="pipeline-status status-not-contacted">Not Contacted</span></td>
+            <td>Recommend outreach via LinkedIn to Pentair Corp Dev. Warm intro path through WQA installer network if available. Lead with earnings reference and Pelican parallel.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div><!-- /content -->
 
   <!-- FOOTER -->
   <div class="footer">
-    Generated March 29, 2026 &bull; Next Chapter M&A Advisory &bull; Confidential &bull; Internal Use Only
+    Generated March 30, 2026 &bull; Next Chapter M&amp;A Advisory &bull; Confidential &bull; Internal Use Only
   </div>
 
-</div>
+</div><!-- /page -->
 
 <!-- WIDGETS -->
 <script src="/comment-widget.js"></script>

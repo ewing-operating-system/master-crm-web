@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operations Log — Next Chapter Master CRM</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#c9d1d9;line-height:1.5}
+.header{background:linear-gradient(135deg,#161b22,#1a5276);padding:25px 30px;text-align:center}
+.header h1{color:#58a6ff;font-size:28px;margin:0}
+.header .sub{color:#8b949e;margin-top:8px;font-size:13px}
+.back-link{display:inline-block;margin:15px 20px;padding:6px 14px;font-size:12px;color:#c9d1d9;text-decoration:none;background:#21262d;border:1px solid #30363d;border-radius:6px;transition:all 0.2s}
+.back-link:hover{border-color:#58a6ff;color:#58a6ff}
+.count-header{max-width:1100px;margin:0 auto 10px;padding:0 20px;display:flex;gap:20px;font-size:14px;font-weight:600}
+.count-active{color:#3fb950}.count-completed{color:#8b949e}
+.section{max-width:1100px;margin:0 auto 30px;padding:0 20px}
+.section-title{font-size:20px;font-weight:700;margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid #30363d}
+.section-title.active{color:#58a6ff}
+.section-title.completed{color:#8b949e}
+.campaign-group{margin-bottom:20px}
+.campaign-label{font-size:12px;font-weight:700;color:#8b949e;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding-left:4px}
+.entry{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:14px 18px;margin-bottom:10px;transition:border-color 0.2s}
+.entry:hover{border-color:#58a6ff}
+.entry-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px}
+.task-name{font-size:15px;font-weight:700;color:#f0f6fc}
+.badges{display:flex;gap:5px;align-items:center}
+.badge{padding:2px 10px;border-radius:10px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
+.badge.active{background:#1a6b2e;color:#3fb950;border:1px solid #238636}
+.badge.idle{background:#3d2e00;color:#d29922;border:1px solid #9e6a03}
+.badge.done{background:#21262d;color:#8b949e;border:1px solid #30363d}
+.badge.error{background:#3d1418;color:#f85149;border:1px solid #da3633}
+.meta-line{font-size:12px;color:#8b949e;margin-bottom:8px}
+.meta-line .campaign{color:#58a6ff;font-weight:600}
+.meta-line .time-ago{color:#d2a8ff}
+.log-lines{background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:10px 12px;font-family:'SF Mono','Fira Code',monospace;font-size:11px;color:#7d8590;line-height:1.6;overflow-x:auto;white-space:pre-wrap;word-break:break-all}
+.log-lines .highlight{color:#c9d1d9}
+.status-line{font-size:12px;margin-top:8px;color:#8b949e}
+.status-line strong{color:#c9d1d9}
+.active-entry{border-left:3px solid #238636}
+.active-entry .log-lines{border-color:#1a3a2a}
+.error-entry{border-left:3px solid #da3633}
+.footer{text-align:center;padding:20px;color:#484f58;font-size:11px}
+@media(max-width:700px){.entry-header{flex-direction:column;align-items:flex-start}.count-header{flex-direction:column;gap:5px}}
+</style>
+</head>
+<body>
+<div class="header">
+    <h1>Operations Log — Next Chapter Master CRM</h1>
+    <div class="sub">Real-time view of all pipeline operations, engines, and build tasks</div>
+</div>
+<a href="index.html" class="back-link">← Back to Master CRM</a>
+
+<div class="count-header">
+    <span class="count-active">4 active tasks</span>
+    <span class="count-completed">44 completed tasks</span>
+    <span style="color:#484f58;font-weight:400;font-size:12px">Last generated: 2026-03-30 20:24 MST</span>
+</div>
+
+<!-- ============================================ -->
+<!-- SECTION 1: IN PROGRESS                       -->
+<!-- ============================================ -->
+<div class="section">
+<div class="section-title active">IN PROGRESS</div>
+
+<div class="campaign-group">
+<div class="campaign-label">System — Feedback &amp; QA</div>
+
+<div class="entry active-entry">
+    <div class="entry-header">
+        <span class="task-name">feedback_steps_10_14</span>
+        <div class="badges"><span class="badge active">ACTIVE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">System / QA</span> — Processing resolved comments for QA audit log &bull; <span class="time-ago">~5 hours ago (running on cron)</span></div>
+    <div class="log-lines">2026-03-30T21:50:33 | QA_LOG | Processing resolved comments for QA log...
+2026-03-30T21:50:34 | QA_LOG | Logged 0 resolved comments to QA log and audits
+2026-03-30T21:51:35 | QA_LOG | Logged 0 resolved comments to QA log and audits</div>
+</div>
+
+<div class="entry active-entry">
+    <div class="entry-header">
+        <span class="task-name">feedback_system</span>
+        <div class="badges"><span class="badge active">ACTIVE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">System / QA</span> — Feedback system comment processor &bull; <span class="time-ago">~5 hours ago (running on cron)</span></div>
+    <div class="log-lines">2026-03-30 14:50:34 [INFO] Logged 0 resolved comments to QA log and audits
+2026-03-30 14:51:34 [INFO] Processing resolved comments for QA log...
+2026-03-30 14:51:35 [INFO] Logged 0 resolved comments to QA log and audits</div>
+</div>
+
+<div class="entry active-entry">
+    <div class="entry-header">
+        <span class="task-name">comment_processor</span>
+        <div class="badges"><span class="badge active">ACTIVE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">System / QA</span> — Comment resolution processor &bull; <span class="time-ago">~5 hours ago (running on cron)</span></div>
+    <div class="log-lines">2026-03-30 14:50:34 [INFO] Logged 0 resolved comments to QA log and audits
+2026-03-30 14:51:34 [INFO] Processing resolved comments for QA log...
+2026-03-30 14:51:35 [INFO] Logged 0 resolved comments to QA log and audits</div>
+</div>
+
+<div class="entry error-entry">
+    <div class="entry-header">
+        <span class="task-name">auto_refresh</span>
+        <div class="badges"><span class="badge error">ERROR</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">System / Auto-Refresh</span> — Stale page regeneration checker &bull; <span class="time-ago">~5 hours ago (running on cron)</span></div>
+    <div class="log-lines">2026-03-30T21:45:14 | REFRESH | Checking for stale pages to regenerate...
+2026-03-30T21:50:14 | REFRESH | Failed to fetch stale pages: HTTP Error 401: Unauthorized
+2026-03-30T21:50:14 | REFRESH | Failed to fetch stale pages: HTTP Error 401: Unauthorized</div>
+    <div class="status-line"><strong>Issue:</strong> HTTP 401 Unauthorized — Supabase auth may need token refresh</div>
+</div>
+</div>
+</div>
+
+<!-- ============================================ -->
+<!-- SECTION 2: COMPLETED                         -->
+<!-- ============================================ -->
+<div class="section">
+<div class="section-title completed">COMPLETED</div>
+
+<!-- Air Control -->
+<div class="campaign-group">
+<div class="campaign-label">Air Control</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">sap_batch_aircontrol</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">Air Control</span> — SAP buyer narrative batch &bull; Completed 2026-03-29 21:37</div>
+    <div class="log-lines">[2026-03-29T21:37:11] STORED OK: Encompass Home Services
+[2026-03-29T21:37:11] === SAP BATCH COMPLETE ===
+[2026-03-29T21:37:11] Processed: 26, Skipped: 0, Total Exa cost: $1.30</div>
+</div>
+</div>
+
+<!-- AquaScience -->
+<div class="campaign-group">
+<div class="campaign-label">AquaScience</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">sap_batch_aquascience</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">AquaScience</span> — SAP buyer narrative batch &bull; Completed 2026-03-29 21:27</div>
+    <div class="log-lines">=== SAP BATCH V2 COMPLETE ===
+[2026-03-29 21:27:36] Narratives stored: 29/29
+[2026-03-29 21:27:36] Estimated total Exa cost: $1.45</div>
+</div>
+</div>
+
+<!-- HR.com -->
+<div class="campaign-group">
+<div class="campaign-label">HR.com</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">sap_batch_hrcom</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">HR.com</span> — SAP buyer narrative batch &bull; Completed 2026-03-29 21:22</div>
+    <div class="log-lines">2026-03-29 21:22:03 | SAP BATCH COMPLETE
+2026-03-29 21:22:03 | Exa queries: 30 | Results: 90 | Est cost: $0.45
+2026-03-29 21:22:03 | ============================================================</div>
+</div>
+</div>
+
+<!-- Springer Floor -->
+<div class="campaign-group">
+<div class="campaign-label">Springer Floor</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">sap_batch_springer</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">Springer Floor</span> — SAP buyer narrative batch &bull; Completed 2026-03-29 21:20</div>
+    <div class="log-lines">=== V3 COMPLETE ===
+[2026-03-29 21:20:50] Stored: 27/27 | Failed: 0
+[2026-03-29 21:20:50] Total Exa cost (all runs): $3.30</div>
+</div>
+</div>
+
+<!-- Wieser Concrete -->
+<div class="campaign-group">
+<div class="campaign-label">Wieser Concrete</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">buyside_interactive</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">Wieser Concrete / Design Precast</span> — Buy-side interactive proposals &bull; Completed 2026-03-29 21:05</div>
+    <div class="log-lines">Styling: Dark theme matching sell-side, orange accents (#f0883e) instead of green
+Interactions: All slider/dropdown/checkbox/fee/CTA changes logged via Supabase REST API
+Status: COMPLETE</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">buyside_targets</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">Wieser Concrete / Design Precast</span> — Buy-side target research &bull; Completed 2026-03-29 16:52</div>
+    <div class="log-lines">- Never say private equity — say family-owned operator/buyer
+- deal_side = 'buy_side' on all records
+- buyer_type = 'acquisition_target' on all records</div>
+</div>
+</div>
+
+<!-- Multi-Campaign -->
+<div class="campaign-group">
+<div class="campaign-label">Multi-Campaign</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">attack_plan_upgrade</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">All Campaigns</span> — 4-phase visual pipeline with per-company buyer/target names &bull; Completed 2026-03-29 21:49</div>
+    <div class="log-lines">- 4-phase visual pipeline with phase badges, connecting arrows, activity lists
+- Per-company buyer/target names pulled from engagement_buyers table
+- All files copied to ~/Projects/master-crm-web/public/</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">proposal_template_rebuild</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">All Campaigns</span> — Interactive proposal template rebuild &bull; Completed 2026-03-29 21:34</div>
+    <div class="log-lines">- interactive-aquascience.html
+- interactive-air-control.html
+- interactive-springer-floor.html
+- interactive-hrcom-ltd.html</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">buyer_page_fix</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">All Campaigns</span> — Buyer 1-pager generation &bull; Completed 2026-03-29 21:59</div>
+    <div class="log-lines">COMPLETE: 193 success, 0 failed, 193 total
+Output: /Users/clawdbot/Projects/master-crm/data/buyer-1pagers
+Web: /Users/clawdbot/Projects/master-crm-web/public</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">interactive_proposals</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">All Campaigns</span> — Interactive proposal generation with Supabase tracking &bull; Completed 2026-03-29 20:55</div>
+    <div class="log-lines">client_interactions table: created with RLS policies
+Total files: 12
+Completed: 2026-03-29T20:55:42</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">page_templates</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">All Campaigns</span> — Page template system + Vercel deploy &bull; Completed 2026-03-29 20:56</div>
+    <div class="log-lines">- Copied to: ~/Projects/master-crm-web/public/
+- Deployed: vercel deploy --prod --yes
+- URL: https://master-crm-web-eight.vercel.app</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">buyer_enrichment</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">All Campaigns</span> — Buyer contact enrichment via Exa &bull; Completed 2026-03-29 20:06</div>
+    <div class="log-lines">ENRICHMENT COMPLETE
+Buyers enriched: 20/20
+Total Exa searches: 100 | Estimated cost: $1.00</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">buyer_expansion</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">AquaScience / Air Control / Springer</span> — Buyer list expansion (+25 each) &bull; Completed 2026-03-29 20:12</div>
+    <div class="log-lines">Total inserted: 75
+AquaScience: +25 new buyers (was 10, now 35 total)
+Air Control: +25 new buyers (was 10, now 35 total)
+Springer Floor: +25 new buyers (was 10, now 35 total)</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">buyer_1pagers</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">Wieser Concrete</span> — Buyer 1-pager generation &bull; Completed 2026-03-29 16:59</div>
+    <div class="log-lines">Processing: Kersten Precast Concrete LLC (fit=8.3)
+Saved: wieser-concrete-products-inc_kersten-precast-concrete-llc.html
+FIX RUN COMPLETE</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">full_exa_pipeline</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">Air Control / AquaScience / Springer</span> — Full Exa research pipeline &bull; Completed 2026-03-29 20:08</div>
+    <div class="log-lines">CACHE: Air Control(7), AquaScience(6), Springer Floor Care(8)
+Total Exa: 21 searches, $0.15 cost (well under $5 limit)
+FULL PIPELINE COMPLETE.</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">exa_transparency</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">All Campaigns</span> — Exa search transparency reports &bull; Completed 2026-03-29 18:23</div>
+    <div class="log-lines">TOTAL COST: $0.105
+COMPLETE: 15 total Exa searches, $0.105 total cost</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">research_transparency</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">All Campaigns</span> — Research transparency page generation &bull; Completed 2026-03-29 16:30</div>
+    <div class="log-lines">Research methods in library: 20
+Research executions logged: 50
+Companies with transparency: 6 | HTML pages generated: 6</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">ebitda_page_updates</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">All Campaigns</span> — EBITDA levers inserted into data rooms &amp; proposals &bull; Completed 2026-03-29 18:02</div>
+    <div class="log-lines">Generated HTML sections with green (positive) and amber (negative/opportunity) cards
+Inserted into data rooms before CTA section
+Buy-side (Wieser, Design Precast) framed as "Acquisition Scoring Criteria"</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">ebitda_levers</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">All Campaigns</span> — EBITDA lever generation (180 items, 7 verticals) &bull; Completed 2026-03-29 17:39</div>
+    <div class="log-lines">Universal Detractors: 12
+Vertical-Specific Levers: 98 (14 per vertical x 7)
+GRAND TOTAL: 180 items across 7 verticals</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">exa_guide</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">System</span> — Exa API guide &amp; feature documentation &bull; Completed 2026-03-29 20:09</div>
+    <div class="log-lines">Feature requests: 8
+Incident case studies: 1 (urllib 403)
+COMPLETE</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">research_pipeline_rules</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">System</span> — Research pipeline rule extraction &bull; Completed 2026-03-29 20:41</div>
+    <div class="log-lines">Implement R25 goal-priority scoring in orchestrator
+Build 3 buyer search templates (R5) for PE/strategic/consolidator
+Build diff generation on page regeneration (R20)</div>
+</div>
+</div>
+
+<!-- System / Infrastructure -->
+<div class="campaign-group">
+<div class="campaign-label">System &amp; Infrastructure</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">master</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">System</span> — Master orchestration log &bull; Last entry 2026-03-30 04:18</div>
+    <div class="log-lines">2026-03-29 | SPRINT START | 5 systems: versioning, templates, buyer 1-pagers, page tree, auto-rebuild
+2026-03-30 | VERCEL DEPLOYED | https://master-crm-web-eight.vercel.app | 79 pages | Production
+2026-03-30 | EXA V2 DEPLOYED | 12 templates, 6 deep, 10 SEO domains blocked</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">commenting_system</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">System</span> — Comment widget + server route &bull; Completed 2026-03-29 18:29</div>
+    <div class="log-lines">- comment-widget.js (NEW)
+- company_hub.py (script tag injection)
+- server.py (JS file route)
+- 6 hub HTML files regenerated, deployed to Vercel</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">version_slider</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">System</span> — Version slider widget + history page &bull; Completed 2026-03-29 18:30</div>
+    <div class="log-lines">Created version-history.html — standalone table of ALL versions
+Added &lt;meta name="company-name"&gt; and &lt;meta name="page-type"&gt; tags
+page_versions table: 26 rows across 6 companies, 4 page types</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">vercel_redeploy</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">System</span> — Vercel redeploy with DB port fix &bull; Completed 2026-03-29 18:30</div>
+    <div class="log-lines">Fix Applied:
+  - dashboard.py DB_CONN port changed from 5432 to 6543 (pooler port)
+=== END ===</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">version_engine</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">System</span> — Version engine + Supabase backfill &bull; Completed 2026-03-29 16:27</div>
+    <div class="log-lines">Supabase instance entered connection-refused state after backfill
+(likely free-tier auto-pause from rapid connections).
+All data verified inserted before pause. Functions confirmed created.</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">sap_quality_pipeline</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">System</span> — SAP quality assurance pipeline &bull; Completed 2026-03-29 17:58</div>
+    <div class="log-lines">17:58:42 | Claude CLI failed — skipping
+PIPELINE COMPLETE
+============================================================</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">server_rebuild</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">System</span> — Server rebuild + endpoint tests &bull; Completed 2026-03-29 16:22</div>
+    <div class="log-lines">History page correctly shows version browser with dropdown + arrows
+All 25 endpoints PASS. All content checks PASS.
+Final status: ALL TESTS PASSED at 2026-03-29 16:22:06</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">rules_extraction</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">System</span> — Complete rules list extraction (161 rules) &bull; Completed 2026-03-29 17:20</div>
+    <div class="log-lines">TOTAL: 161
+Output: COMPLETE-RULES-LIST.md
+RULES_EXTRACTION | Complete</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">overnight-build</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">All Campaigns</span> — Overnight full build (proposals + buyers) &bull; Completed 2026-03-29 09:34</div>
+    <div class="log-lines">Top Buyers: Ally Services/Watchtower Capital → Air Control (exact market)
+CMC → Wieser &amp; Design Precast (building largest US precast platform)
+Total cost: $0.084 (Exa search only)</div>
+</div>
+</div>
+
+<!-- CRM Engines -->
+<div class="campaign-group">
+<div class="campaign-label">CRM Engines</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">engagement_engine</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">All Campaigns</span> — Engagement activation (scripts, plans, buyer clearance) &bull; Completed 2026-03-29 12:21</div>
+    <div class="log-lines">ENGAGEMENT ACTIVATED: Wieser Concrete Products, Inc.
+Buyers: 10 clear / 0 DNC blocked
+Scripts: top 10 generated | Timeline: 30/60/90 day plan created</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">meeting_engine</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">Wieser / Design Precast</span> — Meeting prep page generation &bull; Completed 2026-03-29 11:54</div>
+    <div class="log-lines">Meeting page saved: wieser-concrete-products-inc_2026-03-29_discovery.html
+Generating: Design Precast &amp; Pipe, Inc. (discovery) for 2026-03-29
+Meeting page saved: design-precast-and-pipe-inc_2026-03-29_discovery.html</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">profile_engine</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">All Campaigns</span> — Company profile generation &bull; Completed 2026-03-29 11:37</div>
+    <div class="log-lines">AquaScience: SUCCESS | Design Precast &amp; Pipe, Inc.: SUCCESS
+HR.com Ltd: SUCCESS | Springer Floor: SUCCESS
+Wieser Concrete Products, Inc.: SUCCESS</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">worker</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">Wieser / Design Precast</span> — Certification worker &bull; Completed 2026-03-29 09:38</div>
+    <div class="log-lines">Certified Wieser Concrete Products, Inc.: APPROVED
+Processing: certifier for Design Precast &amp; Pipe, Inc.
+Certified Design Precast &amp; Pipe, Inc.: NEEDS_REVIEW</div>
+</div>
+</div>
+
+<!-- ETL / Data -->
+<div class="campaign-group">
+<div class="campaign-label">ETL &amp; Data Pipeline</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">normalization</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">System</span> — Contact/company normalization &bull; Completed 2026-03-29 00:06</div>
+    <div class="log-lines">Targets: 195 companies, 208 contacts, 402 targets updated
+Investors: 27 companies, 1729 contacts, 1729 profiles updated
+DONE — 222 companies, 1937 contacts in database</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">dedup_final</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">System</span> — Final deduplication run &bull; Completed 2026-03-29 00:40</div>
+    <div class="log-lines">tam_verifications: 6113 vs expected 6330 (off by -217)
+358 old_id rows retained (unique records from old DB)
+do_not_call: 143 vs expected 144 (off by -1)</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">skills_consolidation</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">System</span> — Skills registry consolidation &bull; Completed 2026-03-29 00:41</div>
+    <div class="log-lines">skill-creator, skill-loader (5 removed). Added connectors (1 new). Net: -4.
+Registry went from 24 to 20.
+Local: gained connectors, salesfinity-loader, rate-oracle (+3 new)</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">expenses</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">System</span> — Expense tracking / budget audit &bull; Completed 2026-03-29 00:38</div>
+    <div class="log-lines">PHASE 3 | Verification tests (28/28 pass)
+PHASE 3 | Campaign rename + cutover prep
+FINAL TOTAL: $0.08 of $50 budget used</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">etl_batch1</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">System</span> — ETL batch 1 migration &bull; Completed 2026-03-28 23:23</div>
+    <div class="log-lines">WARNING: Could not re-add FK constraint (orphan business_ids exist)
+insert or update on table "tam_final" violates FK constraint
+Completed at 2026-03-28T23:23:10</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">etl_batch2</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">System</span> — ETL batch 2 migration &bull; Completed 2026-03-28 23:20</div>
+    <div class="log-lines">id field stripped for all tables except targets (preserved for FK integrity)
+entity_default='next_chapter' applied where specified
+Batch size: 200 with fallback to 50/10/1 on failure</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">etl_batch3</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">System</span> — ETL batch 3 (deal research, targets, forge) &bull; Completed 2026-03-28 23:22</div>
+    <div class="log-lines">deal_research: 67/67 rows loaded
+acquisition_targets: 9/9 rows loaded
+TOTAL: 4787/4787 rows loaded</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">etl_batch4</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">System</span> — ETL batch 4 (investor profiles, events) &bull; Completed 2026-03-28 23:17</div>
+    <div class="log-lines">and_investor_profiles (nyc_pgoo_people.json): 831/831 rows loaded
+and_investor_profiles (nyc_wdhn_attack_list.json): 5/5 rows loaded
+and_events: 7/7 rows loaded</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">extraction_summary</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">System</span> — Full data extraction (26 tables) &bull; Completed 2026-03-28 21:26</div>
+    <div class="log-lines">skills_registry: 23 rows
+Total rows extracted: 27883
+Tables succeeded: 26 | Tables failed: 0</div>
+</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">full_audit_run</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">System</span> — Full audit report generation &bull; Completed 2026-03-28 21:36</div>
+    <div class="log-lines">AUDIT COMPLETE
+Reports: 19 files in audit-report/
+Master index: MASTER_INDEX.md</div>
+</div>
+</div>
+
+<!-- Dossier Pipeline -->
+<div class="campaign-group">
+<div class="campaign-label">Dossier Pipeline (Research)</div>
+
+<div class="entry">
+    <div class="entry-header">
+        <span class="task-name">pipeline_log (JSON)</span>
+        <div class="badges"><span class="badge done">DONE</span></div>
+    </div>
+    <div class="meta-line"><span class="campaign">Dossier Pipeline</span> — Batch research: acquisition checks, quality reviews, scout research &bull; Last entry 2026-03-21</div>
+    <div class="log-lines">Actions: batch_pull, acquisition_check, research_complete, quality_review
+Agents: next (orchestrator), scout (researcher)
+Targets processed: 10 | Classifications: INDEPENDENT, ACQUIRED, PLATFORM, UNCLEAR</div>
+</div>
+</div>
+
+</div>
+
+<div class="footer">Next Chapter M&A Advisory | Operations Log | Generated 2026-03-30 20:24 MST</div>
+</body>
+</html>

@@ -42,11 +42,57 @@
     color: #58a6ff; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid #21262d;
   }
   .card p { margin-bottom: 10px; font-size: 14px; line-height: 1.75; }
+  .facts-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px 32px;
+    font-size: 14px;
+  }
+  .fact-row { display: flex; flex-direction: column; padding: 8px 0; border-bottom: 1px solid #21262d; }
+  .fact-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 3px; }
+  .fact-value { color: #c9d1d9; font-size: 14px; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th { text-align: left; padding: 10px 12px; background: #0d1117; font-weight: 600; color: #8b949e; font-size: 11px; text-transform: uppercase; border-bottom: 1px solid #30363d; }
   td { padding: 10px 12px; border-bottom: 1px solid #21262d; color: #c9d1d9; }
   tr:hover td { background: #1c2128; }
   a { color: #58a6ff; text-decoration: none; }
+  .narrative-box {
+    background: #0d1929; border: 1px solid #1f4e79; border-radius: 8px;
+    padding: 18px 22px; font-size: 14px; line-height: 1.8; color: #b0cfe8;
+  }
+  .narrative-box p { margin-bottom: 10px; }
+  .narrative-box p:last-child { margin-bottom: 0; }
+  .call-opener-box {
+    background: #0b2e1a; border: 1px solid #27ae60; border-radius: 8px;
+    padding: 18px 22px;
+  }
+  .call-opener-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: #27ae60;
+    margin-bottom: 10px; text-transform: uppercase;
+  }
+  .call-opener-box p { color: #a3e4b8; font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+  .call-opener-box p:last-child { margin-bottom: 0; }
+  .talking-points { margin-top: 16px; }
+  .talking-points .tp-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: #8b949e;
+    text-transform: uppercase; margin-bottom: 10px;
+  }
+  .tp-item {
+    display: flex; gap: 12px; margin-bottom: 10px; font-size: 14px; line-height: 1.65;
+  }
+  .tp-num {
+    flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+    background: #1f4e79; color: #58a6ff; font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; margin-top: 1px;
+  }
+  .pipeline-row { display: flex; align-items: center; gap: 16px; padding: 12px 0; border-bottom: 1px solid #21262d; font-size: 14px; }
+  .pipeline-row:last-child { border-bottom: none; }
+  .pipeline-stage { flex: 1; color: #c9d1d9; }
+  .pipeline-date { color: #8b949e; font-size: 13px; width: 80px; text-align: right; }
+  .status-badge {
+    font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+    padding: 3px 10px; border-radius: 12px;
+  }
+  .status-complete { background: #0b3d20; color: #56d364; }
+  .status-next { background: #2e1a0e; color: #f0883e; }
   .footer { text-align: center; padding: 24px 48px; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
 </style>
 <link rel="stylesheet" href="section-controls.css">
@@ -58,161 +104,173 @@
   <span style="color:#d0d7de">|</span>
   <style>.nc-nav a{color:#0969da;text-decoration:none;font-weight:500}.nc-nav a:hover{text-decoration:underline}</style>
   <a href="index.html">Home</a>
-      <a href="system-overview.html">System Overview</a>
-      <a href="air-control-hub.html">Air Control Hub</a>
+  <a href="system-overview.html">System Overview</a>
+  <a href="air-control-hub.html">Air Control Hub</a>
 </div>
 <!-- NAV:END -->
-
-
 
 <div class="page">
   <div class="header">
     <div class="header-label">Buyer Dossier</div>
     <h1>Littlejohn &amp; Co. / United Air Temp</h1>
     <div class="subtitle">Prepared for Air Control</div>
-    <div class='score-badge'><span class='score-num'>9</span><span class='score-label'>Fit</span></div>
+    <div class="score-badge"><span class="score-num">9</span><span class="score-label">Fit</span></div>
   </div>
   <div class="context-bar">
-    <strong>Air Control</strong> &bull; Fred Lowry
+    <strong>Air Control</strong> &bull; Lorton, VA (Adjacent Market)
   </div>
+
   <div class="content">
+
+    <!-- BUYER PROFILE -->
     <div class="card" id="buyer-profile">
-        <h2>Buyer Profile</h2>
-        <p>## Littlejohn & Co. / United Air Temp — Strategic Buyer Profile</p>
-<p>### Company Overview & Strategic Logic
-Littlejohn & Co. / United Air Temp is a potential acquirer for Air Control (HVAC).</p>
-<p>### Earnings & Market Position
-[[PDF] Building Products Report | TM Capital](https://www.tmcapital.com/wp-content/uploads/2024/10/2024-Building-Products-Report-10.22.2024.pdf): Building Products Report
-Trending Positive with Building
-Economic & Demand Tailwinds
-October 2024
-1
-TM Capital’s Building Products Team & Transaction Experience
-TM Capital’s Building Products Practice
-Selected Transactions TM Capital’s Building Products Senior Team
-Jerome Romano
-Managing Director
-(617) 259-2206
-jromano@tmcapital.com
-Paul Smolevitz
-Managing Director
-(212) 809-1416
-psmolevitz@tmcapital.com
-Jonathan Mishkin
-Managing Director
-(212) 809-1413
-jmishkin@tmcapital.com
-David Felts
-Managing Director
-(404) 995-6252
-dfelts@tmcapital.com
-Allan Cruickshanks
-Managing Director
-(804) 387-4485
-acruickshanks@tmcapital.com
-Andy Krna
-Managing Director
-(212) 809-1442
-akrna@tmcapital.com
-Vidur Kapur
-Director
-(212) 809-1422
-vkapur@tmcapital.com
-Steve Hunter
-Managing Director – Sponsor Coverage
-(404) 307-0619
-shunter@tmcapital.com
-2
-THIS COMMUNICATION IS THE INTELLECTUAL PROPERTY OF TM CAPITAL, A DIVISION OF JANNEY AND MAY NOT BE REPRODUCED, 
-DISTRIBUTED, OR PUBLISHED BY ANY PERSON FOR ANY PURPOSE WITHOUT JANNEY'S EXPRESS PRIOR CONSENT.
-Disclaimer</p>
-<p>### M&A Track Record
-[Littlejohn & Co. Acquires United Air Temp, Air Conditioning and ...](https://www.businesswire.com/news/home/20240401700939/en/Littlejohn-Co.-Acquires-United-Air-Temp-Air-Conditioning-and-Heating): Littlejohn & Co. Acquires United Air Temp, Air Conditioning and Heating</p>
-<p>Apr 1, 2024 8:00 AM Eastern Daylight Time</p>
-<p># Littlejohn & Co. Acquires United Air Temp, Air Conditioning and Heating</p>
-<p>Share</p>
-<p>---</p>
-<p>GREENWICH, Conn.--(BUSINESS WIRE)--Littlejohn & Co., LLC (“Littlejohn”), a private investment firm based in Greenwich, CT, announced that it has acquired United Air Temp, Air Conditioning and Heating (“UAT”), a leading provider of HVAC and plumbing services to residential homeowners in the Mid-Atlantic and Southeastern U.S. As part of the transaction, UAT’s senior management team, led by CEO Michael Giordano, will remain significant investors in the company. Terms of the transaction were not disclosed.</p>
-<p>Founded in 1931 and headquartered in Lorton, VA, UAT provides heating and cooling system installation, repair, and maintenance services, indoor air quality, and plumbing services to homeowners across Washington D.C., Maryland, Virginia, North Carolina, and Florida. Over the last three year</p>
-<p>### Financial Profile
-[Littlejohn & Co Revenue, Funding & Valuation - Prospeo](https://prospeo.io/c/littlejohn-co-revenue): Littlejohn & Co Revenue, Funding & Valuation</p>
-<p># Littlejohn & Co Revenue</p>
-<p>Venture Capital and Private Equity Principals • Indian Field, Connecticut, United States • 101-200 Employees</p>
-<p>View Financials And Employees At Littlejohn & Co</p>
-<p>$</p>
-<p>Littlejohn & Co revenue & valuation</p>
-<p>| Annual revenue | $22,000,000 |
-| --- | --- |
-| Revenue per employee | $206,000 |
-| Estimated valuation? | $70,400,000 |
-| Total funding | No funding |</p>
-<p>Key Contacts at Littlejohn & Co</p>
-<p>Jacqueline Russo</p>
-<p>Executive Assistant to Chief Executive Officer</p>
-<p>Mobile @littlejohnllc.com</p>
-<p>View Details</p>
-<p>Michael Klein</p>
-<p>Chief Executive Officer</p>
-<p>Mobile @littlejohnllc.com</p>
-<p>View Details</p>
-<p>View All Employees</p>
-<p>OverviewEmails FormatAboutEmployees InsightsFundingTech StackTrending CompaniesFAQ</p>
-<p>Company overview</p>
-<p>littlejohnllc.com</p>
-<p>| Headquarters | 8 Sound Shore Dr, Greenwich, Connecticut 06830, US |
-| --- | --- |
-| Phone number | +1203552
-Revenue indicator: oling is a Consumer Services company. High Road Heating & Cooling has an annual revenue of $13.9M, founded in 2007. Headquartered in Long Lake, Minnesota, Unite</p>
-<p>### Strategic Fit with Air Control
-[Littlejohn & Co. Partners With GDS Associates to Support the Next ...](https://littlejohnllc.com/news/littlejohn-co-partners-with-gds-associates-to-support-the-next-phase-of-growth/): Littlejohn & Co. Partners With GDS Associates to Support the Next Phase of Growth | Littlejohn & Co.</p>
-<p>Back</p>
-<p>Partnership builds on GDS’s 40-year legacy as a trusted advisor to its clients and positions the firm for expanded technical breadth and strategic growth</p>
-<p>GREENWICH, Conn. — Littlejohn & Co., LLC (“Littlejohn”), a private investment firm based in Greenwich, CT, today announced a strategic partnership with the management team and employees of GDS Associates, Inc. (“GDS” or the “Company”), a market-leading provider of power infrastructure consulting and advisory services to the U.S. electric utility industry. Together, Littlejohn and GDS will invest in expanding the Company’s capabilities and pursue complementary acquisitions to build a scaled platform supporting utilities across the full lifecycle of consulting, planning, engineering, and field services.</p>
-<p>Headquartered in Marietta, Georgia, GDS has built a 40-year track record as a trusted advisor to electric cooperatives, municipal utilities,</p>
-<p>### Key Contacts & Decision Makers
-[Michael Klein - Chief Executive Officer at Littlejohn & Co | LinkedIn](https://www.linkedin.com/in/michael-klein-7082888a): # Michael Klein</p>
-<p>Chief Executive Officer at Littlejohn & Co</p>
-<p>Chief Executive Officer at Littlejohn & Co</p>
-<p>Greenwich, Connecticut, United States (US)</p>
-<p>500 connections • 1,948 followers</p>
-<p>## About</p>
-<p>Total Experience: 29 years and 3 months</p>
-<p>## Experience</p>
-<p>### Chief Executive Officer at Littlejohn & Co (Current)</p>
-<p>Jan 1996 - Present • 30 years and 1 month</p>
-<p>Company: 51-200 employees • Founded 1996 • Privately Held • Venture Capital and Private Equity Principals</p>
-<p>Lead a private equity and distressed security firm focused on acquiring middle market companies.</p>
-<p>Department: C-Suite • Level: C-Level</p>
-<p>### Chief Executive Officer at Littlejohn & Co (Current)</p>
-<p>Sep 1996 - Present • 28</p>
-<p>### Golden Nuggets & Call Ammunition
-- & Co., LLC (“Littlejohn”), a private investment firm based in Greenwich, CT, announced that it has acquired United Air Temp, Air Conditioning and Heating (“UAT”), a leading provider of HVAC and plumbi
-- n & Co. Partners With GDS Associates to Support the Next Phase of Growth | Littlejohn & Co.</p>
-<p>Back</p>
-<p>Partnership builds on GDS’s 40-year legacy as a trusted advisor to its clients and positions the fir
-- n D.C., Maryland, Virginia, North Carolina, and Florida. Over the last three years, the Company has expanded its footprint through a disciplined and deliberate acquisition strategy, assembling an attr
-- ittlejohn &amp; Co
-# Littlejohn &amp; Co Information
-<em> </em>*
-<em> </em>*
-Since 1996, Littlejohn &amp; Co. has invested in middle market companies across the capital structure. Our flexibility and creativity pro
-- nt experience investing in leading service businesses, Littlejohn & Co. will help UAT execute their growth plans organically and through strategic M&A.</p>
-<p>The multi-disciplinary, multi-office Troutman P</p>
-<p>### Research Source
-Exa.ai enrichment — 2026-03-29</p>
-    </div>
-    
-    
-    <div class="card" id="approach">
-        <h2>Approach Strategy</h2>
-        <div style="background:#0b2e1a;border:1px solid #27ae60;border-radius:8px;padding:18px 22px;">
-            <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:#27ae60;margin-bottom:6px;text-transform:uppercase;">CALL OPENER</div>
-            <p style="color:#a3e4b8;font-size:14px;line-height:1.7;">We noticed Littlejohn &amp; Co. / United Air Temp&#x27;s activity in HVAC and your track record of strategic acquisitions in this space. We&#x27;re working with Air Control, and there&#x27;s a compelling fit we&#x27;d love to walk you through.</p>
+      <h2>Buyer Profile</h2>
+      <div class="facts-grid">
+        <div class="fact-row">
+          <span class="fact-label">Platform Company</span>
+          <span class="fact-value">United Air Temp (UAT)</span>
         </div>
+        <div class="fact-row">
+          <span class="fact-label">PE Sponsor</span>
+          <span class="fact-value">Littlejohn &amp; Co., LLC</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact-label">Acquisition Date</span>
+          <span class="fact-value">April 1, 2024</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact-label">UAT Founded</span>
+          <span class="fact-value">1931</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact-label">Headquarters</span>
+          <span class="fact-value">Lorton, VA</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact-label">UAT CEO</span>
+          <span class="fact-value">Michael Giordano (appointed post-acquisition)</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact-label">Services</span>
+          <span class="fact-value">HVAC, plumbing, electrical — residential &amp; commercial</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact-label">Geography Served</span>
+          <span class="fact-value">Virginia, Maryland, DC metro area</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact-label">Market Position</span>
+          <span class="fact-value">One of the largest residential HVAC companies in DC metro</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact-label">Littlejohn AUM</span>
+          <span class="fact-value">$7B+ (middle-market focus)</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact-label">Littlejohn HQ</span>
+          <span class="fact-value">Greenwich, CT</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact-label">Littlejohn Focus</span>
+          <span class="fact-value">Business services &amp; industrial sectors</span>
+        </div>
+      </div>
     </div>
+
+    <!-- CONTACTS -->
+    <div class="card" id="contacts">
+      <h2>Key Contacts</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Contact</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Michael Giordano</td>
+            <td>CEO, United Air Temp</td>
+            <td>&mdash;</td>
+            <td>Appointed post-acquisition; remained as significant investor</td>
+          </tr>
+          <tr>
+            <td>Michael Klein</td>
+            <td>CEO, Littlejohn &amp; Co.</td>
+            <td>&mdash;</td>
+            <td>Has led Littlejohn since founding (1996)</td>
+          </tr>
+          <tr>
+            <td>Jacqueline Russo</td>
+            <td>EA to CEO, Littlejohn</td>
+            <td>&mdash;</td>
+            <td>Executive Assistant to Michael Klein</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- STRATEGIC FIT -->
+    <div class="card" id="strategic-fit">
+      <h2>Strategic Fit</h2>
+      <div class="narrative-box">
+        <p>United Air Temp in Lorton, VA is the closest geographic competitor and most logical acquirer on this entire list. Lorton to McLean is roughly 20 minutes by highway — UAT and Air Control are operating in the same backyard, serving the same DC-metro homeowners and commercial accounts.</p>
+        <p>Littlejohn's PE playbook is explicitly buy-and-build. The BusinessWire announcement specifically notes UAT "has expanded its footprint through a disciplined and deliberate acquisition strategy" prior to the Littlejohn deal — meaning the platform was already acquisition-minded before the PE capital arrived. With Littlejohn's $7B+ AUM behind it, that pace is almost certain to accelerate.</p>
+        <p>Air Control would be a natural bolt-on: same service lines (HVAC, plumbing, electrical), same customer profile, and complementary geographic footprint across McLean and Northern Virginia. There is minimal overlap risk and significant cross-sell upside.</p>
+        <p>UAT's 90+ year brand history gives them credibility with legacy residential customers. Littlejohn's capital gives them the ability to write a check. This combination makes them a serious, motivated acquirer — not a financial sponsor doing a roll-up from scratch, but an established platform actively expanding in the exact market Air Control serves.</p>
+        <p>This is likely the single highest-relevance buyer on the entire list due to geography, operational alignment, and confirmed acquisition mandate.</p>
+      </div>
+    </div>
+
+    <!-- APPROACH STRATEGY -->
+    <div class="card" id="approach">
+      <h2>Approach Strategy</h2>
+      <div class="call-opener-box">
+        <div class="call-opener-label">Call Opener</div>
+        <p>"Michael, I'm calling because we represent Air Control — they're a well-established HVAC company based in McLean, about 20 minutes from your United Air Temp headquarters in Lorton. Given that Littlejohn acquired UAT in April 2024 and you've been open about a buy-and-build strategy in the DC metro area, we think there may be a conversation worth having. Air Control has been serving Northern Virginia for decades and would be a clean fit with what you're building."</p>
+      </div>
+      <div class="talking-points">
+        <div class="tp-label">Talking Points</div>
+        <div class="tp-item">
+          <div class="tp-num">1</div>
+          <div>UAT was acquired by Littlejohn on April 1, 2024 — just over two years ago. The integration is stabilized and the platform is at the stage where add-on acquisitions make strategic and financial sense. Air Control is available now, while UAT is in growth mode.</div>
+        </div>
+        <div class="tp-item">
+          <div class="tp-num">2</div>
+          <div>Lorton to McLean is a 20-minute drive. There are no geographic gaps to bridge, no new market to enter, no learning curve on customer demographics. This is the simplest possible bolt-on — same market, same services, same customer type.</div>
+        </div>
+        <div class="tp-item">
+          <div class="tp-num">3</div>
+          <div>Littlejohn's investment thesis for UAT was explicitly built on M&amp;A-driven growth. The prior management team had already completed multiple acquisitions before Littlejohn arrived. With institutional capital now behind the platform, there is both the mandate and the firepower to move on a deal like this quickly.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PIPELINE HISTORY -->
+    <div class="card" id="pipeline">
+      <h2>Pipeline History</h2>
+      <div class="pipeline-row">
+        <div class="pipeline-stage">Target Identified</div>
+        <span class="status-badge status-complete">Complete</span>
+        <div class="pipeline-date">2025</div>
+      </div>
+      <div class="pipeline-row">
+        <div class="pipeline-stage">Research Complete</div>
+        <span class="status-badge status-complete">Complete</span>
+        <div class="pipeline-date">Mar 2026</div>
+      </div>
+      <div class="pipeline-row">
+        <div class="pipeline-stage">Outreach Pending</div>
+        <span class="status-badge status-next">Next Step</span>
+        <div class="pipeline-date">&mdash;</div>
+      </div>
+    </div>
+
   </div>
   <div class="footer">
-    Generated March 29, 2026 &bull; Next Chapter M&A Advisory &bull; Confidential
+    Generated March 2026 &bull; Next Chapter M&amp;A Advisory &bull; Confidential
   </div>
 </div>
 <script src="/comment-widget.js"></script>
