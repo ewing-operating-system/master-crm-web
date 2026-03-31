@@ -1,0 +1,18 @@
+```json
+{
+  "agent_a": {
+    "score": 8.2,
+    "strengths": "Excellent evidence density with specific data points (1.92M members), clear strategic dimensions (AI training data, vertical proof point, distribution channel), and highly actionable golden nuggets with precise openers. The executor tone creates urgency and direct alignment with IgniteTech's rebuild mandate.",
+    "weaknesses": "Slightly less narrative polish than Agent B, with more bullet-point-like structure in strategic_fit. Could better weave the golden nuggets into a cohesive story about IgniteTech's transformation playbook."
+  },
+  "agent_b": {
+    "score": 8.5,
+    "strengths": "Superior narrative quality with a compelling, flowing strategic_fit section that tells a complete story. Excellent strategic depth in framing HR.com as a 'textbook strategic asset' and 'strategic shortcut.' Golden nuggets are slightly more polished and persuasive, with stronger framing of HR.com's 25-year history as a 'data moat.'",
+    "weaknesses": "Slightly less dense with specific evidence in the strategic_fit section compared to Agent A. The 'nurturer' tone, while polished, might be slightly less urgent for a time-sensitive acquisition pitch."
+  },
+  "winner": "b",
+  "winner_score": 8.5,
+  "reason": "Agent B wins by a narrow margin due to superior narrative quality and strategic framing. While both outputs are excellent, Agent B weaves the evidence into a more compelling and cohesive story that better positions HR.com as the inevitable, perfect-fit asset for IgniteTech's AI rebuild playbook. The golden nuggets are slightly more sophisticated in how they reframe HR.com's assets (as a 'collective voice,' a 'data moat'), and the CEO vision strategy section more powerfully frames the acquisition as buying 'several years of roadmap progress.'",
+  "needs_agent_c": false
+}
+```

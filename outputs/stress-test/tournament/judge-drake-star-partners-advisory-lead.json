@@ -1,0 +1,18 @@
+```json
+{
+  "agent_a": {
+    "score": 8.2,
+    "strengths": "Exceptional narrative quality with a confident, authoritative 'executor' tone ('central nervous system,' 'architect a premium exit'). Strong strategic depth connecting Drake Star's thesis directly to HR.com's assets. High evidence density with specific deal examples (Ingentis), award mentions, and proprietary report data. Highly actionable conclusion framing the engagement as a definitive strategic decision.",
+    "weaknesses": "Slightly less structured than B in explicitly mapping the firm's capabilities to client actions. The 'operator' tone, while powerful, could be perceived as slightly less nurturing for a first-read by a CEO. Could marginally strengthen the 'how' of the process execution."
+  },
+  "agent_b": {
+    "score": 8.6,
+    "strengths": "Superior narrative quality and strategic depth, masterfully weaving Drake Star's market thesis (AI, skills, strategic alignment) with HR.com's specific value proposition. Higher evidence density with additional context (500+ transactions, 10 'Bank of the Year' awards, specific date for Hofmann's commentary). Best-in-class actionability with a dedicated, bulleted 'Actionable Imperative' section that clearly outlines the 'what' and 'how' for the client. The 'nurturer/analyst' tone is persuasive and builds a compelling, step-by-step case for engagement.",
+    "weaknesses": "Very minor: The phrase 'not merely a potential buyer' in the narrative is a slight misstatement (they are an advisor, not a buyer). This is a tiny semantic flaw in an otherwise flawless argument."
+  },
+  "winner": "b",
+  "winner_score": 8.6,
+  "reason": "Output B wins by a narrow but clear margin due to its superior integration of strategy and actionability. It doesn't just state Drake Star's authority; it meticulously deconstructs their market thesis and demonstrates how each element directly applies to and elevates HR.com's position. The dedicated 'Actionable Imperative' section transforms the dossier from a compelling profile into a direct playbook for the client, making the 'why us' argument inseparable from the 'what you should do next' instruction. Its slightly more structured approach and nurturing tone enhance its persuasive power for a CEO audience.",
+  "needs_agent_c": false
+}
+```
