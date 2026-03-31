@@ -24,10 +24,15 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#c9d1d
 .badge.blue{background:#388bfd}
 .badge.purple{background:#8b5cf6}
 .meta{font-size:12px;color:#8b949e;margin-bottom:10px}
-.quick-links{display:flex;gap:6px;flex-wrap:wrap}
+.quick-links{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.quick-links-row2{display:flex;gap:6px;flex-wrap:wrap}
 .quick-link{display:inline-block;padding:5px 10px;font-size:11px;color:#c9d1d9;text-decoration:none;background:#21262d;border:1px solid #30363d;border-radius:6px;transition:all 0.2s}
 .quick-link:hover{border-color:#58a6ff;color:#58a6ff}
 .quick-link.accent{background:#1a3a5c;border-color:#58a6ff;color:#58a6ff}
+.quick-link.green{background:#1a3d2e;border-color:#3fb950;color:#3fb950}
+.quick-link.green:hover{background:#245a3a;color:#56d364}
+.quick-link.orange{background:#3d2e1a;border-color:#f0883e;color:#f0883e}
+.quick-link.orange:hover{background:#5a3a18;color:#f4a261}
 .footer{text-align:center;padding:20px;color:#484f58;font-size:11px}
 @media(max-width:700px){.grid{grid-template-columns:1fr}.top-nav{gap:3px}.top-nav a{font-size:11px;padding:5px 10px}}
 </style>
@@ -56,12 +61,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#c9d1d
     <a href="ebitda-levers.html">💰 EBITDA Levers</a>
     <a href="feature-roadmap.html">🗺️ Feature Roadmap</a>
     <a href="version-history.html">🕐 Version History</a>
-    <a href="interactive-aquascience.html">🎯 AquaScience Proposal</a>
-    <a href="interactive-air-control.html">🎯 Air Control Proposal</a>
-    <a href="interactive-hrcom-ltd.html">🎯 HR.com Proposal</a>
-    <a href="interactive-springer-floor.html">🎯 Springer Proposal</a>
-    <a href="interactive-wieser-concrete.html">🎯 Wieser (Buy-Side)</a>
-    <a href="interactive-design-precast.html">🎯 Design Precast (Buy-Side)</a>
 </div>
 <div class="grid">
     <div class="company-card">
@@ -74,7 +73,8 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#c9d1d
             </div>
         </div>
         <div class="meta">Debbie McGrath | HR Technology & Media | Grimsby, Ontario</div>
-        <div class="quick-links"><a href="hrcom-ltd-hub.html" class="quick-link">📋 Hub</a><a href="interactive-hrcom-ltd.html" class="quick-link accent">🎯 Interactive Proposal</a><a href="dataroom-hrcom-ltd.html" class="quick-link">🔒 Data Room</a><a href="meeting-hrcom-ltd_2026-03-29_discovery.html" class="quick-link">📅 Meeting Prep</a></div>
+        <div class="quick-links"><a href="hrcom-ltd-hub.html" class="quick-link">📋 Hub</a><a href="interactive-hrcom-ltd.html" class="quick-link accent">🎯 Interactive Proposal</a><a href="hrcom-ltd.html" class="quick-link green">📄 Proposal</a></div>
+        <div class="quick-links-row2"><a href="dataroom-hrcom-ltd.html" class="quick-link">🔒 Data Room</a><a href="meeting-hrcom-ltd_2026-03-29_discovery.html" class="quick-link">📅 Meeting Prep</a><a href="hrcom-ltd-research.html" class="quick-link orange">🔬 Research</a></div>
     </div>
     <div class="company-card">
         <div class="card-header">
@@ -86,7 +86,8 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#c9d1d
             </div>
         </div>
         <div class="meta">Lawrence "Larry" Casey | Water Treatment / eCommerce | Wyoming, RI</div>
-        <div class="quick-links"><a href="aquascience-hub.html" class="quick-link">📋 Hub</a><a href="interactive-aquascience.html" class="quick-link accent">🎯 Interactive Proposal</a><a href="dataroom-aquascience.html" class="quick-link">🔒 Data Room</a><a href="meeting-aquascience_2026-03-29_discovery.html" class="quick-link">📅 Meeting Prep</a></div>
+        <div class="quick-links"><a href="aquascience-hub.html" class="quick-link">📋 Hub</a><a href="interactive-aquascience.html" class="quick-link accent">🎯 Interactive Proposal</a><a href="aquascience.html" class="quick-link green">📄 Proposal</a></div>
+        <div class="quick-links-row2"><a href="dataroom-aquascience.html" class="quick-link">🔒 Data Room</a><a href="meeting-aquascience_2026-03-29_discovery.html" class="quick-link">📅 Meeting Prep</a><a href="aquascience-research.html" class="quick-link orange">🔬 Research</a></div>
     </div>
     <div class="company-card">
         <div class="card-header">
@@ -98,7 +99,8 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#c9d1d
             </div>
         </div>
         <div class="meta">Terri Holman | Floor Care / Carpet Cleaning | Des Moines, IA</div>
-        <div class="quick-links"><a href="springer-floor-hub.html" class="quick-link">📋 Hub</a><a href="interactive-springer-floor.html" class="quick-link accent">🎯 Interactive Proposal</a><a href="dataroom-springer-floor.html" class="quick-link">🔒 Data Room</a><a href="meeting-springer-floor_2026-03-29_discovery.html" class="quick-link">📅 Meeting Prep</a></div>
+        <div class="quick-links"><a href="springer-floor-hub.html" class="quick-link">📋 Hub</a><a href="interactive-springer-floor.html" class="quick-link accent">🎯 Interactive Proposal</a><a href="springer-floor.html" class="quick-link green">📄 Proposal</a></div>
+        <div class="quick-links-row2"><a href="dataroom-springer-floor.html" class="quick-link">🔒 Data Room</a><a href="meeting-springer-floor_2026-03-29_discovery.html" class="quick-link">📅 Meeting Prep</a><a href="springer-floor-research.html" class="quick-link orange">🔬 Research</a></div>
     </div>
     <div class="company-card">
         <div class="card-header">
@@ -110,7 +112,8 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#c9d1d
             </div>
         </div>
         <div class="meta">Fred Lowry | HVAC | McLean, VA</div>
-        <div class="quick-links"><a href="air-control-hub.html" class="quick-link">📋 Hub</a><a href="interactive-air-control.html" class="quick-link accent">🎯 Interactive Proposal</a><a href="dataroom-air-control.html" class="quick-link">🔒 Data Room</a><a href="meeting-air-control_2026-03-29_discovery.html" class="quick-link">📅 Meeting Prep</a></div>
+        <div class="quick-links"><a href="air-control-hub.html" class="quick-link">📋 Hub</a><a href="interactive-air-control.html" class="quick-link accent">🎯 Interactive Proposal</a><a href="air-control.html" class="quick-link green">📄 Proposal</a></div>
+        <div class="quick-links-row2"><a href="dataroom-air-control.html" class="quick-link">🔒 Data Room</a><a href="meeting-air-control_2026-03-29_discovery.html" class="quick-link">📅 Meeting Prep</a><a href="air-control-research.html" class="quick-link orange">🔬 Research</a></div>
     </div>
     <div class="company-card">
         <div class="card-header">
@@ -122,7 +125,8 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#c9d1d
             </div>
         </div>
         <div class="meta">Pat Fore III (Founder/President/Owner) | Precast Concrete & Pipe Manufacturing | Gulfport, MS</div>
-        <div class="quick-links"><a href="design-precast-and-pipe-inc-hub.html" class="quick-link">📋 Hub</a><a href="interactive-design-precast.html" class="quick-link accent">🎯 Interactive Proposal</a><a href="dataroom-design-precast-and-pipe-inc.html" class="quick-link">🔒 Data Room</a><a href="meeting-design-precast-and-pipe-inc_2026-03-29_discovery.html" class="quick-link">📅 Meeting Prep</a></div>
+        <div class="quick-links"><a href="design-precast-and-pipe-inc-hub.html" class="quick-link">📋 Hub</a><a href="interactive-design-precast.html" class="quick-link accent">🎯 Interactive Proposal</a><a href="design-precast-and-pipe-inc-research.html" class="quick-link orange">🔬 Research</a></div>
+        <div class="quick-links-row2"><a href="dataroom-design-precast-and-pipe-inc.html" class="quick-link">🔒 Data Room</a><a href="meeting-design-precast-and-pipe-inc_2026-03-29_discovery.html" class="quick-link">📅 Meeting Prep</a></div>
     </div>
     <div class="company-card">
         <div class="card-header">
@@ -134,7 +138,8 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#c9d1d
             </div>
         </div>
         <div class="meta">Andy Wieser (President/CEO) | Precast Concrete Manufacturing | Maiden Rock, WI</div>
-        <div class="quick-links"><a href="wieser-concrete-products-inc-hub.html" class="quick-link">📋 Hub</a><a href="interactive-wieser-concrete.html" class="quick-link accent">🎯 Interactive Proposal</a><a href="dataroom-wieser-concrete-products-inc.html" class="quick-link">🔒 Data Room</a><a href="meeting-wieser-concrete-products-inc_2026-03-29_discovery.html" class="quick-link">📅 Meeting Prep</a></div>
+        <div class="quick-links"><a href="wieser-concrete-products-inc-hub.html" class="quick-link">📋 Hub</a><a href="interactive-wieser-concrete.html" class="quick-link accent">🎯 Interactive Proposal</a><a href="wieser-concrete-products-inc-research.html" class="quick-link orange">🔬 Research</a></div>
+        <div class="quick-links-row2"><a href="dataroom-wieser-concrete-products-inc.html" class="quick-link">🔒 Data Room</a><a href="meeting-wieser-concrete-products-inc_2026-03-29_discovery.html" class="quick-link">📅 Meeting Prep</a></div>
     </div></div>
 <div class="footer">Next Chapter M&A Advisory | 110+ pages | 193 buyers | 169 decisions documented</div>
 <script src="comment-widget.js"></script>
