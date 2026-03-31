@@ -1,93 +1,73 @@
 **HR.COM LTD — ACTION PLAN**
-**Status:** Execution Phase
-**Window:** 90-Day Engagement
-**Date:** March 31, 2026
+**Status:** ACTIVE | **Window:** 90 Days | **Principal:** Debbie McGrath
 
 ---
 
-### **1. IMMEDIATE ACTIONS (Next 72 Hours)**
+### **1. MISSION & FRAMEWORK**
+Execute a parallel-track, 90-day divestiture of HR.com Ltd's three distinct assets to maximize total value and strategic outcome. The domain sale is the lead track. We are coordinating all activity under a single command to ensure one-plus-one-plus-one equals six.
 
-**1.1. Finalize Engagement Terms**
-*   Deliver simplified engagement letter with 5-8% fee structure.
-*   Define tail clause trigger: "Active, documented negotiation" within engagement window. No fee for dormant leads.
-*   Build and demo the tracking dashboard. All contact logs, transcripts, and notes will be visible and unedited.
+### **2. COMMAND STRUCTURE**
+*   **Lead Operator:** John Kelly
+*   **Process & Intelligence:** Ewing Gillaspy
+*   **Client & Final Authority:** Debbie McGrath
+*   **Domain Broker (Aligned):** Andrew Miller (10%)
 
-**1.2. Secure Asset & Acquirer List**
-*   Debbie to provide final asset breakdown document and vetted acquirer list.
-*   We will audit list, removing Informa, and segment by asset priority.
+### **3. IMMEDIATE ACTIONS (Next 72 Hours)**
+1.  **Launch Deal Room:** Publish the updated, operator-positioned deal site. Remove all advisory language. Position as a strategic asset sale by operators, for operators.
+2.  **Formalize Engagement:** Sign the 90-day engagement agreement. Fee: 5-8% based on asset tier. Tail clause applies only to deals where we have documented, active dialogue (tracked in the dashboard).
+3.  **Activate Tracking Dashboard:** Provide Debbie with live login to the contact management dashboard. All outreach, responses, and notes will be logged in real time.
+4.  **Secure Asset Document:** Receive Debbie's list of potential acquirers and asset overview. Integrate into our target list.
+5.  **MyPeople CEO Intro:** John connects with Debbie's two internal CEO candidates. Purpose: Assessment and mentorship path.
 
-**1.3. Establish MyPeople Interim Leadership**
-*   Schedule John Kelly's introductory call with the two internal CEO candidates.
-*   Objective: Assess and mentor, not replace. Prepare for external investor introductions.
+### **4. PARALLEL ASSET TRACKS**
 
----
+**TRACK A: DOMAIN (hr.com)**
+*   **Objective:** Secure $15-20M sale.
+*   **Lead:** Andrew Miller, coordinated by our team.
+*   **Targets:** AI/LLM players (OpenAI, Anthropic, Google), Major HCM Platforms (SAP, Workday, Oracle), Big Four (Deloitte, Accenture, PwC).
+*   **Pitch:** "Control the HR layer in an AI-driven world. This is the agentic entry point to 1.8M professionals."
+*   **Action:** Miller leads outreach. We manage all overlapping conversations with buyers who may want asset bundles.
 
-### **2. EXECUTION STRATEGY: THREE ASSET TRACKS**
+**TRACK B: MEDIA BUSINESS**
+*   **Objective:** Sell the profitable, 27-year media/community platform.
+*   **Lead:** John Kelly.
+*   **Targets:** Digital media consolidators, Private Equity, Strategic HCM players wanting community.
+*   **Pitch:** "1.8M-member owned community, profitable, with full data sovereignty. The definitive HR narrative platform."
+*   **Action:** Targeted outreach to curated list (Informa removed). Highlight migration off AWS as key data moat.
 
-**Track A: Domain Sale (Primary Focus)**
-*   **Thesis:** Highest value, simplest transaction. Target $15-20M.
-*   **Buyers:** AI/tech giants (OpenAI, Anthropic, Google), major HCM platforms (SAP, Workday, Oracle), Big 4.
-*   **Positioning:** "Control the AI agentic layer for the HR function." Independent layer atop legacy systems.
-*   **Action:** Coordinate with domain broker Andrew Miller (10%) on multi-asset buyers to avoid conflict. We lead overall strategy.
+**TRACK C: MyPeople PLATFORM**
+*   **Objective:** Position for CEO placement and subsequent funding round; prepare as a standalone sale asset.
+*   **Lead:** John Kelly (Interim CEO/Mentor).
+*   **Immediate Actions:**
+    *   John mentors internal CEO candidates.
+    *   Secure 3-5 enterprise contracts from the 35 interested clients to demonstrate growth trajectory.
+    *   Activate Tim Glory (Sierra Ventures) connection for investor preview.
+*   **Pitch:** "The independent AI layer for HR. API-first, modern stack, built while incumbents give lip service."
 
-**Track B: Media Business Sale**
-*   **Thesis:** Profitable, standalone entity. Value: 1.2-1.5x revenue.
-*   **Buyers:** B2B media companies, private equity roll-ups, strategic acquirers.
-*   **Positioning:** "27-year incumbent community with 1.8M members and owned data infrastructure." Highlight migration off AWS for data sovereignty.
-*   **Action:** Bundle with domain for media buyers where it increases multiple. Keep separate for pure domain buyers.
+### **5. BUNDLE STRATEGY**
+*   We will steer buyers toward the simplest deal: Domain-only or Media-only.
+*   For buyers who require bundles (Media + Domain most likely), we coordinate terms to protect the domain's premium valuation.
+*   Only SAP/Oracle-scale buyers will be presented with the full three-asset package.
 
-**Track C: MyPeople Platform Capital Raise**
-*   **Thesis:** Remove from HR.com payroll. Secure growth capital.
-*   **Path:** John Kelly mentors internal CEO candidate. Secure 3-5 enterprise contracts in next 45 days to demonstrate traction.
-*   **Action:** Leverage Tim Glory (Sierra Ventures) connection for Series A introduction post-CEO placement and contract wins.
+### **6. COMMUNICATIONS & RHYTHM**
+*   **Daily:** Dashboard updated with all activity.
+*   **Weekly:** Sync call (Wednesdays, post-3:30 PM ET).
+*   **Bi-Weekly:** Formal pipeline review with Debbie.
+*   **Protocol:** All buyer communication is documented in the dashboard. No side channels.
 
----
+### **7. KEY CONSTRAINTS & LEVERS**
+*   **Constraint:** Debbie's hip surgery (June). Limited availability mid-May through early June. No travel until June 8.
+*   **Constraint:** Debbie does **not** want another CEO role. Open to 2-year transition.
+*   **Leverage:** Debbie's 27-year tenure and deep industry relationships.
+*   **Leverage:** John's direct CEO-level access to potential acquirers (Remote, Rippling, Deel, SAP, Oracle).
+*   **Leverage:** Owned, sovereign data asset post-AWS migration.
 
-### **3. BUYER OUTREACH SEQUENCE**
-
-**Phase 1 (Week 1-2): Domain-First Buyers**
-*   Contact AI/tech and strategic buyers for domain-only or domain+media package.
-*   Lead with AI layer narrative. Use Debbie's industry credibility and owned data as key moats.
-
-**Phase 2 (Week 3-4): Media & Bundled Buyers**
-*   Engage B2B media and PE firms with media+domain bundle.
-*   Position as a leveraged buyout of a cash-flowing asset with a premium digital property.
-
-**Phase 3 (Week 5-6): Full-Package Strategic Buyers**
-*   Approach SAP, Oracle, Workday with full three-asset proposition.
-*   Narrative: "Acquire the community, the platform, and the AI gateway in one move."
-
-**Phase 4 (Ongoing): MyPeople Investor Prep**
-*   Parallel track. Develop data room and growth metrics for investor outreach post-CEO stabilization.
-
----
-
-### **4. ROLES & RESPONSIBILITIES**
-
-*   **John Kelly:** Interim CEO/mentor for MyPeople. Lead on strategic buyer relationships (SAP, Oracle, Splunk contacts).
-*   **Ewing Gillaspy:** Primary point of contact for Debbie. Oversee process, dashboard, and broker coordination.
-*   **Debbie McGrath:** Provide asset data, facilitate internal introductions, and be available for key buyer calls post-June 8.
-*   **Glenn ("Daddy Shark"):** Trusted advisor. Available for strategic counsel as needed.
-
----
-
-### **5. TIMELINE & MILESTONES**
-
-*   **April 2:** Deliver updated dealroom, engagement terms, and dashboard demo.
-*   **April 7:** Finalize buyer list segmentation and outreach scripts.
-*   **April 14:** Complete first wave of outreach to priority buyers.
-*   **April 30:** Secure initial indications of interest on domain asset.
-*   **May 15:** MyPeople internal CEO candidate assessment complete; begin investor deck prep.
-*   **June 8:** Debbie travel-ready for in-person meetings as required.
-*   **June 30:** Mid-point review. Assess offers, adjust strategy.
+### **8. SUCCESS METRICS (90-Day Window)**
+1.  Domain under LOI at >$15M.
+2.  Media business in active, documented dialogue with ≥3 qualified buyers.
+3.  MyPeople with a clear CEO path and ≥3 new enterprise contracts signed.
+4.  All activity transparently tracked in the client-accessible dashboard.
 
 ---
 
-### **6. KEY PRINCIPLES**
-
-*   **Operator Tone:** We are executing a plan, not advising on one.
-*   **Transparency:** The dashboard is the single source of truth. No surprises.
-*   **Velocity:** 90-day window requires decisive, parallel-track execution.
-*   **Leverage:** We are Debbie's leverage. We handle negotiations to maximize outcome across all three assets.
-
-**We are moving.**
+**NEXT STEP:** Your go/no-go on this action plan and the engagement agreement. We execute upon your confirmation.

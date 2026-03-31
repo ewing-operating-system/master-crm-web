@@ -1,5 +1,5 @@
 # HR.COM DEAL — OVERNIGHT BUILD OUTPUT INDEX
-## Generated: 2026-03-31 11:21
+## Generated: 2026-03-31 12:49
 
 ## Buyer Intelligence (outputs/buyer-intel/)
 - acquirer-table.json

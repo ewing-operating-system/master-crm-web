@@ -1,23 +1,23 @@
-**Subject:** A Strategic Move to Own the Conversation in HCM & AI  
+**Subject:** Re: A Strategic Asset for Workday’s AI & Openness Mandate  
 
-**To:** Workday Corporate Development Team  
+**To:** Corporate Development Team, Workday  
 
-Carl,  
+I’ve followed Carl Eschenbach’s recent commentary on building the “System of Record for the AI Era” with interest—particularly the vision for a platform that serves both human and AI workers, monetized through seat-based, agent-based, and API-driven models. It’s a bold repositioning at a pivotal moment.  
 
-In your recent comments at Workday Rising and in discussions about building the “System of Record for the AI Era,” you’ve emphasized Workday’s commitment to evolving its platform for both human and AI workers. It’s clear you’re focused on transformational growth and positioning Workday as the definitive leader in HCM and AI.  
+Yet, as you execute this strategy, there’s a growing tension in the market. Workday’s strength as a system of record is sometimes perceived as a walled garden—clients feel locked in, AI is bundled, and the narrative around openness is challenging to own. This is where **hr.com** becomes a unique and timely asset.  
 
-However, as you navigate this next phase, one of Workday’s biggest challenges is being perceived as open and community-driven—especially as clients grow impatient with restrictive data policies and tiered AI access. Owning **hr.com** would directly address this.  
+Owning hr.com wouldn’t just be a domain acquisition; it would be a strategic declaration. It allows Workday to transcend the “vendor” label and become the heart of the global HR community—an open, neutral, and trusted platform where professionals connect, learn, and shape the future of work. It directly addresses the perception challenge by giving Workday an independent, community-driven channel that complements your core product suite.  
 
-**hr.com** isn’t just a domain; it’s the independent, trusted hub for the HR community—1.8 million professionals strong, built over 27 years. It represents neutrality, collaboration, and thought leadership—everything Workday needs to align with as you expand your AI ecosystem and reinforce your role as an industry leader.  
+Why hr.com matters:  
+- **1.8 million members** in the largest HR community worldwide.  
+- A **27-year legacy** of trust and neutrality—it’s seen as a resource, not a vendor.  
+- An independent platform that can host conversations, training, and innovation beyond Workday’s ecosystem.  
 
-Acquiring hr.com would:  
-- Position Workday as the heart of the global HR conversation.  
-- Demonstrate a commitment to openness and community, countering current perceptions.  
-- Provide an unparalleled platform for engaging HR leaders, gathering insights, and shaping the future of work alongside your AI strategy.  
+This isn’t just a digital real estate play. It’s a chance to own the category narrative, foster goodwill, and create a bridge to the broader market as you lead through the AI transition.  
 
-This is a controlled process with multiple qualified parties. The window for acquisition is **60 days**.  
+We are running a controlled process with multiple qualified parties. The window for serious interest is **60 days**.  
 
-If you’re interested in exploring how hr.com can accelerate Workday’s strategic vision, I’m happy to coordinate a brief discussion.  
+If this aligns with Workday’s next chapter, I’m happy to arrange a brief discussion.  
 
 Best regards,  
 Ewing Gillaspy  

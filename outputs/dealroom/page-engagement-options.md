@@ -40,11 +40,13 @@
         }
         .framing {
             font-size: 1.25rem;
-            color: var(--gray-text);
+            color: var(--accent);
+            font-weight: 500;
             font-style: italic;
             margin-bottom: 2rem;
             padding: 1rem;
-            background-color: white;
+            background-color: var(--accent-light);
+            border-radius: 8px;
             border-left: 4px solid var(--accent);
         }
         .options-grid {
@@ -55,18 +57,22 @@
         }
         .option-card {
             background: white;
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 2rem;
-            border: 1px solid var(--gray-border);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 2px solid var(--gray-border);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
             display: flex;
             flex-direction: column;
         }
+        .option-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+        }
         .option-card.recommended {
-            border: 2px solid var(--accent);
-            box-shadow: 0 4px 12px var(--accent-light);
+            border-color: var(--accent);
+            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.15);
             position: relative;
-            order: -1; /* Brings recommended to front on mobile */
+            order: -1;
         }
         .recommended-badge {
             position: absolute;
@@ -75,7 +81,7 @@
             transform: translateX(-50%);
             background: var(--accent);
             color: white;
-            padding: 0.25rem 1rem;
+            padding: 0.5rem 1.5rem;
             border-radius: 20px;
             font-size: 0.875rem;
             font-weight: 600;
@@ -103,44 +109,66 @@
         .option-features li:last-child {
             border-bottom: none;
         }
-        .best-for {
-            background: var(--accent-light);
-            padding: 1rem;
-            border-radius: 6px;
+        .fee-structure {
+            background: var(--primary-light);
+            padding: 1.5rem;
+            border-radius: 8px;
             margin-top: auto;
         }
-        .best-for strong {
-            display: block;
-            margin-bottom: 0.25rem;
+        .monthly-fee {
+            font-size: 2rem;
+            font-weight: 800;
             color: var(--accent);
+        }
+        .success-fee {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        .best-for {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--gray-border);
+            font-weight: 600;
+        }
+        .best-for span {
+            color: var(--gray-text);
+            font-weight: normal;
+            display: block;
+            margin-top: 0.25rem;
         }
         .comparison-section {
             margin: 4rem 0;
         }
         .comparison-section h2 {
             font-size: 1.75rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
         table {
             width: 100%;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid var(--gray-border);
             border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        thead {
+            background-color: var(--primary-dark);
+            color: white;
         }
         th {
-            background: var(--primary-dark);
-            color: white;
+            padding: 1.25rem 1rem;
             text-align: left;
-            padding: 1rem;
             font-weight: 600;
         }
+        th:first-child {
+            width: 25%;
+        }
         td {
-            padding: 1rem;
+            padding: 1.25rem 1rem;
             border-bottom: 1px solid var(--gray-border);
         }
-        tr:last-child td {
+        tbody tr:last-child td {
             border-bottom: none;
         }
         .highlight-cell {
@@ -149,35 +177,43 @@
         }
         .tail-clause {
             background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            border: 1px solid var(--gray-border);
-            margin: 3rem 0;
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin: 4rem 0;
+            border-left: 4px solid var(--accent);
         }
         .tail-clause h2 {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.75rem;
         }
         .tail-clause ul {
-            list-style-position: inside;
-            margin: 1rem 0;
+            list-style: none;
+            margin: 1.5rem 0;
         }
         .tail-clause li {
-            margin-bottom: 0.5rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-border);
         }
-        .bottom-statement {
+        .tail-clause li:last-child {
+            border-bottom: none;
+        }
+        .bottom-cta {
             text-align: center;
-            padding: 3rem 1rem;
-            border-top: 1px solid var(--gray-border);
-            margin-top: 3rem;
+            padding: 3rem;
+            background: var(--primary-dark);
+            color: white;
+            border-radius: 12px;
+            margin-top: 4rem;
         }
-        .bottom-statement p {
+        .bottom-cta p {
             font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 1rem;
         }
-        .bottom-statement .deadline {
-            color: var(--accent);
-            font-weight: 700;
+        .bottom-cta .subtext {
+            font-size: 1rem;
+            font-weight: normal;
+            opacity: 0.9;
         }
         @media (max-width: 768px) {
             .options-grid {
@@ -201,114 +237,130 @@
         </div>
     </header>
 
-    <main>
-        <div class="options-grid">
-            <!-- Option 1 -->
-            <div class="option-card">
-                <h3 class="option-title">Clean Exit</h3>
-                <p class="option-subtitle">Tighter buyer set, bundled approach, faster timeline</p>
-                <ul class="option-features">
-                    <li><strong>$15K/month</strong> engagement fee</li>
-                    <li><strong>4%</strong> success fee</li>
-                    <li>Performance kicker above agreed floor</li>
-                </ul>
-                <div class="best-for">
-                    <strong>Best for:</strong> Getting to an outcome quickly with a focused buyer set.
-                </div>
-            </div>
-
-            <!-- Option 2 - Recommended -->
-            <div class="option-card recommended">
-                <div class="recommended-badge">Recommended</div>
-                <h3 class="option-title">Max Value Process</h3>
-                <p class="option-subtitle">Three parallel tracks, different buyer universes</p>
-                <ul class="option-features">
-                    <li><strong>$8K/month</strong> (half of Option 1)</li>
-                    <li><strong>5%</strong> success fee</li>
-                    <li>No performance tier</li>
-                </ul>
-                <div class="best-for">
-                    <strong>Best for:</strong> Maximum value extraction across all three assets.
-                </div>
-            </div>
-
-            <!-- Option 3 -->
-            <div class="option-card">
-                <h3 class="option-title">Conviction Bet</h3>
-                <p class="option-subtitle">Aggressive. Maximum alignment.</p>
-                <ul class="option-features">
-                    <li><strong>No upfront fee</strong> — we eat the cost</li>
-                    <li><strong>90-day exclusivity</strong> required</li>
-                    <li><strong>6%</strong> on first $40M, <strong>20%</strong> above $40M</li>
-                </ul>
-                <div class="best-for">
-                    <strong>Best for:</strong> If you believe in the process and want maximum incentive alignment.
-                </div>
-            </div>
-        </div>
-
-        <section class="comparison-section">
-            <h2>Comparison</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Feature</th>
-                        <th>Clean Exit</th>
-                        <th>Max Value (Rec.)</th>
-                        <th>Conviction Bet</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Monthly Fee</td>
-                        <td>$15,000</td>
-                        <td class="highlight-cell">$8,000</td>
-                        <td>$0</td>
-                    </tr>
-                    <tr>
-                        <td>Success Fee</td>
-                        <td>4%</td>
-                        <td class="highlight-cell">5%</td>
-                        <td>6% on first $40M<br>20% above $40M</td>
-                    </tr>
-                    <tr>
-                        <td>Exclusivity</td>
-                        <td>No</td>
-                        <td class="highlight-cell">No</td>
-                        <td>90-day required</td>
-                    </tr>
-                    <tr>
-                        <td>Timeline</td>
-                        <td>Fastest</td>
-                        <td class="highlight-cell">Comprehensive</td>
-                        <td>Extended</td>
-                    </tr>
-                    <tr>
-                        <td>Best For</td>
-                        <td>Speed & focus</td>
-                        <td class="highlight-cell">Max value extraction</td>
-                        <td>Maximum alignment</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <section class="tail-clause">
-            <h2>Tail Clause</h2>
-            <p>Simple and fair. The tail applies only to buyers we directly contacted AND received a response from.</p>
-            <ul>
-                <li><strong>12-month tail period</strong></li>
-                <li><strong>Named buyer list</strong> provided at start, updated weekly</li>
-                <li>Transparent. Auditable. Fair.</li>
+    <div class="options-grid">
+        <!-- Option 1 -->
+        <div class="option-card">
+            <h3 class="option-title">Clean Exit</h3>
+            <p class="option-subtitle">Tighter buyer set, bundled approach, faster timeline</p>
+            <ul class="option-features">
+                <li>Focused, high-probability buyer outreach</li>
+                <li>Assets bundled for a streamlined sale</li>
+                <li>Accelerated 60-90 day timeline</li>
+                <li>Performance kicker above agreed floor price</li>
             </ul>
-        </section>
-
-        <div class="bottom-statement">
-            <p>Every option runs a real market.</p>
-            <p>The difference is scope, speed, and how we split the economics.</p>
-            <p class="deadline">Wednesday we pick one and go.</p>
+            <div class="fee-structure">
+                <div class="monthly-fee">$15K/month</div>
+                <div class="success-fee">4% success fee</div>
+            </div>
+            <div class="best-for">
+                Best for:
+                <span>Getting to an outcome quickly with a focused buyer set</span>
+            </div>
         </div>
-    </main>
+
+        <!-- Option 2 - Recommended -->
+        <div class="option-card recommended">
+            <div class="recommended-badge">RECOMMENDED</div>
+            <h3 class="option-title">Max Value Process</h3>
+            <p class="option-subtitle">Three parallel tracks, different buyer universes</p>
+            <ul class="option-features">
+                <li>Track 1: Strategic acquirers (industry players)</li>
+                <li>Track 2: Financial buyers (PE, family offices)</li>
+                <li>Track 3: Opportunistic & non-traditional buyers</li>
+                <li>Designed to surface maximum competitive tension</li>
+            </ul>
+            <div class="fee-structure">
+                <div class="monthly-fee">$8K/month</div>
+                <div class="success-fee">5% success fee</div>
+            </div>
+            <div class="best-for">
+                Best for:
+                <span>Maximum value extraction across all three assets</span>
+            </div>
+        </div>
+
+        <!-- Option 3 -->
+        <div class="option-card">
+            <h3 class="option-title">Conviction Bet</h3>
+            <p class="option-subtitle">No upfront fee — we eat the cost</p>
+            <ul class="option-features">
+                <li>We carry all upfront costs and effort</li>
+                <li>90-day exclusivity required</li>
+                <li>Highly aggressive outreach and process</li>
+                <li>Maximum incentive alignment on outcome</li>
+            </ul>
+            <div class="fee-structure">
+                <div class="monthly-fee">$0/month</div>
+                <div class="success-fee">6% on first $40M<br>20% above $40M</div>
+            </div>
+            <div class="best-for">
+                Best for:
+                <span>If you believe in the process and want maximum incentive alignment</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="comparison-section">
+        <h2>Comparison</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Clean Exit</th>
+                    <th>Max Value (Rec.)</th>
+                    <th>Conviction Bet</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Monthly Fee</td>
+                    <td>$15,000</td>
+                    <td class="highlight-cell">$8,000</td>
+                    <td>$0</td>
+                </tr>
+                <tr>
+                    <td>Success Fee</td>
+                    <td>4%</td>
+                    <td class="highlight-cell">5%</td>
+                    <td>6% on first $40M<br>20% above $40M</td>
+                </tr>
+                <tr>
+                    <td>Exclusivity</td>
+                    <td>None required</td>
+                    <td class="highlight-cell">None required</td>
+                    <td>90 days required</td>
+                </tr>
+                <tr>
+                    <td>Timeline</td>
+                    <td>60-90 days</td>
+                    <td class="highlight-cell">90-120 days</td>
+                    <td>90-120 days</td>
+                </tr>
+                <tr>
+                    <td>Best For</td>
+                    <td>Speed & certainty</td>
+                    <td class="highlight-cell">Max value extraction</td>
+                    <td>Maximum alignment</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="tail-clause">
+        <h2>Tail Clause</h2>
+        <p>Clear, fair, and designed to protect both parties.</p>
+        <ul>
+            <li><strong>Scope:</strong> Tail applies only to buyers we directly contacted AND received a response from.</li>
+            <li><strong>Period:</strong> 12-month tail period post-engagement.</li>
+            <li><strong>Transparency:</strong> Named buyer list provided at start, updated weekly.</li>
+            <li><strong>Principle:</strong> Transparent. Auditable. Fair.</li>
+        </ul>
+    </div>
+
+    <div class="bottom-cta">
+        <p>Every option runs a real market.</p>
+        <p class="subtext">The difference is scope, speed, and how we split the economics.<br>Wednesday we pick one and go.</p>
+    </div>
 </body>
 </html>
 ```

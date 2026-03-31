@@ -1,20 +1,25 @@
-**Subject:** Strategic Opportunity: The hr.com Domain & Owning the AI + HR Layer  
+**Subject:** Strategic Opportunity: The HR Layer in an AI-Driven World  
+
+**To:** [Appropriate Executive at OpenAI/Anthropic]  
 
 Hi [First Name],  
 
-I’ve been following the exciting moves you’ve been making in the HR space—from OpenAI’s hiring platform to Anthropic’s HR-focused Claude plugins. It’s clear that every major AI lab is building vertical products to capture real-world value, and HR is one of the most compelling markets to tackle.  
+I’ve been following the strategic moves at [OpenAI/Anthropic] with great interest, particularly your recent push into vertical applications like HR. The launch of [OpenAI Frontier/Claude tools for HR] underscores a clear trend: every major AI lab is building vertical products. The domains that define those verticals are the most valuable digital real estate of the next decade.  
 
-As these verticals take shape, the domains that define them become the most valuable digital real estate of the next decade. In an AI-driven world, controlling the namespace for a vertical isn’t just branding—it’s owning the entry point.  
+That brings me to **hr.com**.  
 
-That’s why I’m reaching out about **hr.com**.  
+In an AI-driven world, controlling the foundational layer of key verticals will be critical. HR is a $30B+ market, and the company that owns **hr.com** owns the namespace for AI + HR. It’s not just a domain—it’s the definitive entry point for the future of work, talent, and organizational design powered by AI.  
 
-For 27 years, hr.com has been the definitive hub for HR professionals, with 1.8 million community members, deep SEO authority, and a legacy of trust. It’s not just a domain—it’s the HR layer. In a market worth $30B+, the company that owns hr.com owns the namespace for AI + HR.  
+Here’s why hr.com is uniquely positioned:  
+- **Authority:** 27 years of trusted content, community, and SEO dominance.  
+- **Scale:** A built-in audience of 1.8M HR professionals and decision-makers.  
+- **Strategic Fit:** Aligns perfectly with your vision to embed AI into the fabric of enterprise HR.  
 
-If you’re looking to solidify your position in this space, hr.com is the asset to do it.  
+This isn’t just an acquisition—it’s a strategic move to own the HR layer for the next decade.  
 
-We’re running a controlled process with multiple parties, so if this aligns with your strategy, I’d encourage you to move quickly. The window for action is roughly 60 days.  
+The process is controlled, with multiple parties involved, and we’re operating within a 60-day window. I’d welcome the chance to discuss how hr.com could accelerate your vertical strategy and solidify your position in the AI+HR space.  
 
-I’d be happy to share more details or set up a brief call to discuss.  
+Let me know if you’d like to connect for a brief conversation.  
 
 Best,  
 Ewing Gillaspy  

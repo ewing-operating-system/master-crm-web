@@ -1,58 +1,59 @@
-### **The Unlock: Debbie McGrath and the Three Keys**
+**The Unlocking: Debbie McGrath and the Three Keys**
 
-This isn’t a founder looking for an exit. This is a builder, 27 years into a bootstrapped marathon, standing at a unique market crossroads with three distinct assets in her hands. Each is valuable. Together, they are a puzzle. Separated and strategically placed, they represent a significant value unlock that can only happen now.
+This isn’t a story about selling a company. It’s about unlocking a vault that’s been patiently assembled for 27 years. The founder is ready. The market has finally caught up to her vision. And the combination—one plus one plus one—equals six or seven.
 
-Her name is Debbie McGrath. She doesn’t want another CEO job. She’s worked 12 hours a day for years. At 63, after building the largest HR community in the world (1.8 million members) from her base in Grimsby, Ontario, she’s earned the right to say that. She has people who have been with her for 20, 30 years. This is about securing their future and realizing the full, latent value of what they built—value that the market is finally ready to see.
+Meet Debbie McGrath. For 27 years, she has been the quiet architect of the world’s largest HR community from a small town in Ontario. She bootstrapped HR.com through the dot-com crash, the 2008 financial crisis, and a global pandemic—during which she ran 260 virtual activations, hosting everyone from Michelle Obama to 10,000 ADP developers on her platform. She has people who have been with her for 20, 30 years. She has worked 12-hour days for decades.
 
-The market has shifted beneath her feet. The AI wave has repriced strategic digital real estate and first-party data. The legacy HCM giants are stumbling; “Workday is being very difficult to work with and not letting anybody get their data out,” she notes, seeing the frustration firsthand. “Clients are going to just be sick of waiting for these guys to catch up.” Meanwhile, she owns all her community data, having just migrated off AWS. In an age where data is the new oil, she owns the refinery and the wells.
+Now, at 63, she is clear: **“I don’t want another CEO job.”** But she is not retiring. She is executing a final, masterful operator’s move: disentangling three distinct, valuable assets that are worth more apart than together. This is a controlled, strategic unlocking, not a fire sale. And the timing, driven by the AI revolution, is perfect.
 
-This is the story of her three assets, and why this moment—May 2026—is the precise time to act.
+**The First Key: The Crown Jewel Domain (hr.com)**
+
+In a world where AI agents will need to understand and navigate business functions, the address matters. The two-letter, category-defining domain **hr.com** is not just a URL; it’s the ultimate strategic real estate for the $30B+ Human Capital Management market. It is the “.com” for Human Resources.
+
+*   **Comparable:** AI.com sold in January 2026 for a reported eight figures.
+*   **Our Estimate:** Domain brokers value hr.com at **$15-20M**.
+*   **The Play:** This asset can be sold cleanly, separately, and immediately. Debbie is already migrating content to other domains (HR West, HRRI). The buyer list is a who’s-who of tech and consulting: SAP, Workday, Oracle, OpenAI, Anthropic, Deloitte, Google. For them, controlling “hr.com” is controlling the agentic layer for the entire HR function. As Debbie notes, selling the domain is “the simplest, easiest, and probably the highest value right now.”
+
+**The Second Key: The Profitable Media Kingdom (HR.com Media Business)**
+
+While the domain is the crown, the media business is the productive, profitable kingdom. This is a 27-year-old, bootstrapped, **profitable B2B digital media empire** with an ~20% EBITDA margin, even on a declining revenue base. It includes:
+*   The 1.8 million-member community (the “LinkedIn for HR people”).
+*   The HR West conference.
+*   The Human Resource Research Institute (HRRI).
+*   Certification prep and a 50,000-vendor directory.
+
+This is not a software company. It’s a high-margin, audience-and-data business. **We have prior market proof:** In a 2022 process, they received **8 offers ranging from $9M to $45M**. One mid-range offer was accepted but did not close. At a standard 1.2x-1.5x revenue multiple, this is a solid, cash-flowing asset.
+
+Critically, Debbie just completed a full migration off AWS. **HR.com now owns all its first-party community data outright.** In an era where, as Debbie says, “Workday is being very difficult to work with and not letting anybody get their data out,” this ownership is a formidable moat. “Clients are going to just be sick of waiting for these guys to catch up.” She owns the engaged audience and their data. This is a goldmine for any HCM platform, media consolidator, or consulting firm looking for reach and insight.
+
+**The Third Key: The Reborn Platform (MyPeople.ai)**
+
+This is the phoenix story. Years ago, Debbie spun out a community platform called “Forj.” She raised $8M from Baer Baird. It failed—4 CTOs in 3 years burned through the capital. In 2023, Debbie, the bootstrapper, swooped in and **recovered the IP for $1M**. She then did what the venture-backed team could not: she rebuilt the entire tech stack from the ground up in a modern, API-first, AI-native architecture (TypeScript, Node.js, React).
+
+Reborn as **MyPeople.ai**, it is now a promising HR platform with **$7M in revenue, 35 interested HR tech clients, and its first 7 implementations going live in the next 45 days.** HR.com currently funds it at just $250K/year.
+
+But Debbie knows its limit under her watch. **“Silicon Valley funding people want young people. They don’t want us.”** The play here is not to bundle it with the sale. The play is to **place a growth CEO**, then raise a proper funding round to unleash it. This is a pure tech asset needing a tech operator and growth capital. Unlocked, it has significant standalone potential.
+
+**The Narrative: Why This? Why Now? Why Us?**
+
+1.  **The Founder is Ready & Realistic:** Debbie is not dreaming of a unicorn exit. She is a pragmatic builder who has seen cycles. She wants her life back but wants the value she built recognized. She’s open to a 2-year transition but will not run it forever. This alignment is everything.
+2.  **The AI Repricing Event:** The market for strategic digital assets has been fundamentally repriced by AI. hr.com is worth multiples of what it was 3 years ago. The data HR.com owns is now training fuel. MyPeople’s AI-native stack is now the standard.
+3.  **The “Sum of the Parts” Moment:** These three assets have been tangled together for years. Debbie’s insight—and our mandate—is to untangle them. Sell the domain to a strategic. Sell the media business to a consolidator or HCM player. Spin up MyPeople with a new CEO and capital. **One plus one plus one equals six or seven.**
+4.  **Our Edge: The Relationship Moat & The Plan:** Debbie knows virtually every potential buyer personally. Our outreach will be warm, guided by her and her 30+ year friend, our trusted contact “Daddy Shark.” She is sending us her own detailed acquirer list. We are not starting from scratch. We are orchestrating a finale she has already scripted in her mind.
+
+**The Path Forward (The Operator’s Plan):**
+
+*   **Asset 1 (Domain):** Execute a fast, targeted auction to 10-15 strategic tech/consulting buyers. Target: $15M+.
+*   **Asset 2 (Media Business):** Run a structured process leveraging the 2022 data. Target HCM platforms (seeking data/community), media roll-ups, and private equity. Target: Base of $9M+ with upside.
+*   **Asset 3 (MyPeople):** Immediately begin CEO search. Package the story: “The platform that survived venture capital.” Secure a leader, then run a Series A process. Unlock future option value.
+
+Debbie McGrath built an empire on patience, grit, and community. She outlasted crashes, crises, and venture capital folly. Now, the market has finally arrived at her door, holding a checkbook shaped by AI.
+
+Her job is nearly done. Ours is to **“blow her away”** and prove what we say: **“We’re damn good at what we do.”**
+
+This is the deal to prove it. Let’s go build the lever and turn the first key.
+
+**Timeline & Constraint:** Debbie has hip surgery in May. No in-person meetings until **June 8+. All initial outreach and meetings must be virtual.** This is not a hindrance; it’s a filter for serious, agile buyers.
 
 ---
-
-#### **Asset One: The Crown Jewel Domain — `hr.com`**
-
-Think of it as the beachfront property on the main street of a $30B+ industry. `hr.com` is a premium, two-letter .com domain. In a world moving toward AI agents that need simple, authoritative endpoints, this isn’t just a URL; it’s the natural control point for the HR layer of the internet.
-
-**The Facts:** Domain brokers estimate its value at **$15–20M**. The comp is `AI.com`, which sold in January 2026. Debbie is already pragmatically migrating content to other domains (HR West, HR Certification, HRRI). The asset is clean, separable, and ready.
-
-**The Narrative:** “Selling just the domain name is kind of the simplest, easiest, and probably the highest value right now,” Debbie says. This is pure strategic real estate. The buyer pool is clear and deep: SAP, Workday, Oracle, OpenAI, Anthropic, the Big Four consulting firms. It’s the ultimate category-capture move. For a tech giant building an AI “agentic layer” on top of disparate HR systems, `hr.com` is the intuitive, trusted address. This is a non-operational, high-margin transaction that can fund everything else.
-
----
-
-#### **Asset Two: The Profitable Engine — The HR.com Media Business**
-
-This is the 27-year-old, bootstrapped, cash-flow-positive machine that built the community. It is **not** a software company. It’s a B2B digital media and community powerhouse—the “LinkedIn for HR people.”
-
-**The Facts:** Even on a declining revenue trend (as investment shifted to My People), it maintains a disciplined **~20% EBITDA margin**. It includes the community platform, the HR West conference, the Human Resource Research Institute (HRRI), a certification prep business, and a massive 50,000-vendor directory. Crucially, it owns all its first-party data. In 2022, it ran a process and received **8 concrete offers ranging from $9M to $45M**. A mid-range offer was accepted but did not close—proving tangible market demand.
-
-**The Narrative:** This is a classic, profitable digital media business with a 1.2-1.5x revenue multiple. But its true value to a strategic buyer (a media roll-up, a consulting firm, an HCM platform) is its **audience and data moat**. It’s 1.8 million engaged HR professionals. During COVID, Debbie proved its reach by executing **260 virtual activations**, including hosting Michelle Obama and engaging ADP’s 10,000-strong developer community on her platform. This asset is the definitive source of truth for the HR world. It’s the audience HubSpot bought The Hustle for, but for a far more valuable, enterprise-centric vertical.
-
----
-
-#### **Asset Three: The Future Platform — My People**
-
-This is the phoenix. Originally spun out as “Forj” (F-O-R-J), it raised **$8M from Baer Baird** and then imploded—4 CTOs in 3 years burned through the capital. Debbie, the relentless founder, recovered the IP in 2023 for **$1M**. She didn’t just salvage it; she rebuilt it from the ground up.
-
-**The Facts:** The new stack is modern: **TypeScript, Node.js, React, API-first, native AI**. It went live in June 2025. It’s now **My People**, an AI-native HR community platform. It has **$7M in revenue**, with **35 HR tech clients interested** and the **first 7 going live in the next 45 days**. HR.com currently funds it at ~$250K/year. It needs a growth CEO and a proper funding round to rocket.
-
-**The Narrative:** This is the unbundled future. “Silicon Valley funding people want young people. They don’t want us,” Debbie observes wryly. But she built the damn thing anyway. My People is the modern, deployable platform that leverages all the learnings (and data) of HR.com. It’s what the failed Forj venture was supposed to be. With a dedicated leader and capital, this is a standalone growth story targeting the very HR tech vendors frustrated by the Workdays of the world. Debbie can hand them the keys: “I can get you all that data for free.” She believes “all that data is going to be free everywhere soon,” and she’s built the platform to thrive in that world.
-
----
-
-#### **The Moment & The Mandate**
-
-Debbie is having hip surgery in May. She can’t travel until after June 8. This creates a forced, focused period for virtual due diligence and deal structuring. It’s not a constraint; it’s a catalyst.
-
-The playbook is not a bundled sale. It’s a strategic triage:
-1.  **Sell the `hr.com` domain** to a strategic buyer (SAP, OpenAI, Big Four) for pure capital.
-2.  **Sell the media business** to a digital media consolidator or strategic acquirer (PE roll-up, industry association) at a 1.2-1.5x multiple.
-3.  **Place a CEO and raise growth capital** for My People, positioning it as the modern, AI-native alternative in HR tech.
-
-As our own John Kelly puts it: **“One plus one plus one equals six or seven. It’s a very different thing.”** The sum of the parts vastly exceeds the value of the whole.
-
-Debbie knows everyone. Her trusted advisor, “Daddy Shark” (Glenn), is a 30-year friend and the warmest path in. Her own acquirer list is forthcoming. Our job is to architect the process, leverage her unparalleled relationships, and execute the separation with precision.
-
-This is the culmination of 27 years of patient, bootstrapped building. It’s the story of a founder who survived every crash, outlasted every trend, and now holds assets the market is perfectly primed to value. She built a kingdom. Now it’s time to help her crown the right successors for each throne.
-
-**The ask is simple:** Let us build the leadership teams and run the processes. As John Kelly says, **“We’re damn good at what we do. Let us blow you away.”** This is the unlock. Let’s execute it.
+*For the team: This narrative is the core. We can adapt slices for buyer-facing teasers—emphasizing the domain for tech buyers, the media profit for PE, the platform potential for VCs. But internally, this is the map. The treasure is real, and the clock is ticking on a rare, founder-aligned, multi-asset unlock.*

@@ -1,124 +1,123 @@
 ## REMOVED
-*   **Informa** — Confirmed by Debbie on March 30 call. They are being sold themselves and are also trying to sell an asset to Debbie, making them an unsuitable buyer.
+*   **Informa** — MUST BE REMOVE. Debbie confirmed on March 30 call they are being sold themselves and are trying to sell her an asset.
+*   **No other companies flagged as M&A targets** based on the provided list and deal intelligence. (Note: This audit is based on the provided data. A live check for recent M&A news on major companies like TechTarget, Industry Dive, etc., is recommended).
 
 ## TOP 10 DOMAIN BUYERS
-*(Targets: AI companies, major tech/HCM platforms seeking a premium HR namespace)*
-1.  **Google** (fit=6) — Major AI player with capital; premium domains are strategic assets.
-2.  **OpenAI** (fit=4) — Leading AI company; a premium, category-defining domain like `hr.com` aligns with its scale.
-3.  **Microsoft** (fit=8) — Major player in HCM (LinkedIn, Dynamics) and AI; strategic fit for owning the HR namespace.
-4.  **Anthropic** (fit=4) — Major AI contender; could value a top-tier, industry-specific domain.
-5.  **Amazon (AWS)** (fit=6) — Cloud/AI giant; could use the domain for a dedicated HR/AI service front-end.
-6.  **Oracle HCM** (fit=8) — One of the "Big Three" HCM suites; owning `hr.com` would be a massive branding coup.
-7.  **Workday** (fit=8) — One of the "Big Three" HCM suites; direct strategic fit to own the definitive HR domain.
-8.  **SAP SuccessFactors** (fit=8) — One of the "Big Three" HCM suites; strong rationale to acquire the category domain.
-9.  **Salesforce** (fit=6) — Major platform with significant HR/CRM overlap (Salesforce Talent); could integrate the domain.
-10. **Cohere** (fit=4) — Enterprise-focused AI company; a premium domain like `hr.com` could accelerate enterprise credibility.
+*(Target: AI/tech giants, major consultancies, and HCM platforms seeking a premium HR namespace)*
+1.  **Google** (fit=6) — Major AI player, strategic buyer for premium `.com` domains.
+2.  **OpenAI** (fit=4) — Leading AI company, potential buyer for a strategic agentic layer domain.
+3.  **Anthropic** (fit=4) — Major AI competitor, similar strategic rationale as OpenAI.
+4.  **Amazon (AWS)** (fit=6) — Cloud/AI giant, could use domain for HR/AI services.
+5.  **Microsoft** (fit=8) — Has major HCM (LinkedIn, Viva) and AI interests; domain is a strategic fit.
+6.  **SAP SuccessFactors** (fit=8) — Leading HCM platform; `hr.com` is a natural brand asset.
+7.  **Oracle HCM** (fit=8) — Leading HCM platform; direct strategic fit for domain control.
+8.  **Workday** (fit=8) — Leading HCM platform; prime candidate for a definitive HR domain.
+9.  **Deloitte** (fit=8) — Big 4 consulting leader in HR transformation; domain enhances digital brand.
+10. **Accenture** (fit=8) — Global consulting/tech giant; domain aligns with HR services practice.
 
 ## TOP 10 MEDIA BUYERS
-*(Targets: B2B media platforms, HCM/consulting firms seeking content/community)*
-1.  **Industry Dive** (fit=8) — Pure-play B2B digital media company; perfect strategic and operational fit.
-2.  **RELX (Reed Elsevier)** (fit=8) — Global information/analytics giant with strong B2B media segments.
-3.  **Wolters Kluwer** (fit=8) — Global professional information/services, strong in compliance and HR adjacent fields.
-4.  **Thomson Reuters** (fit=6) — Major global information and news company; HR.com content aligns with professional segments.
-5.  **TechTarget** (fit=8) — Publicly-traded B2B tech media and data company; direct peer.
-6.  **Wiley** (fit=8) — Global research and education company; HR certification/content is a strong fit.
-7.  **G2** (fit=6) — B2B software review platform; HR.com's vendor directory and community are highly complementary.
-8.  **ZoomInfo** (fit=6) — B2B intelligence platform; could integrate HR.com's community and directory data.
-9.  **Dotdash Meredith** (fit=6) — Large digital media publisher; operational expertise in content and audience.
-10. **Randstad / Randstad Digital** (fit=8) — Global HR services giant; media/community asset enhances thought leadership and client engagement.
+*(Target: B2B media platforms, PE roll-ups, and strategic acquirers of community/content businesses)*
+1.  **Industry Dive** (fit=8) — Pure-play B2B digital media company, excellent strategic fit.
+2.  **RELX (Reed Elsevier)** (fit=8) — Global information/analytics giant, owns HR media assets.
+3.  **Wolters Kluwer** (fit=8) — Global professional information/services, strong HR segment.
+4.  **Thomson Reuters** (fit=6) — Major information/news company, logical consolidator.
+5.  **Wiley** (fit=8) — Global research/publishing company, owns HR-related content.
+6.  **TechTarget** (fit=8) — B2B tech media and data company, adjacent vertical model.
+7.  **Dotdash Meredith** (fit=6) — Large digital media publisher, could expand into B2B verticals.
+8.  **Vista Equity Partners** (fit=8) — PE firm with history of rolling up software/media assets.
+9.  **HG Capital** (fit=8) — PE firm active in media/software, potential roll-up candidate.
+10. **Randstad / Randstad Digital** (fit=8) — Global HR services firm; media asset drives lead gen.
 
 ## TOP 10 MYPEOPLE BUYERS/INVESTORS
-*(Targets: PE/VC, strategic HCM platforms, community software buyers)*
-1.  **Francisco Partners** (fit=8) — PE firm with deep tech expertise; ideal for a platform technology roll-up.
-2.  **Vista Equity Partners** (fit=8) — PE firm specializing in enterprise software; strong fit for a B2B SaaS platform.
-3.  **HG Capital** (fit=8) — PE firm with TMT focus; experience in software and information services.
-4.  **Thoma Bravo** (fit=8) — Leading software-focused PE firm; clear fit for investing in a growth-stage platform.
-5.  **Spark Capital** (fit=4) — VC with history in community/platform investments (e.g., Discord).
-6.  **Benchmark** (fit=4) — Top-tier VC with platform/community investment expertise.
-7.  **Norwest Venture Partners** (fit=4) — Growth equity firm with investments in enterprise tech.
-8.  **Thrive Capital** (fit=4) — VC with community and enterprise software investments.
-9.  **Salesforce** (fit=6) — Could acquire MyPeople as a community layer for its Customer 360 platform.
-10. **ServiceNow** (fit=6) — Could integrate MyPeople as a community/HR service delivery platform.
+*(Target: HCM platforms needing community tech, PE/VC investors, and strategic tech partners)*
+1.  **MyPeople.ai** (fit=6) — The platform itself; potential acquirer for consolidation or key investor.
+2.  **Workday** (fit=8) — HCM leader needing native community/engagement layer.
+3.  **SAP SuccessFactors** (fit=8) — Similar rationale to Workday; platform enhancement.
+4.  **UKG (Ultimate Kronos)** (fit=8) — HCM giant where community tech is a differentiator.
+5.  **ADP** (fit=8) — Largest HCM payroll provider; platform to deepen client engagement.
+6.  **Salesforce** (fit=6) — CRM leader; community platform aligns with ecosystem strategy.
+7.  **ServiceNow** (fit=6) — Workflow platform; HR service delivery community is a fit.
+8.  **Vista Equity Partners** (fit=8) — PE firm that could fund growth or acquire.
+9.  **Francisco Partners** (fit=8) — PE firm specializing in tech, could fund/roll-up.
+10. **Spark Capital / Norwest Venture Partners / Thrive Capital** (fit=4) — Venture capital firms listed as `my_people_investor` segment.
 
 ## FULL SEGMENT MAP
 
-### Domain Buyers
-*   Amazon (AWS)
-*   Anthropic
-*   Cohere
+**Domain Buyers (AI/Tech/Consulting Majors)**
 *   Google
 *   OpenAI
-
-### Media Buyers
-*   Accenture
-*   Bevy
+*   Anthropic
+*   Amazon (AWS)
+*   Cohere
+*   Microsoft
+*   SAP SuccessFactors
+*   Oracle HCM
+*   Workday
 *   Deloitte
-*   Dotdash Meredith
-*   EY
-*   G2
-*   HubSpot
-*   Industry Dive
-*   Khoros
-*   Mighty Networks
+*   Accenture
 *   PWC
+*   EY
+*   IBM
+
+**Media Buyers (B2B Media, PE, Strategic)**
+*   Industry Dive
 *   RELX (Reed Elsevier)
-*   Shopify
-*   TechTarget
+*   Wolters Kluwer
 *   Thomson Reuters
 *   Wiley
-*   Wolters Kluwer
+*   TechTarget
+*   Dotdash Meredith
+*   G2
+*   Khoros
 *   ZoomInfo
-
-### MyPeople Buyers/Investors
-*   Benchmark
-*   Francisco Partners
-*   HG Capital
-*   Insight Partners
-*   KKR
-*   MyPeople.ai
-*   Norwest Venture Partners
-*   Spark Capital
-*   Thoma Bravo
-*   Thrive Capital
+*   Bevy
+*   HubSpot
+*   Shopify
+*   Mighty Networks
 *   Vista Equity Partners
+*   HG Capital
+*   Thoma Bravo
+*   Hellman & Friedman
+*   Clearlake Capital
+*   KKR
+*   Silver Lake
+*   Insight Partners
+*   Randstad / Randstad Digital
+*   Manpower (ManpowerGroup)
+*   Lighthouse Research & Advisory
+*   Drake Star Partners
 
-### Hybrid / Multi-Asset Buyers
-*(Companies that could logically acquire more than one asset, e.g., Media + Domain, or HCM Platform + MyPeople)*
-*   **ADP** (HCM Platform) — Could be Media (content) or MyPeople (tech) buyer.
-*   **Alight** (HCM Platform) — Could be Media (content) or MyPeople (tech) buyer.
-*   **BambooHR** (HCM Platform) — Could be Media (content) or MyPeople (tech) buyer.
-*   **Ceridian (Dayforce)** (HCM Platform) — Could be Media (content) or MyPeople (tech) buyer.
-*   **Clearlake Capital** (PE Roll-up) — Could be Media or MyPeople buyer.
-*   **Culture Amp** (HCM Platform) — Could be Media (content) or MyPeople (tech) buyer.
-*   **Deel** (HCM Platform) — Could be Media (content) or MyPeople (tech) buyer.
-*   **Gainsight** (HCM Platform) — Could be Media (content) or MyPeople (tech) buyer.
-*   **Greenhouse** (HCM Platform) — Could be Media (content) or MyPeople (tech) buyer.
-*   **Hellman & Friedman** (PE Roll-up) — Could be Media or MyPeople buyer.
-*   **IBM** (HCM Platform) — Could be Media (content) or MyPeople (tech) buyer.
-*   **Indeed** (HCM Platform) — Could be Media (content) or MyPeople (tech) buyer.
-*   **Lattice** (HCM Platform) — Could be Media (content) or MyPeople (tech) buyer.
-*   **Manpower (ManpowerGroup)** (Strategic Acquirer) — Could be Media or MyPeople buyer.
-*   **Microsoft** (HCM Platform) — Could be Domain, Media, or MyPeople buyer.
-*   **Oracle HCM** (HCM Platform) — Could be Domain, Media, or MyPeople buyer.
-*   **Paychex** (HCM Platform) — Could be Media (content) or MyPeople (tech) buyer.
-*   **Paycom** (HCM Platform) — Could be Media (content) or MyPeople (tech) buyer.
-*   **Paylocity** (HCM Platform) — Could be Media (content) or MyPeople (tech) buyer.
-*   **Remote** (HCM Platform) — Could be Media (content) or MyPeople (tech) buyer.
-*   **Rippling** (HCM Platform) — Could be Media (content) or MyPeople (tech) buyer.
-*   **Salesforce** (HCM Platform) — Could be Domain, Media, or MyPeople buyer.
-*   **SAP SuccessFactors** (HCM Platform) — Could be Domain, Media, or MyPeople buyer.
-*   **ServiceNow** (HCM Platform) — Could be Media or MyPeople buyer.
-*   **Silver Lake** (PE Roll-up) — Could be Media or MyPeople buyer.
-*   **UKG (Ultimate Kronos)** (HCM Platform) — Could be Media (content) or MyPeople (tech) buyer.
-*   **Workday** (HCM Platform) — Could be Domain, Media, or MyPeople buyer.
+**MyPeople Buyers/Investors (HCM Platforms, PE/VC, Tech)**
+*   MyPeople.ai
+*   Workday
+*   SAP SuccessFactors
+*   UKG (Ultimate Kronos)
+*   ADP
+*   Ceridian (Dayforce)
+*   Paylocity
+*   Paychex
+*   Deel
+*   Indeed
+*   Paycom
+*   Remote
+*   Greenhouse
+*   Rippling
+*   Lattice
+*   Culture Amp
+*   BambooHR
+*   Gainsight
+*   ServiceNow
+*   Salesforce
+*   Alight
+*   Francisco Partners
+*   Vista Equity Partners
+*   Thoma Bravo
+*   Spark Capital
+*   Norwest Venture Partners
+*   Thrive Capital
+*   Benchmark
+*   SHRM *(Potential partner/investor)*
+*   WorldatWork *(Potential partner/investor)*
+*   ATD *(Potential partner/investor)*
 
-### Other / Niche
-*   **ATD** (Industry Association)
-*   **Drake Star Partners (Advisory Lead)** (Industry Consolidator)
-*   **Lighthouse Research & Advisory** (Industry Consolidator)
-*   **Randstad / Randstad Digital** (Strategic Acquirer) — *Categorized above as a Top 10 Media Buyer.*
-*   **SHRM** (Industry Association)
-*   **WorldatWork** (Industry Association)
-
----
-**Note on Personal Relationships:** Per Debbie's key intel ("Debbie 'knows all these people' — most buyers are warm contacts"), a very high proportion of the listed buyers, particularly in the HCM, Media, and Big4 segments, likely have a warm intro path. Specific, confirmed warm paths include contacts through **Glenn ("Daddy Shark")**, **Doug Merritt (via John Kelly)**, and **Jason Corcello** (to be called).
+**Note on Warm Intros:** Per Debbie's key intel ("Debbie knows all these people"), virtually every major company on this list is a warm contact. Outreach should be coordinated through her and her trusted advisor, Glenn ("Daddy Shark"), for the highest impact.
