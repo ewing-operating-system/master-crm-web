@@ -7,7 +7,7 @@
  */
 
 const LOB_API_KEY = process.env.LOB_API_KEY || '';
-const SUPABASE_URL = process.env.SUPABASE_URL || 'https://dwrnfpjcvydhmhnvyzov.supabase.co';
+const SUPABASE_URL = process.env.SUPABASE_URL || '';
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 const LOB_COST_PER_LETTER = 1.75;
 
@@ -49,82 +49,12 @@ async function supabaseRequest(method, path, data) {
   return res.json();
 }
 
-export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  try {
-    const { target_id, letter_html, recipient, entity } = req.body;
-
-    if (!letter_html || !recipient) {
-      return res.status(400).json({ error: 'Missing letter_html or recipient' });
-    }
-
-    // Validate recipient address
-    const required = ['name', 'address_line1', 'address_city', 'address_state', 'address_zip'];
-    for (const field of required) {
-      if (!recipient[field]) {
-        return res.status(400).json({ error: `Missing recipient.${field}` });
-      }
-    }
-
-    // Send via Lob
-    const lobResult = await lobRequest('letters', {
-      to: {
-        name: recipient.name,
-        address_line1: recipient.address_line1,
-        address_line2: recipient.address_line2 || '',
-        address_city: recipient.address_city,
-        address_state: recipient.address_state,
-        address_zip: recipient.address_zip,
-      },
-      from: NC_RETURN_ADDRESS,
-      file: letter_html,
-      color: false,
-      description: `NC Letter — ${recipient.name}`,
-      metadata: {
-        target_id: target_id || '',
-        entity: entity || 'next_chapter',
-        sent_at: new Date().toISOString(),
-      },
-    });
-
-    // Update letter_approvals with Lob tracking
-    if (target_id) {
-      await supabaseRequest('PATCH',
-        `letter_approvals?target_id=eq.${target_id}&status=eq.approved`,
-        {
-          lob_id: lobResult.id,
-          lob_status: 'created',
-          lob_url: lobResult.url || '',
-          sent_at: new Date().toISOString(),
-          status: 'sent',
-        }
-      );
-    }
-
-    // Log cost to cost_ledger
-    await supabaseRequest('POST', 'cost_ledger', {
-      entity: entity || 'next_chapter',
-      service: 'lob',
-      operation: 'letter_send',
-      cost: LOB_COST_PER_LETTER,
-      target_id: target_id || null,
-      metadata: JSON.stringify({ lob_id: lobResult.id }),
-      created_at: new Date().toISOString(),
-    });
-
-    return res.status(200).json({
-      lob_id: lobResult.id,
-      tracking_url: lobResult.url || '',
-      expected_delivery: lobResult.expected_delivery_date || '',
-      cost: LOB_COST_PER_LETTER,
-      status: 'sent',
-    });
-
-  } catch (err) {
-    console.error('Letter send error:', err);
-    return res.status(500).json({ error: err.message });
-  }
+module.exports = async function handler(req, res) {
+  // DISABLED — All letters must go through the approval queue.
+  // Use /api/letters/generate to create, /api/letters/approve to approve,
+  // then /api/letters/send-to-lob or /api/letters/batch-send to mail.
+  return res.status(403).json({
+    error: 'Direct letter sending is disabled. Letters must be approved before sending.',
+    help: 'Use POST /api/letters/approve to approve a letter, then POST /api/letters/send-to-lob to send it.',
+  });
 }

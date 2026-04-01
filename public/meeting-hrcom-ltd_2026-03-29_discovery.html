@@ -20,8 +20,14 @@
   .card .checklist li::before { content: "☐ "; color: #27ae60; font-weight: bold; }
   .danger li::before { content: "⚠ "; color: #e74c3c; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th { text-align: left; padding: 8px; background: #f8f9fa; font-weight: 600; }
+  th { text-align: left; padding: 8px; background: #f8f9fa; font-weight: 600; position: sticky; top: 0; }
   td { padding: 8px; border-bottom: 1px solid #f0f2f5; }
+  .buyer-table-wrap { max-height: 600px; overflow-y: auto; border: 1px solid #e0e4e8; border-radius: 8px; }
+  .score-8 { color: #27ae60; font-weight: 700; }
+  .score-6 { color: #f39c12; font-weight: 600; }
+  .score-4 { color: #95a5a6; }
+  .notes-box { width: 100%; min-height: 400px; padding: 16px; font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; line-height: 1.6; border: 2px solid #e0e4e8; border-radius: 8px; resize: vertical; word-wrap: break-word; overflow-wrap: break-word; white-space: pre-wrap; }
+  .notes-box:focus { border-color: #27ae60; outline: none; box-shadow: 0 0 0 3px rgba(39,174,96,0.15); }
   .footer { text-align: center; padding: 20px; color: #999; font-size: 11px; grid-column: 1 / -1; }
   @media (max-width: 700px) { .container { grid-template-columns: 1fr; } }
 </style>
@@ -126,9 +132,90 @@
   </div>
 
   <div class="card full">
-    <h3>Identified Buyers</h3>
-    <p style="font-size:13px;color:#27ae60;margin:8px 0 12px;font-style:italic;">Debbie knows all buyers personally. Domain buyers are primary tier.</p>
-    <table><tr><th>Buyer</th><th>Type</th><th>Fit</th><th>Status</th></tr><tr><td>Paychex</td><td>Strategic Acquirer</td><td>8</td><td>new</td></tr><tr><td>Workday</td><td>Strategic Acquirer</td><td>7</td><td style="color:#27ae60;font-weight:600;">debbie_named</td></tr><tr><td>SAP SuccessFactors</td><td>Strategic Acquirer</td><td>7</td><td style="color:#27ae60;font-weight:600;">debbie_named</td></tr><tr><td>Thoma Bravo</td><td>PE Roll-up</td><td>7</td><td>new</td></tr><tr><td>ADP</td><td>Strategic Acquirer</td><td>7</td><td style="color:#27ae60;font-weight:600;">debbie_named</td></tr><tr><td>HG Capital</td><td>PE Roll-up</td><td>6</td><td>new</td></tr><tr><td>Deel</td><td>Strategic Acquirer</td><td>6</td><td>new</td></tr><tr><td>Randstad / Randstad Digital</td><td>Strategic Acquirer</td><td>6</td><td>new</td></tr><tr><td>Lighthouse Research & Advisory</td><td>Industry Consolidator</td><td>5</td><td>new</td></tr><tr><td>Drake Star Partners (Advisory Lead)</td><td>Industry Consolidator</td><td>5</td><td>new</td></tr></table>
+    <h3>Identified Buyers — 68 Total</h3>
+    <p style="font-size:13px;color:#27ae60;margin:8px 0 12px;font-style:italic;">Debbie knows many buyers personally. 28 scored HIGH (fit 8) — confirmed acquirers in HR tech/media vertical.</p>
+    <div class="buyer-table-wrap">
+    <table>
+      <tr><th>Buyer</th><th>Type</th><th>Fit</th><th>Status</th></tr>
+      <!-- FIT SCORE 8 — HIGH (28 buyers) -->
+      <tr><td>Informa</td><td>Platform</td><td class="score-8">8</td><td>imported</td></tr>
+      <tr><td>RELX (Reed Elsevier)</td><td>Platform</td><td class="score-8">8</td><td>imported</td></tr>
+      <tr><td>Francisco Partners</td><td>Platform</td><td class="score-8">8</td><td>imported</td></tr>
+      <tr><td>TechTarget</td><td>Platform</td><td class="score-8">8</td><td>imported</td></tr>
+      <tr><td>ADP</td><td>Platform</td><td class="score-8">8</td><td style="color:#27ae60;font-weight:600;">scripted</td></tr>
+      <tr><td>Workday</td><td>Platform</td><td class="score-8">8</td><td style="color:#27ae60;font-weight:600;">scripted</td></tr>
+      <tr><td>Paychex</td><td>Platform</td><td class="score-8">8</td><td style="color:#27ae60;font-weight:600;">scripted</td></tr>
+      <tr><td>HG Capital</td><td>PE Roll-up</td><td class="score-8">8</td><td style="color:#27ae60;font-weight:600;">scripted</td></tr>
+      <tr><td>Industry Dive</td><td>Platform</td><td class="score-8">8</td><td>imported</td></tr>
+      <tr><td>Ceridian (Dayforce)</td><td>Platform</td><td class="score-8">8</td><td>imported</td></tr>
+      <tr><td>Paylocity</td><td>Platform</td><td class="score-8">8</td><td>imported</td></tr>
+      <tr><td>Vista Equity Partners</td><td>Platform</td><td class="score-8">8</td><td>imported</td></tr>
+      <tr><td>Randstad / Randstad Digital</td><td>Strategic Acquirer</td><td class="score-8">8</td><td style="color:#27ae60;font-weight:600;">scripted</td></tr>
+      <tr><td>Accenture</td><td>Platform</td><td class="score-8">8</td><td>imported</td></tr>
+      <tr><td>ManpowerGroup</td><td>Platform</td><td class="score-8">8</td><td>imported</td></tr>
+      <tr><td>PWC</td><td>Platform</td><td class="score-8">8</td><td>imported</td></tr>
+      <tr><td>Thoma Bravo</td><td>Platform</td><td class="score-8">8</td><td style="color:#27ae60;font-weight:600;">scripted</td></tr>
+      <tr><td>Deloitte</td><td>Platform</td><td class="score-8">8</td><td>imported</td></tr>
+      <tr><td>SAP SuccessFactors</td><td>Platform</td><td class="score-8">8</td><td style="color:#27ae60;font-weight:600;">scripted</td></tr>
+      <tr><td>Wiley</td><td>Platform</td><td class="score-8">8</td><td>imported</td></tr>
+      <tr><td>Alight</td><td>Platform</td><td class="score-8">8</td><td>imported</td></tr>
+      <tr><td>Wolters Kluwer</td><td>Platform</td><td class="score-8">8</td><td>imported</td></tr>
+      <tr><td>EY</td><td>Platform</td><td class="score-8">8</td><td>imported</td></tr>
+      <tr><td>IBM</td><td>Platform</td><td class="score-8">8</td><td>imported</td></tr>
+      <tr><td>Hellman & Friedman</td><td>Platform</td><td class="score-8">8</td><td>imported</td></tr>
+      <tr><td>Oracle HCM</td><td>Platform</td><td class="score-8">8</td><td>imported</td></tr>
+      <tr><td>UKG (Ultimate Kronos)</td><td>Platform</td><td class="score-8">8</td><td>imported</td></tr>
+      <tr><td>Microsoft</td><td>Platform</td><td class="score-8">8</td><td>imported</td></tr>
+      <tr><td>Deel</td><td>Platform</td><td class="score-8">8</td><td style="color:#27ae60;font-weight:600;">scripted</td></tr>
+      <!-- FIT SCORE 6 — MEDIUM (27 buyers) -->
+      <tr><td>G2</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>Thomson Reuters</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>Indeed</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>Khoros</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>Clearlake Capital</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>SHRM</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>Paycom</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>KKR</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>Remote</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>WorldatWork</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>Greenhouse</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>Amazon (AWS)</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>Lattice</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>Google</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>Rippling</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>ATD</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>Culture Amp</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>BambooHR</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>Dotdash Meredith</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>ZoomInfo</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>Silver Lake</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>Gainsight</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>ServiceNow</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>Salesforce</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>Insight Partners</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>Bevy</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <tr><td>HubSpot</td><td>Platform</td><td class="score-6">6</td><td>imported</td></tr>
+      <!-- FIT SCORE 4 — LOW (11 buyers) -->
+      <tr><td>Shopify</td><td>Platform</td><td class="score-4">4</td><td>imported</td></tr>
+      <tr><td>MyPeople.ai</td><td>Platform</td><td class="score-4">4</td><td>imported</td></tr>
+      <tr><td>Spark Capital</td><td>Platform</td><td class="score-4">4</td><td>imported</td></tr>
+      <tr><td>OpenAI</td><td>Platform</td><td class="score-4">4</td><td>imported</td></tr>
+      <tr><td>Mighty Networks</td><td>Platform</td><td class="score-4">4</td><td>imported</td></tr>
+      <tr><td>Benchmark</td><td>Platform</td><td class="score-4">4</td><td>imported</td></tr>
+      <tr><td>Lighthouse Research & Advisory</td><td>Industry Consolidator</td><td class="score-4">4</td><td style="color:#27ae60;font-weight:600;">scripted</td></tr>
+      <tr><td>Norwest Venture Partners</td><td>Platform</td><td class="score-4">4</td><td>imported</td></tr>
+      <tr><td>Cohere</td><td>Platform</td><td class="score-4">4</td><td>imported</td></tr>
+      <tr><td>Anthropic</td><td>Platform</td><td class="score-4">4</td><td>imported</td></tr>
+      <tr><td>Drake Star Partners (Advisory Lead)</td><td>Industry Consolidator</td><td class="score-4">4</td><td style="color:#27ae60;font-weight:600;">scripted</td></tr>
+      <tr><td>Thrive Capital</td><td>Platform</td><td class="score-4">4</td><td>imported</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="card full">
+    <h3>Meeting Notes</h3>
+    <p style="font-size:13px;color:#8b949e;margin-bottom:12px;">Use this space to capture real-time notes during the meeting. Text wraps automatically.</p>
+    <textarea class="notes-box" placeholder="Type meeting notes here...&#10;&#10;Key topics discussed:&#10;&#10;Action items:&#10;&#10;Follow-up needed:&#10;&#10;Buyer reactions / preferences:&#10;&#10;"></textarea>
   </div>
 
   <div class="footer">

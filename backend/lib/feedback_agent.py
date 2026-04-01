@@ -60,19 +60,13 @@ log = logging.getLogger("feedback_agent")
 # ---------------------------------------------------------------------------
 _ctx = ssl.create_default_context()
 
-SUPA_URL = "https://dwrnfpjcvydhmhnvyzov.supabase.co"
-SUPA_KEY = os.environ.get(
-    "SUPABASE_SERVICE_ROLE_KEY",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NDc1NzI5MCwiZXhwIjoyMDkwMzMzMjkwfQ.7Bd_6aZhpWazv-evA_f1WpocfEHcXX8JATLNSKAC00s",
-)
+SUPA_URL = os.environ.get("SUPABASE_URL", "")
+SUPA_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
 
 # ---------------------------------------------------------------------------
 # OpenRouter config — DeepSeek V3 fallback
 # ---------------------------------------------------------------------------
-OPENROUTER_KEY = os.environ.get(
-    "OPENROUTER_API_KEY",
-    "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",
-)
+OPENROUTER_KEY = os.environ.get("OPENROUTER_API_KEY", "")
 OPENROUTER_MODEL = "deepseek/deepseek-chat-v3-0324"
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 

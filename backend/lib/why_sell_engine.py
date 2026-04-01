@@ -40,15 +40,9 @@ from datetime import datetime
 
 # ─── Config ──────────────────────────────────────────────────────────────────
 
-SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://dwrnfpjcvydhmhnvyzov.supabase.co")
-SUPABASE_KEY = os.environ.get(
-    "SUPABASE_SERVICE_ROLE_KEY",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NDc1NzI5MCwiZXhwIjoyMDkwMzMzMjkwfQ.7Bd_6aZhpWazv-evA_f1WpocfEHcXX8JATLNSKAC00s",
-)
-OPENROUTER_KEY = os.environ.get(
-    "OPENROUTER_API_KEY",
-    "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",
-)
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
+SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
+OPENROUTER_KEY = os.environ.get("OPENROUTER_API_KEY", "")
 
 LOG_FILE = os.path.expanduser("~/Projects/master-crm/data/logs/why_sell_engine.log")
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)

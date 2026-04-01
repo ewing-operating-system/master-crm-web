@@ -21,8 +21,8 @@ The Entity Classification Guide (`data/north-star/NORTH-STAR-entity-classificati
 ### Supabase (ONE instance — `master-crm`)
 - **Project ID:** `dwrnfpjcvydhmhnvyzov`
 - **URL:** `https://dwrnfpjcvydhmhnvyzov.supabase.co`
-- **Service Role Key:** `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NDc1NzI5MCwiZXhwIjoyMDkwMzMzMjkwfQ.7Bd_6aZhpWazv-evA_f1WpocfEHcXX8JATLNSKAC00s`
-- **Anon Key:** `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NTcyOTAsImV4cCI6MjA5MDMzMzI5MH0.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY`
+- **Service Role Key:** `$SUPABASE_SERVICE_ROLE_KEY`
+- **Anon Key:** `$SUPABASE_ANON_KEY`
 - **Tables:** 33 tables, entity-tagged. 17 campaigns pre-seeded.
 - **Views:** `nc_targets`, `nc_companies`, `nc_contacts`, `and_targets`, `and_companies`, `and_contacts`, `and_investors`, `and_daily_briefing`, `ru_targets`, `ru_companies`, `ru_contacts`
 
@@ -41,7 +41,7 @@ Use `lib/classification.py` for deterministic entity classification. It implemen
 - **DeepSeek V3:** OpenRouter — $0.004/call. For auditor + validator agents.
 - **Gemini 2.5 Flash Lite:** OpenRouter — $0.001/call. For researcher agent.
 - **GPT-4o Mini:** OpenRouter — $0.002/call. For executor agent.
-- **OpenRouter Key:** `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`
+- **OpenRouter Key:** `$OPENROUTER_API_KEY`
 
 ### People Routing
 - **Ewing Gillaspy:** AND Capital + Next Chapter only. NEVER RevsUp in Salesfinity.

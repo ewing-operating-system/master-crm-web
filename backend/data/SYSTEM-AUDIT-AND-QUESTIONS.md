@@ -1832,7 +1832,7 @@ Coordinates page regeneration after any engine produces output. Provides thin wr
 
 ### Security Concerns
 
-1. **Database password in plaintext in 8+ files.** `MakeMoneyNow1!` appears in: proposal_engine.py, profile_engine.py, engagement_engine.py, meeting_engine.py, company_hub.py, dashboard.py, orchestrator.py, worker.py, server.py, slack_messages.py, research_transparency.py. It should be in an environment variable, read once.
+1. **Database password in plaintext in 8+ files.** [FIXED 2026-03-31] All hardcoded DB passwords removed. All files now use `os.environ.get("DATABASE_URL", "")`.
 
 2. **Supabase service role key in plaintext in 5+ files.** The service role key (which has FULL admin access to the database) is hardcoded in: CLAUDE.md, proposal_engine.py, supabase.py, research_transparency.py, and potentially others. This key appears in git history and is visible to anyone with repo access.
 

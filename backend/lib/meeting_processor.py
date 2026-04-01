@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 
 load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
 
-DB_CONN = f"postgresql://postgres:{os.environ.get('DB_PASSWORD', '')}@db.dwrnfpjcvydhmhnvyzov.supabase.co:6543/postgres"
+DB_CONN = os.environ.get("DATABASE_URL", "")
 
 def log(msg):
     print(f"{datetime.utcnow().isoformat()} | MEETING_PROCESSOR | {msg}", flush=True)

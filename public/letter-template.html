@@ -376,15 +376,52 @@
         // Attach inline editing
         engine.attachInlineEditing(letterContainer, companyId + '-letter');
 
-        // ---- Edit toggle ----
+        // ---- Edit toggle + auto-save ----
         let editMode = false;
-        document.getElementById('edit-toggle-btn').addEventListener('click', function() {
+        let autoSaveTimer = null;
+        const editToggleBtn = document.getElementById('edit-toggle-btn');
+
+        function showSaveIndicator(msg) {
+            editToggleBtn.textContent = msg;
+            setTimeout(function() {
+                if (editMode) editToggleBtn.textContent = 'Disable Editing';
+            }, 1500);
+        }
+
+        function autoSaveLetter() {
+            if (!currentApprovalId) return;
+            clearTimeout(autoSaveTimer);
+            autoSaveTimer = setTimeout(async function() {
+                const text = letterContainer.innerText || letterContainer.textContent;
+                try {
+                    await fetch(SUPABASE_URL + '/rest/v1/letter_approvals?id=eq.' + currentApprovalId, {
+                        method: 'PATCH',
+                        headers: SB_HEADERS,
+                        body: JSON.stringify({
+                            letter_text: text,
+                            updated_at: new Date().toISOString()
+                        })
+                    });
+                    showSaveIndicator('Saved');
+                } catch(e) {
+                    showSaveIndicator('Save failed');
+                }
+            }, 2000);
+        }
+
+        editToggleBtn.addEventListener('click', function() {
             editMode = !editMode;
             this.textContent = editMode ? 'Disable Editing' : 'Enable Editing';
             letterContainer.querySelectorAll('.letter-paragraph, p').forEach(function(p) {
                 p.contentEditable = editMode ? 'true' : 'false';
                 p.classList.toggle('letter-editable', editMode);
             });
+            if (editMode) {
+                letterContainer.addEventListener('input', autoSaveLetter);
+            } else {
+                letterContainer.removeEventListener('input', autoSaveLetter);
+                clearTimeout(autoSaveTimer);
+            }
         });
 
         // ---- Supabase: Insert letter as pending ----

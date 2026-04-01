@@ -2,7 +2,7 @@
 def apply_fact_correction(comment_id):
     """Apply a fact correction from an accepted comment to the canonical data."""
     import psycopg2, json, re, os
-    conn = psycopg2.connect(os.environ.get("DATABASE_URL", "postgresql://postgres:MakeMoneyNow1!@db.dwrnfpjcvydhmhnvyzov.supabase.co:6543/postgres"))
+    conn = psycopg2.connect(os.environ.get("DATABASE_URL", ""))
     conn.autocommit = True
     cur = conn.cursor()
     

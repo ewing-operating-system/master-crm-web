@@ -22,12 +22,12 @@ load_dotenv(os.path.join(os.path.dirname(__file__), '.env'))
 import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'lib'))
 
-SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://dwrnfpjcvydhmhnvyzov.supabase.co")
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
 SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
 
 PORT = 8080
 BASE_DIR = os.path.expanduser("~/Projects/master-crm/data")
-DB_CONN = f"postgresql://postgres:{os.environ.get('DB_PASSWORD', '')}@db.dwrnfpjcvydhmhnvyzov.supabase.co:6543/postgres"
+DB_CONN = os.environ.get("DATABASE_URL", "")
 
 # Kill any existing server on 8080
 subprocess.run(["pkill", "-f", "server.py"], capture_output=True)

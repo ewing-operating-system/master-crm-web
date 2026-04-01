@@ -7,7 +7,7 @@ Provides self-diagnosis and auto-fix capabilities.
 
 import json, os, subprocess, time, psycopg2, urllib.request, ssl
 
-DB_CONN = os.environ.get("DATABASE_URL", "postgresql://postgres:MakeMoneyNow1!@db.dwrnfpjcvydhmhnvyzov.supabase.co:6543/postgres")
+DB_CONN = os.environ.get("DATABASE_URL", "")
 ctx = ssl.create_default_context()
 
 def get_conn():
@@ -218,7 +218,7 @@ def get_exa_key():
         return os.environ.get("EXA_API_KEY", "")
 
 def get_openrouter_key():
-    return os.environ.get("OPENROUTER_API_KEY", "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")
+    return os.environ.get("OPENROUTER_API_KEY", "")
 
 def update_exa_key(new_key):
     """Update Exa API key in tool_health config."""

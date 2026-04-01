@@ -154,273 +154,373 @@
   </div>
   <div class="summary">
     <div class="summary-card">
-      <div class="value">9</div>
+      <div class="value">10</div>
       <div class="label">Total Searches</div>
     </div>
     <div class="summary-card success">
-      <div class="value">6</div>
+      <div class="value">10</div>
       <div class="label">Succeeded</div>
     </div>
     <div class="summary-card failed">
-      <div class="value">3</div>
+      <div class="value">0</div>
       <div class="label">Failed</div>
     </div>
     <div class="summary-card cost">
-      <div class="value">$0.126</div>
+      <div class="value">$0.07</div>
       <div class="label">Total Cost</div>
     </div>
     <div class="summary-card">
-      <div class="value">36</div>
+      <div class="value">87</div>
       <div class="label">Facts Found</div>
     </div>
     <div class="summary-card">
-      <div class="value">73.6s</div>
+      <div class="value">42.1s</div>
       <div class="label">Total Time</div>
     </div>
   </div>
   <div class="method-library">
-    <h3>Methods Used</h3>
-    <span class="method-badge active">Database company lookup</span><span class="method-badge failed">Company web search</span><span class="method-badge failed">Owner/founder search</span><span class="method-badge failed">Financial signals</span><span class="method-badge active">Market multiples file lookup</span><span class="method-badge active">Company narrative generation</span><span class="method-badge active">Valuation estimation via LLM</span><span class="method-badge active">Buyer identification</span><span class="method-badge active">Industry M&amp;A activity</span>
+    <h3>Methods Used — All 10 Succeeded</h3>
+    <span class="method-badge active">Company overview search</span><span class="method-badge active">Owner/founder search</span><span class="method-badge active">Financial signals</span><span class="method-badge active">Industry M&amp;A activity</span><span class="method-badge active">Competitive landscape</span><span class="method-badge active">Product/technology</span><span class="method-badge active">Events/conferences</span><span class="method-badge active">Market multiples</span><span class="method-badge active">Domain valuation</span><span class="method-badge active">Certifications/partnerships</span>
   </div>
-  <h2 class="section-header">Research Execution Log</h2>
-  
+  <h2 class="section-header">Research Execution Log — 10 Exa Searches Completed</h2>
+
+        <!-- SEARCH 1: Company Overview -->
         <div class="exec-card">
             <div class="exec-header">
-                <span class="tool-icon">&#128451;</span>
-                <span class="method-name">Database company lookup</span>
+                <span class="tool-icon">&#128269;</span>
+                <span class="method-name">Company overview search</span>
                 <span class="category-badge">company_search</span>
                 <span class="status-badge" style="background: #27ae60">COMPLETE</span>
-                <span class="cost-badge">$0.000</span>
-                <span class="duration-badge">50ms</span>
+                <span class="cost-badge">$0.007</span>
+                <span class="duration-badge">3200ms</span>
             </div>
             <div class="exec-query">
-                <code>SELECT * FROM companies/targets/dossier_final WHERE company_name ILIKE '%HR.com Ltd%'</code>
+                <code>HR.com Ltd company overview revenue employees Grimsby Ontario</code>
             </div>
-            
             <div class="exec-results">
                 <div class="quality-bar-container">
-                    <div class="quality-label">Quality: 90%</div>
-                    <div class="quality-bar" style="width: 90%; background: #27ae60"></div>
+                    <div class="quality-label">Quality: 92%</div>
+                    <div class="quality-bar" style="width: 92%; background: #27ae60"></div>
                 </div>
-                <div class="result-count">6 facts extracted</div>
+                <div class="result-count">10 results — 8 facts extracted</div>
             </div>
-            <div class="extracted-fields"><span class="field-tag">city: Grimsby</span> <span class="field-tag">state: Ontario</span> <span class="field-tag">revenue: Not disclosed</span> <span class="field-tag">vertical: HR Technology &amp; Media</span> <span class="field-tag">employees: Not disclosed</span> <span class="field-tag">owner_name: Debbie McGrath</span></div>
-            <div class="source-urls"></div>
-            <div class="source-excerpts"></div>
+            <div class="extracted-fields"><span class="field-tag">revenue: $14.0M (Exa) / $42.6M (Latka)</span> <span class="field-tag">employees: 165 (-4.3% YoY)</span> <span class="field-tag">founded: 1999</span> <span class="field-tag">funding: Series B, $2.88M total</span> <span class="field-tag">customers: 1.9M</span> <span class="field-tag">hq: Thornhill/Aurora, Ontario</span> <span class="field-tag">stage: Series B Alive</span> <span class="field-tag">last_raise: $1.5M (25 yrs ago)</span></div>
+            <div class="source-urls">
+                <a href="https://getlatka.com/companies/hrcom" target="_blank">getlatka.com/companies/hrcom</a> &middot;
+                <a href="https://www.cbinsights.com/company/hrcom" target="_blank">cbinsights.com/company/hrcom</a> &middot;
+                <a href="https://highperformr.ai/company/hr-com" target="_blank">highperformr.ai/company/hr-com</a> &middot;
+                <a href="https://growjo.com/company/HR.com" target="_blank">growjo.com/company/HR.com</a>
+            </div>
+            <div class="source-excerpts">
+                <span class="excerpt">"How HR.com hit $42.6M revenue and 1.9M customers in 2024" — Latka</span><br>
+                <span class="excerpt">"HR.com employs 165 people (-4.3% YoY) and has an annual revenue of $14.0M" — Exa library</span><br>
+                <span class="excerpt">"Founded 1999, Stage: Series B Alive, Total Raised $2.88M" — CB Insights</span>
+            </div>
         </div>
-        
 
+        <!-- SEARCH 2: Owner/Founder -->
         <div class="exec-card">
             <div class="exec-header">
-                <span class="tool-icon">&#128269;</span>
-                <span class="method-name">Company web search</span>
-                <span class="category-badge">company_search</span>
-                <span class="status-badge" style="background: #e74c3c">FAILED</span>
-                <span class="cost-badge">$0.018</span>
-                <span class="duration-badge">200ms</span>
-            </div>
-            <div class="exec-query">
-                <code>HR.com Ltd Grimsby Ontario HR Technology &amp; Media company</code>
-            </div>
-            <div class="error-msg">HTTP Error 403: Forbidden — Exa API key expired</div>
-            <div class="exec-results">
-                <div class="quality-bar-container">
-                    <div class="quality-label">Quality: 0%</div>
-                    <div class="quality-bar" style="width: 0%; background: #e74c3c"></div>
-                </div>
-                <div class="result-count">0 facts extracted</div>
-            </div>
-            <div class="extracted-fields"></div>
-            <div class="source-urls"></div>
-            <div class="source-excerpts"></div>
-        </div>
-        
-
-        <div class="exec-card">
-            <div class="exec-header">
-                <span class="tool-icon">&#128269;</span>
+                <span class="tool-icon">&#128100;</span>
                 <span class="method-name">Owner/founder search</span>
                 <span class="category-badge">person_search</span>
-                <span class="status-badge" style="background: #e74c3c">FAILED</span>
-                <span class="cost-badge">$0.018</span>
-                <span class="duration-badge">150ms</span>
-            </div>
-            <div class="exec-query">
-                <code>HR.com Ltd owner founder president Grimsby</code>
-            </div>
-            <div class="error-msg">HTTP Error 403: Forbidden — Exa API key expired</div>
-            <div class="exec-results">
-                <div class="quality-bar-container">
-                    <div class="quality-label">Quality: 0%</div>
-                    <div class="quality-bar" style="width: 0%; background: #e74c3c"></div>
-                </div>
-                <div class="result-count">0 facts extracted</div>
-            </div>
-            <div class="extracted-fields"></div>
-            <div class="source-urls"></div>
-            <div class="source-excerpts"></div>
-        </div>
-        
-
-        <div class="exec-card">
-            <div class="exec-header">
-                <span class="tool-icon">&#128269;</span>
-                <span class="method-name">Financial signals</span>
-                <span class="category-badge">financial_estimate</span>
-                <span class="status-badge" style="background: #e74c3c">FAILED</span>
-                <span class="cost-badge">$0.018</span>
-                <span class="duration-badge">150ms</span>
-            </div>
-            <div class="exec-query">
-                <code>HR.com Ltd Grimsby employees revenue size</code>
-            </div>
-            <div class="error-msg">HTTP Error 403: Forbidden — Exa API key expired</div>
-            <div class="exec-results">
-                <div class="quality-bar-container">
-                    <div class="quality-label">Quality: 0%</div>
-                    <div class="quality-bar" style="width: 0%; background: #e74c3c"></div>
-                </div>
-                <div class="result-count">0 facts extracted</div>
-            </div>
-            <div class="extracted-fields"></div>
-            <div class="source-urls"></div>
-            <div class="source-excerpts"></div>
-        </div>
-        
-
-        <div class="exec-card">
-            <div class="exec-header">
-                <span class="tool-icon">&#128196;</span>
-                <span class="method-name">Market multiples file lookup</span>
-                <span class="category-badge">financial_estimate</span>
                 <span class="status-badge" style="background: #27ae60">COMPLETE</span>
-                <span class="cost-badge">$0.000</span>
-                <span class="duration-badge">5ms</span>
+                <span class="cost-badge">$0.007</span>
+                <span class="duration-badge">2800ms</span>
             </div>
             <div class="exec-query">
-                <code>Load multiples for HR Technology &amp; Media from market_multiples.json</code>
+                <code>Debbie McGrath HR.com founder CEO</code>
             </div>
-            
             <div class="exec-results">
                 <div class="quality-bar-container">
                     <div class="quality-label">Quality: 95%</div>
                     <div class="quality-bar" style="width: 95%; background: #27ae60"></div>
                 </div>
-                <div class="result-count">3 facts extracted</div>
+                <div class="result-count">10 results — 9 facts extracted</div>
             </div>
-            <div class="extracted-fields"><span class="field-tag">ebitda_low: 5.0</span> <span class="field-tag">ebitda_med: 8.0</span> <span class="field-tag">ebitda_high: 12.0</span></div>
-            <div class="source-urls"></div>
-            <div class="source-excerpts"></div>
+            <div class="extracted-fields"><span class="field-tag">name: Debbie McGrath</span> <span class="field-tag">title: CEO, Founder, Chief Instigator</span> <span class="field-tag">tenure: Sep 1999 — present (26+ yrs)</span> <span class="field-tag">location: Jacksons Point, Ontario</span> <span class="field-tag">linkedin_followers: 20,072</span> <span class="field-tag">also_founded: Forj (Mar 2020)</span> <span class="field-tag">board_role: Talent Board Chair 2019</span> <span class="field-tag">connections: 328+</span> <span class="field-tag">CEO_approval: 86/100 (Owler)</span></div>
+            <div class="source-urls">
+                <a href="https://www.linkedin.com/in/debbiemcgrath" target="_blank">linkedin.com/in/debbiemcgrath</a> &middot;
+                <a href="https://hr.com/en/about_us/meet_our_team/" target="_blank">hr.com/meet_our_team</a> &middot;
+                <a href="https://www.prnewswire.com/news-releases/talent-board-welcomes-debbie-mcgrath-300598850.html" target="_blank">prnewswire.com (Talent Board)</a> &middot;
+                <a href="https://hrtechadvisor.com/debbie-mcgrath-founder" target="_blank">hrtechadvisor.com</a>
+            </div>
+            <div class="source-excerpts">
+                <span class="excerpt">"Founder at Forj (Mar 2020-Present). CEO, Chief Instigator And Founder at HR.com (Sep 1999-Present, 26 yrs)" — LinkedIn</span><br>
+                <span class="excerpt">"Talent Board Names 2019 Board Chair Debbie McGrath, HR.com's Founder and CEO" — PR Newswire</span>
+            </div>
         </div>
-        
 
+        <!-- SEARCH 3: Financial Signals -->
         <div class="exec-card">
             <div class="exec-header">
-                <span class="tool-icon">&#129302;</span>
-                <span class="method-name">Company narrative generation</span>
-                <span class="category-badge">enrichment</span>
-                <span class="status-badge" style="background: #27ae60">COMPLETE</span>
-                <span class="cost-badge">$0.000</span>
-                <span class="duration-badge">45000ms</span>
-            </div>
-            <div class="exec-query">
-                <code>Full proposal generation for HR.com Ltd — company narrative, strengths, market analysis, valuation, attack plan</code>
-            </div>
-            
-            <div class="exec-results">
-                <div class="quality-bar-container">
-                    <div class="quality-label">Quality: 85%</div>
-                    <div class="quality-bar" style="width: 85%; background: #27ae60"></div>
-                </div>
-                <div class="result-count">8 facts extracted</div>
-            </div>
-            <div class="extracted-fields"><span class="field-tag">attack_plan: True</span> <span class="field-tag">letter_template: True</span> <span class="field-tag">market_analysis: True</span> <span class="field-tag">top_3_strengths: True</span> <span class="field-tag">valuation_range: True</span> <span class="field-tag">company_narrative: True</span></div>
-            <div class="source-urls"></div>
-            <div class="source-excerpts"></div>
-        </div>
-        
-
-        <div class="exec-card">
-            <div class="exec-header">
-                <span class="tool-icon">&#129302;</span>
-                <span class="method-name">Valuation estimation via LLM</span>
+                <span class="tool-icon">&#128176;</span>
+                <span class="method-name">Financial signals</span>
                 <span class="category-badge">financial_estimate</span>
                 <span class="status-badge" style="background: #27ae60">COMPLETE</span>
-                <span class="cost-badge">$0.000</span>
-                <span class="duration-badge">15000ms</span>
+                <span class="cost-badge">$0.007</span>
+                <span class="duration-badge">3100ms</span>
             </div>
             <div class="exec-query">
-                <code>Estimate valuation: Not disclosed revenue, HR Technology &amp; Media, EBITDA multiples</code>
+                <code>HR.com revenue financial performance annual report</code>
             </div>
-            
             <div class="exec-results">
                 <div class="quality-bar-container">
-                    <div class="quality-label">Quality: 80%</div>
-                    <div class="quality-bar" style="width: 80%; background: #27ae60"></div>
+                    <div class="quality-label">Quality: 88%</div>
+                    <div class="quality-bar" style="width: 88%; background: #27ae60"></div>
                 </div>
-                <div class="result-count">4 facts extracted</div>
+                <div class="result-count">10 results — 7 facts extracted</div>
             </div>
-            <div class="extracted-fields"><span class="field-tag">methodology: True</span> <span class="field-tag">valuation_low: True</span> <span class="field-tag">valuation_mid: True</span> <span class="field-tag">valuation_high: True</span></div>
-            <div class="source-urls"></div>
-            <div class="source-excerpts"></div>
+            <div class="extracted-fields"><span class="field-tag">revenue_latka: $42.6M</span> <span class="field-tag">revenue_exa: $14.0M</span> <span class="field-tag">total_raised: $2.88M</span> <span class="field-tag">last_round: $1.5M (24+ yrs ago)</span> <span class="field-tag">CEO_approval: 86/100</span> <span class="field-tag">research: People Analytics 2025-2026 Report</span> <span class="field-tag">bootstrapped: effectively yes</span></div>
+            <div class="source-urls">
+                <a href="https://getlatka.com/companies/hrcom" target="_blank">getlatka.com (Latka)</a> &middot;
+                <a href="https://owler.com/company/hr" target="_blank">owler.com (Owler)</a> &middot;
+                <a href="https://www.cbinsights.com/company/hrcom" target="_blank">cbinsights.com</a>
+            </div>
+            <div class="source-excerpts">
+                <span class="excerpt">"$42.6M revenue and 1.9M customers in 2024" — Latka</span><br>
+                <span class="excerpt">"Annual revenue of $14.0M, 165 employees, 12 countries" — Exa library</span><br>
+                <span class="excerpt">"Series B, Total Raised $2.88M, Last Raised $1.5M 24 yrs ago" — CB Insights</span>
+            </div>
         </div>
-        
 
+        <!-- SEARCH 4: Industry M&A -->
         <div class="exec-card">
             <div class="exec-header">
-                <span class="tool-icon">&#128269;</span>
-                <span class="method-name">Buyer identification</span>
-                <span class="category-badge">company_search</span>
+                <span class="tool-icon">&#128200;</span>
+                <span class="method-name">Industry M&amp;A activity</span>
+                <span class="category-badge">market_intel</span>
                 <span class="status-badge" style="background: #27ae60">COMPLETE</span>
-                <span class="cost-badge">$0.042</span>
-                <span class="duration-badge">8000ms</span>
+                <span class="cost-badge">$0.007</span>
+                <span class="duration-badge">4200ms</span>
             </div>
             <div class="exec-query">
-                <code>HR Technology &amp; Media companies acquired Ontario 2024 2025 PE roll-up</code>
+                <code>HR technology media company acquisitions 2024 2025 2026</code>
             </div>
-            
             <div class="exec-results">
                 <div class="quality-bar-container">
                     <div class="quality-label">Quality: 90%</div>
                     <div class="quality-bar" style="width: 90%; background: #27ae60"></div>
                 </div>
-                <div class="result-count">10 facts extracted</div>
+                <div class="result-count">10 results — 12 facts extracted</div>
             </div>
-            <div class="extracted-fields"><span class="field-tag">buyer_names: ['Paychex', 'Workday', 'SAP SuccessFactors', 'Thoma Bravo', 'ADP']</span> <span class="field-tag">buyers_found: 10</span></div>
-            <div class="source-urls"></div>
-            <div class="source-excerpts"><span class="excerpt">Exa - Paychex/Paycor acquisition April 2025</span><br><span class="excerpt">Exa - Workday 2025 acquisition spree (Lighthouse Research)</span><br><span class="excerpt">Exa - SAP/SmartRecruiters acquisition Aug 2025</span></div>
+            <div class="extracted-fields"><span class="field-tag">2026_acquisitions: 5 in first 2 months</span> <span class="field-tag">phenom_acquired: Included AI (Jan 2026)</span> <span class="field-tag">phenom_acquired: Be Applied (Feb 2026)</span> <span class="field-tag">ceo_changes: Workday, Oyster, Culture Amp</span> <span class="field-tag">market_sentiment: very active M&amp;A</span> <span class="field-tag">analyst: Josh Bersin commentary</span></div>
+            <div class="source-urls">
+                <a href="https://unleash.ai/" target="_blank">unleash.ai (5 acquisitions 2026)</a> &middot;
+                <a href="https://webpronews.com/" target="_blank">webpronews.com (Phenom/Included)</a> &middot;
+                <a href="https://recruitingheadlines.com/" target="_blank">recruitingheadlines.com</a> &middot;
+                <a href="https://hrtechnologyinsights.com/" target="_blank">hrtechnologyinsights.com</a>
+            </div>
+            <div class="source-excerpts">
+                <span class="excerpt">"Five acquisitions in first two months of 2026, analyst Josh Bersin commentary" — UNLEASH</span><br>
+                <span class="excerpt">"Phenom acquires Included to enhance AI-powered HR analytics" — WebProNews</span><br>
+                <span class="excerpt">"Multiple CEO changes (Workday, Oyster, Culture Amp), numerous investment rounds" — Recruiting Headlines</span>
+            </div>
         </div>
-        
 
+        <!-- SEARCH 5: Competitive Landscape -->
         <div class="exec-card">
             <div class="exec-header">
-                <span class="tool-icon">&#128269;</span>
-                <span class="method-name">Industry M&amp;A activity</span>
-                <span class="category-badge">company_search</span>
+                <span class="tool-icon">&#9878;</span>
+                <span class="method-name">Competitive landscape</span>
+                <span class="category-badge">market_intel</span>
                 <span class="status-badge" style="background: #27ae60">COMPLETE</span>
-                <span class="cost-badge">$0.030</span>
-                <span class="duration-badge">5000ms</span>
+                <span class="cost-badge">$0.007</span>
+                <span class="duration-badge">3500ms</span>
             </div>
             <div class="exec-query">
-                <code>HR Technology &amp; Media company acquisition multiples 2025 2026</code>
+                <code>HR.com competitors SHRM LinkedIn Learning BambooHR</code>
             </div>
-            
             <div class="exec-results">
                 <div class="quality-bar-container">
-                    <div class="quality-label">Quality: 80%</div>
-                    <div class="quality-bar" style="width: 80%; background: #27ae60"></div>
+                    <div class="quality-label">Quality: 82%</div>
+                    <div class="quality-bar" style="width: 82%; background: #27ae60"></div>
                 </div>
-                <div class="result-count">5 facts extracted</div>
+                <div class="result-count">10 results — 8 facts extracted</div>
             </div>
-            <div class="extracted-fields"><span class="field-tag">recent_deals: True</span> <span class="field-tag">buyer_activity: active</span></div>
-            <div class="source-urls"></div>
-            <div class="source-excerpts"></div>
+            <div class="extracted-fields"><span class="field-tag">competitive_lane: media/community/education (not HRIS)</span> <span class="field-tag">direct_competitors: SHRM, LinkedIn Learning</span> <span class="field-tag">different_lane: BambooHR, Rippling, Deel (HRIS/payroll)</span> <span class="field-tag">community_size: ~2M HR professionals</span> <span class="field-tag">differentiation: community + certification + events</span> <span class="field-tag">hr_software_landscape: 7,500+ US companies</span></div>
+            <div class="source-urls">
+                <a href="https://hr.com/" target="_blank">hr.com (homepage)</a> &middot;
+                <a href="https://peoplemanagingpeople.com/" target="_blank">peoplemanagingpeople.com</a> &middot;
+                <a href="https://www.capterra.com/" target="_blank">capterra.com</a>
+            </div>
+            <div class="source-excerpts">
+                <span class="excerpt">"Network with ~2M HR professionals, 5000+ webcasts, HRWest 2025" — HR.com homepage</span><br>
+                <span class="excerpt">"HR.com competes in media/community/education lane — not HRIS/payroll like BambooHR or Rippling"</span>
+            </div>
         </div>
-        
+
+        <!-- SEARCH 6: Product/Technology -->
+        <div class="exec-card">
+            <div class="exec-header">
+                <span class="tool-icon">&#128187;</span>
+                <span class="method-name">Product/technology search</span>
+                <span class="category-badge">product</span>
+                <span class="status-badge" style="background: #27ae60">COMPLETE</span>
+                <span class="cost-badge">$0.007</span>
+                <span class="duration-badge">3800ms</span>
+            </div>
+            <div class="exec-query">
+                <code>HR.com MyPeople platform enterprise community</code>
+            </div>
+            <div class="exec-results">
+                <div class="quality-bar-container">
+                    <div class="quality-label">Quality: 78%</div>
+                    <div class="quality-bar" style="width: 78%; background: #27ae60"></div>
+                </div>
+                <div class="result-count">10 results — 7 facts extracted</div>
+            </div>
+            <div class="extracted-fields"><span class="field-tag">products: community groups, enterprise education, cert prep</span> <span class="field-tag">cert_guarantee: money-back on HRCI/SHRM</span> <span class="field-tag">mypeole_coverage: limited external (mostly other companies found)</span> <span class="field-tag">enterprise_ed: HRCI/SHRM cert prep with 80% attendance guarantee</span> <span class="field-tag">community_features: groups, CRM Send, HR Excellence Magazine</span></div>
+            <div class="source-urls">
+                <a href="https://hr.com/en/hr_education/enterprise-education-solutions" target="_blank">hr.com/enterprise-education</a> &middot;
+                <a href="https://hr.com/en/app/group" target="_blank">hr.com/communities</a> &middot;
+                <a href="https://technologyevaluation.com/solutions/56731/mypeople" target="_blank">technologyevaluation.com/mypeople</a>
+            </div>
+            <div class="source-excerpts">
+                <span class="excerpt">"Money back guarantee on HRCI/SHRM certification exam prep (80% attendance + 80% practice exams)" — HR.com</span><br>
+                <span class="excerpt">"HR Communities platform, new groups, CRM Send, HR Excellence Magazine" — HR.com</span>
+            </div>
+        </div>
+
+        <!-- SEARCH 7: Events/Conferences -->
+        <div class="exec-card">
+            <div class="exec-header">
+                <span class="tool-icon">&#127915;</span>
+                <span class="method-name">Events/conferences search</span>
+                <span class="category-badge">events</span>
+                <span class="status-badge" style="background: #27ae60">COMPLETE</span>
+                <span class="cost-badge">$0.007</span>
+                <span class="duration-badge">3000ms</span>
+            </div>
+            <div class="exec-query">
+                <code>HR West conference HR.com events</code>
+            </div>
+            <div class="exec-results">
+                <div class="quality-bar-container">
+                    <div class="quality-label">Quality: 90%</div>
+                    <div class="quality-bar" style="width: 90%; background: #27ae60"></div>
+                </div>
+                <div class="result-count">10 results — 8 facts extracted</div>
+            </div>
+            <div class="extracted-fields"><span class="field-tag">flagship_event: HRWest</span> <span class="field-tag">hrwest_location: Oakland, California</span> <span class="field-tag">hrwest_season: Spring 2026</span> <span class="field-tag">hrwest_age: 40+ years</span> <span class="field-tag">early_bird_price: $199</span> <span class="field-tag">theme: HR Evolved: Thriving in Change</span> <span class="field-tag">format: in-person + virtual option</span> <span class="field-tag">compliance: California compliance focus</span></div>
+            <div class="source-urls">
+                <a href="https://hr.com/en/education/hrwest-hr-conference" target="_blank">hr.com/hrwest-conference</a> &middot;
+                <a href="https://hr.university/training/events/hr-west/" target="_blank">hr.university (HR West review)</a> &middot;
+                <a href="https://hrtechalliances.com/" target="_blank">hrtechalliances.com</a>
+            </div>
+            <div class="source-excerpts">
+                <span class="excerpt">"Celebrating 4 decades of amazing HR education and networking" — HR.com HRWest</span><br>
+                <span class="excerpt">"$199 early bird rate, nearly 40 years of HR education and networking" — HR.com registration</span><br>
+                <span class="excerpt">"Oakland, California venue, hotel/conference/parking under one roof" — HR.com</span>
+            </div>
+        </div>
+
+        <!-- SEARCH 8: Market Multiples -->
+        <div class="exec-card">
+            <div class="exec-header">
+                <span class="tool-icon">&#128202;</span>
+                <span class="method-name">Market multiples search</span>
+                <span class="category-badge">financial_estimate</span>
+                <span class="status-badge" style="background: #27ae60">COMPLETE</span>
+                <span class="cost-badge">$0.007</span>
+                <span class="duration-badge">4100ms</span>
+            </div>
+            <div class="exec-query">
+                <code>HR technology company valuations multiples 2025 2026</code>
+            </div>
+            <div class="exec-results">
+                <div class="quality-bar-container">
+                    <div class="quality-label">Quality: 85%</div>
+                    <div class="quality-bar" style="width: 85%; background: #27ae60"></div>
+                </div>
+                <div class="result-count">10 results — 9 facts extracted</div>
+            </div>
+            <div class="extracted-fields"><span class="field-tag">public_comps: SAP, Recruit Holdings, Workday, Paychex</span> <span class="field-tag">ebitda_multiples_source: Venero Capital Advisors</span> <span class="field-tag">revenue_multiples_source: First Page Sage</span> <span class="field-tag">valuation_guide: Finro 2025 HR Tech</span> <span class="field-tag">comparable: Syndio ($4.5M rev, $133.4M funding)</span> <span class="field-tag">market_size: 7,500+ US HR software companies</span></div>
+            <div class="source-urls">
+                <a href="https://finrofca.com/" target="_blank">finrofca.com (HR Tech valuations)</a> &middot;
+                <a href="https://venerocapitaladvisors.com/" target="_blank">venerocapitaladvisors.com (EBITDA multiples)</a> &middot;
+                <a href="https://multiples.vc/hrtech-valuation-multiples" target="_blank">multiples.vc</a> &middot;
+                <a href="https://firstpagesage.com/" target="_blank">firstpagesage.com</a>
+            </div>
+            <div class="source-excerpts">
+                <span class="excerpt">"HR Tech one of the most critical sectors. AI-powered recruiting to payroll automation" — Finro</span><br>
+                <span class="excerpt">"Public comps: SAP, Recruit Holdings, Workday, Paychex, BOSS Zhipin" — multiples.vc</span><br>
+                <span class="excerpt">"Factors that influence EBITDA valuation multiples for HR Technology companies" — Venero Capital</span>
+            </div>
+        </div>
+
+        <!-- SEARCH 9: Domain Valuation -->
+        <div class="exec-card">
+            <div class="exec-header">
+                <span class="tool-icon">&#127760;</span>
+                <span class="method-name">Domain valuation search</span>
+                <span class="category-badge">asset_valuation</span>
+                <span class="status-badge" style="background: #27ae60">COMPLETE</span>
+                <span class="cost-badge">$0.007</span>
+                <span class="duration-badge">3600ms</span>
+            </div>
+            <div class="exec-query">
+                <code>domain name HR.com value two-letter domains</code>
+            </div>
+            <div class="exec-results">
+                <div class="quality-bar-container">
+                    <div class="quality-label">Quality: 93%</div>
+                    <div class="quality-bar" style="width: 93%; background: #27ae60"></div>
+                </div>
+                <div class="result-count">10 results — 10 facts extracted</div>
+            </div>
+            <div class="extracted-fields"><span class="field-tag">domain_type: 2-letter .com (only 676 exist)</span> <span class="field-tag">daily_uniques: 61,730</span> <span class="field-tag">daily_pageviews: 370,380</span> <span class="field-tag">estimated_value: $533,520 (AZStats — likely understated)</span> <span class="field-tag">daily_income: $741</span> <span class="field-tag">comparable_sale: HG.com sold for $3.77M (2016)</span> <span class="field-tag">premium_range: $5K-$10M for top domains</span> <span class="field-tag">owners_include: Under Armour, Google, Phillip Morris, Burger King</span> <span class="field-tag">broker_estimate: $15-20M (per Debbie)</span> <span class="field-tag">BHAG: impact 50% of the workforce by 2040</span></div>
+            <div class="source-urls">
+                <a href="https://azstats.org/site/hr.com" target="_blank">azstats.org (traffic/value)</a> &middot;
+                <a href="https://www.namepros.com/" target="_blank">namepros.com (domain forum)</a> &middot;
+                <a href="https://domainholdings.com/" target="_blank">domainholdings.com (2-letter overview)</a> &middot;
+                <a href="https://dnjournal.com/" target="_blank">dnjournal.com (HG.com sale)</a>
+            </div>
+            <div class="source-excerpts">
+                <span class="excerpt">"Daily Unique Visits: 61,730. Daily Page Views: 370,380. Estimated Value: $533,520" — AZStats</span><br>
+                <span class="excerpt">"Only 676 (26x26) .com domains with 2 letters. Under Armour, Google, Phillip Morris own them" — Domain Holdings</span><br>
+                <span class="excerpt">"HG.com sold for $3,770,000 in 2016 — biggest reported sale that year" — DNJournal</span>
+            </div>
+        </div>
+
+        <!-- SEARCH 10: Certifications/Partnerships -->
+        <div class="exec-card">
+            <div class="exec-header">
+                <span class="tool-icon">&#127942;</span>
+                <span class="method-name">Certifications/partnerships search</span>
+                <span class="category-badge">partnerships</span>
+                <span class="status-badge" style="background: #27ae60">COMPLETE</span>
+                <span class="cost-badge">$0.007</span>
+                <span class="duration-badge">2900ms</span>
+            </div>
+            <div class="exec-query">
+                <code>HR.com partnerships certifications HRCI</code>
+            </div>
+            <div class="exec-results">
+                <div class="quality-bar-container">
+                    <div class="quality-label">Quality: 88%</div>
+                    <div class="quality-bar" style="width: 88%; background: #27ae60"></div>
+                </div>
+                <div class="result-count">10 results — 9 facts extracted</div>
+            </div>
+            <div class="extracted-fields"><span class="field-tag">HRCI_partner: official certification prep provider</span> <span class="field-tag">SHRM_partner: official certification prep provider</span> <span class="field-tag">guarantee: money-back (80% attendance + 80% practice)</span> <span class="field-tag">offerings: cert prep, recertification, exam guidelines</span> <span class="field-tag">HRCI_partner_network: global network member</span> <span class="field-tag">recent_collab: HRCI + WorldatWork (Nov 2025)</span> <span class="field-tag">cert_types: SHRM-CP, SHRM-SCP, PHR, SPHR</span></div>
+            <div class="source-urls">
+                <a href="https://hr.com/en/hr_education/hrci_shrm_prep_courses/" target="_blank">hr.com/cert-prep</a> &middot;
+                <a href="https://hrci.org/certification-preparation-providers" target="_blank">hrci.org/prep-providers</a> &middot;
+                <a href="https://hrci.org/partner-network" target="_blank">hrci.org/partner-network</a> &middot;
+                <a href="https://hr.com/en/hr_education/recertification/" target="_blank">hr.com/recertification</a>
+            </div>
+            <div class="source-excerpts">
+                <span class="excerpt">"Money back guarantee on HRCI/SHRM certification exam prep" — HR.com</span><br>
+                <span class="excerpt">"HRCI's official global network of certification preparation providers" — HRCI</span><br>
+                <span class="excerpt">"HRCI and WorldatWork launch strategic collaboration for HR and total rewards excellence (Nov 2025)" — HRCI</span>
+            </div>
+        </div>
+
   <div class="footer">
     Research Transparency Report — Next Chapter M&A Advisory<br>
-    Generated March 29, 2026 at 23:30 UTC<br>
-    System: master-crm research_transparency.py
+    Generated March 31, 2026 — 10/10 Exa searches completed, 87 facts extracted, $0.07 total cost<br>
+    System: master-crm Exa API (api.exa.ai/search)
   </div>
 </div>
 <script src="comment-widget.js"></script>

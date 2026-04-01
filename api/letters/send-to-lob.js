@@ -16,7 +16,7 @@
  * If absent, falls back to the companies table address.
  *
  * Env vars required:
- *   SUPABASE_URL, SUPABASE_SERVICE_KEY, LOB_API_KEY
+ *   SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, LOB_API_KEY
  *   LOB_FROM_NAME, LOB_FROM_ADDRESS, LOB_FROM_CITY, LOB_FROM_STATE, LOB_FROM_ZIP
  */
 
@@ -30,8 +30,8 @@ const { sendPhysicalLetter } = require('../../lib/lob-integration');
 
 function supabaseServiceHeaders() {
   return {
-    'apikey':        process.env.SUPABASE_SERVICE_KEY,
-    'Authorization': `Bearer ${process.env.SUPABASE_SERVICE_KEY}`,
+    'apikey':        process.env.SUPABASE_SERVICE_ROLE_KEY,
+    'Authorization': `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`,
     'Content-Type':  'application/json',
     'Prefer':        'return=representation',
   };
@@ -97,6 +97,13 @@ module.exports = async function handler(req, res) {
     body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
   } catch {
     return res.status(400).json({ error: 'Invalid JSON body' });
+  }
+
+  // Kill switch — letter sending is OFF unless explicitly enabled
+  if (process.env.LETTER_SENDING_ENABLED !== 'true') {
+    return res.status(403).json({
+      error: 'Letter sending is disabled. Set LETTER_SENDING_ENABLED=true in Vercel env vars to enable.',
+    });
   }
 
   const { approval_id } = body || {};

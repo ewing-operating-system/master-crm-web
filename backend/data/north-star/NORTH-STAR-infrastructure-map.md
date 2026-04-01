@@ -48,8 +48,8 @@ The Forge (Boomerang), BioLev, Sea Sweet, and Precision Exploration each need st
 
 ### 1.1 LIVE Instance Connection Details (`dwrnfpjcvydhmhnvyzov` — Master CRM)
 - **URL:** `https://dwrnfpjcvydhmhnvyzov.supabase.co`
-- **Anon key:** `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NTcyOTAsImV4cCI6MjA5MDMzMzI5MH0.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY`
-- **Service role key:** `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NDc1NzI5MCwiZXhwIjoyMDkwMzMzMjkwfQ.7Bd_6aZhpWazv-evA_f1WpocfEHcXX8JATLNSKAC00s`
+- **Anon key:** `$SUPABASE_ANON_KEY`
+- **Service role key:** `$SUPABASE_SERVICE_ROLE_KEY`
 
 ### 1.1b RETIRED Instance (`rdnnhxhohwjucvjwbwch` — OLD AND Call Command)
 - **URL:** `https://rdnnhxhohwjucvjwbwch.supabase.co`
@@ -57,7 +57,7 @@ The Forge (Boomerang), BioLev, Sea Sweet, and Precision Exploration each need st
 
 ### 1.2 RETIRED Instance Connection Details (`lhmuwrlpcdlzpfthrodm`)
 - **URL:** `https://lhmuwrlpcdlzpfthrodm.supabase.co`
-- **Anon key:** `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxobXV3cmxwY2RsenBmdGhyb2RtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3MjQxNzQsImV4cCI6MjA4OTMwMDE3NH0.dcedlyfYYW25i5imrpzY0NjrwK2A0CH4U65bvaRVJqE`
+- **Anon key:** `[RETIRED — key deleted]`
 - **Data remaining:** 1,844 persons, 1,068 companies, 1,829 phone numbers, 1,559 scores, 21 lists, 1,533 list assignments
 - **Why it still exists:** 2 Lovable apps still point here (Cold Call Universe v2, Cold Call CRM)
 
@@ -65,18 +65,18 @@ The Forge (Boomerang), BioLev, Sea Sweet, and Precision Exploration each need st
 
 **Marks NYC Hunt (`iumytggxqtfyaxewgghb`)**
 - **URL:** `https://iumytggxqtfyaxewgghb.supabase.co`
-- **Anon key:** `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml1bXl0Z2d4cXRmeWF4ZXdnZ2hiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4OTIyMTcsImV4cCI6MjA4ODQ2ODIxN30._sclNNI2UZSt-ajZ1FQQ9XMN2RjjwPVHrzNfzKCBdzE`
+- **Anon key:** `[RETIRED — key deleted]`
 - **Tables:** `contacts` (investor CRM: AUM, FINRA risk, fund tags, archetypes, openers, scripts, thesis alignment)
 
 **NYC Deal Maker (`wdhnsbzmcjpqbltkulwe`)**
 - **URL:** `https://wdhnsbzmcjpqbltkulwe.supabase.co`
-- **Anon key:** `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndkaG5zYnptY2pwcWJsdGt1bHdlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0MDM4MDAsImV4cCI6MjA4Nzk3OTgwMH0.GOgC7L2dI_NQ5JxnrsAw-nX6ZnZuox0ZPm3MJC3WDhw`
+- **Anon key:** `[RETIRED — key deleted]`
 - **Tables:** `attack_list` (NYC networking targets), `attack_notes` (notes per target), `app_config` (key-value settings)
 - **Edge function:** `polish-update` (AI itinerary assistant, Gemini 2.5 Flash)
 
 **NYC Outreach Hub (`pgoogsxaljtjhwhydqtg`)**
 - **URL:** `https://pgoogsxaljtjhwhydqtg.supabase.co`
-- **Anon key:** `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBnb29nc3hhbGp0amh3aHlkcXRnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0OTYyNDQsImV4cCI6MjA4ODA3MjI0NH0.AuLPsHkl6hFKy7YCIH1UYbHKqEibP058OsLspncs5fI`
+- **Anon key:** `[RETIRED — key deleted]`
 - **Tables:** `companies`, `people`, `events`, `event_targets`
 - **Views:** `company_dashboard_view`, `people_dashboard_view`, `daily_briefing_view`
 - **Enums:** 5 enum types

@@ -7,9 +7,8 @@ import json, os, urllib.request, ssl
 
 ctx = ssl.create_default_context()
 
-URL = os.environ.get("SUPABASE_URL", "https://dwrnfpjcvydhmhnvyzov.supabase.co")
-KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NDc1NzI5MCwiZXhwIjoyMDkwMzMzMjkwfQ.7Bd_6aZhpWazv-evA_f1WpocfEHcXX8JATLNSKAC00s")
+URL = os.environ.get("SUPABASE_URL", "")
+KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
 
 # Tables that do NOT require entity column
 ENTITY_EXEMPT = {"do_not_call", "audits", "harvests", "stories", "analysis", "skills_registry",

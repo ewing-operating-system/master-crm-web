@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Performance Rankings — Next Chapter</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#c9d1d9;line-height:1.7;padding:0}
+.page-header{background:linear-gradient(135deg,#161b22,#1a3a5c);padding:28px 32px;border-bottom:1px solid #30363d}
+.page-header h1{color:#58a6ff;font-size:22px;margin-bottom:4px}
+.page-header .meta{color:#8b949e;font-size:13px}
+.page-header .breadcrumb{color:#8b949e;font-size:12px;margin-bottom:8px}
+.page-header .breadcrumb a{color:#58a6ff;text-decoration:none}
+.page-header .breadcrumb a:hover{text-decoration:underline}
+.badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600;margin-right:6px;margin-top:6px}
+.badge-json{background:#1c2d1a;color:#3fb950;border:1px solid #3fb950}
+.badge-md{background:#2d1c36;color:#d2a8ff;border:1px solid #d2a8ff}
+.badge-section{background:#1a2a3a;color:#79c0ff;border:1px solid #388bfd}
+.container{max-width:1000px;margin:0 auto;padding:24px 20px}
+.card{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:20px;margin-bottom:16px}
+.card h2{font-size:17px;color:#f0f6fc;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #21262d}
+.card h3{font-size:15px;color:#79c0ff;margin:16px 0 8px}
+.card p,.card li{font-size:14px;color:#c9d1d9;margin-bottom:8px}
+.card ul,.card ol{padding-left:20px}
+.card a{color:#58a6ff;text-decoration:none}
+.card a:hover{text-decoration:underline}
+.card blockquote{border-left:3px solid #388bfd;padding:8px 16px;margin:10px 0;background:#0d1117;border-radius:0 6px 6px 0;font-style:italic;color:#8b949e}
+.card strong{color:#f0f6fc}
+.card em{color:#d2a8ff}
+.card code{background:#0d1117;padding:2px 6px;border-radius:4px;font-size:13px;color:#7ee787;font-family:'SF Mono',Consolas,monospace}
+.card pre{background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:12px;overflow-x:auto;font-size:13px;color:#c9d1d9;margin:10px 0}
+.card table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+.card th{text-align:left;padding:8px 10px;background:#21262d;color:#f0f6fc;font-weight:600;border:1px solid #30363d}
+.card td{padding:8px 10px;border:1px solid #21262d}
+.source-card{background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:14px;margin-bottom:10px;transition:border-color 0.2s}
+.source-card:hover{border-color:#388bfd}
+.source-title{font-size:14px;font-weight:600;color:#58a6ff;margin-bottom:4px}
+.source-title a{color:#58a6ff;text-decoration:none}
+.source-title a:hover{text-decoration:underline}
+.source-date{font-size:11px;color:#8b949e;margin-bottom:6px}
+.source-excerpt{font-size:13px;color:#8b949e;line-height:1.5}
+.source-url{font-size:11px;color:#484f58;word-break:break-all;margin-top:4px}
+.score-bar{height:4px;border-radius:2px;background:#21262d;margin-top:4px;overflow:hidden}
+.score-fill{height:100%;border-radius:2px}
+.buyer-row{display:grid;grid-template-columns:2fr 1fr 60px 100px;gap:8px;padding:8px 0;border-bottom:1px solid #21262d;align-items:center;font-size:13px}
+.buyer-row:first-child{font-weight:600;color:#f0f6fc}
+.fit-8{color:#3fb950;font-weight:700}
+.fit-6{color:#f0883e;font-weight:600}
+.fit-4{color:#8b949e}
+.section-divider{font-size:12px;color:#8b949e;text-transform:uppercase;letter-spacing:1px;margin:20px 0 10px;padding:8px 0;border-bottom:1px solid #21262d}
+.back-link{display:inline-block;margin:16px 0;color:#58a6ff;text-decoration:none;font-size:13px;padding:6px 14px;border-radius:6px;background:#21262d;border:1px solid #30363d}
+.back-link:hover{border-color:#58a6ff}
+.footer{text-align:center;padding:24px;color:#484f58;font-size:11px;border-top:1px solid #21262d;margin-top:20px}
+hr{border:none;border-top:1px solid #21262d;margin:16px 0}
+@media(max-width:700px){.container{padding:12px}.buyer-row{grid-template-columns:1fr;gap:2px}}
+</style>
+</head>
+<body>
+<div class="page-header">
+  <div class="breadcrumb"><a href="/index.html">Home</a> / <a href="/hrcom-ltd-hub.html">HR.com Hub</a> / <a href="/outputs/stress-test/reports/">Stress Test</a> / agent-rankings.json</div>
+  <h1>Agent Performance Rankings</h1>
+  <div class="meta">49 total runs | $21.04 total cost | 100% success rate</div>
+  <span class="badge badge-json">JSON</span><span class="badge badge-section">Performance</span>
+</div>
+<div class="container">
+<div class="card"><h2>Agent Performance Summary</h2><table><tr><th>Agent</th><th>Model</th><th>Runs</th><th>Avg Cost</th><th>Avg Time</th><th>Success</th></tr><tr><td><strong>exa-api</strong></td><td>exa-search</td><td>28</td><td>$0.7500</td><td>1.0s</td><td>100%</td></tr><tr><td><strong>executor</strong></td><td>deepseek-chat</td><td>7</td><td>$0.0024</td><td>45.3s</td><td>100%</td></tr><tr><td><strong>nurturer</strong></td><td>deepseek-chat</td><td>7</td><td>$0.0023</td><td>42.7s</td><td>100%</td></tr><tr><td><strong>auditor</strong></td><td>deepseek-chat</td><td>7</td><td>$0.0015</td><td>22.9s</td><td>100%</td></tr></table></div>
+</div>
+<div class="footer">
+  Rendered 2026-03-31 15:26 — Next Chapter M&A Advisory | <a href="/hrcom-dealroom-overnight.html" style="color:#58a6ff;text-decoration:none">Deal Room</a>
+</div>
+</body>
+</html>

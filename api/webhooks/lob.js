@@ -8,7 +8,7 @@
  * disabled for this route via vercel.json bodyParser config.
  *
  * Env vars required:
- *   LOB_WEBHOOK_SECRET, SUPABASE_URL, SUPABASE_SERVICE_KEY
+ *   LOB_WEBHOOK_SECRET, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
  *   SALESFINITY_API_KEY (optional — enables call task on delivery)
  *   EWING_TELEGRAM_CHAT_ID (optional — enables 401 alerts)
  */

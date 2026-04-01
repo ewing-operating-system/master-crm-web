@@ -18,7 +18,7 @@ from datetime import datetime, timedelta
 from dotenv import load_dotenv
 load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
 
-DB_CONN = f"postgresql://postgres:{os.environ.get('DB_PASSWORD', '')}@db.dwrnfpjcvydhmhnvyzov.supabase.co:5432/postgres"
+DB_CONN = os.environ.get("DATABASE_URL", "")
 LOG_FILE = os.path.expanduser("~/Projects/master-crm/data/logs/engagement_engine.log")
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
 

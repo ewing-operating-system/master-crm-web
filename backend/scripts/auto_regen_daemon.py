@@ -13,7 +13,7 @@ from pathlib import Path
 
 import urllib.request, ssl
 
-SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://dwrnfpjcvydhmhnvyzov.supabase.co")
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
 SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
 MASTER_CRM_DIR = Path(os.environ.get("MASTER_CRM_DIR", "/Users/clawdbot/projects/master-crm"))
 WEB_DIR = Path(os.environ.get("WEB_DIR", "/Users/clawdbot/projects/master-crm-web"))

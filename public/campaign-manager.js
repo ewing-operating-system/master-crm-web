@@ -7,8 +7,8 @@
 (function () {
   'use strict';
 
-  const SUPABASE_URL = 'https://dwrnfpjcvydhmhnvyzov.supabase.co';
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NTcyOTAsImV4cCI6MjA5MDMzMzI5MH0.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY';
+  const SUPABASE_URL = window.__SUPABASE_URL;
+  const SUPABASE_KEY = window.__SUPABASE_ANON_KEY;
 
   const CAMPAIGNS_API = SUPABASE_URL + '/rest/v1/letter_campaigns';
   const CALL_LOG_API  = SUPABASE_URL + '/rest/v1/call_log';

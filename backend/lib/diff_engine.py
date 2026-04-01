@@ -23,11 +23,8 @@ from datetime import datetime
 # ---------------------------------------------------------------------------
 # Supabase config (mirrors lib/supabase.py pattern)
 # ---------------------------------------------------------------------------
-_URL = os.environ.get("SUPABASE_URL", "https://dwrnfpjcvydhmhnvyzov.supabase.co")
-_KEY = os.environ.get(
-    "SUPABASE_SERVICE_ROLE_KEY",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NDc1NzI5MCwiZXhwIjoyMDkwMzMzMjkwfQ.7Bd_6aZhpWazv-evA_f1WpocfEHcXX8JATLNSKAC00s",
-)
+_URL = os.environ.get("SUPABASE_URL", "")
+_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
 _ctx = ssl.create_default_context()
 
 TELEGRAM_TARGET = os.environ.get("EWING_TELEGRAM_CHAT_ID", "8706175267")

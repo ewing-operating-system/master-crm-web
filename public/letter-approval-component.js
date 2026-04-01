@@ -17,8 +17,8 @@
 (function(global) {
   'use strict';
 
-  const SUPABASE_URL = 'https://dwrnfpjcvydhmhnvyzov.supabase.co';
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NTcyOTAsImV4cCI6MjA5MDMzMzI5MH0.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY';
+  const SUPABASE_URL = window.__SUPABASE_URL;
+  const SUPABASE_KEY = window.__SUPABASE_ANON_KEY;
 
   const BASE = SUPABASE_URL + '/rest/v1/letter_approvals';
   const HEADERS = {
@@ -158,7 +158,7 @@
         </div>
         <textarea class="approval-notes" data-notes-input placeholder="Optional notes (saved with record)..."></textarea>
         <div class="approval-actions">
-          <button class="btn-approve" data-btn-approve>&#10003; Approve &amp; Send</button>
+          <button class="btn-approve" data-btn-approve>&#10003; Approve &amp; Queue</button>
           <button class="btn-edit" data-btn-edit>&#9999; Edit</button>
           <button class="btn-reject" data-btn-reject>&#10005; Reject with reason</button>
         </div>
@@ -197,7 +197,7 @@
     approveBtn.addEventListener('click', async function() {
       if (approveBtn.disabled) return;
       setButtonsDisabled(card, true);
-      approveBtn.innerHTML = '<span class="approval-spinner"></span> Sending...';
+      approveBtn.innerHTML = '<span class="approval-spinner"></span> Approving...';
       try {
         const notesInput = card.querySelector('[data-notes-input]');
         if (notesInput && notesInput.value.trim()) {
@@ -207,11 +207,12 @@
           });
         }
         await approveRecord(approval.id, getCurrentUser());
-        await triggerLobSend(approval.id);
+        // Lob send is now handled by /api/letters/batch-send — not here.
+        // Letters stay in 'approved' status until batch-send picks them up.
         markCardApproved(card);
         updatePendingCountBadge(-1);
       } catch (err) {
-        approveBtn.innerHTML = '&#10003; Approve &amp; Send';
+        approveBtn.innerHTML = '&#10003; Approve &amp; Queue';
         setButtonsDisabled(card, false);
         showCardError(card, 'Failed to send: ' + err.message);
       }
@@ -259,9 +260,9 @@
     card.className = 'approval-card status-approved';
     const header = card.querySelector('.approval-header');
     header.querySelector('.approval-status-icon').textContent = '✓';
-    header.querySelector('span:nth-child(2)').textContent = 'Letter Approved — Sending to Lob';
+    header.querySelector('span:nth-child(2)').textContent = 'Letter Approved — Queued for Batch Send';
     const body = card.querySelector('.approval-body');
-    body.innerHTML = '<div class="approved-confirmation">&#10003; Approved and queued for mailing.</div>';
+    body.innerHTML = '<div class="approved-confirmation">&#10003; Approved. Letter will ship in next batch.</div>';
   }
 
   function markCardRejected(card, reason) {

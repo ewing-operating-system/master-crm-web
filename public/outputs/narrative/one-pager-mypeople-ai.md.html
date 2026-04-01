@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MYPEOPLE.AI — Next Chapter</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#c9d1d9;line-height:1.7;padding:0}
+.page-header{background:linear-gradient(135deg,#161b22,#1a3a5c);padding:28px 32px;border-bottom:1px solid #30363d}
+.page-header h1{color:#58a6ff;font-size:22px;margin-bottom:4px}
+.page-header .meta{color:#8b949e;font-size:13px}
+.page-header .breadcrumb{color:#8b949e;font-size:12px;margin-bottom:8px}
+.page-header .breadcrumb a{color:#58a6ff;text-decoration:none}
+.page-header .breadcrumb a:hover{text-decoration:underline}
+.badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600;margin-right:6px;margin-top:6px}
+.badge-json{background:#1c2d1a;color:#3fb950;border:1px solid #3fb950}
+.badge-md{background:#2d1c36;color:#d2a8ff;border:1px solid #d2a8ff}
+.badge-section{background:#1a2a3a;color:#79c0ff;border:1px solid #388bfd}
+.container{max-width:1000px;margin:0 auto;padding:24px 20px}
+.card{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:20px;margin-bottom:16px}
+.card h2{font-size:17px;color:#f0f6fc;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #21262d}
+.card h3{font-size:15px;color:#79c0ff;margin:16px 0 8px}
+.card p,.card li{font-size:14px;color:#c9d1d9;margin-bottom:8px}
+.card ul,.card ol{padding-left:20px}
+.card a{color:#58a6ff;text-decoration:none}
+.card a:hover{text-decoration:underline}
+.card blockquote{border-left:3px solid #388bfd;padding:8px 16px;margin:10px 0;background:#0d1117;border-radius:0 6px 6px 0;font-style:italic;color:#8b949e}
+.card strong{color:#f0f6fc}
+.card em{color:#d2a8ff}
+.card code{background:#0d1117;padding:2px 6px;border-radius:4px;font-size:13px;color:#7ee787;font-family:'SF Mono',Consolas,monospace}
+.card pre{background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:12px;overflow-x:auto;font-size:13px;color:#c9d1d9;margin:10px 0}
+.card table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+.card th{text-align:left;padding:8px 10px;background:#21262d;color:#f0f6fc;font-weight:600;border:1px solid #30363d}
+.card td{padding:8px 10px;border:1px solid #21262d}
+.source-card{background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:14px;margin-bottom:10px;transition:border-color 0.2s}
+.source-card:hover{border-color:#388bfd}
+.source-title{font-size:14px;font-weight:600;color:#58a6ff;margin-bottom:4px}
+.source-title a{color:#58a6ff;text-decoration:none}
+.source-title a:hover{text-decoration:underline}
+.source-date{font-size:11px;color:#8b949e;margin-bottom:6px}
+.source-excerpt{font-size:13px;color:#8b949e;line-height:1.5}
+.source-url{font-size:11px;color:#484f58;word-break:break-all;margin-top:4px}
+.score-bar{height:4px;border-radius:2px;background:#21262d;margin-top:4px;overflow:hidden}
+.score-fill{height:100%;border-radius:2px}
+.buyer-row{display:grid;grid-template-columns:2fr 1fr 60px 100px;gap:8px;padding:8px 0;border-bottom:1px solid #21262d;align-items:center;font-size:13px}
+.buyer-row:first-child{font-weight:600;color:#f0f6fc}
+.fit-8{color:#3fb950;font-weight:700}
+.fit-6{color:#f0883e;font-weight:600}
+.fit-4{color:#8b949e}
+.section-divider{font-size:12px;color:#8b949e;text-transform:uppercase;letter-spacing:1px;margin:20px 0 10px;padding:8px 0;border-bottom:1px solid #21262d}
+.back-link{display:inline-block;margin:16px 0;color:#58a6ff;text-decoration:none;font-size:13px;padding:6px 14px;border-radius:6px;background:#21262d;border:1px solid #30363d}
+.back-link:hover{border-color:#58a6ff}
+.footer{text-align:center;padding:24px;color:#484f58;font-size:11px;border-top:1px solid #21262d;margin-top:20px}
+hr{border:none;border-top:1px solid #21262d;margin:16px 0}
+@media(max-width:700px){.container{padding:12px}.buyer-row{grid-template-columns:1fr;gap:2px}}
+</style>
+</head>
+<body>
+<div class="page-header">
+  <div class="breadcrumb"><a href="/index.html">Home</a> / <a href="/hrcom-ltd-hub.html">HR.com Hub</a> / <a href="/outputs/narrative/">Narrative</a> / one-pager-mypeople-ai.md</div>
+  <h1>MYPEOPLE.AI</h1>
+  <div class="meta">Narrative — Strategic</div>
+  <span class="badge badge-md">Markdown</span><span class="badge badge-section">Narrative</span>
+</div>
+<div class="container">
+<div class="card"><h2><strong>MYPEOPLE.AI</strong></h2>
+<h3>The AI-Native HR Platform for the Modern Enterprise</h3>
+<br>
+<hr>
+<br>
+<h2><strong>THE PLATFORM</strong></h2>
+<p>An AI-native HR platform engineered from the ground up for intelligence, speed, and scale. Built on a modern, API-first stack (TypeScript/Node.js/React)—not a legacy monolith with AI bolted on. This foundational architecture enables rapid innovation, seamless integration, and a superior user experience for the AI-driven future of work.</p>
+<br>
+<h2><strong>THE TRACTION</strong></h2>
+<p><strong>Product-market fit is validated.</strong></p>
+<ul>
+<li><strong>$7M in Revenue:</strong> Demonstrated commercial traction with enterprise clients.</li>
+<li><strong>35 Interested Enterprise Clients:</strong> Active pipeline from Fortune 500 and mid-market leaders.</li>
+<li><strong>7 Onboarding in 45 Days:</strong> Immediate, near-term revenue growth in motion.</li>
+</ul>
+<br>
+<h2><strong>THE ORIGIN: Built by Insiders, Rebuilt for the Future</strong></h2>
+<ul>
+<li><strong>Team Behind HR.com:</strong> Founded by the creators of the world’s largest HR community (1.8M members). Deep, trusted industry relationships.</li>
+<li><strong>Clean Spin-Out &amp; IP:</strong> Successfully spun out from a prior $8M investment by Forj. All IP recovered and the entire platform rebuilt from scratch—no technical debt, no legacy constraints.</li>
+</ul>
+<br>
+<h2><strong>THE NEED: CEO + Growth Capital to Scale</strong></h2>
+<ul>
+<li><strong>Capital:</strong> Seeking $5–15M in growth funding to accelerate sales, marketing, and platform development.</li>
+<li><strong>Leadership:</strong> Actively mentoring two strong internal CEO candidates.</li>
+<li><strong>Interim CEO/Mentor Engaged:</strong> <strong>John Kelly</strong> (former Oracle/SAP executive, 6 exits, 1 IPO, $750M+ capital raised) is actively guiding the company and ready to support the transition to a permanent, world-class CEO.</li>
+</ul>
+<br>
+<h2><strong>THE MARKET: A $30B+ HCM Inflection Point</strong></h2>
+<p>Enterprise buyers are frustrated with the closed, slow-moving AI ecosystems of incumbent HCM giants (Workday, Oracle, SAP). MyPeople.ai is positioned as the <strong>independent, open AI layer</strong> that can work across systems or stand alone, capturing a significant share of a massive, ripe market.</p>
+<br>
+<h2><strong>THE ASK</strong></h2>
+<p>A growth investment partnership to scale from <strong>$7M to $50M+ in revenue.</strong> We seek an investor who can provide both capital and strategic support in recruiting a top-tier, experienced CEO to lead this next chapter.</p>
+<br>
+<p><strong>Warm introduction available via Tim Glory / Sierra Ventures.</strong></p>
+<br>
+<h2><strong>THE PROCESS</strong></h2>
+<p>This is a controlled investment process. For the executive summary and detailed deck, please contact:</p>
+<br>
+<p><strong>Ewing Gillaspy</strong></p>
+<p>Next Chapter Capital</p>
+<p>[Contact Information]</p>
+<br>
+<hr>
+<p><em>MyPeople.ai: The independent AI brain for human capital management.</em></p>
+<br></div>
+</div>
+<div class="footer">
+  Rendered 2026-03-31 15:23 — Next Chapter M&A Advisory | <a href="/hrcom-dealroom-overnight.html" style="color:#58a6ff;text-decoration:none">Deal Room</a>
+</div>
+</body>
+</html>

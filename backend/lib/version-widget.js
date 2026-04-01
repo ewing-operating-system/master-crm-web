@@ -9,8 +9,8 @@
 (function () {
   'use strict';
 
-  const SUPABASE_URL = 'https://dwrnfpjcvydhmhnvyzov.supabase.co';
-  const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NTcyOTAsImV4cCI6MjA5MDMzMzI5MH0.z0Gu1TWdGPcdptB5W7efnYMmxBbvD353ExG99ftQivY';
+  const SUPABASE_URL = process.env.SUPABASE_URL;
+  const ANON_KEY = process.env.SUPABASE_ANON_KEY;
 
   // ── Detect page identity from meta tags ──
   function getPageIdentity() {

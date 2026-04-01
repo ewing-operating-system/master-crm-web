@@ -28,22 +28,14 @@ from pathlib import Path
 # Configuration
 # ---------------------------------------------------------------------------
 
-SUPABASE_URL = "https://dwrnfpjcvydhmhnvyzov.supabase.co"
-SUPABASE_KEY = (
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
-    ".eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cm5mcGpjdnlkaG1obnZ5em92Iiwicm9sZSI6"
-    "InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NDc1NzI5MCwiZXhwIjoyMDkwMzMzMjkwfQ"
-    ".7Bd_6aZhpWazv-evA_f1WpocfEHcXX8JATLNSKAC00s"
-)
-DB_CONN_PATCHED = (
-    "postgresql://postgres:MakeMoneyNow1%21"
-    "@db.dwrnfpjcvydhmhnvyzov.supabase.co:6543/postgres"
-)
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
+SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
+DB_CONN_PATCHED = os.environ.get("DATABASE_URL", "")
 BASE_URL = os.environ.get("CRM_BASE_URL", "https://master-crm-web.vercel.app").rstrip("/")
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 PUBLIC_DIR = REPO_ROOT / "public"
-CRM_LIB = Path.home() / "Projects" / "master-crm" / "lib"
+CRM_LIB = Path.home() / "Projects" / "master-crm-web" / "backend" / "lib"
 
 
 # ---------------------------------------------------------------------------

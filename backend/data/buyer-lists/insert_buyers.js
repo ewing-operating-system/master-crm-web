@@ -2,7 +2,7 @@ const { Client } = require('pg');
 const fs = require('fs');
 const path = require('path');
 
-const connStr = process.env.DATABASE_URL || 'postgresql://postgres:MakeMoneyNow1!@db.dwrnfpjcvydhmhnvyzov.supabase.co:5432/postgres';
+const connStr = process.env.DATABASE_URL || '';
 
 const FILES = [
   { file: 'aquascience_buyers.json', search: ['aquascience', 'aqua science'] },
