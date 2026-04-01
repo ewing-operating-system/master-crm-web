@@ -14,7 +14,7 @@
 #   ./scripts/morning_orchestrator.sh           # full pipeline
 #   ./scripts/morning_orchestrator.sh --audit   # audit only (no fixes)
 
-set -euo pipefail
+set -uo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 LOG_FILE="$REPO_ROOT/logs/morning_orchestrator.log"
@@ -32,7 +32,8 @@ log() {
 # Step 1: Run the audit
 # ---------------------------------------------------------------------------
 log "Starting morning audit..."
-source ~/.zshrc 2>/dev/null || true
+# Source env vars only (skip completions that fail in non-interactive shells)
+eval "$(grep '^export ' ~/.zshrc 2>/dev/null)" || true
 
 python3 "$REPO_ROOT/scripts/morning_audit.py" 2>&1 | tee -a "$LOG_FILE"
 AUDIT_EXIT=$?
@@ -102,15 +103,19 @@ echo "$OPUS_RESPONSE" > /tmp/morning-opus-decisions.json
 # ---------------------------------------------------------------------------
 # Extract only "fix" actions
 FIX_INSTRUCTIONS=$(echo "$OPUS_RESPONSE" | python3 -c "
-import sys, json
+import sys, json, re
+raw = sys.stdin.read().strip()
+# Strip markdown code fences if Opus wrapped its response
+raw = re.sub(r'^\`\`\`json?\s*', '', raw)
+raw = re.sub(r'\s*\`\`\`$', '', raw)
 try:
-    decisions = json.loads(sys.stdin.read())
+    decisions = json.loads(raw)
     fixes = [d for d in decisions if d.get('action') == 'fix']
     if fixes:
         print(json.dumps(fixes, indent=2))
     else:
         print('NONE')
-except:
+except Exception as e:
     print('NONE')
 " 2>/dev/null || echo "NONE")
 
