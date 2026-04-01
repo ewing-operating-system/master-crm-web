@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Health — Master CRM</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+           background:#f8fafc; color:#1e293b; padding:30px; }
+    .header { text-align:center; margin-bottom:30px; }
+    .header h1 { font-size:24px; margin-bottom:5px; }
+    .header .timestamp { color:#64748b; font-size:13px; }
+    .overall { text-align:center; padding:20px; border-radius:12px; margin-bottom:30px;
+               background:white; box-shadow:0 1px 3px rgba(0,0,0,0.1); }
+    .overall .score { font-size:36px; font-weight:700; color:#f59e0b; }
+    .overall .detail { color:#64748b; font-size:14px; margin-top:5px; }
+    table { width:100%; border-collapse:collapse; background:white;
+            border-radius:8px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.1); }
+    th { background:#f1f5f9; padding:10px 12px; text-align:left; font-size:12px;
+         text-transform:uppercase; color:#64748b; letter-spacing:0.5px; }
+    td { padding:10px 12px; border-top:1px solid #f1f5f9; font-size:13px; vertical-align:top; }
+    tr:hover { background:#f8fafc; }
+    .footer { text-align:center; margin-top:30px; color:#94a3b8; font-size:12px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>System Health Dashboard</h1>
+    <div class="timestamp">Last audit: 2026-04-01 20:52 UTC | Next: 6:00 AM tomorrow</div>
+  </div>
+
+  <div class="overall">
+    <div class="score">2 WARNING(S)</div>
+    <div class="detail">7/11 checks passed | 0 failures | 2 warnings</div>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>Status</th><th>Severity</th><th>Check</th><th>Finding</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><span style="display:inline-block;padding:2px 8px;border-radius:4px;
+              background:#22c55e;color:white;font-weight:600;font-size:12px">PASS</span></td>
+          <td><span style="display:inline-block;padding:1px 6px;border-radius:3px;
+              background:#dc2626;color:white;font-size:11px">critical</span></td>
+          <td style="font-weight:500">Key Hygiene</td>
+          <td>Zero hardcoded keys found</td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;padding:2px 8px;border-radius:4px;
+              background:#f59e0b;color:white;font-weight:600;font-size:12px">WARN</span></td>
+          <td><span style="display:inline-block;padding:1px 6px;border-radius:3px;
+              background:#dc2626;color:white;font-size:11px">critical</span></td>
+          <td style="font-weight:500">Vercel Env</td>
+          <td>Deprecated (remove): SUPABASE_SERVICE_KEY</td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;padding:2px 8px;border-radius:4px;
+              background:#22c55e;color:white;font-weight:600;font-size:12px">PASS</span></td>
+          <td><span style="display:inline-block;padding:1px 6px;border-radius:3px;
+              background:#dc2626;color:white;font-size:11px">critical</span></td>
+          <td style="font-weight:500">Supabase Health</td>
+          <td>Supabase REST API responding (200)</td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;padding:2px 8px;border-radius:4px;
+              background:#22c55e;color:white;font-weight:600;font-size:12px">PASS</span></td>
+          <td><span style="display:inline-block;padding:1px 6px;border-radius:3px;
+              background:#ea580c;color:white;font-size:11px">high</span></td>
+          <td style="font-weight:500">Gateway</td>
+          <td>Gateway running (PID 97296)</td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;padding:2px 8px;border-radius:4px;
+              background:#f59e0b;color:white;font-weight:600;font-size:12px">WARN</span></td>
+          <td><span style="display:inline-block;padding:1px 6px;border-radius:3px;
+              background:#ea580c;color:white;font-size:11px">high</span></td>
+          <td style="font-weight:500">Git Clean</td>
+          <td>4 uncommitted change(s)<br><code style='font-size:11px;color:#666'>M logs/call_sync.log</code><br><code style='font-size:11px;color:#666'>?? MasterOrchestrationChecklist.md</code><br><code style='font-size:11px;color:#666'>?? public/system-health.html</code><br><code style='font-size:11px;color:#666'>?? scripts/morning_audit.py</code></td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;padding:2px 8px;border-radius:4px;
+              background:#22c55e;color:white;font-weight:600;font-size:12px">PASS</span></td>
+          <td><span style="display:inline-block;padding:1px 6px;border-radius:3px;
+              background:#ea580c;color:white;font-size:11px">high</span></td>
+          <td style="font-weight:500">Cron Health</td>
+          <td>Cron logs are current</td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;padding:2px 8px;border-radius:4px;
+              background:#22c55e;color:white;font-weight:600;font-size:12px">PASS</span></td>
+          <td><span style="display:inline-block;padding:1px 6px;border-radius:3px;
+              background:#ca8a04;color:white;font-size:11px">medium</span></td>
+          <td style="font-weight:500">Ollama</td>
+          <td>Ollama running (port 11434)</td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;padding:2px 8px;border-radius:4px;
+              background:#3b82f6;color:white;font-weight:600;font-size:12px">INFO</span></td>
+          <td><span style="display:inline-block;padding:1px 6px;border-radius:3px;
+              background:#ca8a04;color:white;font-size:11px">medium</span></td>
+          <td style="font-weight:500">Openclaw Version</td>
+          <td>OpenClaw version: OpenClaw 2026.3.28 (f9b1079)</td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;padding:2px 8px;border-radius:4px;
+              background:#22c55e;color:white;font-weight:600;font-size:12px">PASS</span></td>
+          <td><span style="display:inline-block;padding:1px 6px;border-radius:3px;
+              background:#ca8a04;color:white;font-size:11px">medium</span></td>
+          <td style="font-weight:500">Disk Usage</td>
+          <td>Disk 47% used (13Gi available)</td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;padding:2px 8px;border-radius:4px;
+              background:#22c55e;color:white;font-weight:600;font-size:12px">PASS</span></td>
+          <td><span style="display:inline-block;padding:1px 6px;border-radius:3px;
+              background:#16a34a;color:white;font-size:11px">low</span></td>
+          <td style="font-weight:500">Stale Files</td>
+          <td>No stale config backups found</td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;padding:2px 8px;border-radius:4px;
+              background:#3b82f6;color:white;font-weight:600;font-size:12px">INFO</span></td>
+          <td><span style="display:inline-block;padding:1px 6px;border-radius:3px;
+              background:#6366f1;color:white;font-size:11px">info</span></td>
+          <td style="font-weight:500">Skill Watch</td>
+          <td>17 skill suggestion(s)<br><code style='font-size:11px;color:#666'>'feat' appears in 12 commits — potential skill candidate</code><br><code style='font-size:11px;color:#666'>'fix' appears in 8 commits — potential skill candidate</code><br><code style='font-size:11px;color:#666'>'fix(nc)' appears in 4 commits — potential skill candidate</code><br><code style='font-size:11px;color:#666'>'add' appears in 3 commits — potential skill candidate</code><br><code style='font-size:11px;color:#666'>'chore' appears in 3 commits — potential skill candidate</code><br><code style='font-size:11px;color:#666'>Script 'morning_audit.py' has no matching skill</code><br><code style='font-size:11px;color:#666'>Script 'inject-nav.py' has no matching skill</code><br><code style='font-size:11px;color:#666'>Script 'regenerate_all.py' has no matching skill</code><br><code style='font-size:11px;color:#666'>Script 'regenerate.py' has no matching skill</code><br><code style='font-size:11px;color:#666'>Script 'render-output.py' has no matching skill</code><br><em>...and 5 more</em></td>
+        </tr></tbody>
+  </table>
+
+  
+        <div style="margin-top:30px;padding:20px;background:#f0f4ff;border-radius:8px;border-left:4px solid #6366f1">
+          <h3 style="margin:0 0 10px">Suggested Skills</h3>
+          <p style="color:#555;font-size:13px">Processes detected that could become reusable skills:</p>
+          <ul style="font-size:13px"><li>'feat' appears in 12 commits — potential skill candidate</li><li>'fix' appears in 8 commits — potential skill candidate</li><li>'fix(nc)' appears in 4 commits — potential skill candidate</li><li>'add' appears in 3 commits — potential skill candidate</li><li>'chore' appears in 3 commits — potential skill candidate</li><li>Script 'morning_audit.py' has no matching skill</li><li>Script 'inject-nav.py' has no matching skill</li><li>Script 'regenerate_all.py' has no matching skill</li><li>Script 'regenerate.py' has no matching skill</li><li>Script 'render-output.py' has no matching skill</li><li>Script 'sync_call_intel.py' has no matching skill</li><li>Script 'rebuild_buyer_pages.sh' has no matching skill</li><li>Script 'hrcom-stress-test.sh' has no matching skill</li><li>Script 'overnight-research.sh' has no matching skill</li><li>Script 'hrcom-overnight-build.sh' has no matching skill</li></ul>
+        </div>
+
+  <div class="footer">
+    Generated by morning_audit.py | Findings only — fixes decided by Claude Opus, implemented by Sonnet
+  </div>
+</body>
+</html>
