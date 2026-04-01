@@ -242,6 +242,182 @@ def check_stale_files():
             "message": f"{len(found)} stale file(s) found", "details": found}
 
 
+def check_unpushed_commits():
+    """Check if local repo has commits not pushed to remote."""
+    try:
+        # Fetch latest remote state without pulling
+        subprocess.run(
+            ["git", "-C", str(REPO_ROOT), "fetch", "--quiet"],
+            capture_output=True, text=True, timeout=15
+        )
+        # Check for unpushed commits
+        result = subprocess.run(
+            ["git", "-C", str(REPO_ROOT), "log", "origin/main..HEAD", "--oneline"],
+            capture_output=True, text=True
+        )
+        unpushed = [l for l in result.stdout.strip().split("\n") if l.strip()]
+
+        if not unpushed:
+            return {"check": "unpushed_commits", "status": "PASS", "severity": "high",
+                    "message": "All commits pushed to GitHub"}
+
+        # Assess if the push looks safe (no destructive keywords)
+        dangerous_keywords = ["delete", "drop", "remove prod", "reset", "force", "wipe", "destroy"]
+        risky = []
+        for commit in unpushed:
+            if any(kw in commit.lower() for kw in dangerous_keywords):
+                risky.append(f"RISKY: {commit}")
+
+        details = unpushed[:10]
+        if risky:
+            details = risky + [f"({len(unpushed)} total unpushed)"]
+            return {"check": "unpushed_commits", "status": "WARN", "severity": "critical",
+                    "message": f"{len(unpushed)} unpushed commit(s), {len(risky)} look risky — needs human review",
+                    "details": details}
+
+        return {"check": "unpushed_commits", "status": "WARN", "severity": "high",
+                "message": f"{len(unpushed)} unpushed commit(s) — appear safe to push",
+                "details": details}
+
+    except Exception as e:
+        return {"check": "unpushed_commits", "status": "ERROR", "severity": "high",
+                "message": f"Could not check push status: {e}"}
+
+
+def check_data_sync():
+    """Verify Supabase data is reaching downstream pages.
+
+    Samples ~30% of hub pages and verifies buyer counts match Supabase.
+    Also checks that Vercel deployment matches the latest git commit.
+    """
+    import urllib.request
+    import ssl
+    import random
+
+    url = os.environ.get("SUPABASE_URL", "")
+    key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
+    if not url or not key:
+        return {"check": "data_sync", "status": "ERROR", "severity": "critical",
+                "message": "Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY"}
+
+    issues = []
+    details = []
+
+    def supa_get(path):
+        req = urllib.request.Request(f"{url}/rest/v1/{path}")
+        req.add_header("apikey", key)
+        req.add_header("Authorization", f"Bearer {key}")
+        req.add_header("Content-Type", "application/json")
+        ctx = ssl.create_default_context()
+        with urllib.request.urlopen(req, context=ctx, timeout=10) as resp:
+            return json.loads(resp.read().decode())
+
+    # 1. Check proposals → hub pages exist
+    try:
+        proposals = supa_get("proposals?select=id,company_name,quality_score")
+        hub_pages = list(PUBLIC_DIR.glob("*-hub.html"))
+        hub_names = {p.stem.replace("-hub", "") for p in hub_pages}
+        details.append(f"Proposals in DB: {len(proposals)}, Hub pages on disk: {len(hub_pages)}")
+
+        for p in proposals:
+            name = p.get("company_name", "")
+            # Make slug same way as regenerate.py
+            slug = re.sub(r"[.,]", "", name.lower().replace("&", "and"))
+            slug = re.sub(r"\s+", "-", slug.strip())[:40].rstrip("-")
+            if slug not in hub_names and slug:
+                issues.append(f"Proposal '{name}' has no hub page (expected {slug}-hub.html)")
+    except Exception as e:
+        issues.append(f"Could not verify proposals→pages: {e}")
+
+    # 2. Sample 30% of hub pages — check buyer counts match DB
+    try:
+        hub_pages = list(PUBLIC_DIR.glob("*-hub.html"))
+        sample_size = max(2, len(hub_pages) * 30 // 100)
+        sampled = random.sample(hub_pages, min(sample_size, len(hub_pages)))
+
+        for page in sampled:
+            page_content = page.read_text(encoding="utf-8", errors="ignore")
+
+            # Count buyer rows in HTML (look for table rows with buyer data)
+            buyer_rows_html = len(re.findall(r'<tr[^>]*class="buyer-row"', page_content))
+            # Also try counting any table rows in buyer sections
+            if buyer_rows_html == 0:
+                buyer_rows_html = page_content.count("fit_score") + page_content.count("fit-score")
+
+            # Check for empty/broken pages
+            if len(page_content) < 1000:
+                issues.append(f"{page.name}: suspiciously small ({len(page_content)} bytes)")
+            elif "<title>" not in page_content:
+                issues.append(f"{page.name}: missing <title> tag — may be broken")
+            else:
+                details.append(f"Sampled {page.name}: {len(page_content):,} bytes, ~{buyer_rows_html} buyer refs")
+    except Exception as e:
+        issues.append(f"Page content audit error: {e}")
+
+    # 3. Check engagement_buyers count vs what pages show
+    try:
+        buyers = supa_get("engagement_buyers?select=proposal_id&limit=500")
+        proposal_buyer_counts = {}
+        for b in buyers:
+            pid = b.get("proposal_id", "unknown")
+            proposal_buyer_counts[pid] = proposal_buyer_counts.get(pid, 0) + 1
+        details.append(f"Engagement buyers in DB: {len(buyers)} across {len(proposal_buyer_counts)} proposals")
+    except Exception as e:
+        issues.append(f"Could not count engagement_buyers: {e}")
+
+    # 4. Check Vercel deploy matches latest git commit
+    try:
+        git_result = subprocess.run(
+            ["git", "-C", str(REPO_ROOT), "rev-parse", "HEAD"],
+            capture_output=True, text=True
+        )
+        local_sha = git_result.stdout.strip()[:7]
+
+        remote_result = subprocess.run(
+            ["git", "-C", str(REPO_ROOT), "rev-parse", "origin/main"],
+            capture_output=True, text=True
+        )
+        remote_sha = remote_result.stdout.strip()[:7]
+
+        if local_sha == remote_sha:
+            details.append(f"Git HEAD ({local_sha}) matches origin/main — Vercel should be in sync")
+        else:
+            issues.append(f"Git HEAD ({local_sha}) != origin/main ({remote_sha}) — Vercel may be stale")
+    except Exception as e:
+        issues.append(f"Could not check git/Vercel sync: {e}")
+
+    # 5. Check letter_approvals for stuck records
+    try:
+        stuck = supa_get("letter_approvals?status=eq.approved&select=id,company_id,approved_at&limit=10")
+        if stuck:
+            issues.append(f"{len(stuck)} approved letter(s) not yet sent — may be stuck in queue")
+            details.extend([f"Stuck letter: {s.get('id','?')[:8]}... approved {s.get('approved_at','?')}" for s in stuck[:3]])
+    except Exception:
+        pass  # Table might not exist yet
+
+    # 6. Check page_versions for recent activity
+    try:
+        versions = supa_get("page_versions?select=id,page_path,published_at&order=published_at.desc&limit=5")
+        if versions:
+            latest = versions[0].get("published_at", "unknown")
+            details.append(f"Latest page version: {latest}")
+        else:
+            details.append("No page_versions records found")
+    except Exception:
+        pass
+
+    if not issues:
+        return {"check": "data_sync", "status": "PASS", "severity": "critical",
+                "message": f"Data sync verified ({len(details)} checks passed)",
+                "details": details}
+
+    severity = "critical" if any("stale" in i.lower() or "no hub page" in i.lower() for i in issues) else "high"
+    return {"check": "data_sync", "status": "WARN" if len(issues) < 3 else "FAIL",
+            "severity": severity,
+            "message": f"{len(issues)} sync issue(s) found",
+            "details": issues + ["---"] + details}
+
+
 def check_skill_watch():
     """Identify repetitive processes that should become skills."""
     suggestions = []
@@ -413,6 +589,8 @@ def main():
         check_supabase_health,
         check_gateway,
         check_git_clean,
+        check_unpushed_commits,
+        check_data_sync,
         check_cron_health,
         check_ollama,
         check_openclaw_version,

@@ -169,8 +169,10 @@ How an agent or developer gets up to speed:
 | **Key hygiene** | Zero hardcoded keys in repo, skills, openclaw | CRITICAL |
 | **Vercel env sync** | All 17 vars present, no deprecated vars | CRITICAL |
 | **Supabase health** | REST API returns 200 | CRITICAL |
+| **Data sync** | DB data matches pages, Vercel matches git, no stuck records | CRITICAL |
 | **Gateway running** | PID exists, Telegram polling OK | HIGH |
 | **Git clean** | No uncommitted changes in master-crm-web | HIGH |
+| **Unpushed commits** | All local commits pushed; risky commits flagged | HIGH |
 | **Cron health** | All 3 crons ran in last interval | HIGH |
 | **Ollama running** | Port 11434 responding | MEDIUM |
 | **OpenClaw version** | Running latest version | MEDIUM |
