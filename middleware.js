@@ -3,12 +3,12 @@ import { getCompanyForPath, PUBLIC_PATHS, PUBLIC_EXTENSIONS, COMPANIES } from '.
 /**
  * Vercel Edge Middleware — Client Portal Gate
  *
- * Intercepts every request. If the page belongs to a company,
- * checks for a valid portal_session cookie. Redirects to /login.html
- * if unauthenticated. Returns 403 if the user's company doesn't match.
+ * GATING IS CURRENTLY DISABLED. All requests pass through.
+ * To re-enable, set PORTAL_GATING_ENABLED=true in Vercel env vars.
  *
- * Admin users (role=admin) can access all pages.
- * Shared/internal pages (dashboard, activity-feed, etc.) require admin auth.
+ * When enabled: intercepts every request, checks portal_session cookie,
+ * enforces company-level page access. Redirects to /login.html if
+ * unauthenticated. Returns 403 if the user's company doesn't match.
  */
 
 export const config = {
@@ -16,6 +16,11 @@ export const config = {
 };
 
 export default function middleware(request) {
+  // Gating kill switch — wide open until re-enabled
+  if (!process.env.PORTAL_GATING_ENABLED || process.env.PORTAL_GATING_ENABLED !== 'true') {
+    return; // pass through everything
+  }
+
   const url = new URL(request.url);
   const pathname = url.pathname;
 
