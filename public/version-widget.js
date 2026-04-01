@@ -9,6 +9,9 @@
 (function () {
   'use strict';
 
+  // Credentials: loaded from /supabase-config.js (include via <script> tag before this file)
+  // See .env.example for all env var names, CLAUDE.md for architecture
+
   const SUPABASE_URL = window.__SUPABASE_URL;
   const ANON_KEY = window.__SUPABASE_ANON_KEY;
 

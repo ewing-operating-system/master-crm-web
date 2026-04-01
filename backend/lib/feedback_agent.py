@@ -58,6 +58,7 @@ log = logging.getLogger("feedback_agent")
 # ---------------------------------------------------------------------------
 # Supabase — master-crm instance (service role for backend agent)
 # ---------------------------------------------------------------------------
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 _ctx = ssl.create_default_context()
 
 SUPA_URL = os.environ.get("SUPABASE_URL", "")

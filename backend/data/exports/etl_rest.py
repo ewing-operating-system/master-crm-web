@@ -6,6 +6,7 @@ Keeps ALL data. Unmapped fields go into extra_fields JSONB.
 
 import json, os, sys, time, urllib.request, ssl
 
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 URL = os.environ.get("SUPABASE_URL", "")
 KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
 EXPORT = os.path.expanduser("~/Projects/dossier-pipeline/data/data-export")

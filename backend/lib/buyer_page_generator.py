@@ -16,6 +16,7 @@ import datetime
 import html as html_mod
 
 # --- Config ---
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 DB_URL = os.environ.get("DATABASE_URL", "")
 OUTPUT_DIR = os.path.expanduser("~/Projects/master-crm/data/buyer-1pagers")
 WEB_DIR = os.path.expanduser("~/Projects/master-crm-web/public")

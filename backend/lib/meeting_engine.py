@@ -24,6 +24,7 @@ Produces: Custom HTML page with:
 import json, os, sys, subprocess, time, psycopg2
 from datetime import datetime
 
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 DB_CONN = os.environ.get("DATABASE_URL", "")
 MEETINGS_DIR = os.path.expanduser("~/Projects/master-crm/data/meetings")
 LOG_FILE = os.path.expanduser("~/Projects/master-crm/data/logs/meeting_engine.log")

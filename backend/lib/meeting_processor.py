@@ -15,6 +15,7 @@ from dotenv import load_dotenv
 
 load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
 
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 DB_CONN = os.environ.get("DATABASE_URL", "")
 
 def log(msg):

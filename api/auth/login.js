@@ -8,6 +8,9 @@
  * The password itself identifies the company — no username needed.
  */
 
+// Credentials: all keys come from env vars. See .env.example for names.
+// Vercel injects these at runtime. Local dev: copy .env.example to .env
+
 const COMPANIES = {
   hrcom: {
     name: 'HR.com Ltd',

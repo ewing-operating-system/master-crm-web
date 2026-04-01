@@ -1,4 +1,6 @@
 #!/bin/bash
+# Credentials: all keys come from env vars (inherited from ~/.zshrc).
+# See .env.example for variable names. NEVER hardcode keys in scripts.
 # ============================================================
 # HR.COM DEAL — OVERNIGHT STRESS TEST + AGENT TOURNAMENT
 # Benchmarks, scores, re-enriches, and ranks every agent

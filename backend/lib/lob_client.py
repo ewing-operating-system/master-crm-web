@@ -7,6 +7,7 @@ Uses urllib (no external deps). Reads LOB_API_KEY from env.
 import json, os, urllib.request, urllib.parse, ssl, base64, hashlib, hmac
 from datetime import datetime
 
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 LOB_API_KEY = os.environ.get("LOB_API_KEY", "")
 LOB_WEBHOOK_SECRET = os.environ.get("LOB_WEBHOOK_SECRET", "")
 LOB_BASE = "https://api.lob.com/v1"

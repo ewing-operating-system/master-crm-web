@@ -2,6 +2,7 @@
 def apply_fact_correction(comment_id):
     """Apply a fact correction from an accepted comment to the canonical data."""
     import psycopg2, json, re, os
+    # Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
     conn = psycopg2.connect(os.environ.get("DATABASE_URL", ""))
     conn.autocommit = True
     cur = conn.cursor()

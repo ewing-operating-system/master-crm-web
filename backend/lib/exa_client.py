@@ -20,6 +20,7 @@ import time
 from typing import Optional, Dict, Any, List
 
 # ── API Key ──────────────────────────────────────────────
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 EXA_KEY = os.environ.get("EXA_API_KEY", "")
 
 # ── SEO farms to always exclude ──────────────────────────

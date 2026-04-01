@@ -23,6 +23,7 @@ from datetime import datetime
 # ---------------------------------------------------------------------------
 # Supabase config (mirrors lib/supabase.py pattern)
 # ---------------------------------------------------------------------------
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 _URL = os.environ.get("SUPABASE_URL", "")
 _KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
 _ctx = ssl.create_default_context()

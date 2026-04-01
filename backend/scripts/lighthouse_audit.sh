@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Credentials: all keys come from env vars (inherited from ~/.zshrc).
+# See .env.example for variable names. NEVER hardcode keys in scripts.
 # lighthouse_audit.sh — Mobile readiness audit for client-facing pages
 # Usage:
 #   ./lighthouse_audit.sh                        # audit default URL list

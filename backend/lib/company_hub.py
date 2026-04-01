@@ -23,6 +23,7 @@ import json, os, sys, time, psycopg2
 from datetime import datetime
 from page_template import wrap_page, get_page_framing
 
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 DB_CONN = os.environ.get("DATABASE_URL", "")
 HUB_DIR = os.path.expanduser("~/Projects/master-crm/data/company-hubs")
 DL_DIR = os.path.expanduser("~/Downloads/master-crm-proposals")

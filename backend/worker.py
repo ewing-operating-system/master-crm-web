@@ -7,6 +7,7 @@ Routes to the correct agent module based on agent_name.
 import json, os, time, sys, subprocess, psycopg2, urllib.request, ssl
 from datetime import datetime
 
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 DB_CONN = os.environ.get("DATABASE_URL", "")
 OPENROUTER_KEY = os.environ.get("OPENROUTER_API_KEY", "")
 LOG_FILE = os.path.expanduser("~/Projects/master-crm/data/logs/worker.log")

@@ -1,5 +1,8 @@
 # Agent Briefing: Home Services M&A Advisory Proposal Workflow
 
+> **Credentials:** Never hardcode API keys. All credentials come from environment variables.
+> See `.env.example` for variable names, `CLAUDE.md` for architecture.
+
 ## What This Agent Does
 Builds a complete M&A advisory proposal for home services businesses (HVAC, plumbing, pest control, roofing, electrical) — both the structured data template and a production-ready React webpage.
 

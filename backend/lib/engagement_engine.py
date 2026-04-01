@@ -18,6 +18,7 @@ from datetime import datetime, timedelta
 from dotenv import load_dotenv
 load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
 
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 DB_CONN = os.environ.get("DATABASE_URL", "")
 LOG_FILE = os.path.expanduser("~/Projects/master-crm/data/logs/engagement_engine.log")
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)

@@ -1,4 +1,6 @@
 #!/bin/bash
+# Credentials: all keys come from env vars (inherited from ~/.zshrc).
+# See .env.example for variable names. NEVER hardcode keys in scripts.
 # ============================================================
 # HR.COM DEAL — OVERNIGHT MULTI-AGENT BUILD
 # Uses OpenClaw agents (DeepSeek/Gemini/GPT-4o-mini) — ZERO Claude usage

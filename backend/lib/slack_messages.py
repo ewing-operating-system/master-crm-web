@@ -12,6 +12,7 @@ Until then, uses localhost (only works on local network).
 import json, os, psycopg2
 from datetime import datetime
 
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 DB_CONN = os.environ.get("DATABASE_URL", "")
 BASE_URL = os.environ.get("MASTER_CRM_URL", "http://localhost:8080")
 

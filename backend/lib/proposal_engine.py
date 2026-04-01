@@ -27,6 +27,7 @@ Falls back to OpenRouter if Claude CLI fails.
 import json, os, sys, subprocess, time, urllib.request, ssl, psycopg2
 
 # ─── Config ──────────────────────────────────────────────────────────────────
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 
 DB_CONN = os.environ.get("DATABASE_URL", "")
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "")

@@ -39,6 +39,7 @@ import sys
 import requests
 
 # ── Config ──────────────────────────────────────────────────────────────────
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 
 SUPABASE_URL = os.environ.get('SUPABASE_URL', '')
 SUPABASE_KEY = os.environ.get('SUPABASE_SERVICE_ROLE_KEY', '')

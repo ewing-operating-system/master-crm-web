@@ -18,6 +18,9 @@
 
 'use strict';
 
+// Credentials: all keys come from env vars. See .env.example for names.
+// Vercel injects these at runtime. Local dev: copy .env.example to .env
+
 // ---------------------------------------------------------------------------
 // Supabase helpers (service role — bypasses RLS)
 // ---------------------------------------------------------------------------

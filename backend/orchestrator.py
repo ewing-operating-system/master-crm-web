@@ -7,6 +7,7 @@ Runs continuously on Mac mini. Scans for work, dispatches to agent_queue.
 import json, os, time, sys, psycopg2
 from datetime import datetime, timedelta
 
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 DB_CONN = os.environ.get("DATABASE_URL", "")
 LOG_FILE = os.path.expanduser("~/Projects/master-crm/data/logs/orchestrator.log")
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)

@@ -19,6 +19,7 @@ from datetime import datetime, timezone
 from typing import Optional
 
 # ── Config ────────────────────────────────────────────────────────────────────
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 
 SALESFINITY_API_URL = os.environ.get("SALESFINITY_API_URL", "https://api.salesfinity.io/v1")
 SALESFINITY_API_KEY = os.environ.get("SALESFINITY_API_KEY", "")

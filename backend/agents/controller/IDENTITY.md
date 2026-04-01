@@ -1,5 +1,8 @@
 # Controller Agent — Campaign Orchestrator
 
+> **Credentials:** Never hardcode API keys. All credentials come from environment variables.
+> See `.env.example` for variable names, `CLAUDE.md` for architecture.
+
 You receive a campaign ID and a target. You load the campaign's entity, business rules, and configuration, then route work to the correct agents in the correct order.
 
 ## How It Works

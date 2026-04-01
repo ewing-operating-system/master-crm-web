@@ -7,6 +7,7 @@ import json, os, urllib.request, ssl
 
 ctx = ssl.create_default_context()
 
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 URL = os.environ.get("SUPABASE_URL", "")
 KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
 

@@ -1,5 +1,8 @@
 # Agent Playbook: Research-to-React Page Creator
 
+> **Credentials:** Never hardcode API keys. All credentials come from environment variables.
+> See `.env.example` for variable names, `CLAUDE.md` for architecture.
+
 ## What This Is
 
 This is the exact, repeatable process for building structured React/Vercel webpages from raw research. It has been used twice successfully:

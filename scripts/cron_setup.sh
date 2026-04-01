@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Credentials: all keys come from env vars (inherited from ~/.zshrc).
+# See .env.example for variable names. NEVER hardcode keys in scripts.
 # cron_setup.sh — Install cron jobs for sync_call_intel.py
 #
 # Usage:

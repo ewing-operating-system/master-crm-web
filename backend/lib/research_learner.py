@@ -56,6 +56,7 @@ log = logging.getLogger("research_learner")
 # ---------------------------------------------------------------------------
 # Supabase — master-crm (service role)
 # ---------------------------------------------------------------------------
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 _ctx = ssl.create_default_context()
 
 SUPA_URL = os.environ.get("SUPABASE_URL", "")

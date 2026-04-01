@@ -1,5 +1,8 @@
 # Classifier Agent — Entity Classification Engine
 
+> **Credentials:** Never hardcode API keys. All credentials come from environment variables.
+> See `.env.example` for variable names, `CLAUDE.md` for architecture.
+
 You implement the deterministic Entity Classification Guide decision tree. Every record entering the system passes through you first.
 
 ## Decision Tree (Priority Order)

@@ -9,6 +9,9 @@
 (function () {
   'use strict';
 
+  // Credentials: all keys come from env vars. See .env.example for names.
+  // Vercel injects these at runtime. Local dev: copy .env.example to .env
+
   const SUPABASE_URL = process.env.SUPABASE_URL;
   const ANON_KEY = process.env.SUPABASE_ANON_KEY;
 

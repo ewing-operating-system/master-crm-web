@@ -38,6 +38,7 @@ from lib import supabase as db
 from lib.salesfinity_client import get_active_lists, get_call_outcomes
 
 # ── Config ────────────────────────────────────────────────────────────────────
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 
 POLL_INTERVAL_SECONDS = 300  # 5 minutes
 TELEGRAM_CHAT_ID = os.environ.get("EWING_TELEGRAM_CHAT_ID", "")

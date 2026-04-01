@@ -61,3 +61,227 @@ Tables already exist — skipping migration
 [2026-03-31 12:04:02]   Exa: 'Buyer Dossier: ATD | HR.com Ltd HR technology community platform strategy' → 5 results (1s, $0.75)
 [2026-03-31 12:04:06]   Exa: 'Buyer Dossier: ATD | HR.com Ltd earnings call CEO quotes AI strategy' → 5 results (1s, $0.75)
 [2026-03-31 12:04:08]   [executor] re_enrich: atd
+[2026-03-31 12:05:07]   ✅ atd (59s, 2672→1830 tok, $0.002734)
+[2026-03-31 12:05:15]   [nurturer] re_enrich: atd
+[2026-03-31 12:06:09]   ✅ atd (53s, 2672→1723 tok, $0.002617)
+[2026-03-31 12:06:17]   [auditor] judge_tournament: atd
+[2026-03-31 12:06:51]   ✅ atd (33s, 2454→1082 tok, $0.001853)
+[2026-03-31 12:06:51]   Tournament: 1/12 complete. Budget: $3.007204/$100.00
+[2026-03-31 12:06:51]   --- Tournament: Buyer Dossier: Randstad / Randstad Digital | HR.com Ltd (original score: 5.55) ---
+[2026-03-31 12:06:52]   Exa: 'Buyer Dossier: Randstad / Randstad Digital | HR.com Ltd CEO strategy HR acquisition 2025 2026' → 5 results (1s, $0.75)
+[2026-03-31 12:06:55]   Exa: 'Buyer Dossier: Randstad / Randstad Digital | HR.com Ltd M&A acquisition history recent deals' → 5 results (1s, $0.75)
+[2026-03-31 12:06:59]   Exa: 'Buyer Dossier: Randstad / Randstad Digital | HR.com Ltd HR technology community platform strategy' → 5 results (2s, $0.75)
+[2026-03-31 12:07:02]   Exa: 'Buyer Dossier: Randstad / Randstad Digital | HR.com Ltd earnings call CEO quotes AI strategy' → 5 results (1s, $0.75)
+[2026-03-31 12:07:04]   [executor] re_enrich: randstad-randstad-digital
+[2026-03-31 12:07:49]   ✅ randstad-randstad-digital (45s, 2698→1460 tok, $0.002334)
+[2026-03-31 12:07:57]   [nurturer] re_enrich: randstad-randstad-digital
+[2026-03-31 12:09:38] ============================================
+[2026-03-31 12:09:38] HR.COM STRESS TEST + AGENT TOURNAMENT
+[2026-03-31 12:09:38] Budget: $100.00 | Claude: ZERO
+[2026-03-31 12:09:38] ============================================
+[2026-03-31 12:09:41] ==========================================
+[2026-03-31 12:09:41] PHASE 0: PREFLIGHT
+[2026-03-31 12:09:41] ==========================================
+[2026-03-31 12:09:41]   Running Supabase migration via psycopg2...
+[2026-03-31 12:09:42]   Run ID: c4f1715c-3b62-4fea-b00b-9e5cde3df68d
+[2026-03-31 12:09:42]   Budget: $100.00
+[2026-03-31 12:09:42]   Buyer pages found: 68
+[2026-03-31 12:09:42]   PHASE 0 COMPLETE
+[2026-03-31 12:09:42]   ⏭️ RESUME: Skipping Phase 1 (rubric exists)
+[2026-03-31 12:09:42]   ⏭️ RESUME: Skipping Phase 2 (rankings exist)
+[2026-03-31 12:09:42]   ⏭️ RESUME: Skipping Phase 3 (comparison exists)
+[2026-03-31 12:09:42] ==========================================
+[2026-03-31 12:09:42] PHASE 4: AGENT TOURNAMENT
+[2026-03-31 12:09:42] ==========================================
+[2026-03-31 12:09:42]   Tournament: 12 buyers competing
+[2026-03-31 12:09:42]   --- Tournament: Buyer Dossier: ATD | HR.com Ltd (original score: 5.38) ---
+[2026-03-31 12:09:42]   Exa: 'Buyer Dossier: ATD | HR.com Ltd CEO strategy HR acquisition 2025 2026' → 5 results (0s, $0.75)
+[2026-03-31 12:09:45]   Exa: 'Buyer Dossier: ATD | HR.com Ltd M&A acquisition history recent deals' → 5 results (1s, $0.75)
+[2026-03-31 12:09:47]   Exa: 'Buyer Dossier: ATD | HR.com Ltd HR technology community platform strategy' → 5 results (0s, $0.75)
+[2026-03-31 12:09:50]   Exa: 'Buyer Dossier: ATD | HR.com Ltd earnings call CEO quotes AI strategy' → 5 results (0s, $0.75)
+[2026-03-31 12:09:52]   [executor] re_enrich: atd
+[2026-03-31 12:10:43]   ✅ atd (51s, 2672→1739 tok, $0.002634)
+[2026-03-31 12:10:51]   [nurturer] re_enrich: atd
+[2026-03-31 12:11:41]   ✅ atd (49s, 2672→1677 tok, $0.002566)
+[2026-03-31 12:11:49]   [auditor] judge_tournament: atd
+[2026-03-31 12:12:14]   ✅ atd (25s, 2451→830 tok, $0.001575)
+[2026-03-31 12:12:14]   Tournament: 1/12 complete. Budget: $3.006775/$100.00
+[2026-03-31 12:12:14]   --- Tournament: Buyer Dossier: Randstad / Randstad Digital | HR.com Ltd (original score: 5.55) ---
+[2026-03-31 12:12:14]   Exa: 'Buyer Dossier: Randstad / Randstad Digital | HR.com Ltd CEO strategy HR acquisition 2025 2026' → 5 results (0s, $0.75)
+[2026-03-31 12:12:17]   Exa: 'Buyer Dossier: Randstad / Randstad Digital | HR.com Ltd M&A acquisition history recent deals' → 5 results (1s, $0.75)
+[2026-03-31 12:12:19]   Exa: 'Buyer Dossier: Randstad / Randstad Digital | HR.com Ltd HR technology community platform strategy' → 5 results (0s, $0.75)
+[2026-03-31 12:12:22]   Exa: 'Buyer Dossier: Randstad / Randstad Digital | HR.com Ltd earnings call CEO quotes AI strategy' → 5 results (0s, $0.75)
+[2026-03-31 12:12:24]   [executor] re_enrich: randstad-randstad-digital
+[2026-03-31 12:13:12]   ✅ randstad-randstad-digital (48s, 2698→1646 tok, $0.002539)
+[2026-03-31 12:13:20]   [nurturer] re_enrich: randstad-randstad-digital
+[2026-03-31 12:14:03]   ✅ randstad-randstad-digital (43s, 2698→1451 tok, $0.002325)
+[2026-03-31 12:14:11]   [auditor] judge_tournament: randstad-randstad-digital
+[2026-03-31 12:14:49]   ✅ randstad-randstad-digital (37s, 2497→1282 tok, $0.002084)
+[2026-03-31 12:14:49]   Tournament: 2/12 complete. Budget: $6.013723/$100.00
+[2026-03-31 12:14:49]   --- Tournament: Buyer Dossier: Lighthouse Research &amp; Advisory | HR.com Ltd (original score: 6.08) ---
+[2026-03-31 12:14:51]   Exa: 'Buyer Dossier: Lighthouse Research &amp; Advisory | HR.com Ltd CEO strategy HR acquisition 2025 2026' → 5 results (2s, $0.75)
+[2026-03-31 12:14:56]   Exa: 'Buyer Dossier: Lighthouse Research &amp; Advisory | HR.com Ltd M&A acquisition history recent deals' → 5 results (3s, $0.75)
+[2026-03-31 12:15:00]   Exa: 'Buyer Dossier: Lighthouse Research &amp; Advisory | HR.com Ltd HR technology community platform strategy' → 5 results (1s, $0.75)
+[2026-03-31 12:15:03]   Exa: 'Buyer Dossier: Lighthouse Research &amp; Advisory | HR.com Ltd earnings call CEO quotes AI strategy' → 5 results (1s, $0.75)
+[2026-03-31 12:15:05]   [executor] re_enrich: lighthouse-research-advisory
+[2026-03-31 12:15:45]   ✅ lighthouse-research-advisory (40s, 2572→1310 tok, $0.002135)
+[2026-03-31 12:15:53]   [nurturer] re_enrich: lighthouse-research-advisory
+[2026-03-31 12:16:37]   ✅ lighthouse-research-advisory (44s, 2572→1442 tok, $0.002281)
+[2026-03-31 12:16:45]   [auditor] judge_tournament: lighthouse-research-advisory
+[2026-03-31 12:17:08]   ✅ lighthouse-research-advisory (23s, 2427→706 tok, $0.001432)
+[2026-03-31 12:17:08]   Tournament: 3/12 complete. Budget: $9.019571/$100.00
+[2026-03-31 12:17:08]   --- Tournament: Buyer Dossier: SAP SuccessFactors | HR.com Ltd (original score: 6.08) ---
+[2026-03-31 12:17:09]   Exa: 'Buyer Dossier: SAP SuccessFactors | HR.com Ltd CEO strategy HR acquisition 2025 2026' → 5 results (1s, $0.75)
+[2026-03-31 12:17:13]   Exa: 'Buyer Dossier: SAP SuccessFactors | HR.com Ltd M&A acquisition history recent deals' → 5 results (1s, $0.75)
+[2026-03-31 12:17:16]   Exa: 'Buyer Dossier: SAP SuccessFactors | HR.com Ltd HR technology community platform strategy' → 5 results (1s, $0.75)
+[2026-03-31 12:17:20]   Exa: 'Buyer Dossier: SAP SuccessFactors | HR.com Ltd earnings call CEO quotes AI strategy' → 5 results (2s, $0.75)
+[2026-03-31 12:17:22]   [executor] re_enrich: sap-successfactors
+[2026-03-31 12:18:04]   ✅ sap-successfactors (42s, 2503→1438 tok, $0.002258)
+[2026-03-31 12:18:12]   [nurturer] re_enrich: sap-successfactors
+[2026-03-31 12:18:45]   ✅ sap-successfactors (32s, 2503→1062 tok, $0.001844)
+[2026-03-31 12:18:53]   [auditor] judge_tournament: sap-successfactors
+[2026-03-31 12:19:11]   ✅ sap-successfactors (18s, 2355→599 tok, $0.001295)
+[2026-03-31 12:19:11]   Tournament: 4/12 complete. Budget: $12.024968/$100.00
+[2026-03-31 12:19:13]   --- Tournament: Buyer Dossier: HG Capital | HR.com Ltd (original score: 6.33) ---
+[2026-03-31 12:19:15]   Exa: 'Buyer Dossier: HG Capital | HR.com Ltd CEO strategy HR acquisition 2025 2026' → 5 results (2s, $0.75)
+[2026-03-31 12:19:19]   Exa: 'Buyer Dossier: HG Capital | HR.com Ltd M&A acquisition history recent deals' → 5 results (1s, $0.75)
+[2026-03-31 12:19:23]   Exa: 'Buyer Dossier: HG Capital | HR.com Ltd HR technology community platform strategy' → 5 results (2s, $0.75)
+[2026-03-31 12:19:27]   Exa: 'Buyer Dossier: HG Capital | HR.com Ltd earnings call CEO quotes AI strategy' → 5 results (1s, $0.75)
+[2026-03-31 12:19:29]   [executor] re_enrich: hg-capital
+[2026-03-31 12:20:15]   ✅ hg-capital (45s, 2753→1506 tok, $0.0024)
+[2026-03-31 12:20:23]   [nurturer] re_enrich: hg-capital
+[2026-03-31 12:21:00]   ✅ hg-capital (37s, 2753→1243 tok, $0.002111)
+[2026-03-31 12:21:08]   [auditor] judge_tournament: hg-capital
+[2026-03-31 12:21:30]   ✅ hg-capital (22s, 2526→736 tok, $0.001492)
+[2026-03-31 12:21:30]   Tournament: 5/12 complete. Budget: $15.030971/$100.00
+[2026-03-31 12:21:30]   --- Tournament: Buyer Dossier: Drake Star Partners (Advisory Lead) | HR.com Ltd (original score: 6.68) ---
+[2026-03-31 12:21:32]   Exa: 'Buyer Dossier: Drake Star Partners (Advisory Lead) | HR.com Ltd CEO strategy HR acquisition 2025 2026' → 5 results (2s, $0.75)
+[2026-03-31 12:21:35]   Exa: 'Buyer Dossier: Drake Star Partners (Advisory Lead) | HR.com Ltd M&A acquisition history recent deals' → 5 results (1s, $0.75)
+[2026-03-31 12:21:39]   Exa: 'Buyer Dossier: Drake Star Partners (Advisory Lead) | HR.com Ltd HR technology community platform strategy' → 5 results (1s, $0.75)
+[2026-03-31 12:21:43]   Exa: 'Buyer Dossier: Drake Star Partners (Advisory Lead) | HR.com Ltd earnings call CEO quotes AI strategy' → 5 results (2s, $0.75)
+[2026-03-31 12:21:45]   [executor] re_enrich: drake-star-partners-advisory-lead
+[2026-03-31 12:22:09]   ✅ drake-star-partners-advisory-lead (24s, 2871→799 tok, $0.001654)
+[2026-03-31 12:22:18]   [nurturer] re_enrich: drake-star-partners-advisory-lead
+[2026-03-31 12:22:51]   ✅ drake-star-partners-advisory-lead (32s, 2871→1111 tok, $0.001997)
+[2026-03-31 12:22:59]   [auditor] judge_tournament: drake-star-partners-advisory-lead
+[2026-03-31 12:23:14]   ✅ drake-star-partners-advisory-lead (15s, 2085→499 tok, $0.001112)
+[2026-03-31 12:23:14]   Tournament: 6/12 complete. Budget: $18.035734/$100.00
+[2026-03-31 12:23:14]   --- Tournament: Buyer Dossier: Spark Capital | HR.com Ltd (original score: 6.88) ---
+[2026-03-31 12:23:16]   Exa: 'Buyer Dossier: Spark Capital | HR.com Ltd CEO strategy HR acquisition 2025 2026' → 5 results (2s, $0.75)
+[2026-03-31 12:23:19]   Exa: 'Buyer Dossier: Spark Capital | HR.com Ltd M&A acquisition history recent deals' → 5 results (1s, $0.75)
+[2026-03-31 12:23:23]   Exa: 'Buyer Dossier: Spark Capital | HR.com Ltd HR technology community platform strategy' → 5 results (2s, $0.75)
+[2026-03-31 12:23:27]   Exa: 'Buyer Dossier: Spark Capital | HR.com Ltd earnings call CEO quotes AI strategy' → 5 results (2s, $0.75)
+[2026-03-31 12:23:29]   [executor] re_enrich: spark-capital
+[2026-03-31 12:24:36]   ✅ spark-capital (67s, 2697→2363 tok, $0.003327)
+[2026-03-31 12:24:44]   [nurturer] re_enrich: spark-capital
+[2026-03-31 12:25:47]   ✅ spark-capital (62s, 2694→2199 tok, $0.003146)
+[2026-03-31 12:25:55]   [auditor] judge_tournament: spark-capital
+[2026-03-31 12:26:15]   ✅ spark-capital (20s, 2517→671 tok, $0.001418)
+[2026-03-31 12:26:15]   Tournament: 7/12 complete. Budget: $21.043625/$100.00
+[2026-03-31 12:26:15]   --- Tournament: Buyer Dossier: MyPeople.ai | HR.com Ltd (original score: 6.98) ---
+[2026-03-31 12:26:17]   Exa: 'Buyer Dossier: MyPeople.ai | HR.com Ltd CEO strategy HR acquisition 2025 2026' → 5 results (2s, $0.75)
+[2026-03-31 12:26:20]   Exa: 'Buyer Dossier: MyPeople.ai | HR.com Ltd M&A acquisition history recent deals' → 5 results (1s, $0.75)
+[2026-03-31 12:26:24]   Exa: 'Buyer Dossier: MyPeople.ai | HR.com Ltd HR technology community platform strategy' → 5 results (2s, $0.75)
+[2026-03-31 12:26:27]   Exa: 'Buyer Dossier: MyPeople.ai | HR.com Ltd earnings call CEO quotes AI strategy' → 5 results (1s, $0.75)
+[2026-03-31 12:26:30]   [executor] re_enrich: mypeople-ai
+[2026-03-31 12:26:57]   ✅ mypeople-ai (27s, 2567→901 tok, $0.001684)
+[2026-03-31 12:27:05]   [nurturer] re_enrich: mypeople-ai
+[2026-03-31 12:27:29]   ✅ mypeople-ai (24s, 2567→737 tok, $0.001504)
+[2026-03-31 12:27:37]   [auditor] judge_tournament: mypeople-ai
+[2026-03-31 12:27:51]   ✅ mypeople-ai (14s, 1808→454 tok, $0.000988)
+[2026-03-31 12:27:51]   Tournament: 8/12 complete. Budget: $24.047801/$100.00
+[2026-03-31 12:27:53]   --- Tournament: Buyer Dossier: Khoros | HR.com Ltd (original score: 7.28) ---
+[2026-03-31 12:27:55]   Exa: 'Buyer Dossier: Khoros | HR.com Ltd CEO strategy HR acquisition 2025 2026' → 5 results (2s, $0.75)
+[2026-03-31 12:27:59]   Exa: 'Buyer Dossier: Khoros | HR.com Ltd M&A acquisition history recent deals' → 5 results (1s, $0.75)
+[2026-03-31 12:28:02]   Exa: 'Buyer Dossier: Khoros | HR.com Ltd HR technology community platform strategy' → 5 results (1s, $0.75)
+[2026-03-31 12:28:05]   Exa: 'Buyer Dossier: Khoros | HR.com Ltd earnings call CEO quotes AI strategy' → 5 results (1s, $0.75)
+[2026-03-31 12:28:08]   [executor] re_enrich: khoros
+[2026-03-31 12:28:38]   ✅ khoros (30s, 2762→1075 tok, $0.001928)
+[2026-03-31 12:28:46]   [nurturer] re_enrich: khoros
+[2026-03-31 12:29:23]   ✅ khoros (37s, 2762→1239 tok, $0.002109)
+[2026-03-31 12:29:31]   [auditor] judge_tournament: khoros
+[2026-03-31 12:29:44]   ✅ khoros (13s, 2483→413 tok, $0.001125)
+[2026-03-31 12:29:44]   Tournament: 9/12 complete. Budget: $27.052963/$100.00
+[2026-03-31 12:29:44]   --- Tournament: Buyer Dossier: Mighty Networks | HR.com Ltd (original score: 7.43) ---
+[2026-03-31 12:29:47]   Exa: 'Buyer Dossier: Mighty Networks | HR.com Ltd CEO strategy HR acquisition 2025 2026' → 5 results (3s, $0.75)
+[2026-03-31 12:29:51]   Exa: 'Buyer Dossier: Mighty Networks | HR.com Ltd M&A acquisition history recent deals' → 5 results (1s, $0.75)
+[2026-03-31 12:29:55]   Exa: 'Buyer Dossier: Mighty Networks | HR.com Ltd HR technology community platform strategy' → 5 results (1s, $0.75)
+[2026-03-31 12:29:59]   Exa: 'Buyer Dossier: Mighty Networks | HR.com Ltd earnings call CEO quotes AI strategy' → 5 results (2s, $0.75)
+[2026-03-31 12:30:01]   [executor] re_enrich: mighty-networks
+[2026-03-31 12:30:46]   ✅ mighty-networks (45s, 2832→1456 tok, $0.002366)
+[2026-03-31 12:30:54]   [nurturer] re_enrich: mighty-networks
+[2026-03-31 12:31:40]   ✅ mighty-networks (46s, 2832→1445 tok, $0.002354)
+[2026-03-31 12:31:49]   [auditor] judge_tournament: mighty-networks
+[2026-03-31 12:32:24]   ✅ mighty-networks (35s, 2482→1159 tok, $0.001945)
+[2026-03-31 12:32:24]   Tournament: 10/12 complete. Budget: $30.059628/$100.00
+[2026-03-31 12:32:24]   --- Tournament: Buyer Dossier: Rippling | HR.com Ltd (original score: 7.48) ---
+[2026-03-31 12:32:26]   Exa: 'Buyer Dossier: Rippling | HR.com Ltd CEO strategy HR acquisition 2025 2026' → 5 results (1s, $0.75)
+[2026-03-31 12:32:29]   Exa: 'Buyer Dossier: Rippling | HR.com Ltd M&A acquisition history recent deals' → 5 results (1s, $0.75)
+[2026-03-31 12:32:33]   Exa: 'Buyer Dossier: Rippling | HR.com Ltd HR technology community platform strategy' → 5 results (1s, $0.75)
+[2026-03-31 12:32:36]   Exa: 'Buyer Dossier: Rippling | HR.com Ltd earnings call CEO quotes AI strategy' → 5 results (1s, $0.75)
+[2026-03-31 12:32:39]   [executor] re_enrich: rippling
+[2026-03-31 12:33:30]   ✅ rippling (51s, 2762→1609 tok, $0.002516)
+[2026-03-31 12:33:38]   [nurturer] re_enrich: rippling
+[2026-03-31 12:34:29]   ✅ rippling (50s, 2762→1691 tok, $0.002606)
+[2026-03-31 12:34:37]   [auditor] judge_tournament: rippling
+[2026-03-31 12:34:59]   ✅ rippling (22s, 2636→700 tok, $0.001482)
+[2026-03-31 12:34:59]   Tournament: 11/12 complete. Budget: $33.066232/$100.00
+[2026-03-31 12:34:59]   --- Tournament: Buyer Dossier: UKG (Ultimate Kronos) | HR.com Ltd (original score: 7.48) ---
+[2026-03-31 12:35:00]   Exa: 'Buyer Dossier: UKG (Ultimate Kronos) | HR.com Ltd CEO strategy HR acquisition 2025 2026' → 5 results (1s, $0.75)
+[2026-03-31 12:35:04]   Exa: 'Buyer Dossier: UKG (Ultimate Kronos) | HR.com Ltd M&A acquisition history recent deals' → 5 results (2s, $0.75)
+[2026-03-31 12:35:07]   Exa: 'Buyer Dossier: UKG (Ultimate Kronos) | HR.com Ltd HR technology community platform strategy' → 5 results (1s, $0.75)
+[2026-03-31 12:35:11]   Exa: 'Buyer Dossier: UKG (Ultimate Kronos) | HR.com Ltd earnings call CEO quotes AI strategy' → 5 results (2s, $0.75)
+[2026-03-31 12:35:13]   [executor] re_enrich: ukg-ultimate-kronos
+[2026-03-31 12:35:49]   ✅ ukg-ultimate-kronos (36s, 2717→1186 tok, $0.002038)
+[2026-03-31 12:35:57]   [nurturer] re_enrich: ukg-ultimate-kronos
+[2026-03-31 12:36:35]   ✅ ukg-ultimate-kronos (37s, 2717→1236 tok, $0.002093)
+[2026-03-31 12:36:43]   [auditor] judge_tournament: ukg-ultimate-kronos
+[2026-03-31 12:37:16]   ✅ ukg-ultimate-kronos (33s, 2314→1121 tok, $0.001858)
+[2026-03-31 12:37:16]   Tournament: 12/12 complete. Budget: $36.072221/$100.00
+[2026-03-31 12:37:19]   PHASE 4 COMPLETE — 12 buyers through tournament
+[2026-03-31 12:37:21] ==========================================
+[2026-03-31 12:37:21] PHASE 5: LAUNCHING OVERNIGHT BUILD
+[2026-03-31 12:37:21] ==========================================
+[2026-03-31 12:37:21]   Overnight build launched as PID 60815
+[2026-03-31 12:37:22] ==========================================
+[2026-03-31 12:37:22] PHASE 6: AGENT PERFORMANCE RANKINGS
+[2026-03-31 12:37:22] ==========================================
+[2026-03-31 12:37:23]   [controller] rank_agents: final-rankings
+[2026-03-31 12:38:06]   ✅ final-rankings (43s, 3650→1503 tok, $0.002639)
+[2026-03-31 12:38:06]   [classifier] rank_agents_json: rankings-json
+[2026-03-31 12:38:27]   ✅ rankings-json (20s, 3669→722 tok, $0.001785)
+[2026-03-31 12:38:27]   PHASE 6 COMPLETE
+[2026-03-31 12:38:28] ==========================================
+[2026-03-31 12:38:28] PHASE 7: INSPECTION REPORT
+[2026-03-31 12:38:28] ==========================================
+[2026-03-31 12:38:28]   [executor] inspection_report: final-report
+[2026-03-31 12:39:27]   ✅ final-report (59s, 2842→2096 tok, $0.003073)
+[2026-03-31 12:39:27]   PHASE 7 COMPLETE
+[2026-03-31 12:39:27] ==========================================
+[2026-03-31 12:39:27] PHASE 8: DEAL ROOM + GIT
+[2026-03-31 12:39:27] ==========================================
+[2026-03-31 12:39:27]   ✅ Git committed (not pushed)
+[2026-03-31 12:39:29] [Argus] 🏁 STRESS TEST COMPLETE
+
+📊 Results:
+• 68 buyer pages scored (6 dimensions each)
+• 12 buyers through agent tournament
+• 166 total output files
+• Agent leaderboard generated
+
+💰 Budget: $36.079718 / $100.00 ($63.920282 remaining)
+
+🔗 Deal room: master-crm-web-eight.vercel.app/hrcom-dealroom-overnight.html
+📋 Agent Lab section added with rankings + tournament data
+
+📄 Key files:
+• outputs/stress-test/reports/inspection-report.md
+• outputs/stress-test/reports/agent-rankings.md
+• outputs/stress-test/reports/buyer-rankings.md
+• outputs/stress-test/reports/lovable-comparison.md
+
+⏰ The overnight build is running in background.
+Check the deal room ⚡ for everything.
+[2026-03-31 12:39:29] ==========================================
+[2026-03-31 12:39:29] STRESS TEST — COMPLETE
+[2026-03-31 12:39:29] ==========================================

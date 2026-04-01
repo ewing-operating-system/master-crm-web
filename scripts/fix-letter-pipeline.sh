@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Credentials: all keys come from env vars (inherited from ~/.zshrc).
+# See .env.example for variable names. NEVER hardcode keys in scripts.
 # fix-letter-pipeline.sh — Verify and deploy letter pipeline fixes
 # Idempotent. Safe to run multiple times.
 # Does NOT set env vars or deploy to production.

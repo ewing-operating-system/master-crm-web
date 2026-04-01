@@ -7,6 +7,7 @@ Provides self-diagnosis and auto-fix capabilities.
 
 import json, os, subprocess, time, psycopg2, urllib.request, ssl
 
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 DB_CONN = os.environ.get("DATABASE_URL", "")
 ctx = ssl.create_default_context()
 

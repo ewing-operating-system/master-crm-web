@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 // Buyer 1-Pager Engine — generates professional HTML dossiers for top 3 buyers per company
+// Credentials: all keys come from env vars. See .env.example for names.
+// Vercel injects these at runtime. Local dev: copy .env.example to .env
+
 import { execSync } from 'child_process';
 import { writeFileSync, mkdirSync, copyFileSync } from 'fs';
 import { join } from 'path';

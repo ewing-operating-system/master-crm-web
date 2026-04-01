@@ -16,6 +16,7 @@ from datetime import datetime, timezone
 # ---------------------------------------------------------------------------
 # Supabase REST — same pattern as lib/supabase.py
 # ---------------------------------------------------------------------------
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 _SUPA_URL = os.environ.get("SUPABASE_URL", "")
 _SUPA_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
 _ctx = ssl.create_default_context()

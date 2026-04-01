@@ -1,4 +1,6 @@
 #!/bin/bash
+# Credentials: all keys come from env vars (inherited from ~/.zshrc).
+# See .env.example for variable names. NEVER hardcode keys in scripts.
 # Buyer 1-Pager Engine
 # Generates professional HTML dossiers for top 3 buyers per company
 set -euo pipefail

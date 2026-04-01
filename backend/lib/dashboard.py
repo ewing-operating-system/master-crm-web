@@ -26,6 +26,7 @@ Generates an HTML dashboard with:
 import json, os, time, psycopg2
 from datetime import datetime, timedelta
 
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 DB_CONN = os.environ.get("DATABASE_URL", "")
 DASHBOARD_DIR = os.path.expanduser("~/Projects/master-crm/data/dashboards")
 os.makedirs(DASHBOARD_DIR, exist_ok=True)

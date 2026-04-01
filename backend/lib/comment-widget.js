@@ -9,6 +9,9 @@
  * - Shows Original vs Revised content toggle when revision_ready
  * - Supports threaded replies to clarifying questions
  */
+// Credentials: all keys come from env vars. See .env.example for names.
+// Vercel injects these at runtime. Local dev: copy .env.example to .env
+
 (function() {
   const SUPABASE_URL = process.env.SUPABASE_URL;
   const SUPABASE_KEY = process.env.SUPABASE_ANON_KEY;

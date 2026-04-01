@@ -22,6 +22,7 @@ load_dotenv(os.path.join(os.path.dirname(__file__), '.env'))
 import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'lib'))
 
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
 SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
 

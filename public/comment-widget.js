@@ -9,6 +9,9 @@
  * - Shows Original vs Revised content toggle when revision_ready
  * - Supports threaded replies to clarifying questions
  */
+// Credentials: loaded from /supabase-config.js (include via <script> tag before this file)
+// See .env.example for all env var names, CLAUDE.md for architecture
+
 (function() {
   const SUPABASE_URL = window.__SUPABASE_URL;
   const SUPABASE_KEY = window.__SUPABASE_ANON_KEY;

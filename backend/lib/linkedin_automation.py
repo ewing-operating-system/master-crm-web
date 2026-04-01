@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 
 import urllib.request, ssl
 
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
 SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
 ctx = ssl.create_default_context()

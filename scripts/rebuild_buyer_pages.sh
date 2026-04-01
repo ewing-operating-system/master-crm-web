@@ -1,4 +1,6 @@
 #!/bin/bash
+# Credentials: all keys come from env vars (inherited from ~/.zshrc).
+# See .env.example for variable names. NEVER hardcode keys in scripts.
 # =============================================================================
 # BUYER PAGE REBUILD ORCHESTRATOR
 # Sends each problem page to a Claude Code agent via openclaw coding-agent

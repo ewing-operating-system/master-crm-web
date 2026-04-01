@@ -28,6 +28,9 @@
  *   }
  */
 
+// Credentials: all keys come from env vars. See .env.example for names.
+// Vercel injects these at runtime. Local dev: copy .env.example to .env
+
 // ---------------------------------------------------------------------------
 // Inline engine — mirrors /public/letter-template.js exactly so there is one
 // source of truth for the algorithm. Keep the two files in sync.

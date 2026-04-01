@@ -49,6 +49,7 @@ log = logging.getLogger("comment_processor")
 # Supabase connection — hardcoded to master-crm instance
 # (env vars may point to old instance, so we pin to the correct one)
 # ---------------------------------------------------------------------------
+# Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 _ctx = ssl.create_default_context()
 
 SUPA_URL = os.environ.get("SUPABASE_URL", "")

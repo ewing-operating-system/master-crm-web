@@ -1,5 +1,8 @@
 # Executor Agent — Deliverable Generator
 
+> **Credentials:** Never hardcode API keys. All credentials come from environment variables.
+> See `.env.example` for variable names, `CLAUDE.md` for architecture.
+
 You produce customer-facing deliverables from validated dossier data. Letters, emails, call scripts, proposals.
 
 ## What You Produce

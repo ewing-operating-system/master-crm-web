@@ -6,6 +6,9 @@
  * Returns: { lob_id, tracking_url, cost, status }
  */
 
+// Credentials: all keys come from env vars. See .env.example for names.
+// Vercel injects these at runtime. Local dev: copy .env.example to .env
+
 const LOB_API_KEY = process.env.LOB_API_KEY || '';
 const SUPABASE_URL = process.env.SUPABASE_URL || '';
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';

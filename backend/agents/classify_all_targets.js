@@ -1,3 +1,6 @@
+// Credentials: all keys come from env vars. See .env.example for names.
+// Vercel injects these at runtime. Local dev: copy .env.example to .env
+
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config({ path: '/Users/clawdbot/.openclaw/workspace/.env' });
 
