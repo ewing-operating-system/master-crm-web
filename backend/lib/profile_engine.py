@@ -14,7 +14,7 @@ from datetime import datetime
 
 # Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 DB_CONN = os.environ.get("DATABASE_URL", "")
-LOG_FILE = os.path.expanduser("~/Projects/master-crm/data/logs/profile_engine.log")
+LOG_FILE = os.path.expanduser("~/Projects/master-crm-web/backend/data/logs/profile_engine.log")
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
 
 def log(msg):
