@@ -27,7 +27,7 @@
 <body>
   <div class="header">
     <h1>System Health Dashboard</h1>
-    <div class="timestamp">Last audit: 2026-04-01 22:12 UTC | Next: 6:00 AM tomorrow</div>
+    <div class="timestamp">Last audit: 2026-04-01 22:16 UTC | Next: 6:00 AM tomorrow</div>
   </div>
 
   <div class="overall">
@@ -70,7 +70,7 @@
           <td><span style="display:inline-block;padding:1px 6px;border-radius:3px;
               background:#dc2626;color:white;font-size:11px">critical</span></td>
           <td style="font-weight:500">Data Sync</td>
-          <td>Data sync verified (5 checks passed)<br><code style='font-size:11px;color:#666'>Proposals in DB: 6, Hub pages on disk: 6</code><br><code style='font-size:11px;color:#666'>Sampled hrcom-ltd-hub.html: 49,599 bytes, ~0 buyer refs</code><br><code style='font-size:11px;color:#666'>Sampled design-precast-and-pipe-inc-hub.html: 46,411 bytes, ~0 buyer refs</code><br><code style='font-size:11px;color:#666'>Engagement buyers in DB: 224 across 6 proposals</code><br><code style='font-size:11px;color:#666'>Git HEAD (e832052) matches origin/main — Vercel should be in sync</code></td>
+          <td>Data sync verified (5 checks passed)<br><code style='font-size:11px;color:#666'>Proposals in DB: 6, Hub pages on disk: 6</code><br><code style='font-size:11px;color:#666'>Sampled air-control-hub.html: 35,036 bytes, ~0 buyer refs</code><br><code style='font-size:11px;color:#666'>Sampled wieser-concrete-products-inc-hub.html: 26,981 bytes, ~0 buyer refs</code><br><code style='font-size:11px;color:#666'>Engagement buyers in DB: 224 across 6 proposals</code><br><code style='font-size:11px;color:#666'>Git HEAD (c5db667) matches origin/main — Vercel should be in sync</code></td>
         </tr>
         <tr>
           <td><span style="display:inline-block;padding:2px 8px;border-radius:4px;
@@ -86,7 +86,7 @@
           <td><span style="display:inline-block;padding:1px 6px;border-radius:3px;
               background:#ea580c;color:white;font-size:11px">high</span></td>
           <td style="font-weight:500">Git Clean</td>
-          <td>3 uncommitted change(s)<br><code style='font-size:11px;color:#666'>M MasterOrchestrationChecklist.md</code><br><code style='font-size:11px;color:#666'> M logs/call_sync.log</code><br><code style='font-size:11px;color:#666'> M scripts/morning_audit.py</code></td>
+          <td>4 uncommitted change(s)<br><code style='font-size:11px;color:#666'>M logs/call_sync.log</code><br><code style='font-size:11px;color:#666'> M public/system-health.html</code><br><code style='font-size:11px;color:#666'> M scripts/morning_orchestrator.sh</code><br><code style='font-size:11px;color:#666'>?? logs/morning_orchestrator.log</code></td>
         </tr>
         <tr>
           <td><span style="display:inline-block;padding:2px 8px;border-radius:4px;
@@ -142,7 +142,7 @@
           <td><span style="display:inline-block;padding:1px 6px;border-radius:3px;
               background:#6366f1;color:white;font-size:11px">info</span></td>
           <td style="font-weight:500">Skill Watch</td>
-          <td>18 skill suggestion(s)<br><code style='font-size:11px;color:#666'>'feat' appears in 12 commits — potential skill candidate</code><br><code style='font-size:11px;color:#666'>'fix' appears in 8 commits — potential skill candidate</code><br><code style='font-size:11px;color:#666'>'fix(nc)' appears in 4 commits — potential skill candidate</code><br><code style='font-size:11px;color:#666'>'add' appears in 3 commits — potential skill candidate</code><br><code style='font-size:11px;color:#666'>'chore' appears in 3 commits — potential skill candidate</code><br><code style='font-size:11px;color:#666'>Script 'morning_audit.py' has no matching skill</code><br><code style='font-size:11px;color:#666'>Script 'inject-nav.py' has no matching skill</code><br><code style='font-size:11px;color:#666'>Script 'regenerate_all.py' has no matching skill</code><br><code style='font-size:11px;color:#666'>Script 'regenerate.py' has no matching skill</code><br><code style='font-size:11px;color:#666'>Script 'render-output.py' has no matching skill</code><br><em>...and 5 more</em></td>
+          <td>18 skill suggestion(s)<br><code style='font-size:11px;color:#666'>'feat' appears in 12 commits — potential skill candidate</code><br><code style='font-size:11px;color:#666'>'fix' appears in 8 commits — potential skill candidate</code><br><code style='font-size:11px;color:#666'>'add' appears in 4 commits — potential skill candidate</code><br><code style='font-size:11px;color:#666'>'fix(nc)' appears in 4 commits — potential skill candidate</code><br><code style='font-size:11px;color:#666'>'chore' appears in 3 commits — potential skill candidate</code><br><code style='font-size:11px;color:#666'>Script 'morning_audit.py' has no matching skill</code><br><code style='font-size:11px;color:#666'>Script 'inject-nav.py' has no matching skill</code><br><code style='font-size:11px;color:#666'>Script 'regenerate_all.py' has no matching skill</code><br><code style='font-size:11px;color:#666'>Script 'regenerate.py' has no matching skill</code><br><code style='font-size:11px;color:#666'>Script 'render-output.py' has no matching skill</code><br><em>...and 5 more</em></td>
         </tr></tbody>
   </table>
 
@@ -150,7 +150,7 @@
         <div style="margin-top:30px;padding:20px;background:#f0f4ff;border-radius:8px;border-left:4px solid #6366f1">
           <h3 style="margin:0 0 10px">Suggested Skills</h3>
           <p style="color:#555;font-size:13px">Processes detected that could become reusable skills:</p>
-          <ul style="font-size:13px"><li>'feat' appears in 12 commits — potential skill candidate</li><li>'fix' appears in 8 commits — potential skill candidate</li><li>'fix(nc)' appears in 4 commits — potential skill candidate</li><li>'add' appears in 3 commits — potential skill candidate</li><li>'chore' appears in 3 commits — potential skill candidate</li><li>Script 'morning_audit.py' has no matching skill</li><li>Script 'inject-nav.py' has no matching skill</li><li>Script 'regenerate_all.py' has no matching skill</li><li>Script 'regenerate.py' has no matching skill</li><li>Script 'render-output.py' has no matching skill</li><li>Script 'sync_call_intel.py' has no matching skill</li><li>Script 'rebuild_buyer_pages.sh' has no matching skill</li><li>Script 'hrcom-stress-test.sh' has no matching skill</li><li>Script 'overnight-research.sh' has no matching skill</li><li>Script 'morning_orchestrator.sh' has no matching skill</li></ul>
+          <ul style="font-size:13px"><li>'feat' appears in 12 commits — potential skill candidate</li><li>'fix' appears in 8 commits — potential skill candidate</li><li>'add' appears in 4 commits — potential skill candidate</li><li>'fix(nc)' appears in 4 commits — potential skill candidate</li><li>'chore' appears in 3 commits — potential skill candidate</li><li>Script 'morning_audit.py' has no matching skill</li><li>Script 'inject-nav.py' has no matching skill</li><li>Script 'regenerate_all.py' has no matching skill</li><li>Script 'regenerate.py' has no matching skill</li><li>Script 'render-output.py' has no matching skill</li><li>Script 'sync_call_intel.py' has no matching skill</li><li>Script 'rebuild_buyer_pages.sh' has no matching skill</li><li>Script 'hrcom-stress-test.sh' has no matching skill</li><li>Script 'overnight-research.sh' has no matching skill</li><li>Script 'morning_orchestrator.sh' has no matching skill</li></ul>
         </div>
 
   <div class="footer">
