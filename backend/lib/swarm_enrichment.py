@@ -303,7 +303,8 @@ def agent_swarm_enrichment(conn, item):
             duration_ms = int((time.time() - t0) * 1000)
             text_chunk, urls = flatten_results(exa_response)
             result_count = len(exa_response.get("results", []))
-            cost_usd = exa_response.get("costDollars", 0.0) or 0.0
+            raw_cost = exa_response.get("costDollars", 0.0)
+            cost_usd = float(raw_cost.get("total", 0.0)) if isinstance(raw_cost, dict) else float(raw_cost or 0.0)
 
             log_execution(
                 conn, buyer_name, section_key, effective_query,
@@ -343,7 +344,8 @@ def agent_swarm_enrichment(conn, item):
                 duration_ms = int((time.time() - t0) * 1000)
                 text_chunk, urls = flatten_results(exa_response)
                 result_count = len(exa_response.get("results", []))
-                cost_usd = exa_response.get("costDollars", 0.0) or 0.0
+                raw_cost = exa_response.get("costDollars", 0.0)
+                cost_usd = float(raw_cost.get("total", 0.0)) if isinstance(raw_cost, dict) else float(raw_cost or 0.0)
 
                 log_execution(
                     conn, buyer_name, section_key, guidance_query,
