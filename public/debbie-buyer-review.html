@@ -51,6 +51,11 @@ body { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; backgrou
 .fb-comment { font-size:10px; padding:4px 6px; background:#0d1117; border:1px solid #21262d; border-radius:4px; color:#c9d1d9; resize:vertical; font-family:inherit; width:100%; min-height:32px; }
 .fb-comment:focus { outline:none; border-color:#58a6ff; }
 
+/* ── MEDIA FEEDBACK CARD OVERRIDES ──────── */
+.fb-card.fb-border-media .fb-card-label { font-size:13px; }
+.fb-card.fb-border-media .fb-radio { font-size:12px; }
+.fb-card.fb-border-media .fb-comment { min-height:200px; font-size:12px; }
+
 /* Section border colors */
 .fb-border-header { border-left-color:#58a6ff; }
 .fb-border-media { border-left-color:#a371f7; }
@@ -1284,6 +1289,17 @@ async function init() {
 
   // Render feedback column
   document.getElementById('feedbackCol').innerHTML = renderFeedbackColumn(slug);
+
+  // Sync media feedback card comment height to center section
+  const mediaSection = document.querySelector('[data-section-key="hr_media_business"].card');
+  const mediaFbCard = document.getElementById('fb-' + slug + '-hr_media_business');
+  if (mediaSection && mediaFbCard) {
+    const commentBox = mediaFbCard.querySelector('.fb-comment');
+    if (commentBox) {
+      const targetH = mediaSection.offsetHeight - mediaFbCard.querySelector('.fb-card-label').offsetHeight - mediaFbCard.querySelector('.fb-radios').offsetHeight - 40;
+      commentBox.style.minHeight = Math.max(targetH, 200) + 'px';
+    }
+  }
 
   // Render nuggets
   renderNuggets(slug);
