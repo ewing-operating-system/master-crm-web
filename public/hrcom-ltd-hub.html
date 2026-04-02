@@ -10,7 +10,6 @@
 <style>
   /* === RESET === */
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
 
   /* === BASE === */
   body {
@@ -111,6 +110,14 @@
     min-height: calc(100vh - 160px);
   }
 
+  /* === SCROLL BEHAVIOR === */
+  html {
+    scroll-behavior: smooth;
+  }
+  .card[id] {
+    scroll-margin-top: 100px;
+  }
+
   /* === SIDEBAR === */
   .sidebar {
     width: 220px;
@@ -120,9 +127,11 @@
     padding: 20px 0;
     position: sticky;
     top: 90px;
+    align-self: flex-start;
     height: fit-content;
     max-height: calc(100vh - 120px);
     overflow-y: auto;
+    z-index: 50;
   }
   .sidebar-heading {
     font-size: 11px;
@@ -165,19 +174,18 @@
     background: #161b22;
     border: 1px solid #30363d;
     border-radius: 10px;
-    padding: 24px 28px;
-    margin-bottom: 24px;
+    padding: 20px;
+    margin-bottom: 20px;
   }
   .card h2 {
     font-size: 16px;
     font-weight: 600;
     color: #f0f6fc;
-    margin-bottom: 18px;
-    padding-bottom: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
     border-bottom: 1px solid #21262d;
   }
-  .card p { margin-bottom: 12px; }
-  .card p:last-child { margin-bottom: 0; }
+  .card p { margin-bottom: 10px; }
 
   /* === GRIDS === */
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -222,12 +230,10 @@
     border-bottom: 1px solid #30363d;
   }
   td {
-    padding: 10px 14px;
+    padding: 10px 12px;
     border-bottom: 1px solid #21262d;
     color: #c9d1d9;
-    vertical-align: top;
   }
-  tbody tr:nth-child(even) td { background: #0f1318; }
   tr:hover td { background: #1c2128; }
 
   /* === LINKS === */
@@ -236,8 +242,7 @@
 
   /* === LISTS === */
   ul, ol { padding-left: 22px; }
-  li { margin: 7px 0; line-height: 1.5; }
-  .card > ul, .card > ol { margin-top: 4px; }
+  li { margin: 5px 0; }
 
   /* === SCRIPT/NARRATIVE BOXES === */
   .narrative-box {
@@ -248,56 +253,24 @@
     border-radius: 6px;
     margin: 12px 0;
     line-height: 1.7;
+    white-space: pre-wrap;
     font-size: 14px;
-  }
-  .narrative-box p {
-    margin-bottom: 12px;
-  }
-  .narrative-box p:last-child {
-    margin-bottom: 0;
-  }
-  .script-block {
-    margin-bottom: 20px;
-  }
-  .script-block:last-child {
-    margin-bottom: 0;
   }
   .script-box {
     background: #0d1117;
     border: 1px solid #21262d;
-    padding: 16px 20px;
+    padding: 16px;
     border-radius: 8px;
-    margin-top: 8px;
+    margin: 10px 0;
     white-space: pre-wrap;
     font-size: 13px;
-    line-height: 1.7;
+    line-height: 1.6;
   }
   .script-label {
     font-weight: 600;
     color: #f0f6fc;
-    font-size: 13px;
-    margin-bottom: 0;
-  }
-
-  /* === OUTREACH TRACK BLOCKS === */
-  .track-block {
-    background: #0d1117;
-    border: 1px solid #21262d;
-    border-radius: 8px;
-    padding: 14px 18px;
-    margin-top: 12px;
-  }
-  .track-block strong {
-    display: block;
-    color: #f0f6fc;
-    font-size: 14px;
     margin-bottom: 6px;
-  }
-  .track-block p {
-    margin: 0;
     font-size: 13px;
-    color: #c9d1d9;
-    line-height: 1.6;
   }
 
   /* === HIGHLIGHT CARD (for narrative) === */
@@ -305,16 +278,12 @@
     background: linear-gradient(135deg, #161b22, #1c2128);
     border: 1px solid #58a6ff;
     border-radius: 10px;
-    padding: 24px 28px;
-    margin-bottom: 24px;
+    padding: 24px;
+    margin-bottom: 20px;
   }
   .highlight-card h2 {
-    font-size: 16px;
-    font-weight: 600;
     color: #58a6ff;
-    margin-bottom: 18px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #58a6ff40;
+    border-bottom-color: #58a6ff40;
   }
 
   /* === FOOTER === */
@@ -364,29 +333,15 @@
     .badge { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
   }
 </style>
-<link rel="stylesheet" href="section-controls.css">
-<link rel="stylesheet" href="mobile-fixes.css">
 </head>
 <body>
-<!-- NAV:START -->
-<div class="nc-nav" style="background:#f6f8fa;border-bottom:1px solid #d0d7de;padding:8px 20px;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:999">
-  <span style="font-weight:700;color:#0d1117;margin-right:8px">Next Chapter M&amp;A</span>
-  <span style="color:#d0d7de">|</span>
-  <style>.nc-nav a{color:#0969da;text-decoration:none;font-weight:500}.nc-nav a:hover{text-decoration:underline}</style>
-  <a href="index.html">Home</a>
-      <a href="system-overview.html">System Overview</a>
-</div>
-<!-- NAV:END -->
-
-
-
 
 <!-- HEADER -->
 <div class="page-header">
   <div class="header-inner">
     <div class="header-left">
       <h1>HR.com Ltd</h1>
-      <div class="subtitle">Debbie McGrath | Grimsby, Ontario | B2B Digital Media | Rev: Declining from peak (3-year trend due to My People investment) | ~20% EBITDA margin | Team: 18 on HR.com side + separate My People dev team</div>
+      <div class="subtitle">Debbie McGrath | Grimsby, Ontario | HR Technology / B2B Digital Media | Rev: Not publicly disclosed | Employees: Not publicly disclosed</div>
     </div>
     <div class="header-right">
       <span class="deal-badge">SELL SIDE</span>
@@ -399,7 +354,7 @@
   <a href="/dashboard.html">Home</a>
 <a href="/dashboard.html">Dashboard</a>
 <a href="/hrcom-ltd-hub.html" class="active">Company Hub</a>
-<a href="/ebitda-levers.html">EBITDA Levers</a>
+<a href="/hrcom-ltd-ebitda-levers.html">EBITDA Levers</a>
 <a href="#history">Version History</a>
 
 </div>
@@ -412,17 +367,13 @@
     <div class="sidebar-heading">Page Sections</div>
     <a href="#overview" class="sidebar-link">Overview</a>
 <a href="#your-company-story" class="sidebar-link">Your Company Story</a>
-<a href="#three-assets" class="sidebar-link">Three Distinct Assets</a>
 <a href="#contacts" class="sidebar-link">Contacts</a>
 <a href="#buyer-outreach-strategy" class="sidebar-link">Buyer Outreach Strategy</a>
 <a href="#potential-acquirers-68" class="sidebar-link">Potential Acquirers (68)</a>
 <a href="#outreach-scripts" class="sidebar-link">Outreach Scripts</a>
 <a href="#plays-amp-emails-sent" class="sidebar-link">Plays &amp; Emails Sent</a>
-<a href="#tools-amp-dashboards" class="sidebar-link">Tools &amp; Dashboards</a>
 <a href="#documents-amp-files" class="sidebar-link">Documents &amp; Files</a>
-<a href="#meeting-transcripts" class="sidebar-link">Meeting Transcripts</a>
 <a href="#pipeline-history" class="sidebar-link">Pipeline History</a>
-<a href="hrcom-dealroom-overnight.html" class="sidebar-link" style="color:#f0883e">⚡ Deal Room</a>
 
   </div>
 
@@ -434,7 +385,7 @@
         <span class="badge blue">Quality: 90</span>
         <span class="badge green">Cost: $0.00</span>
         <span class="badge blue">68 Potential Acquirers</span>
-        <span class="badge blue">4 Contacts</span>
+        <span class="badge blue">0 Contacts</span>
     </div>
 
     <div class="card" id="overview">
@@ -443,719 +394,446 @@
             <div class="stat"><div class="num">68</div><div class="label">Potential Acquirers</div></div>
             <div class="stat"><div class="num">68</div><div class="label">Scripts Ready</div></div>
             <div class="stat"><div class="num">0</div><div class="label">Letters Sent</div></div>
-            <div class="stat"><div class="num">4</div><div class="label">Documents</div></div>
+            <div class="stat"><div class="num">0</div><div class="label">Documents</div></div>
         </div>
         
     </div>
 
-    <div class="highlight-card" id="your-company-story">
+    <div class="highlight-card" id="narrative">
         <h2>Your Company Story</h2>
-        <div class="narrative-box">
-          <p>HR.com is a 27-year-old profitable B2B digital media company — not a software business. Think of it as LinkedIn just for HR people. Content comes from the community.</p>
-          <p>The business includes four divisions: the media/community platform, HR West conference, Human Resource Research Institute, and a cert prep business. They also maintain a directory of 50,000 HR vendors.</p>
-          <p>Revenue has declined over the last 3 years due to investment focus on My People (spun-out platform tech). EBITDA is approximately 20%. Debbie knows virtually every potential buyer personally.</p>
-        </div>
-    </div>
-
-    <div class="card" id="three-assets">
-        <h2>Three Distinct Assets</h2>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-top:8px">
-
-          <div style="background:#0d1117;border:1px solid #21262d;border-top:3px solid #58a6ff;border-radius:8px;padding:20px">
-            <div style="font-weight:700;color:#f0f6fc;margin-bottom:10px;font-size:14px">Asset 1: hr.com Domain Name</div>
-            <ul style="font-size:13px;color:#c9d1d9">
-              <li>Premium 2-letter .com domain</li>
-              <li>Domain brokers estimate $15–20M (AI.com sold January as comp)</li>
-              <li>Potential buyers: SAP, Workday, Oracle, OpenAI, Anthropic, Deloitte, Accenture, PWC, Google</li>
-              <li>Use case: Agentic layer on top of disparate HR systems. Control point for the HR layer in an AI-driven world.</li>
-              <li>Current domain broker at 10% commission (down from 20%)</li>
-              <li>Can be sold separately — already separating content to alternative domains (HR West, HR Certification, HRRI)</li>
-            </ul>
-          </div>
-
-          <div style="background:#0d1117;border:1px solid #21262d;border-top:3px solid #27ae60;border-radius:8px;padding:20px">
-            <div style="font-weight:700;color:#f0f6fc;margin-bottom:10px;font-size:14px">Asset 2: HR.com Media Business</div>
-            <ul style="font-size:13px;color:#c9d1d9">
-              <li>27-year profitable B2B media/community platform</li>
-              <li>Revenue multiple: 1.2–1.5x (industry standard for digital media)</li>
-              <li>2022 process: 8 offers received, range $9M–$45M. One mid-range accepted, didn't close.</li>
-              <li>Includes: community platform, conference (HR West), research division, cert prep, 50K vendor directory</li>
-              <li>Just migrated off AWS — owns all data (critical competitive moat)</li>
-            </ul>
-          </div>
-
-          <div style="background:#0d1117;border:1px solid #21262d;border-top:3px solid #f39c12;border-radius:8px;padding:20px">
-            <div style="font-weight:700;color:#f0f6fc;margin-bottom:10px;font-size:14px">Asset 3: My People (Platform Technology)</div>
-            <ul style="font-size:13px;color:#c9d1d9">
-              <li>Spun-out community platform. TypeScript, Node.js, React, API-first, native AI.</li>
-              <li>Rebuilt backend 2023, live since June 2025</li>
-              <li>35 HR tech clients interested, first 7 going live in 45 days</li>
-              <li>HR.com funds at $250K/year. Ready for outside funding once CEO is placed.</li>
-              <li>History: Previously Forge (F-O-R-J). $8M raised (Baer Baird), 4 CTOs in 3 years, failed. Debbie recovered IP in 2023 for $1M.</li>
-              <li>Needs: CEO placement, then funding round</li>
-            </ul>
-          </div>
-
-        </div>
+        <div class="narrative-box">HR.com Ltd, founded in 1999 and headquartered in Grimsby, Ontario, is a premier HR Technology &amp; Media company led by CEO Debbie McGrath. With a strong focus on providing HR professionals with cutting-edge resources, HR.com has established itself as a leader in the industry. The company offers a comprehensive suite of services including HR research and insights, an online HR community, technology resources, webinars, events, and certification programs. HR.com's platform is a go-to destination for HR professionals seeking knowledge, networking, and professional development. The company's domain, HR.com, is one of only 676 two-letter .com domains in existence, ranking in the top 1% for traffic and instantly conferring authority in the HR tech space. This rare asset, combined with the company's established brand and thought leadership, positions HR.com as a highly attractive acquisition target.</div>
     </div>
 
     <div class="card" id="contacts">
         <h2>Contacts</h2>
         <table>
-          <thead>
-            <tr><th>Name</th><th>Role</th><th>Email</th><th>Notes</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong style="color:#f0f6fc">Debbie McGrath</strong></td>
-              <td>CEO / Founder (27 years)</td>
-              <td>dmcgrath@hr.com</td>
-              <td>Age 63. Hip surgery May — no travel until June 8. Open to 2-year transition.</td>
-            </tr>
-            <tr>
-              <td><strong style="color:#f0f6fc">Glenn ("Daddy Shark")</strong></td>
-              <td>Referral Source / Trusted Advisor</td>
-              <td>—</td>
-              <td>Ewing's former boss. Debbie's friend 30+ years. Santa Barbara. Skiing buddy.</td>
-            </tr>
-            <tr>
-              <td><strong style="color:#f0f6fc">Bill Philip</strong></td>
-              <td>Delancey and Partners</td>
-              <td>—</td>
-              <td>Brought previous CEO for Forge attempt.</td>
-            </tr>
-            <tr>
-              <td><strong style="color:#f0f6fc">Doug Merritt</strong></td>
-              <td>Mutual Contact (John Kelly)</td>
-              <td>—</td>
-              <td>Splunk/SAP connection. John was best man at his wedding twice.</td>
-            </tr>
-          </tbody>
+            <tr><th>Name</th><th>Title</th><th>Email</th><th>Phone</th><th>LinkedIn</th></tr>
+            <tr><td colspan="5" style="color:#8b949e">No contacts on file</td></tr>
         </table>
     </div>
 
-    <div class="card" id="buyer-outreach-strategy">
+    <div class="card" id="proposal">
         <h2>Buyer Outreach Strategy</h2>
-        <p>Three parallel tracks. Domain buyers (AI-native, Enterprise HCM, Big 4 consulting). Media buyers (platform + data acquirers). My People investors/acquirers. 63 pre-qualified buyers mapped. Debbie sending detailed asset document with her own acquirer list.</p>
-        <div class="track-block">
-          <strong>Track 1 — Domain Buyers</strong>
-          <p>AI-native companies (OpenAI, Anthropic, Google), Enterprise HCM platforms (SAP, Workday, Oracle), Big 4 consulting (Deloitte, Accenture, PWC, EY). Thesis: hr.com as the agentic control point for the HR layer in an AI-driven world.</p>
-        </div>
-        <div class="track-block">
-          <strong>Track 2 — Media Buyers</strong>
-          <p>Platform and data acquirers targeting the 27-year content moat, 50K vendor directory, and first-party community data. Owns all data post-AWS migration. Revenue multiple 1.2–1.5x.</p>
-        </div>
-        <div class="track-block">
-          <strong>Track 3 — My People Investors/Acquirers</strong>
-          <p>CEO placement first, then funding round. 35 HR tech clients in pipeline, first 7 going live in 45 days. TypeScript/Node/React/API-first stack. Separate from HR.com operating business.</p>
-        </div>
+        <p>HR.com Ltd, founded in 1999 and headquartered in Grimsby, Ontario, is a premier HR Technology &amp; Media company led by CEO Debbie McGrath. With a strong focus on providing HR professionals with cutting-edge resources, HR.com has established itself as a leader in the industry. The company offers a comprehensive suite of services including HR research and insights, an online HR community, technology resources, webinars, events, and certification programs. HR.com's platform is a go-to destination for HR professionals seeking knowledge, networking, and professional development. The company's domain, HR.com, is one of only 676 two-letter .com domains in existence, ranking in the top 1% for traffic and instantly conferring authority in the HR tech space. This rare asset, combined with the company'</p>
+        <div style="margin-top:15px"><strong style="color:#f0f6fc">Market Analysis:</strong><p style="margin-top:6px">The HR technology market is a rapidly growing sector, valued at over $30 billion, with increasing demand for integrated solutions that cater to HR professionals. HR.com's unique position as a media and technology provider allows it to serve as a bridge between HR practitioners and the latest industry trends. The company's domain, HR.com, is a rare and commercially significant asset, comparable to other high-value two-letter domains like AI.com, which sold for $70M. This domain not only provides </p></div>
+        <div style="margin-top:15px"><strong style="color:#f0f6fc">Attack Plan:</strong><p style="margin-top:6px">1. Identify and prioritize top buyer targets based on strategic fit and willingness to pay. 2. Prepare a compelling pitch highlighting HR.com's unique assets and market position. 3. Engage with domain brokers and industry contacts to facilitate introductions. 4. Negotiate terms that maximize value for HR.com while ensuring a smooth transition.</p></div>
+        <div style="margin-top:15px"><strong style="color:#f0f6fc">Timeline:</strong><p style="margin-top:6px">30/60/90</p></div>
     </div>
 
-    <div class="card" id="potential-acquirers-68">
+    <div class="card" id="buyers">
         <h2>Potential Acquirers (68)</h2>
         <table>
             <tr><th>Company</th><th>Type</th><th>Location</th><th>Fit</th><th>DNC</th><th>Script</th><th>Status</th></tr>
-        <tr>
-            <td><a href="hr-com-ltd_informa.html">Informa</a></td>
+            <tr>
+            <td>Informa</td>
             <td>Platform</td>
             <td>London, UK</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_relx-reed-elsevier.html">RELX (Reed Elsevier)</a></td>
+        </tr><tr>
+            <td>RELX (Reed Elsevier)</td>
             <td>Platform</td>
             <td>London, UK</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_francisco-partners.html">Francisco Partners</a></td>
+        </tr><tr>
+            <td>Francisco Partners</td>
             <td>Platform</td>
             <td>San Francisco, CA</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_techtarget.html">TechTarget</a></td>
+        </tr><tr>
+            <td>TechTarget</td>
             <td>Platform</td>
             <td>Newton, MA</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_adp.html">ADP</a></td>
-            <td>Platform</td>
-            <td>Roseland, NJ</td>
-            <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_workday.html">Workday</a></td>
-            <td>Platform</td>
-            <td>Pleasanton, CA</td>
-            <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_paychex.html">Paychex</a></td>
-            <td>Platform</td>
-            <td>Rochester, NY</td>
-            <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_hg-capital.html">HG Capital</a></td>
-            <td>PE Roll-up</td>
-            <td>London, UK</td>
-            <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_industry-dive.html">Industry Dive</a></td>
-            <td>Platform</td>
-            <td>Washington, DC</td>
-            <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_ceridian-dayforce.html">Ceridian (Dayforce)</a></td>
-            <td>Platform</td>
-            <td>Minneapolis, MN</td>
-            <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_paylocity.html">Paylocity</a></td>
-            <td>Platform</td>
-            <td>Schaumburg, IL</td>
-            <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_vista-equity-partners.html">Vista Equity Partners</a></td>
-            <td>Platform</td>
-            <td>Austin, TX</td>
-            <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_randstad-randstad-digital.html">Randstad / Randstad Digital</a></td>
-            <td>Strategic Acquirer</td>
-            <td>Diemen, Netherlands (US: Atlanta, GA)</td>
-            <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_accenture.html">Accenture</a></td>
+        </tr><tr>
+            <td>Accenture</td>
             <td>Platform</td>
             <td>Dublin, Ireland</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_manpower-manpowergroup.html">Manpower (ManpowerGroup)</a></td>
+        </tr><tr>
+            <td>Workday</td>
+            <td>Platform</td>
+            <td>Pleasanton, CA</td>
+            <td>8</td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
+            <td><span class="badge gray" style="font-size:10px">scripted</span></td>
+        </tr><tr>
+            <td>Paychex</td>
+            <td>Platform</td>
+            <td>Rochester, NY</td>
+            <td>8</td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
+            <td><span class="badge gray" style="font-size:10px">scripted</span></td>
+        </tr><tr>
+            <td>Manpower (ManpowerGroup)</td>
             <td>Platform</td>
             <td>Milwaukee, WI</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_pwc.html">PWC</a></td>
+        </tr><tr>
+            <td>Industry Dive</td>
+            <td>Platform</td>
+            <td>Washington, DC</td>
+            <td>8</td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
+            <td><span class="badge gray" style="font-size:10px">imported</span></td>
+        </tr><tr>
+            <td>Ceridian (Dayforce)</td>
+            <td>Platform</td>
+            <td>Minneapolis, MN</td>
+            <td>8</td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
+            <td><span class="badge gray" style="font-size:10px">imported</span></td>
+        </tr><tr>
+            <td>Paylocity</td>
+            <td>Platform</td>
+            <td>Schaumburg, IL</td>
+            <td>8</td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
+            <td><span class="badge gray" style="font-size:10px">imported</span></td>
+        </tr><tr>
+            <td>Vista Equity Partners</td>
+            <td>Platform</td>
+            <td>Austin, TX</td>
+            <td>8</td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
+            <td><span class="badge gray" style="font-size:10px">imported</span></td>
+        </tr><tr>
+            <td>ADP</td>
+            <td>Platform</td>
+            <td>Roseland, NJ</td>
+            <td>8</td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
+            <td><span class="badge gray" style="font-size:10px">scripted</span></td>
+        </tr><tr>
+            <td>HG Capital</td>
+            <td>PE Roll-up</td>
+            <td>London, UK</td>
+            <td>8</td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
+            <td><span class="badge gray" style="font-size:10px">scripted</span></td>
+        </tr><tr>
+            <td>Randstad / Randstad Digital</td>
+            <td>Strategic Acquirer</td>
+            <td>Diemen, Netherlands (US: Atlanta, GA)</td>
+            <td>8</td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
+            <td><span class="badge gray" style="font-size:10px">scripted</span></td>
+        </tr><tr>
+            <td>PWC</td>
             <td>Platform</td>
             <td>New York, NY</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_thoma-bravo.html">Thoma Bravo</a></td>
+        </tr><tr>
+            <td>Thoma Bravo</td>
             <td>Platform</td>
             <td>San Francisco, CA</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_deloitte.html">Deloitte</a></td>
+        </tr><tr>
+            <td>Deloitte</td>
             <td>Platform</td>
             <td>New York, NY</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_sap-successfactors.html">SAP SuccessFactors</a></td>
+        </tr><tr>
+            <td>SAP SuccessFactors</td>
             <td>Platform</td>
             <td>Walldorf, Germany (US: Newtown Square, PA)</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_wiley.html">Wiley</a></td>
+        </tr><tr>
+            <td>Wiley</td>
             <td>Platform</td>
             <td>Hoboken, NJ</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_alight.html">Alight</a></td>
+        </tr><tr>
+            <td>Alight</td>
             <td>Platform</td>
             <td>Lincolnshire, IL</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_wolters-kluwer.html">Wolters Kluwer</a></td>
+        </tr><tr>
+            <td>Wolters Kluwer</td>
             <td>Platform</td>
             <td>Alphen aan den Rijn, Netherlands</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_ey.html">EY</a></td>
+        </tr><tr>
+            <td>EY</td>
             <td>Platform</td>
             <td>New York, NY</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_ibm.html">IBM</a></td>
+        </tr><tr>
+            <td>IBM</td>
             <td>Platform</td>
             <td>Armonk, NY</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_hellman-friedman.html">Hellman & Friedman</a></td>
+        </tr><tr>
+            <td>Hellman &amp; Friedman</td>
             <td>Platform</td>
             <td>San Francisco, CA</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_oracle-hcm.html">Oracle HCM</a></td>
+        </tr><tr>
+            <td>Oracle HCM</td>
             <td>Platform</td>
             <td>Austin, TX</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_ukg-ultimate-kronos.html">UKG (Ultimate Kronos)</a></td>
+        </tr><tr>
+            <td>UKG (Ultimate Kronos)</td>
             <td>Platform</td>
             <td>Weston, FL</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_microsoft.html">Microsoft</a></td>
+        </tr><tr>
+            <td>Microsoft</td>
             <td>Platform</td>
             <td>Redmond, WA</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_deel.html">Deel</a></td>
+        </tr><tr>
+            <td>Deel</td>
             <td>Platform</td>
             <td>San Francisco, CA</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_g2.html">G2</a></td>
+        </tr><tr>
+            <td>G2</td>
             <td>Platform</td>
             <td>Chicago, IL</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_thomson-reuters.html">Thomson Reuters</a></td>
+        </tr><tr>
+            <td>Thomson Reuters</td>
             <td>Platform</td>
             <td>Toronto, Canada</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_indeed.html">Indeed</a></td>
+        </tr><tr>
+            <td>Indeed</td>
             <td>Platform</td>
             <td>Austin, TX</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_khoros.html">Khoros</a></td>
+        </tr><tr>
+            <td>Khoros</td>
             <td>Platform</td>
             <td>Austin, TX</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_clearlake-capital.html">Clearlake Capital</a></td>
+        </tr><tr>
+            <td>Clearlake Capital</td>
             <td>Platform</td>
             <td>Santa Monica, CA</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_shrm.html">SHRM</a></td>
+        </tr><tr>
+            <td>SHRM</td>
             <td>Platform</td>
             <td>Alexandria, VA</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_paycom.html">Paycom</a></td>
+        </tr><tr>
+            <td>Paycom</td>
             <td>Platform</td>
             <td>Oklahoma City, OK</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_kkr.html">KKR</a></td>
+        </tr><tr>
+            <td>KKR</td>
             <td>Platform</td>
             <td>New York, NY</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_remote.html">Remote</a></td>
+        </tr><tr>
+            <td>Remote</td>
             <td>Platform</td>
             <td>San Francisco, CA</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_worldatwork.html">WorldatWork</a></td>
+        </tr><tr>
+            <td>WorldatWork</td>
             <td>Platform</td>
             <td>Scottsdale, AZ</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_greenhouse.html">Greenhouse</a></td>
+        </tr><tr>
+            <td>Greenhouse</td>
             <td>Platform</td>
             <td>New York, NY</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_amazon-aws.html">Amazon (AWS)</a></td>
+        </tr><tr>
+            <td>Amazon (AWS)</td>
             <td>Platform</td>
             <td>Seattle, WA</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_lattice.html">Lattice</a></td>
+        </tr><tr>
+            <td>Lattice</td>
             <td>Platform</td>
             <td>San Francisco, CA</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_google.html">Google</a></td>
+        </tr><tr>
+            <td>Google</td>
             <td>Platform</td>
             <td>Mountain View, CA</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_rippling.html">Rippling</a></td>
+        </tr><tr>
+            <td>Rippling</td>
             <td>Platform</td>
             <td>San Francisco, CA</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_atd.html">ATD</a></td>
+        </tr><tr>
+            <td>ATD</td>
             <td>Platform</td>
             <td>Alexandria, VA</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_culture-amp.html">Culture Amp</a></td>
+        </tr><tr>
+            <td>Culture Amp</td>
             <td>Platform</td>
             <td>San Francisco, CA</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_bamboohr.html">BambooHR</a></td>
+        </tr><tr>
+            <td>BambooHR</td>
             <td>Platform</td>
             <td>Lindon, UT</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_dotdash-meredith.html">Dotdash Meredith</a></td>
+        </tr><tr>
+            <td>Dotdash Meredith</td>
             <td>Platform</td>
             <td>New York, NY</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_zoominfo.html">ZoomInfo</a></td>
+        </tr><tr>
+            <td>ZoomInfo</td>
             <td>Platform</td>
             <td>Vancouver, WA</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_silver-lake.html">Silver Lake</a></td>
+        </tr><tr>
+            <td>Silver Lake</td>
             <td>Platform</td>
             <td>Menlo Park, CA</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_gainsight.html">Gainsight</a></td>
-            <td>Platform</td>
-            <td>San Francisco, CA</td>
-            <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_servicenow.html">ServiceNow</a></td>
-            <td>Platform</td>
-            <td>Santa Clara, CA</td>
-            <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_salesforce.html">Salesforce</a></td>
-            <td>Platform</td>
-            <td>San Francisco, CA</td>
-            <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_insight-partners.html">Insight Partners</a></td>
-            <td>Platform</td>
-            <td>New York, NY</td>
-            <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_bevy.html">Bevy</a></td>
-            <td>Platform</td>
-            <td>Palo Alto, CA</td>
-            <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_hubspot.html">HubSpot</a></td>
-            <td>Platform</td>
-            <td>Cambridge, MA</td>
-            <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_shopify.html">Shopify</a></td>
-            <td>Platform</td>
-            <td>Ottawa, Canada</td>
-            <td>4</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_mypeople-ai.html">MyPeople.ai</a></td>
-            <td>Platform / Tech</td>
-            <td>San Francisco, CA</td>
-            <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_spark-capital.html">Spark Capital</a></td>
-            <td>Platform</td>
-            <td>San Francisco, CA</td>
-            <td>4</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_openai.html">OpenAI</a></td>
-            <td>Platform</td>
-            <td>San Francisco, CA</td>
-            <td>4</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_mighty-networks.html">Mighty Networks</a></td>
-            <td>Platform</td>
-            <td>Palo Alto, CA</td>
-            <td>4</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_benchmark.html">Benchmark</a></td>
-            <td>Platform</td>
-            <td>San Francisco, CA</td>
-            <td>4</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_lighthouse-research-advisory.html">Lighthouse Research & Advisory</a></td>
-            <td>Industry Consolidator</td>
-            <td>Birmingham, AL</td>
-            <td>4</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_norwest-venture-partners.html">Norwest Venture Partners</a></td>
-            <td>Platform</td>
-            <td>Palo Alto, CA</td>
-            <td>4</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_cohere.html">Cohere</a></td>
-            <td>Platform</td>
-            <td>Toronto, Canada</td>
-            <td>4</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_anthropic.html">Anthropic</a></td>
-            <td>Platform</td>
-            <td>San Francisco, CA</td>
-            <td>4</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_drake-star-partners-advisory-lead.html">Drake Star Partners (Advisory Lead)</a></td>
-            <td>Industry Consolidator</td>
-            <td>New York, NY</td>
-            <td>4</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr>
-        <tr>
-            <td><a href="hr-com-ltd_thrive-capital.html">Thrive Capital</a></td>
-            <td>Platform</td>
-            <td>New York, NY</td>
-            <td>4</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
         </tr>
         </table>
     </div>
 
-    <div class="card" id="outreach-scripts">
+    <div class="card" id="scripts">
         <h2>Outreach Scripts</h2>
-        <div class="script-block">
-          <div class="script-label">Email</div>
-          <div class="script-box">Subject: Content moat for 790K customers — worth a look?
-
-John,
-
-With Paycor now integrated, Paychex has the transaction infrastructure. The missing piece is the attention layer — content, events, and certifications that keep HR leaders engaged between purchase decisions.
-
-We advise owners of HR technology and media businesses on strategic options. One company we represent operates exactly that platform: a lead-generation and education engine purpose-built for the HR community.
-
-Paired with Paychex's customer base, this creates organic cross-sell pathways and a defensible content moat no competitor can quickly replicate.
-
-Worth 15 minutes to explore fit?
-
-Best,
-Ewing Gillaspy
-Next Chapter Advisory</div>
-        </div>
-        <div class="script-block">
-          <div class="script-label">Call Script</div>
-          <div class="script-box">Hi John, this is Ewing Gillaspy with Next Chapter Advisory. Congratulations on closing Paycor — impressive integration at that scale.
-
-Quick reason for my call: we advise owners of HR technology and media businesses, and we're working with one whose content and certification platform could plug directly into Paychex's 790K customer base as a lead-gen and engagement engine.
-
-Talking points:
-- Content moat: events, certifications, media — hard to build, easy to bolt on
-- Cross-sell: organic upsell pathways across existing accounts
-- Defensive: keeps HR buyers in Paychex ecosystem vs. competitors
-
-Would 15 minutes this week make sense to explore fit?</div>
-        </div>
-        <div class="script-block">
-          <div class="script-label">LinkedIn</div>
-          <div class="script-box">John — congrats on the Paycor close. We advise HR tech owners on strategic options and are working with one whose content and certification platform could be a natural fit for Paychex's 790K base. Worth a brief conversation?</div>
-        </div>
-        <div class="script-block">
-          <div class="script-label">Letter</div>
-          <div class="script-box">Dear Mr. Gibson,
-
-Congratulations on the Paycor integration — bringing 790,000 customers onto a unified platform is no small feat. That scale creates an interesting question: how do you deepen engagement across that base without adding headcount?
-
-Our firm advises owners of HR technology and media businesses on strategic options. We're currently working with the ownership group of a company that operates a content, events, and professional certification platform serving the HR community. Think of it as the attention layer that sits on top of any HCM platform — content, events, certifications, and a vendor directory built for HR leaders.
-
-Would it make sense to explore whether this fits your current priorities? Happy to share more detail.
-
-Best,
-Ewing Gillaspy
-Next Chapter Advisory</div>
-        </div>
+        <div class="script-label">Email</div><div class="script-box">Dear Debbie, I hope this message finds you well. My name is [Your Name], and I’m reaching out from Next Chapter Capital, where we specialize in acquiring founder-built companies like HR.com. Your 25-year journey and the incredible impact you’ve made on the HR industry are truly remarkable. We’re particularly impressed by your domain’s value, the recurring revenue model, and the strong community you’ve built. We’d love to explore how we can partner to ensure HR.com’s continued growth and success. Would you be open to a conversation? Best regards, [Your Name]</div><div class="script-label">Call Script</div><div class="script-box">Hi Debbie, this is [Your Name] from Next Chapter Capital. We specialize in acquiring founder-built companies because we believe in the vision and dedication of owners like you, not just the stock market. Your 25-year journey with HR.com is truly inspiring, and we’d love to discuss how we can support your legacy. Your domain is a valuable asset, and we’re curious about your thoughts on succession planning. Would you be open to a conversation?</div><div class="script-label">LinkedIn</div><div class="script-box">Hi Debbie, I’m [Your Name] from Next Chapter Capital. Your work with HR.com is inspiring! We’d love to connect and explore how we can support your vision. Let’s chat!</div>
     </div>
 
-    <div class="card" id="plays-amp-emails-sent">
+    <div class="card" id="plays">
         <h2>Plays &amp; Emails Sent</h2>
         <table>
             <tr><th>Play</th><th>Status</th><th>Quality</th><th>Date</th></tr>
@@ -1168,48 +846,16 @@ Next Chapter Advisory</div>
         </table>
     </div>
 
-    <div class="card" id="tools-amp-dashboards">
-        <h2>Tools &amp; Dashboards</h2>
-        <ul>
-          <li><a href="debbie-buyer-review.html" target="_blank">Debbie's Buyer Review Tool</a></li>
-          <li><a href="debbie-fact-dashboard.html" target="_blank">Debbie Fact Dashboard</a></li>
-          <li><a href="hrcom-data-audit.html" target="_blank">HR.com Data Audit (Inside-Out View)</a></li>
-        </ul>
-    </div>
-
-    <div class="card" id="documents-amp-files">
+    <div class="card" id="files">
         <h2>Documents &amp; Files</h2>
-        <ul>
-          <li><a href="hrcom-ltd.html" target="_blank">Proposal: hrcom-ltd.html</a></li>
-          <li><a href="hrcom-ltd.html" target="_blank">Proposal: interactive-hrcom-ltd.html</a></li>
-          <li><a href="dataroom-hrcom-ltd.html" target="_blank">Data Room: hrcom-ltd.html</a></li>
-          <li><a href="meeting-hrcom-ltd_2026-03-29_discovery.html" target="_blank">Meeting Prep: hrcom-ltd_2026-03-29_discovery.html</a></li>
-        </ul>
+        <ul><li style='color:#8b949e'>No files generated yet</li></ul>
     </div>
 
-    <div class="card" id="meeting-transcripts">
-        <h2>Meeting Transcripts</h2>
-        <table>
-            <tr><th>Date</th><th>Meeting</th><th>Duration</th><th>Participants</th><th>Learnings</th><th></th></tr>
-            <tr>
-                <td>Apr 1, 2026</td>
-                <td>Proposal Review with Debbie</td>
-                <td>34 min</td>
-                <td>Ewing, Debbie, John, Mark</td>
-                <td><span class="badge blue" style="font-size:10px">14 extracted</span></td>
-                <td><a href="/meetings/01KN3D8S57CX196DC5C6MZ8YHB.html" target="_blank" style="color:#58a6ff">View Transcript &rarr;</a></td>
-            </tr>
-        </table>
-    </div>
-
-    <div class="card" id="pipeline-history">
+    <div class="card" id="history">
         <h2>Pipeline History</h2>
         <table>
             <tr><th>Step</th><th>Tool</th><th>Status</th><th>Cost</th><th>Date</th></tr>
-            <tr><td>Discovery call completed</td><td>—</td><td><span class="badge green" style="font-size:10px">complete</span></td><td>$0.00</td><td>2026-03-23</td></tr>
-            <tr><td>Strategic plan with 3 options due</td><td>—</td><td><span class="badge orange" style="font-size:10px">in progress</span></td><td>—</td><td>—</td></tr>
-            <tr><td>Follow-up call scheduled</td><td>—</td><td><span class="badge blue" style="font-size:10px">scheduled</span></td><td>—</td><td>—</td></tr>
-            <tr><td>Debbie sending asset/acquirer document</td><td>—</td><td><span class="badge gray" style="font-size:10px">pending</span></td><td>—</td><td>—</td></tr>
+            <tr><td colspan="5" style="color:#8b949e">No pipeline history</td></tr>
         </table>
     </div>
   </div>
@@ -1219,38 +865,38 @@ Next Chapter Advisory</div>
 <!-- FOOTER -->
 <div class="page-footer">
   <strong>Next Chapter M&A Advisory</strong> | Sell-Side Engagement<br>
-  Generated March 29, 2026 08:55 PM | INTERNAL — Admin View
+  Generated April 01, 2026 06:22 PM | INTERNAL — Admin View
 </div>
 
 <!-- WIDGETS -->
 <script src="/comment-widget.js"></script>
-<script src="/notification-bell.js"></script>
 <script src="/version-widget.js"></script>
 
 
-<script src="section-controls.js"></script>
+<!-- SCROLL-SPY: highlights active sidebar link as user scrolls -->
 <script>
-/* Sidebar scroll-spy: highlight active link as you scroll */
 (function() {
-  const links = document.querySelectorAll('.sidebar-link');
-  const sections = [];
-  links.forEach(link => {
-    const id = link.getAttribute('href')?.replace('#', '');
-    const el = id && document.getElementById(id);
-    if (el) sections.push({ id, el, link });
+  var links = document.querySelectorAll('.sidebar-link');
+  var sections = [];
+  links.forEach(function(link) {
+    var id = link.getAttribute('href');
+    if (id) id = id.replace('#', '');
+    var el = id && document.getElementById(id);
+    if (el) sections.push({ id: id, el: el, link: link });
   });
   if (!sections.length) return;
   function updateActive() {
-    let current = sections[0];
-    for (const s of sections) {
-      if (s.el.getBoundingClientRect().top <= 120) current = s;
+    var current = sections[0];
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i].el.getBoundingClientRect().top <= 120) current = sections[i];
     }
-    links.forEach(l => l.classList.remove('active'));
+    links.forEach(function(l) { l.classList.remove('active'); });
     current.link.classList.add('active');
   }
   window.addEventListener('scroll', updateActive, { passive: true });
   updateActive();
 })();
 </script>
+
 </body>
 </html>
