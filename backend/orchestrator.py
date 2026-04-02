@@ -4,7 +4,7 @@ Orchestrator — master scheduler and event router.
 Runs continuously on Mac mini. Scans for work, dispatches to agent_queue.
 """
 
-import json, os, time, sys, psycopg2
+import json, os, time, sys, psycopg2, subprocess
 from datetime import datetime, timedelta
 
 # Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
@@ -131,6 +131,60 @@ def get_queue_stats(conn):
         stats.setdefault(agent, {})[status] = count
     return stats
 
+def sync_stale_pages(conn):
+    """Regenerate hub pages for targets that have research but no report yet."""
+    try:
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT id FROM targets
+            WHERE research_completed_at IS NOT NULL
+              AND report_generated_at IS NULL
+              AND pipeline_status NOT IN ('DISQUALIFIED', 'REPORT_LIVE')
+        """)
+        stale = cur.fetchall()
+        count = len(stale)
+        if count == 0:
+            return
+        log(f"sync_stale_pages: {count} stale page(s) found — running regenerate.py")
+        result = subprocess.run(
+            ["python3", "/Users/clawdbot/Projects/master-crm-web/scripts/regenerate.py"],
+            timeout=300,
+            capture_output=True,
+            text=True
+        )
+        if result.returncode == 0:
+            log(f"sync_stale_pages: regeneration succeeded (returncode=0)")
+        else:
+            log(f"sync_stale_pages: regeneration failed (returncode={result.returncode}) stderr={result.stderr[:200]}")
+    except Exception as e:
+        log(f"sync_stale_pages: ERROR (suppressed) — {e}")
+
+
+def sync_public_data_git():
+    """Auto-commit and push uncommitted changes under public/data/."""
+    try:
+        repo = "/Users/clawdbot/Projects/master-crm-web"
+        result = subprocess.run(
+            ["git", "-C", repo, "status", "--porcelain", "public/data/"],
+            capture_output=True, text=True
+        )
+        if not result.stdout.strip():
+            return
+        log(f"sync_public_data_git: uncommitted changes detected — committing and pushing")
+        subprocess.run(["git", "-C", repo, "add", "public/data/"], capture_output=True, text=True)
+        subprocess.run(
+            ["git", "-C", repo, "commit", "-m", "[auto] sync research data"],
+            capture_output=True, text=True
+        )
+        push = subprocess.run(["git", "-C", repo, "push"], capture_output=True, text=True)
+        if push.returncode == 0:
+            log("sync_public_data_git: push succeeded")
+        else:
+            log(f"sync_public_data_git: push failed — {push.stderr[:200]}")
+    except Exception as e:
+        log(f"sync_public_data_git: ERROR (suppressed) — {e}")
+
+
 def run_cycle(conn):
     """One orchestrator cycle."""
     reset_stuck_items(conn)
@@ -144,6 +198,9 @@ def run_cycle(conn):
         done = sum(s.get('done', 0) for s in stats.values())
         failed = sum(s.get('failed', 0) for s in stats.values())
         log(f"Queue: pending={pending} claimed={claimed} done={done} failed={failed}")
+
+    sync_stale_pages(conn)
+    sync_public_data_git()
 
 def main():
     log("=" * 50)

@@ -146,7 +146,7 @@ def git_commit_and_push(files) -> bool:
     rel_files = [str(f.relative_to(REPO_ROOT)) for f in files]
     try:
         subprocess.run(
-            ["git", "-C", str(REPO_ROOT), "add"] + rel_files,
+            ["git", "-C", str(REPO_ROOT), "add"] + rel_files + ["public/data/*.json"],
             check=True
         )
         timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
@@ -178,6 +178,34 @@ def update_supabase_status(target_id: str, slug: str):
             "report_url": report_url,
         },
     )
+
+
+def register_page(page_path: str, page_type: str, company_name: str, entity: str):
+    """Upsert a row into page_versions after generating an HTML file.
+
+    Uses company_name + page_type as the natural merge key (via Prefer header).
+    Stores page_path in template_used and entity in generated_by.
+    """
+    url = f"{SUPABASE_URL}/rest/v1/page_versions"
+    body = {
+        "company_name": company_name,
+        "page_type": page_type,
+        "template_used": page_path,
+        "generated_by": entity,
+        "created_at": datetime.now(timezone.utc).isoformat(),
+    }
+    data = json.dumps(body).encode()
+    req = urllib.request.Request(url, data=data, method="POST")
+    req.add_header("apikey", SUPABASE_KEY)
+    req.add_header("Authorization", f"Bearer {SUPABASE_KEY}")
+    req.add_header("Content-Type", "application/json")
+    req.add_header("Prefer", "resolution=merge-duplicates,return=representation")
+    ctx = ssl.create_default_context()
+    try:
+        with urllib.request.urlopen(req, context=ctx) as resp:
+            resp.read()
+    except Exception as exc:
+        log(f"  WARNING: page_versions upsert failed for {page_path} -- {exc}")
 
 
 # ---------------------------------------------------------------------------
@@ -237,6 +265,12 @@ def main():
             files_written.append(out_path)
             successful_targets.append(t)
             log(f"  OK: wrote {len(html):,} bytes")
+            register_page(
+                page_path=out_path.name,
+                page_type="hub",
+                company_name=company_name,
+                entity=t.get("entity", ""),
+            )
         except Exception as exc:
             log(f"  FAILED: {company_name} -- {exc}")
             failed.append(company_name)

@@ -18,6 +18,9 @@ POLL_INTERVAL = 10  # seconds between queue checks
 IDLE_INTERVAL = 60  # seconds when queue is empty
 WORKER_ID = f"worker-{os.getpid()}"
 
+REGEN_AGENTS = {"swarm_enrichment", "researcher", "buyer_1pager"}
+_last_regen_at = 0.0  # epoch seconds; debounce regeneration calls
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 def log(msg):
@@ -80,6 +83,57 @@ def call_openrouter(prompt, model="deepseek/deepseek-chat-v3-0324"):
         return json.loads(resp.read())["choices"][0]["message"]["content"]
     except:
         return None
+
+def trigger_regeneration(item):
+    """Regenerate static pages for the company associated with this queue item.
+    Debounced to at most once per 120 seconds. Never raises."""
+    global _last_regen_at
+    try:
+        now = time.time()
+        if now - _last_regen_at < 120:
+            log(f"  Regen skipped (debounce): {int(120 - (now - _last_regen_at))}s remaining")
+            return
+        _last_regen_at = now
+
+        payload = item.get("payload") or {}
+        company = (
+            payload.get("buyer_name")
+            or payload.get("company_name")
+            or payload.get("seller_name")
+            or ""
+        )
+        if not company:
+            log(f"  Regen skipped: no company name in payload")
+            return
+
+        regen_cmd = [
+            "python3",
+            "/Users/clawdbot/Projects/master-crm-web/scripts/regenerate.py",
+            "--company", company,
+        ]
+        result = subprocess.run(regen_cmd, capture_output=True, text=True, timeout=120)
+        if result.returncode == 0:
+            log(f"  Regen OK for '{company}'")
+        else:
+            log(f"  Regen FAILED for '{company}': {result.stderr.strip()[:200]}")
+
+        if item.get("agent_name") == "swarm_enrichment":
+            git_cmd = (
+                "cd /Users/clawdbot/Projects/master-crm-web && "
+                "git add public/data/*.json && "
+                'git commit -m "[auto] update research data" && '
+                "git push"
+            )
+            git_result = subprocess.run(
+                git_cmd, shell=True, capture_output=True, text=True, timeout=120
+            )
+            if git_result.returncode == 0:
+                log(f"  Git push OK (swarm data for '{company}')")
+            else:
+                log(f"  Git push FAILED: {git_result.stderr.strip()[:200]}")
+    except Exception as e:
+        log(f"  Regen exception (non-fatal): {e}")
+
 
 # ─── Agent Modules ───────────────────────────────────────────────────────────
 
@@ -231,6 +285,8 @@ def main():
                 status, error = process_item(conn, item)
                 complete_item(conn, item["queue_id"], status, error)
                 log(f"  Result: {status}" + (f" — {error}" if error else ""))
+                if status == "done" and item.get("agent_name") in REGEN_AGENTS:
+                    trigger_regeneration(item)
                 conn.close()
                 time.sleep(POLL_INTERVAL)
             else:
