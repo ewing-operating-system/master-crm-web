@@ -9,194 +9,281 @@
   <meta name="entities" content="next_chapter,hrcom">
   <script src="/supabase-config.js"></script>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #0d1117; color: #c9d1d9; font-family: "Segoe UI", system-ui, -apple-system, sans-serif; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { height: 100%; }
+    body {
+      background: #0d1117; color: #c9d1d9;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      height: 100%; display: flex; flex-direction: column;
+    }
 
-    /* Header */
+    /* ── Header ─────────────────────────────────────── */
     .meeting-header {
-      background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);
+      background: #161b22;
       border-bottom: 1px solid #30363d;
-      padding: 24px 32px;
-      position: sticky; top: 0; z-index: 100;
+      padding: 20px 28px 16px;
+      flex-shrink: 0;
     }
-    .meeting-header h1 { font-size: 22px; color: #f0f6fc; margin-bottom: 8px; }
-    .meeting-meta { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; font-size: 13px; color: #8b949e; }
-    .meeting-meta span { display: flex; align-items: center; gap: 4px; }
+    .header-top {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+    }
+    .meeting-header h1 {
+      font-size: 20px; font-weight: 600; color: #f0f6fc;
+      letter-spacing: -0.3px;
+    }
+    .header-badges { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
     .entity-badge {
-      display: inline-block; padding: 3px 10px; border-radius: 12px;
-      color: #fff; font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+      display: inline-flex; align-items: center; padding: 4px 12px;
+      border-radius: 16px; color: #fff; font-size: 11px;
+      font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase;
     }
-    .hub-links { margin-top: 8px; }
+    .meta-row {
+      display: flex; gap: 20px; flex-wrap: wrap; align-items: center;
+      font-size: 13px; color: #8b949e; margin-top: 10px;
+    }
+    .meta-item { display: flex; align-items: center; gap: 5px; }
+    .meta-icon { opacity: 0.6; }
+    .hub-links { margin-top: 8px; display: flex; gap: 16px; }
     .hub-link {
-      color: #58a6ff; text-decoration: none; font-size: 12px; margin-right: 16px;
+      color: #58a6ff; text-decoration: none; font-size: 12px;
+      display: flex; align-items: center; gap: 4px;
     }
     .hub-link:hover { text-decoration: underline; }
 
-    /* Audio player */
-    .audio-section {
-      padding: 16px 32px;
-      background: #161b22;
-      border-bottom: 1px solid #30363d;
-      display: flex; align-items: center; gap: 16px;
+    /* ── Audio bar ──────────────────────────────────── */
+    .audio-bar {
+      background: #0d1117; border-bottom: 1px solid #21262d;
+      padding: 12px 28px; flex-shrink: 0;
+      display: flex; align-items: center; gap: 14px;
     }
-    .audio-section audio { flex: 1; max-width: 600px; height: 40px; }
-    .audio-label { color: #8b949e; font-size: 13px; }
-
-    /* Summary */
-    .summary-section {
-      padding: 16px 32px;
-      background: #161b22;
-      border-bottom: 1px solid #30363d;
+    .play-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #238636; color: #fff; border: none;
+      padding: 8px 20px; border-radius: 6px; font-size: 13px;
+      font-weight: 500; cursor: pointer; text-decoration: none;
+      transition: background 0.15s;
     }
-    .summary-section h3 { color: #f0f6fc; font-size: 14px; margin-bottom: 8px; }
-    .summary-text { color: #c9d1d9; font-size: 13px; line-height: 1.6; }
+    .play-link:hover { background: #2ea043; }
+    .play-link svg { width: 16px; height: 16px; fill: currentColor; }
+    .audio-meta { color: #484f58; font-size: 12px; }
 
-    /* Main layout */
+    /* ── Summary strip ─────────────────────────────── */
+    .summary-strip {
+      background: #161b22; border-bottom: 1px solid #21262d;
+      padding: 14px 28px; flex-shrink: 0;
+    }
+    .summary-strip h3 {
+      color: #8b949e; font-size: 10px; text-transform: uppercase;
+      letter-spacing: 1px; margin-bottom: 6px; font-weight: 600;
+    }
+    .summary-text {
+      color: #c9d1d9; font-size: 13px; line-height: 1.55;
+      max-width: 900px;
+    }
+
+    /* ── Speaker legend ────────────────────────────── */
+    .speaker-legend {
+      background: #0d1117; border-bottom: 1px solid #21262d;
+      padding: 10px 28px; flex-shrink: 0;
+      display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+    }
+    .speaker-legend-label {
+      color: #484f58; font-size: 10px; text-transform: uppercase;
+      letter-spacing: 1px; margin-right: 4px;
+    }
+    .speaker-chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 12px; color: var(--speaker-color); font-weight: 500;
+      padding: 3px 10px; border-radius: 12px;
+      background: color-mix(in srgb, var(--speaker-color) 12%, transparent);
+      border: 1px solid color-mix(in srgb, var(--speaker-color) 25%, transparent);
+    }
+
+    /* ── Main two-column layout ────────────────────── */
     .main-content {
       display: grid;
-      grid-template-columns: 1fr 380px;
-      height: calc(100vh - 200px);
+      grid-template-columns: 1fr 400px;
+      flex: 1; min-height: 0;
     }
-    @media (max-width: 900px) {
-      .main-content { grid-template-columns: 1fr; }
-      .learnings-panel { max-height: 50vh; }
+    @media (max-width: 960px) {
+      .main-content { grid-template-columns: 1fr; grid-template-rows: 1fr auto; }
     }
 
-    /* Transcript panel */
+    /* ── Transcript panel ──────────────────────────── */
     .transcript-panel {
-      padding: 24px 32px;
-      overflow-y: auto;
-      border-right: 1px solid #30363d;
+      overflow-y: auto; padding: 20px 28px 40px;
+      border-right: 1px solid #21262d;
     }
     .transcript-panel h2 {
-      color: #f0f6fc; font-size: 16px; margin-bottom: 16px;
-      padding-bottom: 8px; border-bottom: 1px solid #30363d;
+      color: #f0f6fc; font-size: 13px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      margin-bottom: 16px; padding-bottom: 10px;
+      border-bottom: 1px solid #21262d;
     }
     .utterance {
-      margin-bottom: 16px;
-      padding: 8px 12px;
-      border-radius: 6px;
-      transition: background 0.2s;
+      margin-bottom: 2px; padding: 6px 10px;
+      border-radius: 4px; transition: background 0.15s;
+      border-left: 2px solid transparent;
     }
-    .utterance:hover { background: #161b22; }
+    .utterance:hover {
+      background: #161b22;
+      border-left-color: #30363d;
+    }
     .speaker-row {
-      display: flex; align-items: center; gap: 8px; margin-bottom: 4px;
+      display: flex; align-items: baseline; gap: 8px; margin-bottom: 2px;
     }
     .timestamp {
-      color: #484f58; font-size: 11px; font-family: monospace;
-      cursor: pointer;
+      color: #484f58; font-size: 10px; font-family: "SF Mono", "Fira Code", monospace;
+      cursor: pointer; min-width: 38px; user-select: none;
     }
     .timestamp:hover { color: #58a6ff; }
     .speaker-name {
-      color: #58a6ff; font-weight: 600; font-size: 13px;
+      font-weight: 600; font-size: 12px;
     }
     .speaker-text {
-      color: #c9d1d9; font-size: 13px; line-height: 1.6;
-      margin-left: 0; margin-bottom: 4px;
+      color: #c9d1d9; font-size: 13px; line-height: 1.55;
+      margin-left: 46px; margin-bottom: 2px;
     }
 
-    /* Learnings panel */
+    /* ── Learnings panel ───────────────────────────── */
     .learnings-panel {
-      padding: 24px 16px;
-      overflow-y: auto;
+      overflow-y: auto; padding: 20px 18px 40px;
       background: #0d1117;
     }
+    .learnings-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 4px;
+    }
     .learnings-panel h2 {
-      color: #f0f6fc; font-size: 16px; margin-bottom: 4px;
+      color: #f0f6fc; font-size: 13px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.8px;
     }
+    .learnings-count {
+      font-size: 11px; color: #8b949e;
+    }
+    .learnings-count .num { color: #58a6ff; font-weight: 600; }
     .learnings-subtitle {
-      color: #8b949e; font-size: 12px; margin-bottom: 16px;
+      color: #484f58; font-size: 11px; margin-bottom: 14px;
     }
+
+    /* Filter pills */
+    .filter-bar {
+      display: flex; gap: 4px; margin-bottom: 14px; flex-wrap: wrap;
+      padding-bottom: 12px; border-bottom: 1px solid #21262d;
+    }
+    .filter-btn {
+      padding: 4px 12px; border-radius: 16px; border: 1px solid #30363d;
+      background: transparent; color: #8b949e; font-size: 11px;
+      cursor: pointer; transition: all 0.15s; white-space: nowrap;
+    }
+    .filter-btn:hover { border-color: #58a6ff; color: #c9d1d9; }
+    .filter-btn.active {
+      background: #1f6feb; color: #fff; border-color: #1f6feb;
+      font-weight: 500;
+    }
+
+    /* Learning cards */
     .learning-card {
-      background: #161b22;
-      border: 1px solid #30363d;
-      border-radius: 8px;
-      padding: 12px;
-      margin-bottom: 10px;
-      transition: border-color 0.2s;
+      background: #161b22; border: 1px solid #21262d;
+      border-radius: 8px; padding: 12px 14px;
+      margin-bottom: 8px; transition: all 0.15s;
+      position: relative;
     }
-    .learning-card:hover { border-color: #58a6ff; }
-    .learning-card.approved { border-left: 3px solid #27ae60; }
-    .learning-card.rejected { border-left: 3px solid #e74c3c; opacity: 0.6; }
+    .learning-card:hover {
+      border-color: #30363d;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+    .learning-card.approved {
+      border-left: 3px solid #238636;
+      background: linear-gradient(90deg, rgba(35,134,54,0.06) 0%, #161b22 40%);
+    }
+    .learning-card.rejected {
+      border-left: 3px solid #da3633;
+      opacity: 0.5;
+    }
     .learning-header {
-      display: flex; align-items: center; gap: 6px; margin-bottom: 6px;
-      flex-wrap: wrap;
+      display: flex; align-items: center; gap: 6px;
+      margin-bottom: 6px; flex-wrap: wrap;
     }
-    .learning-icon { font-size: 14px; }
+    .learning-icon { font-size: 13px; line-height: 1; }
     .learning-category {
-      background: #21262d; color: #8b949e; font-size: 10px;
+      background: #21262d; color: #8b949e; font-size: 9px;
       padding: 2px 8px; border-radius: 10px; text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px; font-weight: 600;
     }
     .learning-entity {
-      background: #1a1a2e; color: #58a6ff; font-size: 10px;
-      padding: 2px 8px; border-radius: 10px;
+      color: #58a6ff; font-size: 9px; padding: 2px 8px;
+      border-radius: 10px; font-weight: 500;
+      border: 1px solid rgba(88,166,255,0.2);
     }
     .learning-confidence {
       color: #484f58; font-size: 10px; margin-left: auto;
+      font-family: "SF Mono", monospace;
     }
     .learning-text {
       color: #c9d1d9; font-size: 12px; line-height: 1.5;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
     .learning-actions {
       display: flex; gap: 6px; align-items: center;
     }
     .btn-approve, .btn-reject {
-      padding: 4px 14px; border-radius: 4px; border: 1px solid #30363d;
-      font-size: 11px; cursor: pointer; transition: all 0.15s;
+      padding: 5px 16px; border-radius: 6px; border: 1px solid transparent;
+      font-size: 12px; font-weight: 500; cursor: pointer;
+      transition: all 0.15s;
     }
     .btn-approve {
-      background: #1a3a2a; color: #27ae60; border-color: #27ae60;
+      background: #238636; color: #fff; border-color: #238636;
     }
-    .btn-approve:hover { background: #27ae60; color: #fff; }
+    .btn-approve:hover { background: #2ea043; }
     .btn-reject {
-      background: #3a1a1a; color: #e74c3c; border-color: #e74c3c;
+      background: transparent; color: #8b949e; border-color: #30363d;
     }
-    .btn-reject:hover { background: #e74c3c; color: #fff; }
+    .btn-reject:hover { background: #21262d; color: #da3633; border-color: #da3633; }
     .status-tag {
-      font-size: 11px; padding: 3px 10px; border-radius: 4px;
+      font-size: 11px; padding: 4px 12px; border-radius: 6px; font-weight: 500;
     }
-    .approved-tag { background: #1a3a2a; color: #27ae60; }
-    .rejected-tag { background: #3a1a1a; color: #e74c3c; }
+    .approved-tag { background: rgba(35,134,54,0.15); color: #3fb950; }
+    .rejected-tag { background: rgba(218,54,51,0.15); color: #f85149; }
 
-    /* Filter bar */
-    .filter-bar {
-      display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap;
-    }
-    .filter-btn {
-      padding: 4px 10px; border-radius: 12px; border: 1px solid #30363d;
-      background: #161b22; color: #8b949e; font-size: 11px; cursor: pointer;
-    }
-    .filter-btn.active { background: #1f6feb; color: #fff; border-color: #1f6feb; }
-
-    /* Scrollbar */
+    /* ── Scrollbar ──────────────────────────────────── */
     ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #0d1117; }
+    ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #30363d; border-radius: 3px; }
     ::-webkit-scrollbar-thumb:hover { background: #484f58; }
   </style>
 </head>
 <body>
   <header class="meeting-header">
-    <h1>Hr.com Proposal Review with Debbie</h1>
-    <div class="meeting-meta">
-      <span>April 1, 2026</span>
-      <span>34 min</span>
-      <span>Debbie McGrath, Mark DeChant, Ewing Gillaspy, John Kelly</span>
-      <span class="entity-badge" style="background:#2c3e50">Next Chapter</span> <span class="entity-badge" style="background:#6c757d">Hrcom</span> 
+    <div class="header-top">
+      <h1>Hr.com Proposal Review with Debbie</h1>
+      <div class="header-badges"><span class="entity-badge" style="background:#2c3e50">Next Chapter</span> <span class="entity-badge" style="background:#6c757d">Hrcom</span> </div>
+    </div>
+    <div class="meta-row">
+      <span class="meta-item"><span class="meta-icon">&#x1F4C5;</span> April 1, 2026</span>
+      <span class="meta-item"><span class="meta-icon">&#x23F1;</span> 34 min</span>
+      <span class="meta-item"><span class="meta-icon">&#x1F465;</span> Debbie McGrath, Mark DeChant, Ewing Gillaspy, John Kelly</span>
     </div>
     <div class="hub-links"><a href="/next-chapter-hub.html" class="hub-link">Next Chapter Account Page</a> <a href="/hrcom-hub.html" class="hub-link">Hrcom Account Page</a> </div>
   </header>
 
-  <div class="audio-section">
-    <span class="audio-label">Recording:</span>
-    <audio controls preload="none" src="https://cdn.fireflies.ai/01KN3D8S57CX196DC5C6MZ8YHB/audio.mp3"></audio>
+  <div class="audio-bar">
+    <a class="play-link" href="https://app.fireflies.ai/view/01KN3D8S57CX196DC5C6MZ8YHB" target="_blank" rel="noopener">
+      <svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6z"/></svg>
+      Listen to Recording
+    </a>
+    <span class="audio-meta">34 min &middot; Opens in Fireflies</span>
   </div>
 
-  <div class="summary-section">
+  <div class="summary-strip">
     <h3>Summary</h3>
     <p class="summary-text">The team discussed strategies to maximize the value of HR.com and its associated assets through a competitive and collaborative deal process. By avoiding exclusivity, they aim to create competition and drive offers higher. The assets are being treated as separate deals—domain, media business, and My People community platform—to target diverse buyer profiles. Andrew Miller, a domain specialist who sold chat.com to Sam Altman, will handle the domain sale separately. Fee structures, competitive positioning, and a meeting with Andrew Thursday at 3pm ET were agreed upon.</p>
+  </div>
+
+  <div class="speaker-legend">
+    <span class="speaker-legend-label">Speakers</span>
+    <span class="speaker-chip" style="--speaker-color:#58a6ff">Debbie McGrath</span><span class="speaker-chip" style="--speaker-color:#f78166">Ewing Gillaspy</span><span class="speaker-chip" style="--speaker-color:#a5d6ff">Mark DeChant</span><span class="speaker-chip" style="--speaker-color:#7ee787">John Kelly</span>
   </div>
 
   <div class="main-content">
@@ -205,14 +292,14 @@
       <div class="utterance" data-time="5.0">
   <div class="speaker-row">
     <span class="timestamp">[00:05]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">This meeting is being recorded.</p>
 </div>
 <div class="utterance" data-time="10.0">
   <div class="speaker-row">
     <span class="timestamp">[00:10]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">Oh.</p>
   <p class="speaker-text">Am I in the wrong place, Man?</p>
@@ -222,28 +309,28 @@
 <div class="utterance" data-time="21.0">
   <div class="speaker-row">
     <span class="timestamp">[00:21]</span>
-    <span class="speaker-name">Mark DeChant</span>
+    <span class="speaker-name" style="color:#a5d6ff">Mark DeChant</span>
   </div>
   <p class="speaker-text">Who knows what calendar we'll use today.</p>
 </div>
 <div class="utterance" data-time="26.0">
   <div class="speaker-row">
     <span class="timestamp">[00:26]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">Maples out there.</p>
 </div>
 <div class="utterance" data-time="31.0">
   <div class="speaker-row">
     <span class="timestamp">[00:31]</span>
-    <span class="speaker-name">John Kelly</span>
+    <span class="speaker-name" style="color:#7ee787">John Kelly</span>
   </div>
   <p class="speaker-text">Yeah.</p>
 </div>
 <div class="utterance" data-time="36.0">
   <div class="speaker-row">
     <span class="timestamp">[00:36]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">What is going on?</p>
   <p class="speaker-text">It's not like either one of.</p>
@@ -251,7 +338,7 @@
 <div class="utterance" data-time="43.0">
   <div class="speaker-row">
     <span class="timestamp">[00:43]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">Come here.</p>
   <p class="speaker-text">Come here.</p>
@@ -259,7 +346,7 @@
 <div class="utterance" data-time="50.0">
   <div class="speaker-row">
     <span class="timestamp">[00:50]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">What is going on?</p>
   <p class="speaker-text">Maple.</p>
@@ -273,14 +360,14 @@
 <div class="utterance" data-time="69.0">
   <div class="speaker-row">
     <span class="timestamp">[01:09]</span>
-    <span class="speaker-name">Mark DeChant</span>
+    <span class="speaker-name" style="color:#a5d6ff">Mark DeChant</span>
   </div>
   <p class="speaker-text">I already deleted that, but check it out.</p>
 </div>
 <div class="utterance" data-time="74.0">
   <div class="speaker-row">
     <span class="timestamp">[01:14]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">There he is.</p>
   <p class="speaker-text">Fresh shave man, glistening.</p>
@@ -291,42 +378,42 @@
 <div class="utterance" data-time="87.0">
   <div class="speaker-row">
     <span class="timestamp">[01:27]</span>
-    <span class="speaker-name">Mark DeChant</span>
+    <span class="speaker-name" style="color:#a5d6ff">Mark DeChant</span>
   </div>
   <p class="speaker-text">I was gonna say.</p>
 </div>
 <div class="utterance" data-time="92.0">
   <div class="speaker-row">
     <span class="timestamp">[01:32]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">I was gonna say.</p>
 </div>
 <div class="utterance" data-time="97.0">
   <div class="speaker-row">
     <span class="timestamp">[01:37]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">Don't tell them.</p>
 </div>
 <div class="utterance" data-time="102.0">
   <div class="speaker-row">
     <span class="timestamp">[01:42]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">Yeah.</p>
 </div>
 <div class="utterance" data-time="107.0">
   <div class="speaker-row">
     <span class="timestamp">[01:47]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">No, no, no.</p>
 </div>
 <div class="utterance" data-time="112.0">
   <div class="speaker-row">
     <span class="timestamp">[01:52]</span>
-    <span class="speaker-name">John Kelly</span>
+    <span class="speaker-name" style="color:#7ee787">John Kelly</span>
   </div>
   <p class="speaker-text">There you go.</p>
   <p class="speaker-text">I'm just gonna say something nasty, Mark.</p>
@@ -334,14 +421,14 @@
 <div class="utterance" data-time="119.0">
   <div class="speaker-row">
     <span class="timestamp">[01:59]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">Anyway.</p>
 </div>
 <div class="utterance" data-time="124.0">
   <div class="speaker-row">
     <span class="timestamp">[02:04]</span>
-    <span class="speaker-name">John Kelly</span>
+    <span class="speaker-name" style="color:#7ee787">John Kelly</span>
   </div>
   <p class="speaker-text">No, no, it's not.</p>
   <p class="speaker-text">It's not really shaped on top at all.</p>
@@ -356,7 +443,7 @@
 <div class="utterance" data-time="145.0">
   <div class="speaker-row">
     <span class="timestamp">[02:25]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">It's called backup to icloud, John.</p>
   <p class="speaker-text">That's all.</p>
@@ -365,14 +452,14 @@
 <div class="utterance" data-time="154.0">
   <div class="speaker-row">
     <span class="timestamp">[02:34]</span>
-    <span class="speaker-name">Mark DeChant</span>
+    <span class="speaker-name" style="color:#a5d6ff">Mark DeChant</span>
   </div>
   <p class="speaker-text">Debbie.</p>
 </div>
 <div class="utterance" data-time="159.0">
   <div class="speaker-row">
     <span class="timestamp">[02:39]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">Hi.</p>
   <p class="speaker-text">Hey, Mark.</p>
@@ -381,7 +468,7 @@
 <div class="utterance" data-time="168.0">
   <div class="speaker-row">
     <span class="timestamp">[02:48]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">Hi, Deb.</p>
   <p class="speaker-text">Well, we sent you a bunch of stuff, probably more than you wanted, and.</p>
@@ -389,7 +476,7 @@
 <div class="utterance" data-time="175.0">
   <div class="speaker-row">
     <span class="timestamp">[02:55]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">All on one nice website, though, right?</p>
   <p class="speaker-text">So.</p>
@@ -397,7 +484,7 @@
 <div class="utterance" data-time="182.0">
   <div class="speaker-row">
     <span class="timestamp">[03:02]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">Yeah.</p>
   <p class="speaker-text">Yeah.</p>
@@ -411,7 +498,7 @@
 <div class="utterance" data-time="201.0">
   <div class="speaker-row">
     <span class="timestamp">[03:21]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">I was just expecting to see the SAP narrative, and I couldn't find it until I found the hamburger menu.</p>
   <p class="speaker-text">Oh.</p>
@@ -430,21 +517,21 @@
 <div class="utterance" data-time="230.0">
   <div class="speaker-row">
     <span class="timestamp">[03:50]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">Oh, it's.</p>
 </div>
 <div class="utterance" data-time="235.0">
   <div class="speaker-row">
     <span class="timestamp">[03:55]</span>
-    <span class="speaker-name">Mark DeChant</span>
+    <span class="speaker-name" style="color:#a5d6ff">Mark DeChant</span>
   </div>
   <p class="speaker-text">It's gonna.</p>
 </div>
 <div class="utterance" data-time="240.0">
   <div class="speaker-row">
     <span class="timestamp">[04:00]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">It's gonna.</p>
   <p class="speaker-text">It's.</p>
@@ -458,7 +545,7 @@
 <div class="utterance" data-time="259.0">
   <div class="speaker-row">
     <span class="timestamp">[04:19]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">Okay.</p>
   <p class="speaker-text">Okay.</p>
@@ -468,21 +555,21 @@
 <div class="utterance" data-time="270.0">
   <div class="speaker-row">
     <span class="timestamp">[04:30]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">One, the one in the loom video is the one that we work out of.</p>
 </div>
 <div class="utterance" data-time="275.0">
   <div class="speaker-row">
     <span class="timestamp">[04:35]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">Okay.</p>
 </div>
 <div class="utterance" data-time="280.0">
   <div class="speaker-row">
     <span class="timestamp">[04:40]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">That is not Debbie's deal room.</p>
   <p class="speaker-text">It's our own system that's got all.</p>
@@ -490,7 +577,7 @@
 <div class="utterance" data-time="287.0">
   <div class="speaker-row">
     <span class="timestamp">[04:47]</span>
-    <span class="speaker-name">John Kelly</span>
+    <span class="speaker-name" style="color:#7ee787">John Kelly</span>
   </div>
   <p class="speaker-text">The staging site Deb.</p>
   <p class="speaker-text">And you don't see that.</p>
@@ -498,7 +585,7 @@
 <div class="utterance" data-time="294.0">
   <div class="speaker-row">
     <span class="timestamp">[04:54]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">Okay.</p>
   <p class="speaker-text">Okay, fine, thanks.</p>
@@ -523,14 +610,14 @@
 <div class="utterance" data-time="335.0">
   <div class="speaker-row">
     <span class="timestamp">[05:35]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">Got it.</p>
 </div>
 <div class="utterance" data-time="340.0">
   <div class="speaker-row">
     <span class="timestamp">[05:40]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">So everybody was for everything.</p>
   <p class="speaker-text">Yeah, yeah.</p>
@@ -541,14 +628,14 @@
 <div class="utterance" data-time="353.0">
   <div class="speaker-row">
     <span class="timestamp">[05:53]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">That makes a ton of sense.</p>
 </div>
 <div class="utterance" data-time="358.0">
   <div class="speaker-row">
     <span class="timestamp">[05:58]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">Okay.</p>
   <p class="speaker-text">And then like even the SAP or the workday stuff, like Carl's gone.</p>
@@ -562,7 +649,7 @@
 <div class="utterance" data-time="377.0">
   <div class="speaker-row">
     <span class="timestamp">[06:17]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">Yes.</p>
   <p class="speaker-text">And just, and so this is me running the low cost models just to put something together so we can look at it honestly.</p>
@@ -574,7 +661,7 @@
 <div class="utterance" data-time="392.0">
   <div class="speaker-row">
     <span class="timestamp">[06:32]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">Okay.</p>
   <p class="speaker-text">Oh, okay.</p>
@@ -582,7 +669,7 @@
 <div class="utterance" data-time="399.0">
   <div class="speaker-row">
     <span class="timestamp">[06:39]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">That's exactly how I want to run this model and is give you a sense of what the cheat models found.</p>
   <p class="speaker-text">Take your expert fine tuning basic machine learning exercise and then take it back to them and have them go look for specific EXA searches.</p>
@@ -592,7 +679,7 @@
 <div class="utterance" data-time="410.0">
   <div class="speaker-row">
     <span class="timestamp">[06:50]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">Okay.</p>
   <p class="speaker-text">Even like, and I don't know if this is just a working document for us.</p>
@@ -600,7 +687,7 @@
 <div class="utterance" data-time="417.0">
   <div class="speaker-row">
     <span class="timestamp">[06:57]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">Yes, yes.</p>
   <p class="speaker-text">This is the audience for this entire thing.</p>
@@ -610,7 +697,7 @@
 <div class="utterance" data-time="428.0">
   <div class="speaker-row">
     <span class="timestamp">[07:08]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">Okay, that's fine.</p>
   <p class="speaker-text">Like just things in regards to my health that I can't travel.</p>
@@ -647,7 +734,7 @@
 <div class="utterance" data-time="493.0">
   <div class="speaker-row">
     <span class="timestamp">[08:13]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">Happy to meet with him Happening.</p>
   <p class="speaker-text">Yeah, yeah, yeah.</p>
@@ -657,7 +744,7 @@
 <div class="utterance" data-time="504.0">
   <div class="speaker-row">
     <span class="timestamp">[08:24]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">Yeah.</p>
   <p class="speaker-text">He gave me a couple examples that he just did deals with where people wanted the whole thing and then he came in and said, okay, that's fine.</p>
@@ -671,28 +758,28 @@
 <div class="utterance" data-time="523.0">
   <div class="speaker-row">
     <span class="timestamp">[08:43]</span>
-    <span class="speaker-name">John Kelly</span>
+    <span class="speaker-name" style="color:#7ee787">John Kelly</span>
   </div>
   <p class="speaker-text">So again, Deb, is Andrew asking for exclusivity?</p>
 </div>
 <div class="utterance" data-time="528.0">
   <div class="speaker-row">
     <span class="timestamp">[08:48]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">Well, he's, he's asking his initial base contract does, but he's willing to carve out that and how he would work with you and me to get this done.</p>
 </div>
 <div class="utterance" data-time="533.0">
   <div class="speaker-row">
     <span class="timestamp">[08:53]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">Okay.</p>
 </div>
 <div class="utterance" data-time="538.0">
   <div class="speaker-row">
     <span class="timestamp">[08:58]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">Right.</p>
   <p class="speaker-text">So, yeah, the only reason I asked.</p>
@@ -700,7 +787,7 @@
 <div class="utterance" data-time="545.0">
   <div class="speaker-row">
     <span class="timestamp">[09:05]</span>
-    <span class="speaker-name">John Kelly</span>
+    <span class="speaker-name" style="color:#7ee787">John Kelly</span>
   </div>
   <p class="speaker-text">Is the Rolodex that we have.</p>
   <p class="speaker-text">Right.</p>
@@ -713,7 +800,7 @@
 <div class="utterance" data-time="562.0">
   <div class="speaker-row">
     <span class="timestamp">[09:22]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">Yeah, he, like, he knows like Sam Altman.</p>
   <p class="speaker-text">He sold a couple domain names.</p>
@@ -728,14 +815,14 @@
 <div class="utterance" data-time="583.0">
   <div class="speaker-row">
     <span class="timestamp">[09:43]</span>
-    <span class="speaker-name">John Kelly</span>
+    <span class="speaker-name" style="color:#7ee787">John Kelly</span>
   </div>
   <p class="speaker-text">So that's again, what I'm implying is I also might know the CFO or CEO.</p>
 </div>
 <div class="utterance" data-time="588.0">
   <div class="speaker-row">
     <span class="timestamp">[09:48]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">Yeah, yeah, yeah.</p>
   <p class="speaker-text">For, for some of the hr, like that's the issue.</p>
@@ -744,7 +831,7 @@
 <div class="utterance" data-time="597.0">
   <div class="speaker-row">
     <span class="timestamp">[09:57]</span>
-    <span class="speaker-name">John Kelly</span>
+    <span class="speaker-name" style="color:#7ee787">John Kelly</span>
   </div>
   <p class="speaker-text">Just, you Know, as former.</p>
   <p class="speaker-text">Like, I used to run the global support team.</p>
@@ -757,7 +844,7 @@
 <div class="utterance" data-time="614.0">
   <div class="speaker-row">
     <span class="timestamp">[10:14]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">I think, I think we can make this competitive and collaborative and, and shared.</p>
   <p class="speaker-text">And I have a bounty for the person that actually finds the buyer.</p>
@@ -766,14 +853,14 @@
 <div class="utterance" data-time="623.0">
   <div class="speaker-row">
     <span class="timestamp">[10:23]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">I mean, I agree, I agree.</p>
 </div>
 <div class="utterance" data-time="628.0">
   <div class="speaker-row">
     <span class="timestamp">[10:28]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">So, yeah, I mean, we can just say, look, you know, we'll split some portion of something and then, you know, you, you find the deal, you get a cherry on top.</p>
   <p class="speaker-text">If we find the deal, we get a cherry on top.</p>
@@ -782,7 +869,7 @@
 <div class="utterance" data-time="637.0">
   <div class="speaker-row">
     <span class="timestamp">[10:37]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">Yeah, yeah, yep.</p>
   <p class="speaker-text">And I told him, you guys have a place to put notes.</p>
@@ -793,14 +880,14 @@
 <div class="utterance" data-time="650.0">
   <div class="speaker-row">
     <span class="timestamp">[10:50]</span>
-    <span class="speaker-name">John Kelly</span>
+    <span class="speaker-name" style="color:#7ee787">John Kelly</span>
   </div>
   <p class="speaker-text">Yeah.</p>
 </div>
 <div class="utterance" data-time="655.0">
   <div class="speaker-row">
     <span class="timestamp">[10:55]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">So.</p>
   <p class="speaker-text">So, so I'm pretty sure, you guys, I'm pretty sure between us, we can figure out how to make it work.</p>
@@ -808,21 +895,21 @@
 <div class="utterance" data-time="662.0">
   <div class="speaker-row">
     <span class="timestamp">[11:02]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">Definitely.</p>
 </div>
 <div class="utterance" data-time="667.0">
   <div class="speaker-row">
     <span class="timestamp">[11:07]</span>
-    <span class="speaker-name">John Kelly</span>
+    <span class="speaker-name" style="color:#7ee787">John Kelly</span>
   </div>
   <p class="speaker-text">Absolutely.</p>
 </div>
 <div class="utterance" data-time="672.0">
   <div class="speaker-row">
     <span class="timestamp">[11:12]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">Okay.</p>
   <p class="speaker-text">So.</p>
@@ -832,7 +919,7 @@
 <div class="utterance" data-time="683.0">
   <div class="speaker-row">
     <span class="timestamp">[11:23]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">No, no, no, no, let's.</p>
   <p class="speaker-text">As far as the proposal goes, did you have a preferred option from those three?</p>
@@ -840,7 +927,7 @@
 <div class="utterance" data-time="690.0">
   <div class="speaker-row">
     <span class="timestamp">[11:30]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">I. I did not get into that much detail on all the pages.</p>
   <p class="speaker-text">Right.</p>
@@ -849,14 +936,14 @@
 <div class="utterance" data-time="699.0">
   <div class="speaker-row">
     <span class="timestamp">[11:39]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">Sure.</p>
 </div>
 <div class="utterance" data-time="704.0">
   <div class="speaker-row">
     <span class="timestamp">[11:44]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">I went to bed super early last night in a back to back meeting.</p>
   <p class="speaker-text">So if you want me to go through all those pages or focus just on the proposal page or like, what do you want me to focus on?</p>
@@ -864,7 +951,7 @@
 <div class="utterance" data-time="711.0">
   <div class="speaker-row">
     <span class="timestamp">[11:51]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">Meeting with Andrew.</p>
   <p class="speaker-text">Study this page.</p>
@@ -875,7 +962,7 @@
 <div class="utterance" data-time="724.0">
   <div class="speaker-row">
     <span class="timestamp">[12:04]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">Okay, let.</p>
   <p class="speaker-text">I'm gonna send you.</p>
@@ -887,14 +974,14 @@
 <div class="utterance" data-time="739.0">
   <div class="speaker-row">
     <span class="timestamp">[12:19]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">Okay.</p>
 </div>
 <div class="utterance" data-time="744.0">
   <div class="speaker-row">
     <span class="timestamp">[12:24]</span>
-    <span class="speaker-name">John Kelly</span>
+    <span class="speaker-name" style="color:#7ee787">John Kelly</span>
   </div>
   <p class="speaker-text">Hey, you.</p>
   <p class="speaker-text">And have you seen it?</p>
@@ -903,21 +990,21 @@
 <div class="utterance" data-time="753.0">
   <div class="speaker-row">
     <span class="timestamp">[12:33]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">I'm going to send it to you.</p>
 </div>
 <div class="utterance" data-time="758.0">
   <div class="speaker-row">
     <span class="timestamp">[12:38]</span>
-    <span class="speaker-name">Mark DeChant</span>
+    <span class="speaker-name" style="color:#a5d6ff">Mark DeChant</span>
   </div>
   <p class="speaker-text">Yeah.</p>
 </div>
 <div class="utterance" data-time="763.0">
   <div class="speaker-row">
     <span class="timestamp">[12:43]</span>
-    <span class="speaker-name">John Kelly</span>
+    <span class="speaker-name" style="color:#7ee787">John Kelly</span>
   </div>
   <p class="speaker-text">For reference, no matter what.</p>
   <p class="speaker-text">Personally, I'd love to read it.</p>
@@ -926,14 +1013,14 @@
 <div class="utterance" data-time="772.0">
   <div class="speaker-row">
     <span class="timestamp">[12:52]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">Yeah.</p>
 </div>
 <div class="utterance" data-time="777.0">
   <div class="speaker-row">
     <span class="timestamp">[12:57]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">And also what after going to.</p>
   <p class="speaker-text">And capital and doing some work with them, if the deal size is over 100 million and expectation, you typically see a 2% fee.</p>
@@ -941,7 +1028,7 @@
 <div class="utterance" data-time="784.0">
   <div class="speaker-row">
     <span class="timestamp">[13:04]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">Yeah, yeah.</p>
   <p class="speaker-text">It's not gonna be over 100 million, guys.</p>
@@ -949,7 +1036,7 @@
 <div class="utterance" data-time="791.0">
   <div class="speaker-row">
     <span class="timestamp">[13:11]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">Yeah, the, the threshold, the linear that I've seen in pricing, it just, just in my, just what I've seen the lines of demarcation seem to be about 150 and 10, where under 10, you know, people want 8% pretty, pretty regularly.</p>
   <p class="speaker-text">And, and right around 50 it starts.</p>
@@ -959,7 +1046,7 @@
 <div class="utterance" data-time="802.0">
   <div class="speaker-row">
     <span class="timestamp">[13:22]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">Yeah, yeah.</p>
   <p class="speaker-text">It's kind of, you know, when Andrew started at 20, got him down to 10 now, like chipping away at other things that he's going to pay for or have to do.</p>
@@ -967,7 +1054,7 @@
 <div class="utterance" data-time="809.0">
   <div class="speaker-row">
     <span class="timestamp">[13:29]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">Quick story for you.</p>
   <p class="speaker-text">When I was selling this roofing company to Bessemer Trust out of New York, after $560,000 spent by them for quality of earnings that took eight weeks, they finally made an offer for 73.</p>
@@ -987,7 +1074,7 @@
 <div class="utterance" data-time="840.0">
   <div class="speaker-row">
     <span class="timestamp">[14:00]</span>
-    <span class="speaker-name">Debbie McGrath</span>
+    <span class="speaker-name" style="color:#58a6ff">Debbie McGrath</span>
   </div>
   <p class="speaker-text">So three o' clock tomorrow I will review that document.</p>
   <p class="speaker-text">If you put a password on it, can you just send me that or whatever.</p>
@@ -997,21 +1084,21 @@
 <div class="utterance" data-time="851.0">
   <div class="speaker-row">
     <span class="timestamp">[14:11]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">Awesome.</p>
 </div>
 <div class="utterance" data-time="856.0">
   <div class="speaker-row">
     <span class="timestamp">[14:16]</span>
-    <span class="speaker-name">Mark DeChant</span>
+    <span class="speaker-name" style="color:#a5d6ff">Mark DeChant</span>
   </div>
   <p class="speaker-text">Okay, thanks.</p>
 </div>
 <div class="utterance" data-time="861.0">
   <div class="speaker-row">
     <span class="timestamp">[14:21]</span>
-    <span class="speaker-name">Ewing Gillaspy</span>
+    <span class="speaker-name" style="color:#f78166">Ewing Gillaspy</span>
   </div>
   <p class="speaker-text">Good seeing you.</p>
 </div>
@@ -1019,33 +1106,23 @@
     </div>
 
     <div class="learnings-panel">
-      <h2>Extracted Learnings</h2>
-      <p class="learnings-subtitle">Review and approve what was learned from this meeting</p>
+      <div class="learnings-header">
+        <h2>Learnings</h2>
+        <span class="learnings-count"><span class="num">13</span> pending &middot; <span class="num">1</span> approved</span>
+      </div>
+      <p class="learnings-subtitle">Review what was extracted from this conversation</p>
 
       <div class="filter-bar">
-        <button class="filter-btn active" onclick="filterLearnings('all')">All</button>
+        <button class="filter-btn active" onclick="filterLearnings('all')">All (14)</button>
         <button class="filter-btn" onclick="filterLearnings('next_chapter')">Next Chapter</button>
         <button class="filter-btn" onclick="filterLearnings('hrcom')">Hrcom</button>
         
-        <button class="filter-btn" onclick="filterLearnings('pending')">Pending</button>
-        <button class="filter-btn" onclick="filterLearnings('approved')">Approved</button>
+        <button class="filter-btn" onclick="filterLearnings('pending')">Pending (13)</button>
+        <button class="filter-btn" onclick="filterLearnings('approved')">Approved (1)</button>
       </div>
 
       <div id="learnings-list">
         
-<div class="learning-card " id="learning-09af135c-1dda-4036-84ac-9da18b74d7b3" data-entity="hrcom">
-  <div class="learning-header">
-    <span class="learning-icon">&#x1F4B0;</span>
-    <span class="learning-category">Budget</span>
-    <span class="learning-entity">Hrcom</span>
-    <span class="learning-confidence">95%</span>
-  </div>
-  <p class="learning-text">Previous offers ranged from $5M to $45M for the full business (domain + media + community). The $45M was NOT domain-only as previously thought — all offers were for everything.</p>
-  <div class="learning-actions">
-    <button class="btn-approve" onclick="approveLearning('09af135c-1dda-4036-84ac-9da18b74d7b3', true)">Agree</button>
-<button class="btn-reject" onclick="approveLearning('09af135c-1dda-4036-84ac-9da18b74d7b3', false)">Reject</button>
-  </div>
-</div>
 <div class="learning-card " id="learning-40aae0c3-81c3-450a-94cf-88377ffc93eb" data-entity="hrcom">
   <div class="learning-header">
     <span class="learning-icon">&#x1F4B0;</span>
@@ -1215,6 +1292,18 @@
 <button class="btn-reject" onclick="approveLearning('0a611bff-b55e-48bf-9b4b-32dc7016d785', false)">Reject</button>
   </div>
 </div>
+<div class="learning-card approved" id="learning-09af135c-1dda-4036-84ac-9da18b74d7b3" data-entity="hrcom">
+  <div class="learning-header">
+    <span class="learning-icon">&#x1F4B0;</span>
+    <span class="learning-category">Budget</span>
+    <span class="learning-entity">Hrcom</span>
+    <span class="learning-confidence">95%</span>
+  </div>
+  <p class="learning-text">Previous offers ranged from $5M to $45M for the full business (domain + media + community). The $45M was NOT domain-only as previously thought — all offers were for everything.</p>
+  <div class="learning-actions">
+    <span class="status-tag approved-tag">Approved</span>
+  </div>
+</div>
       </div>
     </div>
   </div>
@@ -1227,7 +1316,7 @@
     async function approveLearning(learningId, approved) {
       const btn = event.target;
       btn.disabled = true;
-      btn.textContent = approved ? 'Approving...' : 'Rejecting...';
+      btn.textContent = approved ? 'Saving...' : 'Rejecting...';
 
       try {
         const resp = await fetch('/api/meetings/approve-learning', {
@@ -1249,16 +1338,26 @@
             card.classList.remove('approved');
             actions.innerHTML = '<span class="status-tag rejected-tag">Rejected</span>';
           }
+          updateCounts();
         } else {
-          alert('Error: ' + (data.error || 'Unknown error'));
           btn.disabled = false;
           btn.textContent = approved ? 'Agree' : 'Reject';
         }
       } catch (err) {
-        alert('Network error: ' + err.message);
         btn.disabled = false;
         btn.textContent = approved ? 'Agree' : 'Reject';
       }
+    }
+
+    function updateCounts() {
+      const cards = document.querySelectorAll('.learning-card');
+      let p = 0, a = 0;
+      cards.forEach(c => {
+        if (c.classList.contains('approved')) a++;
+        else if (!c.classList.contains('rejected')) p++;
+      });
+      const counter = document.querySelector('.learnings-count');
+      if (counter) counter.innerHTML = '<span class="num">' + p + '</span> pending &middot; <span class="num">' + a + '</span> approved';
     }
 
     function filterLearnings(filter) {
@@ -1277,19 +1376,6 @@
         }
       });
     }
-
-    // Click timestamp to seek audio
-    document.querySelectorAll('.timestamp').forEach(ts => {
-      ts.addEventListener('click', () => {
-        const utterance = ts.closest('.utterance');
-        const time = parseFloat(utterance.dataset.time);
-        const audio = document.querySelector('audio');
-        if (audio && !isNaN(time)) {
-          audio.currentTime = time;
-          audio.play();
-        }
-      });
-    });
   </script>
 </body>
 </html>

@@ -388,13 +388,24 @@ def generate_meeting_page(transcript_row: dict, learnings: list[dict]) -> str:
         label = e.replace("_", " ").title()
         entity_badges += f'<span class="entity-badge" style="background:{color}">{label}</span> '
 
-    # Build transcript HTML
+    # Speaker color assignment for visual distinction
+    speaker_colors = ["#58a6ff", "#f78166", "#a5d6ff", "#7ee787", "#d2a8ff", "#ffa657", "#ff7b72", "#79c0ff"]
+    speaker_map = {}
+    color_idx = 0
+    for s in sentences:
+        name = s.get("speaker_name", "Unknown")
+        if name not in speaker_map:
+            speaker_map[name] = speaker_colors[color_idx % len(speaker_colors)]
+            color_idx += 1
+
+    # Build transcript HTML with per-speaker colors
     transcript_html = ""
     current_speaker = ""
     for s in sentences:
         speaker = s.get("speaker_name", "Unknown")
         text = s.get("text", "")
         start = s.get("start_time", 0)
+        color = speaker_map.get(speaker, "#58a6ff")
 
         # Format timestamp
         mins = int(start // 60)
@@ -407,7 +418,7 @@ def generate_meeting_page(transcript_row: dict, learnings: list[dict]) -> str:
             transcript_html += f'''<div class="utterance" data-time="{start}">
   <div class="speaker-row">
     <span class="timestamp">[{timestamp}]</span>
-    <span class="speaker-name">{speaker}</span>
+    <span class="speaker-name" style="color:{color}">{speaker}</span>
   </div>
   <p class="speaker-text">{text}</p>
 '''
@@ -480,6 +491,19 @@ def generate_meeting_page(transcript_row: dict, learnings: list[dict]) -> str:
             label = e.replace("_", " ").title()
             entity_filter_buttons += f'<button class="filter-btn" onclick="filterLearnings(\'{e}\')">{label}</button>\n        '
 
+    # Determine if audio_url is a direct file or a Fireflies view link
+    has_audio = bool(audio_url)
+
+    # Build speaker legend
+    speaker_legend = ""
+    for name, color in speaker_map.items():
+        speaker_legend += f'<span class="speaker-chip" style="--speaker-color:{color}">{name}</span>'
+
+    # Count learnings by status
+    pending_count = sum(1 for l in learnings if l.get("approved") is None)
+    approved_count = sum(1 for l in learnings if l.get("approved") is True)
+    rejected_count = sum(1 for l in learnings if l.get("approved") is False)
+
     html = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -491,215 +515,305 @@ def generate_meeting_page(transcript_row: dict, learnings: list[dict]) -> str:
   <meta name="entities" content="{','.join(entities)}">
   <script src="/supabase-config.js"></script>
   <style>
-    * {{ margin: 0; padding: 0; box-sizing: border-box; }}
-    body {{ background: #0d1117; color: #c9d1d9; font-family: "Segoe UI", system-ui, -apple-system, sans-serif; }}
+    *, *::before, *::after {{ margin: 0; padding: 0; box-sizing: border-box; }}
+    html {{ height: 100%; }}
+    body {{
+      background: #0d1117; color: #c9d1d9;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      height: 100%; display: flex; flex-direction: column;
+    }}
 
-    /* Header */
+    /* ── Header ─────────────────────────────────────── */
     .meeting-header {{
-      background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);
+      background: #161b22;
       border-bottom: 1px solid #30363d;
-      padding: 24px 32px;
-      position: sticky; top: 0; z-index: 100;
+      padding: 20px 28px 16px;
+      flex-shrink: 0;
     }}
-    .meeting-header h1 {{ font-size: 22px; color: #f0f6fc; margin-bottom: 8px; }}
-    .meeting-meta {{ display: flex; gap: 20px; flex-wrap: wrap; align-items: center; font-size: 13px; color: #8b949e; }}
-    .meeting-meta span {{ display: flex; align-items: center; gap: 4px; }}
+    .header-top {{
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+    }}
+    .meeting-header h1 {{
+      font-size: 20px; font-weight: 600; color: #f0f6fc;
+      letter-spacing: -0.3px;
+    }}
+    .header-badges {{ display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }}
     .entity-badge {{
-      display: inline-block; padding: 3px 10px; border-radius: 12px;
-      color: #fff; font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+      display: inline-flex; align-items: center; padding: 4px 12px;
+      border-radius: 16px; color: #fff; font-size: 11px;
+      font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase;
     }}
-    .hub-links {{ margin-top: 8px; }}
+    .meta-row {{
+      display: flex; gap: 20px; flex-wrap: wrap; align-items: center;
+      font-size: 13px; color: #8b949e; margin-top: 10px;
+    }}
+    .meta-item {{ display: flex; align-items: center; gap: 5px; }}
+    .meta-icon {{ opacity: 0.6; }}
+    .hub-links {{ margin-top: 8px; display: flex; gap: 16px; }}
     .hub-link {{
-      color: #58a6ff; text-decoration: none; font-size: 12px; margin-right: 16px;
+      color: #58a6ff; text-decoration: none; font-size: 12px;
+      display: flex; align-items: center; gap: 4px;
     }}
     .hub-link:hover {{ text-decoration: underline; }}
 
-    /* Audio player */
-    .audio-section {{
-      padding: 16px 32px;
-      background: #161b22;
-      border-bottom: 1px solid #30363d;
-      display: {'flex' if audio_url else 'none'}; align-items: center; gap: 16px;
+    /* ── Audio bar ──────────────────────────────────── */
+    .audio-bar {{
+      background: #0d1117; border-bottom: 1px solid #21262d;
+      padding: 12px 28px; flex-shrink: 0;
+      display: {'flex' if has_audio else 'none'}; align-items: center; gap: 14px;
     }}
-    .audio-section audio {{ flex: 1; max-width: 600px; height: 40px; }}
-    .audio-label {{ color: #8b949e; font-size: 13px; }}
-
-    /* Summary */
-    .summary-section {{
-      padding: 16px 32px;
-      background: #161b22;
-      border-bottom: 1px solid #30363d;
+    .play-link {{
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #238636; color: #fff; border: none;
+      padding: 8px 20px; border-radius: 6px; font-size: 13px;
+      font-weight: 500; cursor: pointer; text-decoration: none;
+      transition: background 0.15s;
     }}
-    .summary-section h3 {{ color: #f0f6fc; font-size: 14px; margin-bottom: 8px; }}
-    .summary-text {{ color: #c9d1d9; font-size: 13px; line-height: 1.6; }}
+    .play-link:hover {{ background: #2ea043; }}
+    .play-link svg {{ width: 16px; height: 16px; fill: currentColor; }}
+    .audio-meta {{ color: #484f58; font-size: 12px; }}
 
-    /* Main layout */
+    /* ── Summary strip ─────────────────────────────── */
+    .summary-strip {{
+      background: #161b22; border-bottom: 1px solid #21262d;
+      padding: 14px 28px; flex-shrink: 0;
+    }}
+    .summary-strip h3 {{
+      color: #8b949e; font-size: 10px; text-transform: uppercase;
+      letter-spacing: 1px; margin-bottom: 6px; font-weight: 600;
+    }}
+    .summary-text {{
+      color: #c9d1d9; font-size: 13px; line-height: 1.55;
+      max-width: 900px;
+    }}
+
+    /* ── Speaker legend ────────────────────────────── */
+    .speaker-legend {{
+      background: #0d1117; border-bottom: 1px solid #21262d;
+      padding: 10px 28px; flex-shrink: 0;
+      display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+    }}
+    .speaker-legend-label {{
+      color: #484f58; font-size: 10px; text-transform: uppercase;
+      letter-spacing: 1px; margin-right: 4px;
+    }}
+    .speaker-chip {{
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 12px; color: var(--speaker-color); font-weight: 500;
+      padding: 3px 10px; border-radius: 12px;
+      background: color-mix(in srgb, var(--speaker-color) 12%, transparent);
+      border: 1px solid color-mix(in srgb, var(--speaker-color) 25%, transparent);
+    }}
+
+    /* ── Main two-column layout ────────────────────── */
     .main-content {{
       display: grid;
-      grid-template-columns: 1fr 380px;
-      height: calc(100vh - 200px);
+      grid-template-columns: 1fr 400px;
+      flex: 1; min-height: 0;
     }}
-    @media (max-width: 900px) {{
-      .main-content {{ grid-template-columns: 1fr; }}
-      .learnings-panel {{ max-height: 50vh; }}
+    @media (max-width: 960px) {{
+      .main-content {{ grid-template-columns: 1fr; grid-template-rows: 1fr auto; }}
     }}
 
-    /* Transcript panel */
+    /* ── Transcript panel ──────────────────────────── */
     .transcript-panel {{
-      padding: 24px 32px;
-      overflow-y: auto;
-      border-right: 1px solid #30363d;
+      overflow-y: auto; padding: 20px 28px 40px;
+      border-right: 1px solid #21262d;
     }}
     .transcript-panel h2 {{
-      color: #f0f6fc; font-size: 16px; margin-bottom: 16px;
-      padding-bottom: 8px; border-bottom: 1px solid #30363d;
+      color: #f0f6fc; font-size: 13px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      margin-bottom: 16px; padding-bottom: 10px;
+      border-bottom: 1px solid #21262d;
     }}
     .utterance {{
-      margin-bottom: 16px;
-      padding: 8px 12px;
-      border-radius: 6px;
-      transition: background 0.2s;
+      margin-bottom: 2px; padding: 6px 10px;
+      border-radius: 4px; transition: background 0.15s;
+      border-left: 2px solid transparent;
     }}
-    .utterance:hover {{ background: #161b22; }}
+    .utterance:hover {{
+      background: #161b22;
+      border-left-color: #30363d;
+    }}
     .speaker-row {{
-      display: flex; align-items: center; gap: 8px; margin-bottom: 4px;
+      display: flex; align-items: baseline; gap: 8px; margin-bottom: 2px;
     }}
     .timestamp {{
-      color: #484f58; font-size: 11px; font-family: monospace;
-      cursor: pointer;
+      color: #484f58; font-size: 10px; font-family: "SF Mono", "Fira Code", monospace;
+      cursor: pointer; min-width: 38px; user-select: none;
     }}
     .timestamp:hover {{ color: #58a6ff; }}
     .speaker-name {{
-      color: #58a6ff; font-weight: 600; font-size: 13px;
+      font-weight: 600; font-size: 12px;
     }}
     .speaker-text {{
-      color: #c9d1d9; font-size: 13px; line-height: 1.6;
-      margin-left: 0; margin-bottom: 4px;
+      color: #c9d1d9; font-size: 13px; line-height: 1.55;
+      margin-left: 46px; margin-bottom: 2px;
     }}
 
-    /* Learnings panel */
+    /* ── Learnings panel ───────────────────────────── */
     .learnings-panel {{
-      padding: 24px 16px;
-      overflow-y: auto;
+      overflow-y: auto; padding: 20px 18px 40px;
       background: #0d1117;
     }}
+    .learnings-header {{
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 4px;
+    }}
     .learnings-panel h2 {{
-      color: #f0f6fc; font-size: 16px; margin-bottom: 4px;
+      color: #f0f6fc; font-size: 13px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.8px;
     }}
+    .learnings-count {{
+      font-size: 11px; color: #8b949e;
+    }}
+    .learnings-count .num {{ color: #58a6ff; font-weight: 600; }}
     .learnings-subtitle {{
-      color: #8b949e; font-size: 12px; margin-bottom: 16px;
+      color: #484f58; font-size: 11px; margin-bottom: 14px;
     }}
+
+    /* Filter pills */
+    .filter-bar {{
+      display: flex; gap: 4px; margin-bottom: 14px; flex-wrap: wrap;
+      padding-bottom: 12px; border-bottom: 1px solid #21262d;
+    }}
+    .filter-btn {{
+      padding: 4px 12px; border-radius: 16px; border: 1px solid #30363d;
+      background: transparent; color: #8b949e; font-size: 11px;
+      cursor: pointer; transition: all 0.15s; white-space: nowrap;
+    }}
+    .filter-btn:hover {{ border-color: #58a6ff; color: #c9d1d9; }}
+    .filter-btn.active {{
+      background: #1f6feb; color: #fff; border-color: #1f6feb;
+      font-weight: 500;
+    }}
+
+    /* Learning cards */
     .learning-card {{
-      background: #161b22;
-      border: 1px solid #30363d;
-      border-radius: 8px;
-      padding: 12px;
-      margin-bottom: 10px;
-      transition: border-color 0.2s;
+      background: #161b22; border: 1px solid #21262d;
+      border-radius: 8px; padding: 12px 14px;
+      margin-bottom: 8px; transition: all 0.15s;
+      position: relative;
     }}
-    .learning-card:hover {{ border-color: #58a6ff; }}
-    .learning-card.approved {{ border-left: 3px solid #27ae60; }}
-    .learning-card.rejected {{ border-left: 3px solid #e74c3c; opacity: 0.6; }}
+    .learning-card:hover {{
+      border-color: #30363d;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }}
+    .learning-card.approved {{
+      border-left: 3px solid #238636;
+      background: linear-gradient(90deg, rgba(35,134,54,0.06) 0%, #161b22 40%);
+    }}
+    .learning-card.rejected {{
+      border-left: 3px solid #da3633;
+      opacity: 0.5;
+    }}
     .learning-header {{
-      display: flex; align-items: center; gap: 6px; margin-bottom: 6px;
-      flex-wrap: wrap;
+      display: flex; align-items: center; gap: 6px;
+      margin-bottom: 6px; flex-wrap: wrap;
     }}
-    .learning-icon {{ font-size: 14px; }}
+    .learning-icon {{ font-size: 13px; line-height: 1; }}
     .learning-category {{
-      background: #21262d; color: #8b949e; font-size: 10px;
+      background: #21262d; color: #8b949e; font-size: 9px;
       padding: 2px 8px; border-radius: 10px; text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px; font-weight: 600;
     }}
     .learning-entity {{
-      background: #1a1a2e; color: #58a6ff; font-size: 10px;
-      padding: 2px 8px; border-radius: 10px;
+      color: #58a6ff; font-size: 9px; padding: 2px 8px;
+      border-radius: 10px; font-weight: 500;
+      border: 1px solid rgba(88,166,255,0.2);
     }}
     .learning-confidence {{
       color: #484f58; font-size: 10px; margin-left: auto;
+      font-family: "SF Mono", monospace;
     }}
     .learning-text {{
       color: #c9d1d9; font-size: 12px; line-height: 1.5;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }}
     .learning-actions {{
       display: flex; gap: 6px; align-items: center;
     }}
     .btn-approve, .btn-reject {{
-      padding: 4px 14px; border-radius: 4px; border: 1px solid #30363d;
-      font-size: 11px; cursor: pointer; transition: all 0.15s;
+      padding: 5px 16px; border-radius: 6px; border: 1px solid transparent;
+      font-size: 12px; font-weight: 500; cursor: pointer;
+      transition: all 0.15s;
     }}
     .btn-approve {{
-      background: #1a3a2a; color: #27ae60; border-color: #27ae60;
+      background: #238636; color: #fff; border-color: #238636;
     }}
-    .btn-approve:hover {{ background: #27ae60; color: #fff; }}
+    .btn-approve:hover {{ background: #2ea043; }}
     .btn-reject {{
-      background: #3a1a1a; color: #e74c3c; border-color: #e74c3c;
+      background: transparent; color: #8b949e; border-color: #30363d;
     }}
-    .btn-reject:hover {{ background: #e74c3c; color: #fff; }}
+    .btn-reject:hover {{ background: #21262d; color: #da3633; border-color: #da3633; }}
     .status-tag {{
-      font-size: 11px; padding: 3px 10px; border-radius: 4px;
+      font-size: 11px; padding: 4px 12px; border-radius: 6px; font-weight: 500;
     }}
-    .approved-tag {{ background: #1a3a2a; color: #27ae60; }}
-    .rejected-tag {{ background: #3a1a1a; color: #e74c3c; }}
+    .approved-tag {{ background: rgba(35,134,54,0.15); color: #3fb950; }}
+    .rejected-tag {{ background: rgba(218,54,51,0.15); color: #f85149; }}
 
-    /* Filter bar */
-    .filter-bar {{
-      display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap;
-    }}
-    .filter-btn {{
-      padding: 4px 10px; border-radius: 12px; border: 1px solid #30363d;
-      background: #161b22; color: #8b949e; font-size: 11px; cursor: pointer;
-    }}
-    .filter-btn.active {{ background: #1f6feb; color: #fff; border-color: #1f6feb; }}
-
-    /* Scrollbar */
+    /* ── Scrollbar ──────────────────────────────────── */
     ::-webkit-scrollbar {{ width: 6px; }}
-    ::-webkit-scrollbar-track {{ background: #0d1117; }}
+    ::-webkit-scrollbar-track {{ background: transparent; }}
     ::-webkit-scrollbar-thumb {{ background: #30363d; border-radius: 3px; }}
     ::-webkit-scrollbar-thumb:hover {{ background: #484f58; }}
   </style>
 </head>
 <body>
   <header class="meeting-header">
-    <h1>{title}</h1>
-    <div class="meeting-meta">
-      <span>{date_display}</span>
-      <span>{duration} min</span>
-      <span>{participants_display}</span>
-      {entity_badges}
+    <div class="header-top">
+      <h1>{title}</h1>
+      <div class="header-badges">{entity_badges}</div>
+    </div>
+    <div class="meta-row">
+      <span class="meta-item"><span class="meta-icon">&#x1F4C5;</span> {date_display}</span>
+      <span class="meta-item"><span class="meta-icon">&#x23F1;</span> {duration} min</span>
+      <span class="meta-item"><span class="meta-icon">&#x1F465;</span> {participants_display}</span>
     </div>
     <div class="hub-links">{hub_links}</div>
   </header>
 
-  <div class="audio-section">
-    <span class="audio-label">Recording:</span>
-    <audio controls preload="none" src="{audio_url}"></audio>
+  <div class="audio-bar">
+    <a class="play-link" href="{audio_url}" target="_blank" rel="noopener">
+      <svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6z"/></svg>
+      Listen to Recording
+    </a>
+    <span class="audio-meta">{duration} min &middot; Opens in Fireflies</span>
   </div>
 
-  <div class="summary-section">
+  <div class="summary-strip">
     <h3>Summary</h3>
     <p class="summary-text">{summary}</p>
+  </div>
+
+  <div class="speaker-legend">
+    <span class="speaker-legend-label">Speakers</span>
+    {speaker_legend}
   </div>
 
   <div class="main-content">
     <div class="transcript-panel">
       <h2>Transcript</h2>
-      {transcript_html if transcript_html else '<p style="color:#8b949e">No transcript text available.</p>'}
+      {transcript_html if transcript_html else '<p style="color:#484f58;font-size:13px">No transcript text available.</p>'}
     </div>
 
     <div class="learnings-panel">
-      <h2>Extracted Learnings</h2>
-      <p class="learnings-subtitle">Review and approve what was learned from this meeting</p>
+      <div class="learnings-header">
+        <h2>Learnings</h2>
+        <span class="learnings-count"><span class="num">{pending_count}</span> pending &middot; <span class="num">{approved_count}</span> approved</span>
+      </div>
+      <p class="learnings-subtitle">Review what was extracted from this conversation</p>
 
       <div class="filter-bar">
-        <button class="filter-btn active" onclick="filterLearnings('all')">All</button>
+        <button class="filter-btn active" onclick="filterLearnings('all')">All ({len(learnings)})</button>
         {entity_filter_buttons}
-        <button class="filter-btn" onclick="filterLearnings('pending')">Pending</button>
-        <button class="filter-btn" onclick="filterLearnings('approved')">Approved</button>
+        <button class="filter-btn" onclick="filterLearnings('pending')">Pending ({pending_count})</button>
+        <button class="filter-btn" onclick="filterLearnings('approved')">Approved ({approved_count})</button>
       </div>
 
       <div id="learnings-list">
-        {learnings_html if learnings_html else '<p style="color:#8b949e">No learnings extracted yet.</p>'}
+        {learnings_html if learnings_html else '<p style="color:#484f58;font-size:13px">No learnings extracted yet.</p>'}
       </div>
     </div>
   </div>
@@ -712,7 +826,7 @@ def generate_meeting_page(transcript_row: dict, learnings: list[dict]) -> str:
     async function approveLearning(learningId, approved) {{
       const btn = event.target;
       btn.disabled = true;
-      btn.textContent = approved ? 'Approving...' : 'Rejecting...';
+      btn.textContent = approved ? 'Saving...' : 'Rejecting...';
 
       try {{
         const resp = await fetch('/api/meetings/approve-learning', {{
@@ -734,16 +848,26 @@ def generate_meeting_page(transcript_row: dict, learnings: list[dict]) -> str:
             card.classList.remove('approved');
             actions.innerHTML = '<span class="status-tag rejected-tag">Rejected</span>';
           }}
+          updateCounts();
         }} else {{
-          alert('Error: ' + (data.error || 'Unknown error'));
           btn.disabled = false;
           btn.textContent = approved ? 'Agree' : 'Reject';
         }}
       }} catch (err) {{
-        alert('Network error: ' + err.message);
         btn.disabled = false;
         btn.textContent = approved ? 'Agree' : 'Reject';
       }}
+    }}
+
+    function updateCounts() {{
+      const cards = document.querySelectorAll('.learning-card');
+      let p = 0, a = 0;
+      cards.forEach(c => {{
+        if (c.classList.contains('approved')) a++;
+        else if (!c.classList.contains('rejected')) p++;
+      }});
+      const counter = document.querySelector('.learnings-count');
+      if (counter) counter.innerHTML = '<span class="num">' + p + '</span> pending &middot; <span class="num">' + a + '</span> approved';
     }}
 
     function filterLearnings(filter) {{
@@ -762,19 +886,6 @@ def generate_meeting_page(transcript_row: dict, learnings: list[dict]) -> str:
         }}
       }});
     }}
-
-    // Click timestamp to seek audio
-    document.querySelectorAll('.timestamp').forEach(ts => {{
-      ts.addEventListener('click', () => {{
-        const utterance = ts.closest('.utterance');
-        const time = parseFloat(utterance.dataset.time);
-        const audio = document.querySelector('audio');
-        if (audio && !isNaN(time)) {{
-          audio.currentTime = time;
-          audio.play();
-        }}
-      }});
-    }});
   </script>
 </body>
 </html>'''
