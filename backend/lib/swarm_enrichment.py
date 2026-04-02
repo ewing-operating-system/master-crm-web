@@ -207,6 +207,11 @@ def update_static_json(buyer_slug, section_key, content_html, source_urls):
     """
     Merge new section data into public/data/debbie-buyer-research.json.
     Creates the file (and directory) if it doesn't exist.
+
+    JSON format expected by debbie-buyer-review.html:
+      {buyers: {slug: {buyer_name, fit_score, sections: {key: html},
+       hr_media_business: {narrative: html}, market_reputation: {products_discovered: []},
+       strategic_fit: "html string", source_urls: {key: [urls]}}}}
     """
     os.makedirs(PUBLIC_DATA_DIR, exist_ok=True)
 
@@ -216,20 +221,40 @@ def update_static_json(buyer_slug, section_key, content_html, source_urls):
             with open(RESEARCH_JSON_PATH, "r", encoding="utf-8") as f:
                 data = json.load(f)
         except (json.JSONDecodeError, OSError):
-            data = {}
+            data = {"buyers": {}}
     else:
-        data = {}
+        data = {"buyers": {}}
 
-    # Merge: data[buyer_slug][section_key] = {content, sources, updated_at}
-    if buyer_slug not in data:
-        data[buyer_slug] = {}
+    if "buyers" not in data:
+        data = {"buyers": data}  # migrate old flat format
 
-    from datetime import datetime, timezone
-    data[buyer_slug][section_key] = {
-        "content": content_html,
-        "source_urls": source_urls,
-        "updated_at": datetime.now(timezone.utc).isoformat(),
-    }
+    buyers = data["buyers"]
+    if buyer_slug not in buyers:
+        buyers[buyer_slug] = {"buyer_slug": buyer_slug, "sections": {}, "source_urls": {}}
+
+    buyer = buyers[buyer_slug]
+    if "sections" not in buyer:
+        buyer["sections"] = {}
+    if "source_urls" not in buyer:
+        buyer["source_urls"] = {}
+
+    # Route section data to the correct location based on what the page reads
+    if section_key in ("hr_media_business", "hr_domain_name"):
+        buyer[section_key] = {"narrative": content_html}
+    elif section_key == "market_reputation":
+        existing_rep = buyer.get("market_reputation", {})
+        existing_rep["narrative"] = content_html
+        if "products_discovered" not in existing_rep:
+            existing_rep["products_discovered"] = []
+        buyer["market_reputation"] = existing_rep
+    elif section_key == "strategic_fit":
+        buyer["strategic_fit"] = content_html
+    elif section_key == "golden_nuggets":
+        buyer["golden_nuggets"] = content_html
+    else:
+        buyer["sections"][section_key] = content_html
+
+    buyer["source_urls"][section_key] = source_urls
 
     with open(RESEARCH_JSON_PATH, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, default=str)
