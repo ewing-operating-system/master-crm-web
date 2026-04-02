@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paychex — Company Hub</title>
+<meta name="company-name" content="Paychex">
+<meta name="page-type" content="hub">
+<meta name="deal-side" content="sell_side">
+<style>
+  /* === RESET === */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* === BASE === */
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #0d1117;
+    color: #c9d1d9;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* === HEADER === */
+  .page-header {
+    background: linear-gradient(135deg, #161b22 0%, #0d1117 50%, #161b22 100%);
+    border-bottom: 1px solid #30363d;
+    padding: 28px 32px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .header-left h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #f0f6fc;
+    letter-spacing: -0.3px;
+  }
+  .header-left .subtitle {
+    font-size: 14px;
+    color: #8b949e;
+    margin-top: 4px;
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .deal-badge {
+    display: inline-block;
+    padding: 5px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #f0f6fc;
+    background: #27ae60;
+    text-transform: uppercase;
+  }
+  .badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #f0f6fc;
+  }
+  .badge.green { background: #27ae60; }
+  .badge.orange { background: #f39c12; color: #1a1a2e; }
+  .badge.blue { background: #1f6feb; }
+  .badge.red { background: #e74c3c; }
+  .badge.gray { background: #30363d; }
+
+  /* === NAVIGATION === */
+  .top-nav {
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    padding: 0 32px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .top-nav a {
+    color: #8b949e;
+    text-decoration: none;
+    padding: 12px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s ease;
+  }
+  .top-nav a:hover { color: #c9d1d9; border-bottom-color: #30363d; }
+  .top-nav a.active { color: #58a6ff; border-bottom-color: #58a6ff; }
+
+  /* === LAYOUT === */
+  .page-layout {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+    min-height: calc(100vh - 160px);
+  }
+
+  /* === SCROLL BEHAVIOR === */
+  html {
+    scroll-behavior: smooth;
+  }
+  .card[id] {
+    scroll-margin-top: 100px;
+  }
+
+  /* === SIDEBAR === */
+  .sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    background: #0d1117;
+    border-right: 1px solid #21262d;
+    padding: 20px 0;
+    position: sticky;
+    top: 90px;
+    align-self: flex-start;
+    height: fit-content;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    z-index: 50;
+  }
+  .sidebar-heading {
+    font-size: 11px;
+    font-weight: 600;
+    color: #8b949e;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 8px 20px;
+    margin-bottom: 4px;
+  }
+  .sidebar-link {
+    display: block;
+    padding: 7px 20px;
+    color: #8b949e;
+    text-decoration: none;
+    font-size: 13px;
+    border-left: 2px solid transparent;
+    transition: all 0.15s ease;
+  }
+  .sidebar-link:hover {
+    color: #c9d1d9;
+    background: #161b22;
+    border-left-color: #30363d;
+  }
+  .sidebar-link:active, .sidebar-link.active {
+    color: #58a6ff;
+    border-left-color: #58a6ff;
+    background: #161b22;
+  }
+
+  /* === MAIN CONTENT === */
+  .main-content {
+    flex: 1;
+    padding: 24px 32px;
+    min-width: 0;
+  }
+
+  /* === CARDS === */
+  .card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .card h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #f0f6fc;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #21262d;
+  }
+  .card p { margin-bottom: 10px; }
+
+  /* === GRIDS === */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .grid4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+
+  /* === STAT BOXES === */
+  .stat {
+    text-align: center;
+    padding: 18px 12px;
+    background: #0d1117;
+    border: 1px solid #21262d;
+    border-radius: 8px;
+  }
+  .stat .num {
+    font-size: 30px;
+    font-weight: 700;
+    color: #f0f6fc;
+    line-height: 1.1;
+  }
+  .stat .label {
+    font-size: 12px;
+    color: #8b949e;
+    margin-top: 4px;
+  }
+
+  /* === TABLES === */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  th {
+    text-align: left;
+    padding: 10px 12px;
+    background: #0d1117;
+    font-weight: 600;
+    color: #8b949e;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #30363d;
+  }
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #21262d;
+    color: #c9d1d9;
+  }
+  tr:hover td { background: #1c2128; }
+
+  /* === LINKS === */
+  a { color: #58a6ff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* === LISTS === */
+  ul, ol { padding-left: 22px; }
+  li { margin: 5px 0; }
+
+  /* === SCRIPT/NARRATIVE BOXES === */
+  .narrative-box {
+    background: #0d1117;
+    border: 1px solid #21262d;
+    border-left: 3px solid #58a6ff;
+    padding: 18px 20px;
+    border-radius: 6px;
+    margin: 12px 0;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+  .script-box {
+    background: #0d1117;
+    border: 1px solid #21262d;
+    padding: 16px;
+    border-radius: 8px;
+    margin: 10px 0;
+    white-space: pre-wrap;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .script-label {
+    font-weight: 600;
+    color: #f0f6fc;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+
+  /* === HIGHLIGHT CARD (for narrative) === */
+  .highlight-card {
+    background: linear-gradient(135deg, #161b22, #1c2128);
+    border: 1px solid #58a6ff;
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .highlight-card h2 {
+    color: #58a6ff;
+    border-bottom-color: #58a6ff40;
+  }
+
+  /* === FOOTER === */
+  .page-footer {
+    text-align: center;
+    padding: 24px 32px;
+    color: #484f58;
+    font-size: 12px;
+    border-top: 1px solid #21262d;
+    margin-top: 20px;
+  }
+  .page-footer strong { color: #8b949e; }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .page-layout { display: block; }
+    .main-content { padding: 16px; }
+    .grid2, .grid3, .grid4 { grid-template-columns: 1fr; }
+    .header-inner { flex-direction: column; gap: 10px; }
+    .top-nav { padding: 0 12px; }
+    .page-header { padding: 16px; }
+  }
+
+  /* === PRINT === */
+  @media print {
+    body { background: white; color: #1a1a2e; }
+    .page-header { background: white; border-bottom: 2px solid #1a1a2e; position: static; }
+    .header-left h1 { color: #1a1a2e; }
+    .header-left .subtitle { color: #555; }
+    .top-nav { display: none; }
+    .sidebar { display: none; }
+    .page-layout { display: block; }
+    .main-content { padding: 0; }
+    .card { background: white; border: 1px solid #ddd; box-shadow: none; page-break-inside: avoid; }
+    .card h2 { color: #1a1a2e; border-bottom-color: #ddd; }
+    .stat { background: #f8f9fa; border-color: #ddd; }
+    .stat .num { color: #1a1a2e; }
+    .narrative-box { background: #f8f9fa; border-color: #ddd; border-left-color: #3498db; }
+    .highlight-card { background: #f8f9fa; border-color: #3498db; }
+    .script-box { background: #f8f9fa; border-color: #ddd; }
+    td { color: #1a1a2e; }
+    th { background: #f0f2f5; color: #555; }
+    .page-footer { color: #999; }
+    a { color: #1a5276; }
+    .deal-badge { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    .badge { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="page-header">
+  <div class="header-inner">
+    <div class="header-left">
+      <h1>Paychex</h1>
+      <div class="subtitle">— | —, — | — | Rev: — | Employees: —</div>
+    </div>
+    <div class="header-right">
+      <span class="deal-badge">SELL SIDE</span>
+    </div>
+  </div>
+</div>
+
+<!-- NAVIGATION -->
+<div class="top-nav">
+  <a href="/dashboard.html">Home</a>
+<a href="/dashboard.html">Dashboard</a>
+<a href="/paychex-hub.html" class="active">Company Hub</a>
+<a href="/paychex-ebitda-levers.html">EBITDA Levers</a>
+<a href="#history">Version History</a>
+
+</div>
+
+<!-- LAYOUT -->
+<div class="page-layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-heading">Page Sections</div>
+    <a href="#overview" class="sidebar-link">Overview</a>
+<a href="#contacts" class="sidebar-link">Contacts</a>
+<a href="#buyer-outreach-strategy" class="sidebar-link">Buyer Outreach Strategy</a>
+<a href="#potential-acquirers-0" class="sidebar-link">Potential Acquirers (0)</a>
+<a href="#outreach-scripts" class="sidebar-link">Outreach Scripts</a>
+<a href="#plays-amp-emails-sent" class="sidebar-link">Plays &amp; Emails Sent</a>
+<a href="#documents-amp-files" class="sidebar-link">Documents &amp; Files</a>
+<a href="#pipeline-history" class="sidebar-link">Pipeline History</a>
+
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+    
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
+        <span class="badge blue">—</span>
+        <span class="badge blue">Quality: —</span>
+        <span class="badge green">Cost: $0.00</span>
+        <span class="badge blue">0 Potential Acquirers</span>
+        <span class="badge blue">6 Contacts</span>
+    </div>
+
+    <div class="card" id="overview">
+        <h2>Overview</h2>
+        <div class="grid4">
+            <div class="stat"><div class="num">0</div><div class="label">Potential Acquirers</div></div>
+            <div class="stat"><div class="num">0</div><div class="label">Scripts Ready</div></div>
+            <div class="stat"><div class="num">0</div><div class="label">Letters Sent</div></div>
+            <div class="stat"><div class="num">0</div><div class="label">Documents</div></div>
+        </div>
+        
+    </div>
+
+    <div class="card" id="contacts">
+        <h2>Contacts</h2>
+        <table>
+            <tr><th>Name</th><th>Title</th><th>Email</th><th>Phone</th><th>LinkedIn</th></tr>
+            <tr>
+            <td>Stephen C.</td>
+            <td>Director, Mergers &amp; Acquisitions</td>
+            <td></td>
+            <td></td>
+            <td><a href="https://www.linkedin.com/in/cooperstephen" target="_blank">Profile</a></td>
+        </tr><tr>
+            <td>Tom Hammond</td>
+            <td>Managing Director, Strategy, Partnerships, and Business Development</td>
+            <td></td>
+            <td></td>
+            <td><a href="https://linkedin.com/in/tom-hammond-865644244" target="_blank">Profile</a></td>
+        </tr><tr>
+            <td>John B. Gibson</td>
+            <td>President and Chief Executive Officer</td>
+            <td></td>
+            <td></td>
+            <td><a href="https://linkedin.com/in/johnbgibsonjr" target="_blank">Profile</a></td>
+        </tr><tr>
+            <td>Cory Mau</td>
+            <td>Former Employee</td>
+            <td></td>
+            <td></td>
+            <td><a href="https://www.linkedin.com/posts/paychex_after-more-than-20-years-at-paychex-cory-activity-7328457827318947841-NKvA" target="_blank">Profile</a></td>
+        </tr><tr>
+            <td>Ken Burtnick</td>
+            <td>Director of Strategic Partnerships</td>
+            <td></td>
+            <td></td>
+            <td><a href="https://www.linkedin.com/in/kenburtnick" target="_blank">Profile</a></td>
+        </tr><tr>
+            <td>Allison Caffrey</td>
+            <td>Manager, Business Development Strategy - Strategic Account Channel</td>
+            <td></td>
+            <td></td>
+            <td><a href="https://linkedin.com/in/wangner" target="_blank">Profile</a></td>
+        </tr>
+        </table>
+    </div>
+
+    <div class="card" id="proposal">
+        <h2>Buyer Outreach Strategy</h2>
+        <p>No narrative generated yet.</p>
+        
+        
+        
+    </div>
+
+    <div class="card" id="buyers">
+        <h2>Potential Acquirers (0)</h2>
+        <table>
+            <tr><th>Company</th><th>Type</th><th>Location</th><th>Fit</th><th>DNC</th><th>Script</th><th>Status</th></tr>
+            <tr><td colspan="7" style="color:#8b949e">No targets identified yet</td></tr>
+        </table>
+    </div>
+
+    <div class="card" id="scripts">
+        <h2>Outreach Scripts</h2>
+        <p style="color:#8b949e">No scripts generated yet</p>
+    </div>
+
+    <div class="card" id="plays">
+        <h2>Plays &amp; Emails Sent</h2>
+        <table>
+            <tr><th>Play</th><th>Status</th><th>Quality</th><th>Date</th></tr>
+            <tr><td colspan="4" style="color:#8b949e">No plays executed yet</td></tr>
+        </table>
+    </div>
+
+    <div class="card" id="files">
+        <h2>Documents &amp; Files</h2>
+        <ul><li style='color:#8b949e'>No files generated yet</li></ul>
+    </div>
+
+    <div class="card" id="history">
+        <h2>Pipeline History</h2>
+        <table>
+            <tr><th>Step</th><th>Tool</th><th>Status</th><th>Cost</th><th>Date</th></tr>
+            <tr><td colspan="5" style="color:#8b949e">No pipeline history</td></tr>
+        </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="page-footer">
+  <strong>Next Chapter M&A Advisory</strong> | Sell-Side Engagement<br>
+  Generated April 01, 2026 06:22 PM | INTERNAL — Admin View
+</div>
+
+<!-- WIDGETS -->
+<script src="/comment-widget.js"></script>
+<script src="/version-widget.js"></script>
+
+
+<!-- SCROLL-SPY: highlights active sidebar link as user scrolls -->
+<script>
+(function() {
+  var links = document.querySelectorAll('.sidebar-link');
+  var sections = [];
+  links.forEach(function(link) {
+    var id = link.getAttribute('href');
+    if (id) id = id.replace('#', '');
+    var el = id && document.getElementById(id);
+    if (el) sections.push({ id: id, el: el, link: link });
+  });
+  if (!sections.length) return;
+  function updateActive() {
+    var current = sections[0];
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i].el.getBoundingClientRect().top <= 120) current = sections[i];
+    }
+    links.forEach(function(l) { l.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+  window.addEventListener('scroll', updateActive, { passive: true });
+  updateActive();
+})();
+</script>
+
+</body>
+</html>
