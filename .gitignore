@@ -4,5 +4,10 @@
 lib/extracted/
 backups/
 .last_deployed_commit
-logs/deploy.log
-logs/deploy_watchdog.log
+logs/
+overnight-logs/
+outputs/
+docs/TRACE-*
+**/node_modules/
+**/"Icon\r"
+*.log
