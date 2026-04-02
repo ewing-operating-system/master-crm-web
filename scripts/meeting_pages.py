@@ -142,69 +142,30 @@ If no transcripts exist in this time range, return: []
 Do NOT include any markdown formatting, explanations, or prose. ONLY the JSON array."""
 
     log.info("Invoking claude CLI for Fireflies (last %d hours since %s)...", hours, from_iso)
-    try:
-        result = subprocess.run(
-            ["claude", "-p", prompt, "--output-format", "text"],
-            capture_output=True, text=True, timeout=180,
-        )
-    except FileNotFoundError:
-        log.error("claude CLI not found")
-        return []
-    except subprocess.TimeoutExpired:
-        log.error("claude CLI timed out")
+    raw = _claude_fireflies(prompt, timeout=300)
+    if not raw:
         return []
 
-    if result.returncode != 0:
-        log.error("claude CLI error: %s", result.stderr[:500])
-        return []
-
-    raw = result.stdout.strip()
-    # Strip markdown fences
-    raw = re.sub(r"^```(?:json)?\s*", "", raw)
-    raw = re.sub(r"\s*```$", "", raw)
-
-    m = re.search(r"(\[.*\])", raw, re.DOTALL)
-    if not m:
-        if raw in ("", "[]"):
+    result = _parse_json_response(raw)
+    if not isinstance(result, list):
+        if not raw or raw == "[]":
             log.info("No new transcripts found.")
-            return []
-        log.warning("Could not parse JSON from claude output:\n%s", raw[:500])
+        else:
+            log.warning("Could not parse transcript list from response")
         return []
 
-    try:
-        transcripts = json.loads(m.group(1))
-    except json.JSONDecodeError as e:
-        log.warning("JSON parse error: %s\nRaw: %s", e, raw[:500])
-        return []
-
-    log.info("Fireflies returned %d transcript(s)", len(transcripts))
-    return transcripts if isinstance(transcripts, list) else []
+    log.info("Fireflies returned %d transcript(s)", len(result))
+    return result
 
 
-def fetch_single_transcript(fireflies_id: str) -> Optional[dict]:
-    """Fetch a specific transcript by ID."""
-    prompt = f"""Use the Fireflies MCP tool mcp__claude_ai_Fireflies__fireflies_get_transcript to fetch transcript with ID "{fireflies_id}".
-
-Return ONLY a JSON object with:
-{{
-  "id": "{fireflies_id}",
-  "title": "meeting title",
-  "date": "ISO-8601 datetime",
-  "duration": duration_in_minutes,
-  "audio_url": "URL to audio file or null",
-  "participants": [{{"name": "Person Name", "email": "email@domain.com"}}],
-  "summary": "meeting summary text",
-  "action_items": ["action item 1"],
-  "sentences": [{{"speaker_name": "Name", "text": "what they said", "start_time": 0.0, "end_time": 5.0}}]
-}}
-
-No markdown, no prose. ONLY the JSON object."""
-
-    log.info("Fetching transcript %s via claude CLI...", fireflies_id)
+def _claude_fireflies(prompt: str, timeout: int = 120) -> Optional[str]:
+    """Run a Claude CLI prompt with Fireflies MCP tools allowed. Returns raw stdout."""
     try:
         result = subprocess.run(
-            ["claude", "-p", prompt, "--output-format", "text"],
-            capture_output=True, text=True, timeout=180,
+            ["claude", "-p", prompt, "--output-format", "text",
+             "--allowedTools", "mcp__claude_ai_Fireflies__fireflies_get_transcript",
+             "mcp__claude_ai_Fireflies__fireflies_get_transcripts"],
+            capture_output=True, text=True, timeout=timeout,
         )
     except (FileNotFoundError, subprocess.TimeoutExpired) as e:
         log.error("claude CLI error: %s", e)
@@ -214,20 +175,82 @@ No markdown, no prose. ONLY the JSON object."""
         log.error("claude CLI error: %s", result.stderr[:500])
         return None
 
-    raw = result.stdout.strip()
+    return result.stdout.strip()
+
+
+def _parse_json_response(raw: str):
+    """Extract and parse JSON from Claude CLI output."""
     raw = re.sub(r"^```(?:json)?\s*", "", raw)
     raw = re.sub(r"\s*```$", "", raw)
 
-    m = re.search(r"(\{.*\})", raw, re.DOTALL)
-    if not m:
-        log.warning("Could not parse JSON: %s", raw[:500])
+    # Try array first, then object
+    for pattern in [r"(\[.*\])", r"(\{.*\})"]:
+        m = re.search(pattern, raw, re.DOTALL)
+        if m:
+            try:
+                return json.loads(m.group(1))
+            except json.JSONDecodeError:
+                continue
+
+    log.warning("Could not parse JSON: %s", raw[:500])
+    return None
+
+
+def fetch_single_transcript(fireflies_id: str) -> Optional[dict]:
+    """Fetch a transcript in two steps: metadata first, then sentences."""
+    log.info("Fetching transcript %s via claude CLI (step 1: metadata)...", fireflies_id)
+
+    # Step 1: Get metadata (small response, fast)
+    meta_prompt = f"""Use mcp__claude_ai_Fireflies__fireflies_get_transcript to get transcript "{fireflies_id}".
+
+Return ONLY a JSON object with these fields (NO sentences):
+{{
+  "id": "{fireflies_id}",
+  "title": "meeting title",
+  "date": "ISO-8601 datetime",
+  "duration": duration_in_minutes,
+  "audio_url": "audio URL or null",
+  "video_url": "video URL or null",
+  "participants": [{{"name": "Person Name", "email": "email@domain.com"}}],
+  "summary": "meeting summary text",
+  "action_items": ["action item 1"]
+}}
+
+No markdown, no prose. ONLY the JSON object."""
+
+    raw = _claude_fireflies(meta_prompt, timeout=120)
+    if not raw:
         return None
 
-    try:
-        return json.loads(m.group(1))
-    except json.JSONDecodeError as e:
-        log.warning("JSON parse error: %s", e)
+    meta = _parse_json_response(raw)
+    if not isinstance(meta, dict):
         return None
+
+    log.info("  Got metadata: %s (%s min)", meta.get("title"), meta.get("duration"))
+
+    # Step 2: Get sentences (large response, longer timeout)
+    log.info("  Fetching sentences (step 2)...")
+    sent_prompt = f"""Use mcp__claude_ai_Fireflies__fireflies_get_transcript to get transcript "{fireflies_id}".
+
+Return ONLY a JSON array of ALL sentences/utterances from this transcript. Each element:
+{{"speaker_name": "Name", "text": "what they said", "start_time": 0.0, "end_time": 5.0}}
+
+Include EVERY sentence. No markdown, no prose. ONLY the JSON array."""
+
+    raw2 = _claude_fireflies(sent_prompt, timeout=300)
+    if raw2:
+        sentences = _parse_json_response(raw2)
+        if isinstance(sentences, list):
+            meta["sentences"] = sentences
+            log.info("  Got %d sentences", len(sentences))
+        else:
+            log.warning("  Could not parse sentences, proceeding without transcript text")
+            meta["sentences"] = []
+    else:
+        log.warning("  Could not fetch sentences, proceeding without transcript text")
+        meta["sentences"] = []
+
+    return meta
 
 
 def fetch_media_urls(fireflies_id: str) -> dict:
@@ -244,52 +267,41 @@ Return ONLY a JSON object like this (with the FULL URLs including all query para
 Do NOT truncate the URLs. Include the complete query string. No markdown, no prose. ONLY the JSON object."""
 
     log.info("Fetching media URLs for %s...", fireflies_id)
-    try:
-        result = subprocess.run(
-            ["claude", "-p", prompt, "--output-format", "text"],
-            capture_output=True, text=True, timeout=90,
-        )
-    except (FileNotFoundError, subprocess.TimeoutExpired) as e:
-        log.warning("Could not fetch media URLs: %s", e)
+    raw = _claude_fireflies(prompt, timeout=120)
+    if not raw:
         return {"audio": None, "video": None}
 
-    if result.returncode != 0:
-        log.warning("Claude CLI returned %d: %s", result.returncode, result.stderr[:300])
+    data = _parse_json_response(raw)
+    if not isinstance(data, dict):
         return {"audio": None, "video": None}
 
-    raw = result.stdout.strip()
-    raw = re.sub(r"^```(?:json)?\s*", "", raw)
-    raw = re.sub(r"\s*```$", "", raw)
-
-    # URLs contain special chars, so use a greedy match
-    m = re.search(r"\{.*\}", raw, re.DOTALL)
-    if not m:
-        log.warning("Could not find JSON in response: %s", raw[:300])
-        return {"audio": None, "video": None}
-
-    try:
-        data = json.loads(m.group(0))
-        audio = data.get("audio") or data.get("audio_url")
-        video = data.get("video") or data.get("video_url")
-        log.info("  Got media: audio=%s video=%s",
-                 "yes" if audio else "no", "yes" if video else "no")
-        return {"audio": audio, "video": video}
-    except json.JSONDecodeError as e:
-        log.warning("JSON parse error: %s", e)
-        return {"audio": None, "video": None}
+    audio = data.get("audio") or data.get("audio_url")
+    video = data.get("video") or data.get("video_url")
+    log.info("  Got media: audio=%s video=%s",
+             "yes" if audio else "no", "yes" if video else "no")
+    return {"audio": audio, "video": video}
 
 
 # ── Entity detection ─────────────────────────────────────────────────────────
 KNOWN_ENTITIES = {
-    "revsup.com": "revsup",
-    "nextchapteradvisory.com": "next_chapter",
-    "andcapital.com": "and_capital",
+    "hr.com": "hrcom",
+    "aquascience.com": "aquascience",
+    "springerfloor.com": "springer",
     "theforge.com": "the_forge",
     "biolev.com": "biolev",
     "seasweet.com": "sea_sweet",
 }
 
-INTERNAL_DOMAINS = {"revsup.com", "nextchapteradvisory.com", "andcapital.com"}
+# Internal team domains — always tag next_chapter (the advisor), not the entity
+INTERNAL_DOMAINS = {"revsup.com": "next_chapter", "nextchapteradvisory.com": "next_chapter", "andcapital.com": "and_capital"}
+
+# Known people → entity mapping (for participant name matching)
+KNOWN_PEOPLE = {
+    "debbie mcgrath": "hrcom",
+    "ewing gillaspy": "next_chapter",
+    "mark dechant": "next_chapter",
+    "john kelly": "next_chapter",
+}
 
 
 def detect_entities(transcript: dict) -> list[str]:
@@ -297,12 +309,20 @@ def detect_entities(transcript: dict) -> list[str]:
     entities = set()
     participants = transcript.get("participants") or []
     for p in participants:
+        # Check name against known people
+        name = (p.get("name") or "").lower().strip()
+        if name in KNOWN_PEOPLE:
+            entities.add(KNOWN_PEOPLE[name])
+
+        # Check email domain
         email = (p.get("email") or "").lower()
         if "@" in email:
             domain = email.split("@")[1]
             if domain in KNOWN_ENTITIES:
                 entities.add(KNOWN_ENTITIES[domain])
-            elif domain not in INTERNAL_DOMAINS:
+            elif domain in INTERNAL_DOMAINS:
+                entities.add(INTERNAL_DOMAINS[domain])
+            else:
                 # External participant — try to match to a known company via Supabase
                 rows = supa_get("targets", f"select=entity&extra_fields->>email=ilike.*{domain}*&limit=1")
                 for row in rows:
@@ -311,9 +331,15 @@ def detect_entities(transcript: dict) -> list[str]:
 
     # Also check title for entity keywords
     title = (transcript.get("title") or "").lower()
-    for entity_name in ["revsup", "and capital", "next chapter", "the forge", "biolev", "sea sweet"]:
-        slug = entity_name.replace(" ", "_")
-        if entity_name in title:
+    title_entity_map = {
+        "hr.com": "hrcom", "hrcom": "hrcom", "debbie": "hrcom",
+        "aquascience": "aquascience", "springer": "springer",
+        "revsup": "revsup", "and capital": "and_capital",
+        "next chapter": "next_chapter", "the forge": "the_forge",
+        "biolev": "biolev", "sea sweet": "sea_sweet",
+    }
+    for keyword, slug in title_entity_map.items():
+        if keyword in title:
             entities.add(slug)
 
     return sorted(entities) if entities else ["unknown"]
@@ -1101,12 +1127,19 @@ def process_transcript(transcript: dict, skip_existing: bool = True) -> Optional
     entities = detect_entities(transcript)
     log.info("  Entities: %s", entities)
 
-    # Fetch fresh signed media URLs
-    media = fetch_media_urls(fireflies_id)
+    # Use media URLs from transcript if already fetched, otherwise fetch separately
+    audio = transcript.get("audio_url") or transcript.get("audio")
+    video = transcript.get("video_url") or transcript.get("video")
+    if audio or video:
+        media = {"audio": audio, "video": video}
+        log.info("  Media URLs (from transcript): audio=%s, video=%s",
+                 "yes" if audio else "no", "yes" if video else "no")
+    else:
+        media = fetch_media_urls(fireflies_id)
+        log.info("  Media URLs (fetched): audio=%s, video=%s",
+                 "yes" if media.get("audio") else "no",
+                 "yes" if media.get("video") else "no")
     media_json = json.dumps(media)
-    log.info("  Media URLs: audio=%s, video=%s",
-             "yes" if media.get("audio") else "no",
-             "yes" if media.get("video") else "no")
 
     # Store transcript
     sentences = transcript.get("sentences") or []
@@ -1114,7 +1147,7 @@ def process_transcript(transcript: dict, skip_existing: bool = True) -> Optional
         "fireflies_id": fireflies_id,
         "title": title,
         "date": transcript.get("date"),
-        "duration_minutes": transcript.get("duration"),
+        "duration_minutes": int(float(transcript.get("duration") or 0)),
         "audio_url": media_json,
         "transcript_json": {"sentences": sentences},
         "participants": transcript.get("participants") or [],
@@ -1159,7 +1192,7 @@ def process_transcript(transcript: dict, skip_existing: bool = True) -> Optional
         "fireflies_id": fireflies_id,
         "title": title,
         "date": transcript.get("date"),
-        "duration_minutes": transcript.get("duration"),
+        "duration_minutes": int(float(transcript.get("duration") or 0)),
         "audio_url": media_json,
         "transcript_json": {"sentences": sentences},
         "participants": transcript.get("participants") or [],
