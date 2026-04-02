@@ -230,6 +230,55 @@ No markdown, no prose. ONLY the JSON object."""
         return None
 
 
+def fetch_media_urls(fireflies_id: str) -> dict:
+    """Fetch fresh signed audio/video URLs for a transcript via Claude CLI.
+    The Fireflies MCP tool returns signed CloudFront URLs that expire after ~3 days.
+    """
+    prompt = f"""Use the Fireflies MCP tool mcp__claude_ai_Fireflies__fireflies_get_transcript to get the transcript with ID "{fireflies_id}".
+
+I need the Audio Url and Video Url fields from the response. These are signed CloudFront CDN URLs that contain query parameters like Expires, Policy, Signature, and Key-Pair-Id.
+
+Return ONLY a JSON object like this (with the FULL URLs including all query parameters):
+{{"audio": "https://cdn.fireflies.ai/...full signed URL...", "video": "https://cdn.fireflies.ai/...full signed URL..."}}
+
+Do NOT truncate the URLs. Include the complete query string. No markdown, no prose. ONLY the JSON object."""
+
+    log.info("Fetching media URLs for %s...", fireflies_id)
+    try:
+        result = subprocess.run(
+            ["claude", "-p", prompt, "--output-format", "text"],
+            capture_output=True, text=True, timeout=90,
+        )
+    except (FileNotFoundError, subprocess.TimeoutExpired) as e:
+        log.warning("Could not fetch media URLs: %s", e)
+        return {"audio": None, "video": None}
+
+    if result.returncode != 0:
+        log.warning("Claude CLI returned %d: %s", result.returncode, result.stderr[:300])
+        return {"audio": None, "video": None}
+
+    raw = result.stdout.strip()
+    raw = re.sub(r"^```(?:json)?\s*", "", raw)
+    raw = re.sub(r"\s*```$", "", raw)
+
+    # URLs contain special chars, so use a greedy match
+    m = re.search(r"\{.*\}", raw, re.DOTALL)
+    if not m:
+        log.warning("Could not find JSON in response: %s", raw[:300])
+        return {"audio": None, "video": None}
+
+    try:
+        data = json.loads(m.group(0))
+        audio = data.get("audio") or data.get("audio_url")
+        video = data.get("video") or data.get("video_url")
+        log.info("  Got media: audio=%s video=%s",
+                 "yes" if audio else "no", "yes" if video else "no")
+        return {"audio": audio, "video": video}
+    except json.JSONDecodeError as e:
+        log.warning("JSON parse error: %s", e)
+        return {"audio": None, "video": None}
+
+
 # ── Entity detection ─────────────────────────────────────────────────────────
 KNOWN_ENTITIES = {
     "revsup.com": "revsup",
@@ -357,8 +406,17 @@ def generate_meeting_page(transcript_row: dict, learnings: list[dict]) -> str:
     title = transcript_row.get("title") or "Meeting"
     date = transcript_row.get("date") or ""
     duration = transcript_row.get("duration_minutes") or 0
-    audio_url = transcript_row.get("audio_url") or ""
+    raw_audio = transcript_row.get("audio_url") or ""
     fireflies_id = transcript_row.get("fireflies_id") or ""
+
+    # Parse media URLs — may be JSON or plain string
+    try:
+        media = json.loads(raw_audio) if raw_audio.startswith("{") else {}
+        audio_url = media.get("audio") or ""
+        video_url = media.get("video") or ""
+    except (json.JSONDecodeError, AttributeError):
+        audio_url = raw_audio
+        video_url = ""
     participants = transcript_row.get("participants") or []
     entities = transcript_row.get("entities") or []
     summary = transcript_row.get("summary") or ""
@@ -492,8 +550,9 @@ def generate_meeting_page(transcript_row: dict, learnings: list[dict]) -> str:
             label = e.replace("_", " ").title()
             entity_filter_buttons += f'<button class="filter-btn" onclick="filterLearnings(\'{e}\')">{label}</button>\n        '
 
-    # Determine if audio_url is a direct file or a Fireflies view link
-    has_audio = bool(audio_url)
+    # Determine media availability
+    media_src = video_url or audio_url
+    has_media = bool(media_src)
 
     # Build speaker legend
     speaker_legend = ""
@@ -792,13 +851,13 @@ def generate_meeting_page(transcript_row: dict, learnings: list[dict]) -> str:
   </header>
 
   <div class="player-section" id="player-section">
-    <div class="player-loading" id="player-loading">
+    <div class="player-loading" id="player-loading" style="display:{'none' if media_src else 'flex'}">
       <div class="spinner"></div>
       Loading recording...
     </div>
-    <video id="meeting-video" controls preload="none" style="display:none"></video>
-    <div class="player-fallback" id="player-fallback">
-      <a href="{audio_url}" target="_blank" rel="noopener">Open recording in Fireflies &rarr;</a>
+    <video id="meeting-video" controls preload="metadata" {'src="' + media_src + '"' if media_src else ''} style="display:{'block' if media_src else 'none'}"></video>
+    <div class="player-fallback" id="player-fallback" style="display:none">
+      <a href="https://app.fireflies.ai/view/{fireflies_id}" target="_blank" rel="noopener">Open recording in Fireflies &rarr;</a>
     </div>
   </div>
 
@@ -851,31 +910,38 @@ def generate_meeting_page(transcript_row: dict, learnings: list[dict]) -> str:
     const utterances = document.querySelectorAll('.utterance');
     let videoReady = false;
 
-    (async function loadMedia() {{
-      try {{
-        const resp = await fetch('/api/meetings/media-url?id=' + FIREFLIES_ID);
-        const data = await resp.json();
+    // Wait for metadata before allowing seek/play
+    video.addEventListener('loadedmetadata', () => {{
+      videoReady = true;
+      loading.style.display = 'none';
+    }});
 
-        const src = data.video_url || data.audio_url;
-        if (src) {{
-          video.src = src;
-          video.style.display = 'block';
-          loading.style.display = 'none';
-          videoReady = true;
+    video.addEventListener('error', () => {{
+      video.style.display = 'none';
+      loading.style.display = 'none';
+      fallback.style.display = 'block';
+    }});
 
-          video.addEventListener('error', () => {{
-            video.style.display = 'none';
+    // If no src baked in, try the API
+    if (!video.src || video.src === window.location.href) {{
+      (async function loadMedia() {{
+        try {{
+          const resp = await fetch('/api/meetings/media-url?id=' + FIREFLIES_ID);
+          const data = await resp.json();
+          const src = data.video_url || data.audio_url;
+          if (src) {{
+            video.src = src;
+            video.style.display = 'block';
+          }} else {{
+            loading.style.display = 'none';
             fallback.style.display = 'block';
-          }});
-        }} else {{
+          }}
+        }} catch (e) {{
           loading.style.display = 'none';
           fallback.style.display = 'block';
         }}
-      }} catch (e) {{
-        loading.style.display = 'none';
-        fallback.style.display = 'block';
-      }}
-    }})();
+      }})();
+    }}
 
     // ── Transcript ↔ Video sync ─────────────────────
     // Click utterance → seek video
@@ -885,7 +951,7 @@ def generate_meeting_page(transcript_row: dict, learnings: list[dict]) -> str:
         const time = parseFloat(u.dataset.time);
         if (videoReady && !isNaN(time)) {{
           video.currentTime = time;
-          video.play();
+          video.play().catch(() => {{}});
           highlightUtterance(u);
           video.scrollIntoView({{ behavior: 'smooth', block: 'nearest' }});
         }}
@@ -916,11 +982,11 @@ def generate_meeting_page(transcript_row: dict, learnings: list[dict]) -> str:
           // Auto-scroll transcript panel to keep active line visible
           const panel = closest.closest('.transcript-panel');
           if (panel) {{
-            const uTop = closest.offsetTop - panel.offsetTop;
-            const panelScroll = panel.scrollTop;
-            const panelHeight = panel.clientHeight;
-            if (uTop < panelScroll + 60 || uTop > panelScroll + panelHeight - 80) {{
-              panel.scrollTo({{ top: uTop - 100, behavior: 'smooth' }});
+            const panelRect = panel.getBoundingClientRect();
+            const uRect = closest.getBoundingClientRect();
+            const relTop = uRect.top - panelRect.top;
+            if (relTop < 60 || relTop > panelRect.height - 80) {{
+              panel.scrollTo({{ top: panel.scrollTop + relTop - 100, behavior: 'smooth' }});
             }}
           }}
         }}
@@ -1035,6 +1101,13 @@ def process_transcript(transcript: dict, skip_existing: bool = True) -> Optional
     entities = detect_entities(transcript)
     log.info("  Entities: %s", entities)
 
+    # Fetch fresh signed media URLs
+    media = fetch_media_urls(fireflies_id)
+    media_json = json.dumps(media)
+    log.info("  Media URLs: audio=%s, video=%s",
+             "yes" if media.get("audio") else "no",
+             "yes" if media.get("video") else "no")
+
     # Store transcript
     sentences = transcript.get("sentences") or []
     row = supa_post("meeting_transcripts", {
@@ -1042,7 +1115,7 @@ def process_transcript(transcript: dict, skip_existing: bool = True) -> Optional
         "title": title,
         "date": transcript.get("date"),
         "duration_minutes": transcript.get("duration"),
-        "audio_url": transcript.get("audio_url"),
+        "audio_url": media_json,
         "transcript_json": {"sentences": sentences},
         "participants": transcript.get("participants") or [],
         "entities": entities,
@@ -1083,10 +1156,11 @@ def process_transcript(transcript: dict, skip_existing: bool = True) -> Optional
     # Build page data
     page_data = {
         "id": transcript_uuid,
+        "fireflies_id": fireflies_id,
         "title": title,
         "date": transcript.get("date"),
         "duration_minutes": transcript.get("duration"),
-        "audio_url": transcript.get("audio_url"),
+        "audio_url": media_json,
         "transcript_json": {"sentences": sentences},
         "participants": transcript.get("participants") or [],
         "entities": entities,
@@ -1181,9 +1255,16 @@ def run_rebuild():
 
     pages = []
     for row in rows:
+        fid = row.get("fireflies_id", row["id"])
+
+        # Refresh signed media URLs
+        media = fetch_media_urls(fid)
+        media_json = json.dumps(media)
+        row["audio_url"] = media_json
+        supa_patch("meeting_transcripts", f"id=eq.{row['id']}", {"audio_url": media_json})
+
         learnings = supa_get("meeting_learnings", f"transcript_id=eq.{row['id']}&select=*")
         html = generate_meeting_page(row, learnings)
-        fid = row.get("fireflies_id", row["id"])
         page_path = MEETINGS_DIR / f"{fid}.html"
         page_path.write_text(html)
         pages.append(str(page_path.relative_to(PROJECT_ROOT)))

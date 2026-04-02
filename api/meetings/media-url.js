@@ -1,23 +1,26 @@
 /**
  * GET /api/meetings/media-url?id=<fireflies_id>
  *
- * Returns fresh signed audio/video URLs from Fireflies.
- * CDN URLs expire after ~3 days, so this endpoint fetches on demand.
+ * Returns audio/video URLs for a meeting transcript.
+ * Reads from Supabase meeting_transcripts table where URLs are stored
+ * and refreshed by the local meeting_pages.py cron (hourly 9am-5pm).
  *
  * Response (200):
  *   { audio_url: string, video_url: string, transcript_url: string }
  *
- * Credentials: Uses Claude CLI to invoke Fireflies MCP tools.
- * Env vars required: none (Claude CLI inherits from shell)
+ * Credentials: all keys come from env vars. See .env.example for names.
+ * Env vars required: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
  */
 
 'use strict';
 
-const { execSync } = require('child_process');
-
-// Simple in-memory cache (survives within a single serverless instance)
-const cache = new Map();
-const CACHE_TTL = 60 * 60 * 1000; // 1 hour
+function supabaseHeaders() {
+  return {
+    'apikey':        process.env.SUPABASE_SERVICE_ROLE_KEY,
+    'Authorization': `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`,
+    'Content-Type':  'application/json',
+  };
+}
 
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -32,52 +35,49 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'id query parameter is required (Fireflies transcript ID)' });
   }
 
-  // Check cache
-  const cached = cache.get(id);
-  if (cached && Date.now() - cached.ts < CACHE_TTL) {
-    return res.status(200).json(cached.data);
-  }
-
-  // Fetch from Fireflies via Claude CLI
-  const prompt = `Use the Fireflies MCP tool mcp__claude_ai_Fireflies__fireflies_get_transcript to fetch transcript with ID "${id}".
-Return ONLY a JSON object with these exact fields:
-{"audio_url": "the audio URL", "video_url": "the video URL", "transcript_url": "the transcript URL"}
-No markdown, no prose. ONLY the JSON object.`;
-
   try {
-    const result = execSync(
-      `echo ${JSON.stringify(prompt)} | claude -p --output-format text`,
-      { timeout: 60000, encoding: 'utf-8', stdio: ['pipe', 'pipe', 'pipe'] }
-    );
+    const url = `${process.env.SUPABASE_URL}/rest/v1/meeting_transcripts`
+      + `?fireflies_id=eq.${encodeURIComponent(id)}`
+      + '&select=audio_url,fireflies_id'
+      + '&limit=1';
 
-    // Parse response — strip markdown fences
-    let raw = result.trim()
-      .replace(/^```(?:json)?\s*/m, '')
-      .replace(/\s*```$/m, '');
-
-    const match = raw.match(/\{[^}]+\}/s);
-    if (!match) {
-      return res.status(502).json({ error: 'Could not parse Fireflies response' });
+    const resp = await fetch(url, { headers: supabaseHeaders() });
+    if (!resp.ok) {
+      throw new Error(`Supabase error: ${resp.status}`);
     }
 
-    const data = JSON.parse(match[0]);
-    const response = {
-      audio_url: data.audio_url || null,
-      video_url: data.video_url || null,
-      transcript_url: data.transcript_url || `https://app.fireflies.ai/view/${id}`,
-    };
+    const rows = await resp.json();
+    const row = rows[0];
 
-    // Cache it
-    cache.set(id, { data: response, ts: Date.now() });
+    if (!row) {
+      return res.status(404).json({ error: 'Transcript not found' });
+    }
 
-    return res.status(200).json(response);
+    // audio_url stores a JSON string with both URLs if available
+    let audio_url = null;
+    let video_url = null;
+
+    // Try to parse as JSON (new format: {audio: "...", video: "..."})
+    try {
+      const media = JSON.parse(row.audio_url);
+      audio_url = media.audio || null;
+      video_url = media.video || null;
+    } catch {
+      // Old format: plain URL string
+      audio_url = row.audio_url || null;
+    }
+
+    return res.status(200).json({
+      audio_url,
+      video_url,
+      transcript_url: `https://app.fireflies.ai/view/${id}`,
+    });
   } catch (err) {
-    // Fallback: return the Fireflies view URL
     return res.status(200).json({
       audio_url: null,
       video_url: null,
       transcript_url: `https://app.fireflies.ai/view/${id}`,
-      error: 'Could not fetch fresh media URLs',
+      error: 'Could not fetch media URLs',
     });
   }
 };
