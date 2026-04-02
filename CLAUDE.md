@@ -112,6 +112,33 @@ Public paths (always accessible): `/login.html`, `/api/*`, `/outputs/`, `/runnin
 10. **Multi-LLM consensus** required before customer-facing documents.
 11. **If a key fails, STOP.** Do not sign up for replacements.
 
+## DATA PIPELINE RULES (Critical — prevents research from going invisible)
+
+Vercel serves **static HTML**. Supabase writes do NOT automatically appear on the site. Every agent, script, and process that writes research data MUST complete all three steps:
+
+1. **Write to Supabase** — store structured data in the correct table/columns.
+2. **Regenerate static pages** — run `scripts/regenerate.py` (or the relevant regeneration script) to rebuild the HTML. If the agent writes to `public/data/*.json`, that file must be committed.
+3. **Commit + push to git** — Vercel deploys from git. No push = no deploy = invisible data.
+
+### Automatic pipeline (already wired)
+- `backend/worker.py` calls `trigger_regeneration()` after any `swarm_enrichment`, `researcher`, or `buyer_1pager` agent completes. This handles step 2+3.
+- `backend/orchestrator.py` runs `sync_stale_pages()` and `sync_public_data_git()` every 5 minutes as a safety net.
+
+### Rules for new agents/scripts
+- **Every new page must be registered** in the `page_versions` table via `scripts/regenerate.py:register_page()`.
+- **Every new page must be linked** from the relevant hub page (e.g., `hrcom-ltd-hub.html`). Orphan pages are invisible.
+- **Static JSON files** under `public/data/` must be git-committed after writes. The orchestrator does this automatically, but manual scripts should also commit.
+- **Never write company-profile data to `engagement_buyers`** unless it's proposal-scoped. Company-level data (HQ, revenue, description) goes on the company record; proposal-level data (fit_score, approach_strategy, one_pager) stays on `engagement_buyers`.
+- **The `store_buyer_research` RPC** writes both company and proposal fields to `engagement_buyers`. This is a known legacy pattern — do not extend it. New research fields should go to `public/data/*.json` or a dedicated table.
+- **`buyer_intelligence` is a VIEW**, not a table. It reads from `engagement_buyers` joined with `proposals`. Do not INSERT/UPDATE it.
+
+### Field ownership (engagement_buyers)
+| Owner | Fields |
+|-------|--------|
+| Proposal-scoped (correct home) | fit_score, fit_narrative, approach_strategy, approach_script, call_opener, one_pager_html/json, outreach_sequence, email/letter/linkedin_draft, expert_verdict/comment, engagement_stage, status, sent_at timestamps, response fields, dnc_* |
+| Company-scoped (legacy, do not extend) | buyer_company_name, buyer_type, buyer_city, buyer_state, buyer_revenue, buyer_employee_count, buyer_description, story_narrative, confidence, acquisition_history, investment_thesis |
+| Contact-scoped (legacy, do not extend) | buyer_contact_name, buyer_title, buyer_email, buyer_phone, buyer_linkedin |
+
 ## BUYER SCORING
 
 | Score | Label | Criteria |
