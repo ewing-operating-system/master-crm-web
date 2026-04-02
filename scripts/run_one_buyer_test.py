@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
 """
-Run comprehensive research for ONE buyer and log every step.
-This is a test harness — validates the full pipeline end-to-end.
+Run comprehensive buyer research for the Debbie Review Page.
 
-Usage: python3 scripts/run_one_buyer_test.py
+Runs Exa searches, synthesizes via Claude, structures golden nuggets
+and market reputation, writes to debbie-buyer-research.json in the
+format the page expects, and commits + pushes to trigger Vercel deploy.
+
+Usage:
+  python3 scripts/run_one_buyer_test.py --buyer "SAP SuccessFactors" --city "Newtown Square" --state PA
+  python3 scripts/run_one_buyer_test.py --buyer Paychex --city Rochester --state NY
+  python3 scripts/run_one_buyer_test.py --buyer Workday --city Pleasanton --state CA --skip-deploy
 """
 
-import json, os, sys, time, requests
+import argparse, json, os, re, subprocess, sys, time, requests
 from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'backend'))
@@ -16,87 +22,29 @@ from lib.exa_client import ExaClient, TEMPLATES
 SUPABASE_URL = os.environ.get('SUPABASE_URL', '')
 SUPABASE_KEY = os.environ.get('SUPABASE_SERVICE_ROLE_KEY', '')
 SB_HEADERS = {'apikey': SUPABASE_KEY, 'Authorization': f'Bearer {SUPABASE_KEY}', 'Content-Type': 'application/json'}
-
-BUYER_NAME = "Paychex"
-BUYER_SLUG = "paychex"
-BUYER_CITY = "Rochester"
-BUYER_STATE = "NY"
 ENTITY = "next_chapter"
 
 PUBLIC_DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'public', 'data')
 RESEARCH_JSON_PATH = os.path.join(PUBLIC_DATA_DIR, 'debbie-buyer-research.json')
+REPO_ROOT = os.path.join(os.path.dirname(__file__), '..')
 
-# The 10 sections the Debbie review page expects
-SECTIONS = [
-    {
-        "key": "hr_media_business",
-        "title": "HR.com Media Business",
-        "templates": ["company_search", "company_financials"],
-        "topic": "HR.com media business model revenue advertising learning marketplace",
-    },
-    {
-        "key": "hr_domain_name",
-        "title": "HR.com Domain Name Value",
-        "templates": ["strategic_fit"],
-        "topic": "HR.com domain name value premium domain HR technology branding",
-    },
-    {
-        "key": "market_reputation",
-        "title": "Market Reputation",
-        "templates": ["reviews_search"],
-        "topic": "Paychex products reviews ratings complaints customer satisfaction",
-    },
-    {
-        "key": "strategic_fit",
-        "title": "Strategic Fit",
-        "templates": ["strategic_fit", "company_financials"],
-        "topic": "Paychex HR technology strategy content marketing HR.com acquisition synergy",
-    },
-    {
-        "key": "ceo_vision",
-        "title": "CEO Vision & Strategy",
-        "templates": ["earnings_call"],
-        "topic": "Paychex CEO John Gibson vision strategy growth priorities HR technology 2025",
-    },
-    {
-        "key": "ma_appetite",
-        "title": "M&A Appetite",
-        "templates": ["ma_history"],
-        "topic": "Paychex acquisition history M&A deals purchased companies HR payroll",
-    },
-    {
-        "key": "competitive_moat",
-        "title": "Competitive Moat",
-        "templates": ["strategic_fit"],
-        "topic": "Paychex competitive advantage moat vs ADP Workday market position",
-    },
-    {
-        "key": "earnings_quotes",
-        "title": "Key Earnings Quotes",
-        "templates": ["earnings_call"],
-        "topic": "Paychex earnings call Q3 Q4 2024 2025 CEO CFO quotes strategy",
-    },
-    {
-        "key": "approach_strategy",
-        "title": "Approach Strategy",
-        "templates": ["buyer_contacts"],
-        "topic": "Paychex corporate development VP M&A business development contact",
-    },
-    {
-        "key": "golden_nuggets",
-        "title": "Golden Nuggets",
-        "templates": ["ma_history", "earnings_call"],
-        "topic": "Paychex surprising facts culture awards unique partnerships community",
-    },
-]
-
-# ── Tracking ──────────────────────────────────────────────────────────────────
-search_log = []  # every search we run
+search_log = []
 total_cost = 0.0
+
 
 def log(msg):
     ts = datetime.now().strftime("%H:%M:%S")
     print(f"[{ts}] {msg}", flush=True)
+
+
+def slugify(s):
+    return re.sub(r'[^a-z0-9]+', '-', s.lower().strip()).strip('-')[:80]
+
+
+def parse_cost(exa_response):
+    raw = exa_response.get("costDollars", 0.0)
+    return float(raw.get("total", 0.0)) if isinstance(raw, dict) else float(raw or 0.0)
+
 
 def flatten_results(exa_response):
     results = exa_response.get("results", [])
@@ -107,9 +55,8 @@ def flatten_results(exa_response):
             urls.append(url)
         content = r.get("text", "") or ""
         if not content:
-            highlights = r.get("highlights", [])
-            if isinstance(highlights, list):
-                content = " ".join(highlights)
+            hl = r.get("highlights", [])
+            content = " ".join(hl) if isinstance(hl, list) else ""
         title = r.get("title", "")
         if title:
             content = f"[{title}] {content}"
@@ -117,8 +64,35 @@ def flatten_results(exa_response):
             texts.append(content.strip())
     return "\n\n---\n\n".join(texts), urls
 
-def log_to_supabase(company, method_code, query, tool, raw_resp, urls, count, cost, duration_ms, status, error=None):
-    """Write to research_executions in Supabase."""
+
+def ensure_method_code(method_code):
+    """Register method_code in research_methods if it doesn't exist."""
+    r = requests.get(
+        f'{SUPABASE_URL}/rest/v1/research_methods?method_code=eq.{method_code}&select=method_code',
+        headers=SB_HEADERS
+    )
+    if r.json():
+        return
+    requests.post(
+        f'{SUPABASE_URL}/rest/v1/research_methods',
+        headers={**SB_HEADERS, 'Prefer': 'return=minimal'},
+        json={
+            'method_code': method_code,
+            'method_name': f'Auto: {method_code}',
+            'description': f'Auto-registered by run_one_buyer_test.py',
+            'category': 'buyer_research',
+            'tool': 'exa',
+            'query_template': '{company_name} {topic}',
+            'expected_output': ['narrative', 'source_urls'],
+            'is_active': True,
+            'discovered_by': 'run_one_buyer_test',
+            'discovery_context': 'Pipeline research script',
+        }
+    )
+
+
+def log_to_supabase(company, method_code, query, raw_resp, urls, count, cost, duration_ms, status, error=None):
+    ensure_method_code(method_code)
     try:
         r = requests.post(
             f'{SUPABASE_URL}/rest/v1/research_executions',
@@ -127,7 +101,7 @@ def log_to_supabase(company, method_code, query, tool, raw_resp, urls, count, co
                 'company_name': company,
                 'method_code': method_code,
                 'actual_query': query,
-                'tool': tool,
+                'tool': 'exa',
                 'raw_response': json.dumps(raw_resp, default=str)[:10000] if raw_resp else None,
                 'result_count': count,
                 'source_urls': json.dumps(urls) if urls else None,
@@ -144,10 +118,20 @@ def log_to_supabase(company, method_code, query, tool, raw_resp, urls, count, co
         log(f"  Supabase log failed: {e}")
         return False
 
+
+def llm(prompt, timeout=120):
+    try:
+        result = subprocess.run(
+            ["claude", "-p", "--output-format", "text"],
+            input=prompt, capture_output=True, text=True, timeout=timeout,
+        )
+        return result.stdout.strip() if result.returncode == 0 else None
+    except Exception:
+        return None
+
+
 def llm_synthesize(buyer_name, section_key, goal, combined_text):
-    """Use Claude CLI to synthesize raw research into clean HTML."""
-    import subprocess
-    prompt = f"""You are a senior M&A research analyst writing buyer intelligence for {buyer_name}.
+    return llm(f"""You are a senior M&A research analyst writing buyer intelligence for {buyer_name}.
 
 Section: {section_key}
 Goal: {goal}
@@ -164,206 +148,381 @@ RULES:
 RAW RESEARCH:
 {combined_text[:8000]}
 
-Return ONLY the HTML content."""
+Return ONLY the HTML content.""")
 
+
+def llm_extract_nuggets(buyer_name, raw_html):
+    """Extract golden nuggets as structured array."""
+    output = llm(f"""Extract golden nuggets from this research about {buyer_name}. Return a JSON array.
+
+Each nugget object:
+- "quote": exact executive quote (verbatim if available)
+- "speaker": name and title (e.g. "John Gibson, CEO")
+- "opener": conversation opener using this nugget (1-2 sentences, speaking to a {buyer_name} executive about acquiring HR.com)
+- "why": why this matters for M&A (1 sentence)
+
+Extract 3-5 nuggets. Return ONLY valid JSON array, no markdown.
+
+SOURCE:
+{raw_html[:6000]}""")
+    if not output:
+        return []
     try:
-        result = subprocess.run(
-            ["claude", "-p", "--output-format", "text"],
-            input=prompt, capture_output=True, text=True, timeout=120,
-        )
-        return result.stdout.strip() if result.returncode == 0 else None
-    except:
+        s, e = output.find('['), output.rfind(']') + 1
+        return json.loads(output[s:e])
+    except Exception:
+        return []
+
+
+def llm_structure_reviews(buyer_name, combined_text):
+    """Structure raw review data into the product_reviews format the page needs."""
+    output = llm(f"""Analyze these raw web results about {buyer_name} products and extract structured review data.
+
+For each product, extract positive and negative reviews.
+
+Each review:
+- "text": review content (1-3 sentences, faithful to source)
+- "category": one of [billing, support, usability, features, reliability, integration, pricing, onboarding, reporting, compliance, other]
+- "source": platform name (G2, Capterra, Reddit, BBB, Birdeye, etc.)
+- "source_url": URL if available, empty string if not
+- "scores": {{"informativeness": 1-3, "specificity": 1-3, "polarity": 1-3}}
+
+Return JSON:
+{{
+  "products_discovered": ["{buyer_name} Product1", ...],
+  "summary_stats": {{"total_reviews_scraped": N, "reviews_passing_threshold": N}},
+  "product_reviews": {{
+    "Product Name": {{
+      "positive": [{{review objects}}],
+      "negative": [{{review objects}}],
+      "total_raw": N
+    }}
+  }}
+}}
+
+Include 3-6 reviews per product per sentiment. Return ONLY valid JSON.
+
+RAW DATA:
+{combined_text[:12000]}""", timeout=180)
+    if not output:
         return None
+    try:
+        s, e = output.find('{'), output.rfind('}') + 1
+        return json.loads(output[s:e])
+    except Exception:
+        return None
+
+
+# ── Section definitions (parameterized by buyer) ─────────────────────────────
+
+def build_sections(buyer_name):
+    return [
+        {"key": "hr_media_business", "title": "HR.com Media Business",
+         "templates": ["company_search", "company_financials"],
+         "topic": f"{buyer_name} HR.com media business model revenue advertising learning marketplace"},
+        {"key": "hr_domain_name", "title": "HR.com Domain Name Value",
+         "templates": ["strategic_fit"],
+         "topic": f"{buyer_name} HR.com domain name value premium domain HR technology branding"},
+        {"key": "market_reputation", "title": "Market Reputation",
+         "templates": ["reviews_search"],
+         "topic": f"{buyer_name} products reviews ratings complaints customer satisfaction"},
+        {"key": "strategic_fit", "title": "Strategic Fit",
+         "templates": ["strategic_fit", "company_financials"],
+         "topic": f"{buyer_name} HR technology strategy content marketing HR.com acquisition synergy"},
+        {"key": "ceo_vision", "title": "CEO Vision & Strategy",
+         "templates": ["earnings_call"],
+         "topic": f"{buyer_name} CEO vision strategy growth priorities HR technology 2025"},
+        {"key": "ma_appetite", "title": "M&A Appetite",
+         "templates": ["ma_history"],
+         "topic": f"{buyer_name} acquisition history M&A deals purchased companies"},
+        {"key": "competitive_moat", "title": "Competitive Moat",
+         "templates": ["strategic_fit"],
+         "topic": f"{buyer_name} competitive advantage moat market position differentiation"},
+        {"key": "earnings_quotes", "title": "Key Earnings Quotes",
+         "templates": ["earnings_call"],
+         "topic": f"{buyer_name} earnings call 2024 2025 CEO CFO quotes strategy growth"},
+        {"key": "approach_strategy", "title": "Approach Strategy",
+         "templates": ["buyer_contacts"],
+         "topic": f"{buyer_name} corporate development VP M&A business development contact"},
+        {"key": "golden_nuggets", "title": "Golden Nuggets",
+         "templates": ["ma_history", "earnings_call"],
+         "topic": f"{buyer_name} surprising facts culture awards unique partnerships community"},
+    ]
+
+
+# ── Exa search runner ────────────────────────────────────────────────────────
+
+def run_exa_searches(exa, buyer_name, buyer_city, buyer_state, templates, topic, section_key):
+    """Run Exa searches for a section, return (combined_text, urls, search_entries)."""
+    global total_cost
+    texts, urls, entries = [], [], []
+
+    for tmpl_name in templates:
+        tmpl = TEMPLATES.get(tmpl_name, {})
+        kwargs = {
+            "company_name": buyer_name, "topic": topic,
+            "city": buyer_city, "state": buyer_state,
+            "vertical": "HR Technology", "owner_name": "",
+        }
+        effective_query = tmpl.get("query", "").format(**kwargs).strip()
+        log(f"  Query: {effective_query[:80]}")
+
+        t0 = time.time()
+        try:
+            resp = exa.search(tmpl_name, **kwargs)
+            ms = int((time.time() - t0) * 1000)
+            text, found_urls = flatten_results(resp)
+            count = len(resp.get("results", []))
+            cost = parse_cost(resp)
+            total_cost += cost
+
+            method_code = f"test_{section_key}_{tmpl_name}"
+            sb_ok = log_to_supabase(buyer_name, method_code, effective_query, resp, found_urls, count, cost, ms, "success")
+
+            if text:
+                texts.append(text)
+            urls.extend(found_urls)
+
+            status = "success" if count > 0 else "empty"
+            log(f"    → {count} results | ${cost:.4f} | {ms}ms | Supabase: {'✓' if sb_ok else '✗'}")
+            entries.append({"template": tmpl_name, "query": effective_query, "results": count,
+                            "cost": cost, "status": status, "supabase": sb_ok})
+        except Exception as exc:
+            ms = int((time.time() - t0) * 1000)
+            log(f"    → FAILED: {exc}")
+            entries.append({"template": tmpl_name, "query": effective_query, "results": 0,
+                            "cost": 0, "status": "error", "supabase": False})
+        time.sleep(0.5)
+
+    return "\n\n---\n\n".join(texts), list(dict.fromkeys(urls)), entries
+
+
+# ── Market reputation deep search ────────────────────────────────────────────
+
+def research_market_reputation(exa, buyer_name, buyer_city):
+    """Run targeted review searches and structure into product_reviews format."""
+    log(f"  Running deep market reputation search...")
+    queries = [
+        (f"{buyer_name} reviews complaints G2 Capterra Reddit 2024 2025", "auto"),
+        (f"{buyer_name} software customer complaints problems billing", "auto"),
+        (f"{buyer_name} software positive review recommendation", "auto"),
+        (f"{buyer_name} product comparison pros cons", "deep"),
+    ]
+    all_text = []
+    for query, stype in queries:
+        try:
+            resp = exa.raw_search(query=query, search_type=stype, num_results=8,
+                                   max_characters=3000, content_mode="text", use_autoprompt=True)
+            for r in resp.get("results", []):
+                text = r.get("text", "")
+                if text:
+                    all_text.append(f"[{r.get('title','')}] ({r.get('url','')})\n{text}")
+            cost = parse_cost(resp)
+            log(f"    → {len(resp.get('results',[]))} results | ${cost:.4f}")
+        except Exception as e:
+            log(f"    → FAILED: {e}")
+        time.sleep(0.5)
+
+    combined = "\n\n---\n\n".join(all_text)
+    if not combined:
+        return None
+
+    log(f"  Structuring {len(all_text)} review sources via Claude...")
+    return llm_structure_reviews(buyer_name, combined)
+
+
+# ── JSON writer (correct format for page) ────────────────────────────────────
+
+def load_json():
+    if os.path.exists(RESEARCH_JSON_PATH):
+        try:
+            with open(RESEARCH_JSON_PATH) as f:
+                data = json.load(f)
+            if "buyers" not in data:
+                data = {"buyers": data}
+            return data
+        except Exception:
+            pass
+    return {"buyers": {}}
+
+
+def save_json(data):
+    os.makedirs(PUBLIC_DATA_DIR, exist_ok=True)
+    with open(RESEARCH_JSON_PATH, 'w') as f:
+        json.dump(data, f, indent=2, default=str)
+
+
+def write_buyer_to_json(data, slug, buyer_name, buyer_type, buyer_city, buyer_state, fit_score,
+                         section_results, golden_nuggets, market_rep):
+    """Write one buyer in the format debbie-buyer-review.html expects."""
+    buyers = data.setdefault("buyers", {})
+    buyer = buyers.get(slug, {})
+    buyer.update({
+        "buyer_name": buyer_name,
+        "buyer_slug": slug,
+        "buyer_type": buyer_type,
+        "buyer_city": buyer_city,
+        "buyer_state": buyer_state,
+        "fit_score": fit_score,
+    })
+    buyer.setdefault("sections", {})
+    buyer.setdefault("source_urls", {})
+
+    for key, html, urls in section_results:
+        if key in ("hr_media_business", "hr_domain_name"):
+            buyer[key] = {"narrative": html}
+        elif key == "strategic_fit":
+            buyer[key] = html
+        elif key == "golden_nuggets":
+            pass  # handled separately
+        elif key == "market_reputation":
+            pass  # handled separately
+        else:
+            buyer["sections"][key] = html
+        buyer["source_urls"][key] = urls
+
+    # Golden nuggets — structured array
+    buyer["golden_nuggets"] = golden_nuggets or []
+
+    # Market reputation — structured reviews
+    if market_rep:
+        buyer["market_reputation"] = {
+            "narrative": next((h for k, h, _ in section_results if k == "market_reputation"), ""),
+            "products_discovered": market_rep.get("products_discovered", []),
+            "summary_stats": market_rep.get("summary_stats", {}),
+            "product_reviews": market_rep.get("product_reviews", {}),
+        }
+    else:
+        buyer["market_reputation"] = {
+            "narrative": next((h for k, h, _ in section_results if k == "market_reputation"), ""),
+            "products_discovered": [],
+            "product_reviews": {},
+        }
+
+    buyers[slug] = buyer
+    return data
+
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
-    global total_cost
+    parser = argparse.ArgumentParser(description='Run comprehensive buyer research for Debbie Review Page')
+    parser.add_argument('--buyer', required=True, help='Buyer company name (e.g. "SAP SuccessFactors")')
+    parser.add_argument('--city', required=True, help='Buyer HQ city')
+    parser.add_argument('--state', required=True, help='Buyer HQ state/country')
+    parser.add_argument('--type', default='Strategic', help='Buyer type (default: Strategic)')
+    parser.add_argument('--score', type=int, default=8, help='Fit score (default: 8)')
+    parser.add_argument('--skip-deploy', action='store_true', help='Skip git commit+push+deploy')
+    args = parser.parse_args()
 
-    log(f"=" * 60)
-    log(f"COMPREHENSIVE BUYER TEST: {BUYER_NAME}")
-    log(f"Sections to research: {len(SECTIONS)}")
-    log(f"=" * 60)
+    buyer_name = args.buyer
+    buyer_slug = slugify(buyer_name)
+    buyer_city = args.city
+    buyer_state = args.state
+
+    log("=" * 60)
+    log(f"BUYER RESEARCH: {buyer_name} ({buyer_slug})")
+    log(f"Location: {buyer_city}, {buyer_state}")
+    log(f"Fit score: {args.score} | Type: {args.type}")
+    log("=" * 60)
 
     exa = ExaClient()
-    os.makedirs(PUBLIC_DATA_DIR, exist_ok=True)
+    sections = build_sections(buyer_name)
+    section_results = []  # [(key, html, urls), ...]
+    golden_nuggets_raw = ""
+    all_entries = []
 
-    # Load existing JSON if any
-    if os.path.exists(RESEARCH_JSON_PATH):
-        with open(RESEARCH_JSON_PATH) as f:
-            all_data = json.load(f)
-    else:
-        all_data = {}
-
-    if BUYER_SLUG not in all_data:
-        all_data[BUYER_SLUG] = {}
-
-    search_num = 0
-
-    for section in SECTIONS:
+    # ── Run all sections ──────────────────────────────────────────────────────
+    for section in sections:
         key = section["key"]
-        title = section["title"]
-        topic = section["topic"]
-        templates = section["templates"]
-
         log(f"\n{'─' * 50}")
-        log(f"SECTION: {title} ({key})")
-        log(f"Templates: {templates}")
+        log(f"SECTION: {section['title']} ({key})")
 
-        section_texts = []
-        section_urls = []
-
-        for tmpl_name in templates:
-            search_num += 1
-            tmpl = TEMPLATES.get(tmpl_name, {})
-            query_template = tmpl.get("query", "")
-
-            kwargs = {
-                "company_name": BUYER_NAME,
-                "topic": topic,
-                "city": BUYER_CITY,
-                "state": BUYER_STATE,
-                "vertical": "HR Technology / Payroll",
-                "owner_name": "John Gibson",
-            }
-            effective_query = query_template.format(**kwargs).strip()
-
-            log(f"  [{search_num}] Template: {tmpl_name}")
-            log(f"       Query: {effective_query}")
-
-            t0 = time.time()
-            try:
-                exa_response = exa.search(tmpl_name, **kwargs)
-                duration_ms = int((time.time() - t0) * 1000)
-                text_chunk, urls = flatten_results(exa_response)
-                result_count = len(exa_response.get("results", []))
-                raw_cost = exa_response.get("costDollars", 0.0)
-                cost = float(raw_cost.get("total", 0.0)) if isinstance(raw_cost, dict) else float(raw_cost or 0.0)
-                total_cost += cost
-
-                entry = {
-                    "search_num": search_num,
-                    "section": key,
-                    "template": tmpl_name,
-                    "query": effective_query,
-                    "result_count": result_count,
-                    "cost_usd": cost,
-                    "duration_ms": duration_ms,
-                    "status": "success" if result_count > 0 else "empty",
-                    "urls": urls[:5],
-                    "stored_supabase": False,
-                    "stored_json": False,
-                }
-
-                # Log to Supabase
-                sb_ok = log_to_supabase(
-                    BUYER_NAME, f"test_{key}_{tmpl_name}", effective_query,
-                    "exa", exa_response, urls, result_count, cost, duration_ms,
-                    "success"
-                )
-                entry["stored_supabase"] = sb_ok
-
-                if text_chunk:
-                    section_texts.append(text_chunk)
-                section_urls.extend(urls)
-
-                log(f"       Results: {result_count} | Cost: ${cost:.4f} | Time: {duration_ms}ms | Supabase: {'✓' if sb_ok else '✗'}")
-                for u in urls[:3]:
-                    log(f"       → {u}")
-
-                search_log.append(entry)
-
-            except Exception as exc:
-                duration_ms = int((time.time() - t0) * 1000)
-                log(f"       FAILED: {exc}")
-                sb_ok = log_to_supabase(
-                    BUYER_NAME, f"test_{key}_{tmpl_name}", effective_query,
-                    "exa", None, [], 0, 0, duration_ms,
-                    "error", str(exc)[:500]
-                )
-                search_log.append({
-                    "search_num": search_num,
-                    "section": key,
-                    "template": tmpl_name,
-                    "query": effective_query,
-                    "result_count": 0,
-                    "cost_usd": 0,
-                    "duration_ms": duration_ms,
-                    "status": "error",
-                    "error": str(exc)[:200],
-                    "stored_supabase": sb_ok,
-                    "stored_json": False,
-                })
-
-            time.sleep(0.5)  # rate limit
-
-        # ── Synthesize section ────────────────────────────────────────────────
-        combined = "\n\n---\n\n".join(section_texts) if section_texts else ""
-        unique_urls = list(dict.fromkeys(section_urls))
+        combined, urls, entries = run_exa_searches(
+            exa, buyer_name, buyer_city, buyer_state,
+            section["templates"], section["topic"], key
+        )
+        all_entries.extend(entries)
 
         if combined:
-            log(f"  Synthesizing {len(section_texts)} text chunks via Claude...")
-            html = llm_synthesize(BUYER_NAME, key, title, combined)
+            log(f"  Synthesizing via Claude...")
+            html = llm_synthesize(buyer_name, key, section["title"], combined)
             if not html:
-                html = f"<p>Synthesis failed. {len(section_texts)} raw sources collected.</p>"
-            log(f"  Synthesis: {'OK' if '<p>' in html else 'FAILED'} ({len(html)} chars)")
+                html = f"<p>Synthesis failed. Raw sources collected.</p>"
+            log(f"  → {len(html)} chars")
         else:
-            html = f"<p>No data found for {title}.</p>"
-            log(f"  No raw data — skipping synthesis")
+            html = f"<p>No data found for {section['title']}.</p>"
 
-        # Store in JSON
-        all_data[BUYER_SLUG][key] = {
-            "content": html,
-            "source_urls": unique_urls,
-            "updated_at": datetime.now(timezone.utc).isoformat(),
-        }
+        section_results.append((key, html, urls))
 
-        # Mark stored
-        for entry in search_log:
-            if entry["section"] == key:
-                entry["stored_json"] = True
+        if key == "golden_nuggets":
+            golden_nuggets_raw = html
 
-    # ── Write final JSON ──────────────────────────────────────────────────────
-    with open(RESEARCH_JSON_PATH, 'w') as f:
-        json.dump(all_data, f, indent=2, default=str)
-    log(f"\n{'=' * 60}")
-    log(f"JSON written: {RESEARCH_JSON_PATH}")
+    # ── Extract golden nuggets as structured array ────────────────────────────
+    log(f"\n{'─' * 50}")
+    log(f"EXTRACTING GOLDEN NUGGETS...")
+    nuggets = llm_extract_nuggets(buyer_name, golden_nuggets_raw)
+    log(f"  → {len(nuggets)} nuggets extracted")
+
+    # ── Deep market reputation search ─────────────────────────────────────────
+    log(f"\n{'─' * 50}")
+    log(f"DEEP MARKET REPUTATION SEARCH...")
+    market_rep = research_market_reputation(exa, buyer_name, buyer_city)
+    if market_rep:
+        prods = market_rep.get("product_reviews", {})
+        total_reviews = sum(len(d.get("positive", [])) + len(d.get("negative", [])) for d in prods.values())
+        log(f"  → {len(prods)} products, {total_reviews} structured reviews")
+    else:
+        log(f"  → No structured reviews extracted")
+
+    # ── Write to JSON ─────────────────────────────────────────────────────────
+    log(f"\n{'─' * 50}")
+    log(f"WRITING JSON...")
+    data = load_json()
+    data = write_buyer_to_json(
+        data, buyer_slug, buyer_name, args.type, buyer_city, buyer_state, args.score,
+        section_results, nuggets, market_rep
+    )
+    save_json(data)
+    log(f"  → {RESEARCH_JSON_PATH} ({os.path.getsize(RESEARCH_JSON_PATH)} bytes)")
+
+    # ── Deploy ────────────────────────────────────────────────────────────────
+    if not args.skip_deploy:
+        log(f"\n{'─' * 50}")
+        log(f"DEPLOYING...")
+        cmds = [
+            ["git", "-C", REPO_ROOT, "add", "public/data/debbie-buyer-research.json"],
+            ["git", "-C", REPO_ROOT, "commit", "-m", f"[auto] Add {buyer_name} buyer research"],
+            ["git", "-C", REPO_ROOT, "push"],
+        ]
+        for cmd in cmds:
+            r = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+            if r.returncode != 0 and "nothing to commit" not in r.stderr + r.stdout:
+                log(f"  Git warning: {r.stderr.strip()[:100]}")
+        log(f"  Pushed to GitHub → Vercel will auto-deploy")
+    else:
+        log(f"\n  --skip-deploy: skipping git+vercel")
 
     # ── Summary ───────────────────────────────────────────────────────────────
     log(f"\n{'=' * 60}")
-    log(f"SEARCH LOG SUMMARY")
+    log(f"SUMMARY: {buyer_name}")
     log(f"{'=' * 60}")
-    successes = [s for s in search_log if s["status"] == "success"]
-    empties = [s for s in search_log if s["status"] == "empty"]
-    errors = [s for s in search_log if s["status"] == "error"]
-    log(f"Total searches: {len(search_log)}")
-    log(f"  Returned results: {len(successes)}")
-    log(f"  Empty (0 results): {len(empties)}")
-    log(f"  Errors: {len(errors)}")
+    successes = [e for e in all_entries if e["status"] == "success"]
+    errors = [e for e in all_entries if e["status"] == "error"]
+    log(f"Exa searches: {len(all_entries)} total, {len(successes)} success, {len(errors)} errors")
     log(f"Total Exa cost: ${total_cost:.4f}")
-    log(f"")
+    log(f"Golden nuggets: {len(nuggets)}")
+    if market_rep:
+        prods = market_rep.get("product_reviews", {})
+        log(f"Market reputation: {len(prods)} products")
+        for p, d in prods.items():
+            log(f"  {p}: {len(d.get('positive',[]))}+ / {len(d.get('negative',[]))}-")
+    log(f"\nSections:")
+    for key, html, urls in section_results:
+        has = bool(html) and "No data found" not in html
+        log(f"  {key:<25} {'✓' if has else '✗'} {len(urls)} sources")
+    log(f"\nView: https://master-crm-web-eight.vercel.app/debbie-buyer-review.html")
 
-    log(f"DETAILED LOG:")
-    log(f"{'#':<4} {'Section':<22} {'Template':<20} {'Results':<8} {'Cost':<8} {'Supabase':<10} {'JSON':<6} {'Status'}")
-    log(f"{'-'*4} {'-'*22} {'-'*20} {'-'*8} {'-'*8} {'-'*10} {'-'*6} {'-'*10}")
-    for s in search_log:
-        log(f"{s['search_num']:<4} {s['section']:<22} {s['template']:<20} {s['result_count']:<8} ${s['cost_usd']:<7.4f} {'✓' if s['stored_supabase'] else '✗':<10} {'✓' if s['stored_json'] else '✗':<6} {s['status']}")
-
-    log(f"\nSECTION COVERAGE:")
-    for section in SECTIONS:
-        key = section["key"]
-        data = all_data.get(BUYER_SLUG, {}).get(key, {})
-        has_content = bool(data.get("content")) and "No data found" not in data.get("content", "")
-        n_sources = len(data.get("source_urls", []))
-        log(f"  {key:<25} {'✓ HAS DATA' if has_content else '✗ EMPTY':<15} {n_sources} sources")
-
-    log(f"\nSTORAGE VERIFICATION:")
-    log(f"  JSON file: {RESEARCH_JSON_PATH}")
-    log(f"  JSON file exists: {os.path.exists(RESEARCH_JSON_PATH)}")
-    log(f"  JSON file size: {os.path.getsize(RESEARCH_JSON_PATH)} bytes")
-    log(f"  Supabase research_executions: {sum(1 for s in search_log if s['stored_supabase'])} rows written")
-
-    return search_log
 
 if __name__ == '__main__':
     main()
