@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meeting Transcripts</title>
+<script src="/supabase-config.js"></script>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #0d1117;
+    color: #c9d1d9;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .page-header {
+    background: linear-gradient(135deg, #161b22 0%, #0d1117 50%, #161b22 100%);
+    border-bottom: 1px solid #30363d;
+    padding: 28px 32px 20px;
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .header-inner h1 { font-size: 24px; color: #f0f6fc; font-weight: 700; }
+  .header-inner .subtitle { font-size: 14px; color: #8b949e; margin-top: 4px; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 24px 32px; }
+  .filters { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+  .filter-btn {
+    background: #21262d; border: 1px solid #30363d; color: #c9d1d9;
+    padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px;
+    transition: all 0.15s;
+  }
+  .filter-btn:hover { border-color: #58a6ff; color: #58a6ff; }
+  .filter-btn.active { background: #1f6feb; border-color: #1f6feb; color: #fff; }
+  .meeting-card {
+    background: #161b22; border: 1px solid #30363d; border-radius: 8px;
+    padding: 20px 24px; margin-bottom: 12px; display: flex;
+    justify-content: space-between; align-items: center;
+    transition: border-color 0.15s;
+  }
+  .meeting-card:hover { border-color: #58a6ff; }
+  .meeting-info h3 { font-size: 16px; color: #f0f6fc; font-weight: 600; margin-bottom: 4px; }
+  .meeting-meta { font-size: 13px; color: #8b949e; display: flex; gap: 16px; flex-wrap: wrap; }
+  .meeting-meta span { display: inline-flex; align-items: center; gap: 4px; }
+  .entity-pill {
+    display: inline-block; padding: 2px 10px; border-radius: 12px;
+    font-size: 11px; font-weight: 600; color: #fff; text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .entity-pills { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+  .view-link {
+    color: #58a6ff; text-decoration: none; font-size: 14px; font-weight: 500;
+    white-space: nowrap; padding: 8px 16px; border: 1px solid #30363d;
+    border-radius: 6px; transition: all 0.15s;
+  }
+  .view-link:hover { background: #1f6feb22; border-color: #58a6ff; }
+  .stats-bar {
+    display: flex; gap: 24px; margin-bottom: 24px; padding: 16px 20px;
+    background: #161b22; border: 1px solid #30363d; border-radius: 8px;
+  }
+  .stat { text-align: center; }
+  .stat-value { font-size: 28px; font-weight: 700; color: #f0f6fc; }
+  .stat-label { font-size: 12px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; }
+  .empty-state { text-align: center; padding: 60px 20px; color: #8b949e; }
+  .loading { text-align: center; padding: 40px; color: #8b949e; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="header-inner">
+    <div>
+      <h1>Meeting Transcripts</h1>
+      <div class="subtitle">AI-extracted business intelligence from client meetings</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="stats-bar" id="stats-bar">
+    <div class="stat"><div class="stat-value" id="stat-meetings">--</div><div class="stat-label">Meetings</div></div>
+    <div class="stat"><div class="stat-value" id="stat-learnings">--</div><div class="stat-label">Learnings</div></div>
+    <div class="stat"><div class="stat-value" id="stat-approved">--</div><div class="stat-label">Approved</div></div>
+    <div class="stat"><div class="stat-value" id="stat-hours">--</div><div class="stat-label">Hours Recorded</div></div>
+  </div>
+
+  <div class="filters" id="filters"></div>
+  <div id="meetings-list"><div class="loading">Loading meetings...</div></div>
+</div>
+
+<script>
+(async function() {
+  const SUPABASE_URL = window.__SUPABASE_URL;
+  const SUPABASE_KEY = window.__SUPABASE_ANON_KEY;
+  const headers = { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY };
+
+  const ENTITY_COLORS = {
+    'and_capital': '#1a1a2e', 'revsup': '#c0392b', 'next_chapter': '#2c3e50',
+    'the_forge': '#e67e22', 'biolev': '#27ae60', 'sea_sweet': '#2980b9',
+    'hrcom': '#8e44ad', 'aquascience': '#16a085', 'springer': '#d35400',
+    'aircontrol': '#2980b9', 'designprecast': '#7f8c8d', 'wieser': '#c0392b',
+    'unknown': '#6c757d'
+  };
+
+  // Fetch meetings
+  const mResp = await fetch(SUPABASE_URL + '/rest/v1/meeting_transcripts?select=*&order=date.desc', { headers });
+  const meetings = await mResp.json();
+
+  // Fetch learnings stats
+  const lResp = await fetch(SUPABASE_URL + '/rest/v1/meeting_learnings?select=id,approved', { headers });
+  const learnings = await lResp.json();
+
+  // Stats
+  document.getElementById('stat-meetings').textContent = meetings.length;
+  document.getElementById('stat-learnings').textContent = learnings.length;
+  document.getElementById('stat-approved').textContent = learnings.filter(l => l.approved === true).length;
+  const totalMin = meetings.reduce((sum, m) => sum + (m.duration_minutes || 0), 0);
+  document.getElementById('stat-hours').textContent = (totalMin / 60).toFixed(1);
+
+  // Build entity filter buttons
+  const allEntities = new Set();
+  meetings.forEach(m => (m.entities || []).forEach(e => { if (e !== 'next_chapter') allEntities.add(e); }));
+  const filtersEl = document.getElementById('filters');
+  const allBtn = document.createElement('button');
+  allBtn.className = 'filter-btn active';
+  allBtn.textContent = 'All';
+  allBtn.dataset.entity = 'all';
+  filtersEl.appendChild(allBtn);
+  allEntities.forEach(e => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.textContent = e.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    btn.dataset.entity = e;
+    btn.style.borderLeftColor = ENTITY_COLORS[e] || '#6c757d';
+    btn.style.borderLeftWidth = '3px';
+    filtersEl.appendChild(btn);
+  });
+
+  let activeFilter = 'all';
+  filtersEl.addEventListener('click', function(ev) {
+    const btn = ev.target.closest('.filter-btn');
+    if (!btn) return;
+    filtersEl.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.entity;
+    render();
+  });
+
+  function render() {
+    const list = document.getElementById('meetings-list');
+    const filtered = activeFilter === 'all'
+      ? meetings
+      : meetings.filter(m => (m.entities || []).includes(activeFilter));
+
+    if (!filtered.length) {
+      list.innerHTML = '<div class="empty-state">No meetings found</div>';
+      return;
+    }
+
+    list.innerHTML = filtered.map(m => {
+      const date = m.date ? new Date(m.date) : null;
+      const dateStr = date ? date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Unknown';
+      const entities = (m.entities || []).filter(e => e !== 'next_chapter');
+      const pills = entities.map(e => {
+        const color = ENTITY_COLORS[e] || '#6c757d';
+        const label = e.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+        return '<span class="entity-pill" style="background:' + color + '">' + label + '</span>';
+      }).join('');
+      const pagePath = m.page_path ? '/' + m.page_path : '#';
+
+      return '<a href="' + pagePath + '" style="text-decoration:none">' +
+        '<div class="meeting-card">' +
+        '<div class="meeting-info">' +
+        '<h3>' + (m.title || 'Untitled') + '</h3>' +
+        '<div class="meeting-meta">' +
+        '<span>' + dateStr + '</span>' +
+        '<span>' + (m.duration_minutes || 0) + ' min</span>' +
+        '</div>' +
+        '<div class="entity-pills">' + pills + '</div>' +
+        '</div>' +
+        '<span class="view-link">View &rarr;</span>' +
+        '</div></a>';
+    }).join('');
+  }
+
+  render();
+})();
+</script>
+
+<div style="text-align:center;padding:24px;font-size:12px;color:#484f58;border-top:1px solid #21262d;margin-top:40px">
+  <strong>Next Chapter M&A Advisory</strong> | Auto-updated hourly 9am-5pm from Fireflies.ai
+</div>
+
+</body>
+</html>
