@@ -1,0 +1,1334 @@
+[
+  {
+    "step": 1,
+    "elapsed_s": 0.0,
+    "timestamp": "21:16:03",
+    "category": "SYSTEM",
+    "action": "PIPELINE START",
+    "buyer": "SAP SuccessFactors",
+    "slug": "sap-successfactors",
+    "city": "Newtown Square",
+    "state": "PA",
+    "ticker": "SAP",
+    "domain": "sap.com",
+    "score": 8,
+    "type": "Strategic"
+  },
+  {
+    "step": 2,
+    "elapsed_s": 0.0,
+    "timestamp": "21:16:03",
+    "category": "PHASE",
+    "action": "SECTION RESEARCH START",
+    "sections": 10
+  },
+  {
+    "step": 3,
+    "elapsed_s": 0.0,
+    "timestamp": "21:16:03",
+    "category": "SECTION",
+    "action": "START: HR.com Media Business",
+    "key": "hr_media_business",
+    "templates": [
+      "company_search",
+      "company_financials"
+    ]
+  },
+  {
+    "step": 4,
+    "elapsed_s": 6.0,
+    "timestamp": "21:16:09",
+    "category": "EXA",
+    "action": "search:hr_media_business:company_search",
+    "template": "company_search",
+    "query": "SAP SuccessFactors Newtown Square PA HR Technology company",
+    "result_count": 8,
+    "cost_usd": 0.012,
+    "duration_ms": 5974,
+    "urls": [
+      "https://training.sap.com/training-locations/us/philadelphia-new-town-square",
+      "https://www.sap.com/about/company/office-locations/usa.html",
+      "https://jobs.sap.com/go/Human-Resources-Jobs-in-the-United-States/902101/",
+      "https://www.linkedin.com/jobs/view/total-rewards-technology-leader-at-sap-4370729584",
+      "https://salestools.io/report/sap-america-headquarters"
+    ],
+    "text_chars": 7033
+  },
+  {
+    "step": 5,
+    "elapsed_s": 11.3,
+    "timestamp": "21:16:14",
+    "category": "EXA",
+    "action": "search:hr_media_business:company_financials",
+    "template": "company_financials",
+    "query": "SAP SuccessFactors annual revenue employees company overview",
+    "result_count": 8,
+    "cost_usd": 0.012,
+    "duration_ms": 4774,
+    "urls": [
+      "https://www.sap.com/products/hcm.html",
+      "https://www.zoominfo.com/c/successfactors-inc/145735847",
+      "https://pitchbook.com/profiles/company/10894-42",
+      "https://www.macrotrends.net/stocks/charts/SAP/sap-se/revenue",
+      "https://www.macrotrends.net/stocks/charts/SAP/sap-se/number-of-employees"
+    ],
+    "text_chars": 21157
+  },
+  {
+    "step": 6,
+    "elapsed_s": 33.2,
+    "timestamp": "21:16:36",
+    "category": "LLM",
+    "action": "synthesize:hr_media_business",
+    "prompt_preview": "You are a senior M&A research analyst writing buyer intelligence for SAP SuccessFactors. Section: hr_media_business | Goal: HR.com Media Business Write 2-4 paragraphs of clean HTML (<p> tags, <strong>",
+    "prompt_length": 8277,
+    "output_length": 2006,
+    "output_preview": "<p><strong>SAP SuccessFactors</strong> (formerly SuccessFactors, Inc.) is a cloud-based human capital management (HCM) suite headquartered in South San Francisco, California, with SAP America's U.S. h",
+    "duration_ms": 21402,
+    "returncode": 0
+  },
+  {
+    "step": 7,
+    "elapsed_s": 33.2,
+    "timestamp": "21:16:36",
+    "category": "SECTION",
+    "action": "DONE: HR.com Media Business",
+    "key": "hr_media_business",
+    "html_chars": 2006,
+    "source_count": 15,
+    "stored_as": "hr_media_business.narrative"
+  },
+  {
+    "step": 8,
+    "elapsed_s": 33.2,
+    "timestamp": "21:16:36",
+    "category": "SECTION",
+    "action": "START: HR.com Domain Name Value",
+    "key": "hr_domain_name",
+    "templates": [
+      "strategic_fit"
+    ]
+  },
+  {
+    "step": 9,
+    "elapsed_s": 41.5,
+    "timestamp": "21:16:44",
+    "category": "EXA",
+    "action": "search:hr_domain_name:strategic_fit",
+    "template": "strategic_fit",
+    "query": "SAP SuccessFactors SAP SuccessFactors HR.com domain name value premium domain HR technology branding strategy investment thesis",
+    "result_count": 8,
+    "cost_usd": 0.012,
+    "duration_ms": 8367,
+    "urls": [
+      "https://www.whois.com/whois/successfactors.com",
+      "https://whois.stsoftware.biz/successfactors-com.htm",
+      "https://en.wikipedia.org/wiki/SAP_SuccessFactors",
+      "https://www.sap.com/investors/en/financial-news/ad-hoc-news/2011/12/1143468.html",
+      "https://www.siteprice.org/website-worth/hr.com"
+    ],
+    "text_chars": 25587
+  },
+  {
+    "step": 10,
+    "elapsed_s": 60.4,
+    "timestamp": "21:17:03",
+    "category": "LLM",
+    "action": "synthesize:hr_domain_name",
+    "prompt_preview": "You are a senior M&A research analyst writing buyer intelligence for SAP SuccessFactors. Section: hr_domain_name | Goal: HR.com Domain Name Value Write 2-4 paragraphs of clean HTML (<p> tags, <strong>",
+    "prompt_length": 8277,
+    "output_length": 1718,
+    "output_preview": "<p>The domain <strong>successfactors.com</strong> was registered on <strong>January 17, 1997</strong>, making it a 29-year-old premium domain \u2014 registered four years before the company itself was foun",
+    "duration_ms": 18390,
+    "returncode": 0
+  },
+  {
+    "step": 11,
+    "elapsed_s": 60.4,
+    "timestamp": "21:17:03",
+    "category": "SECTION",
+    "action": "DONE: HR.com Domain Name Value",
+    "key": "hr_domain_name",
+    "html_chars": 1718,
+    "source_count": 8,
+    "stored_as": "hr_media_business.narrative"
+  },
+  {
+    "step": 12,
+    "elapsed_s": 60.4,
+    "timestamp": "21:17:03",
+    "category": "SECTION",
+    "action": "START: Market Reputation",
+    "key": "market_reputation",
+    "templates": [
+      "reviews_search"
+    ]
+  },
+  {
+    "step": 13,
+    "elapsed_s": 62.0,
+    "timestamp": "21:17:05",
+    "category": "EXA",
+    "action": "search:market_reputation:reviews_search",
+    "template": "reviews_search",
+    "query": "SAP SuccessFactors reviews BBB rating Newtown Square",
+    "result_count": 5,
+    "cost_usd": 0.007,
+    "duration_ms": 1555,
+    "urls": [
+      "https://patch.com/pennsylvania/marplenewtown/newtown-squares-sap-among-best-places-work-website-says",
+      "https://hcmcloudops.successfactors.com/privacy/hxmcloudops_privacy_policy.html",
+      "https://phillyvoice.com/comcast-fortune-best-places-to-work-2022-sheetz-sap-america",
+      "https://my.chatham.edu/documents/documentcenter/20182019ChathamUniversityCatalog.pdf",
+      "https://patch.com/pennsylvania/marplenewtown/newtown-square-firm-best-workplace-women"
+    ],
+    "text_chars": 9031
+  },
+  {
+    "step": 14,
+    "elapsed_s": 80.5,
+    "timestamp": "21:17:23",
+    "category": "LLM",
+    "action": "synthesize:market_reputation",
+    "prompt_preview": "You are a senior M&A research analyst writing buyer intelligence for SAP SuccessFactors. Section: market_reputation | Goal: Market Reputation Write 2-4 paragraphs of clean HTML (<p> tags, <strong> for",
+    "prompt_length": 8273,
+    "output_length": 1828,
+    "output_preview": "<p><strong>SAP America</strong>, the U.S. arm of Germany-based SAP SE, is headquartered in Newtown Square, Pennsylvania and employs approximately 20,000 people domestically. The company has earned con",
+    "duration_ms": 18067,
+    "returncode": 0
+  },
+  {
+    "step": 15,
+    "elapsed_s": 80.5,
+    "timestamp": "21:17:23",
+    "category": "SECTION",
+    "action": "DONE: Market Reputation",
+    "key": "market_reputation",
+    "html_chars": 1828,
+    "source_count": 5,
+    "stored_as": "sections.market_reputation"
+  },
+  {
+    "step": 16,
+    "elapsed_s": 80.5,
+    "timestamp": "21:17:23",
+    "category": "SECTION",
+    "action": "START: Strategic Fit",
+    "key": "strategic_fit",
+    "templates": [
+      "strategic_fit",
+      "company_financials"
+    ]
+  },
+  {
+    "step": 17,
+    "elapsed_s": 88.4,
+    "timestamp": "21:17:31",
+    "category": "EXA",
+    "action": "search:strategic_fit:strategic_fit",
+    "template": "strategic_fit",
+    "query": "SAP SuccessFactors SAP SuccessFactors HR technology strategy content marketing HR.com acquisition synergy strategy investment thesis",
+    "result_count": 8,
+    "cost_usd": 0.012,
+    "duration_ms": 7899,
+    "urls": [
+      "https://www.sap.com/products/hcm.html",
+      "https://news.sap.com/2025/12/ai-data-and-experience-redefining-hr-service-delivery-with-sap-successfactors/",
+      "https://news.sap.com/?p=236901",
+      "https://www.sap.com/products/hcm/partners.html",
+      "https://ide.hr.com/en/about_us/"
+    ],
+    "text_chars": 31741
+  },
+  {
+    "step": 18,
+    "elapsed_s": 95.0,
+    "timestamp": "21:17:38",
+    "category": "EXA",
+    "action": "search:strategic_fit:company_financials",
+    "template": "company_financials",
+    "query": "SAP SuccessFactors annual revenue employees company overview",
+    "result_count": 8,
+    "cost_usd": 0.012,
+    "duration_ms": 6096,
+    "urls": [
+      "https://www.sap.com/products/hcm.html",
+      "https://www.zoominfo.com/c/successfactors-inc/145735847",
+      "https://pitchbook.com/profiles/company/10894-42",
+      "https://www.sec.gov/Archives/edgar/data/1000184/000110465924110719/tm2426630d1_ex99-1.htm",
+      "https://www.sap.com/investors/en/financial-documents-and-events/recent-results.html"
+    ],
+    "text_chars": 26020
+  },
+  {
+    "step": 19,
+    "elapsed_s": 118.7,
+    "timestamp": "21:18:02",
+    "category": "LLM",
+    "action": "synthesize:strategic_fit",
+    "prompt_preview": "You are a senior M&A research analyst writing buyer intelligence for SAP SuccessFactors. Section: strategic_fit | Goal: Strategic Fit Write 2-4 paragraphs of clean HTML (<p> tags, <strong> for key quo",
+    "prompt_length": 8265,
+    "output_length": 2591,
+    "output_preview": "<p>SAP SuccessFactors is SAP's comprehensive Human Capital Management (HCM) suite, serving as the company's flagship cloud HR platform. The suite spans core HR and payroll, talent management, workforc",
+    "duration_ms": 23198,
+    "returncode": 0
+  },
+  {
+    "step": 20,
+    "elapsed_s": 118.7,
+    "timestamp": "21:18:02",
+    "category": "SECTION",
+    "action": "DONE: Strategic Fit",
+    "key": "strategic_fit",
+    "html_chars": 2591,
+    "source_count": 15,
+    "stored_as": "strategic_fit (direct string)"
+  },
+  {
+    "step": 21,
+    "elapsed_s": 118.7,
+    "timestamp": "21:18:02",
+    "category": "SECTION",
+    "action": "START: CEO Vision & Strategy",
+    "key": "ceo_vision",
+    "templates": [
+      "earnings_call"
+    ]
+  },
+  {
+    "step": 22,
+    "elapsed_s": 126.0,
+    "timestamp": "21:18:09",
+    "category": "EXA",
+    "action": "search:ceo_vision:earnings_call",
+    "template": "earnings_call",
+    "query": "SAP SuccessFactors CEO earnings call 2024 2025 strategy SAP SuccessFactors CEO vision strategy growth priorities HR technology 2025",
+    "result_count": 8,
+    "cost_usd": 0.012,
+    "duration_ms": 7286,
+    "urls": [
+      "https://seekingalpha.com/article/4728141-sap-se-sap-q3-2024-earnings-call-transcript",
+      "https://seekingalpha.com/article/4752487-sap-se-sap-q4-2024-earnings-call-transcript",
+      "https://seekingalpha.com/article/4685177-sap-se-sap-q1-2024-earnings-call-transcript",
+      "https://www.prnewswire.com/news-releases/sebastian-steinhaeuser-to-join-the-sap-executive-board--executive-board-member-thomas-saueressigs-contract-extended-302361522.html",
+      "https://www.globenewswire.com/news-release/2025/11/12/3186631/0/en/SmartRecruiters-Drives-Global-Momentum-in-2025-Celebrating-a-Year-of-Innovation-Recognition-and-Retention.html"
+    ],
+    "text_chars": 29950
+  },
+  {
+    "step": 23,
+    "elapsed_s": 147.6,
+    "timestamp": "21:18:30",
+    "category": "LLM",
+    "action": "synthesize:ceo_vision",
+    "prompt_preview": "You are a senior M&A research analyst writing buyer intelligence for SAP SuccessFactors. Section: ceo_vision | Goal: CEO Vision & Strategy Write 2-4 paragraphs of clean HTML (<p> tags, <strong> for ke",
+    "prompt_length": 8270,
+    "output_length": 2024,
+    "output_preview": "<p><strong>Christian Klein</strong>, CEO of SAP since 2020, has driven the company's transformation around a singular vision: making SAP the end-to-end cloud ERP platform for enterprise. Under Klein's",
+    "duration_ms": 21028,
+    "returncode": 0
+  },
+  {
+    "step": 24,
+    "elapsed_s": 147.6,
+    "timestamp": "21:18:30",
+    "category": "SECTION",
+    "action": "DONE: CEO Vision & Strategy",
+    "key": "ceo_vision",
+    "html_chars": 2024,
+    "source_count": 8,
+    "stored_as": "sections.ceo_vision"
+  },
+  {
+    "step": 25,
+    "elapsed_s": 147.6,
+    "timestamp": "21:18:30",
+    "category": "SECTION",
+    "action": "START: M&A Appetite",
+    "key": "ma_appetite",
+    "templates": [
+      "ma_history"
+    ]
+  },
+  {
+    "step": 26,
+    "elapsed_s": 154.4,
+    "timestamp": "21:18:37",
+    "category": "EXA",
+    "action": "search:ma_appetite:ma_history",
+    "template": "ma_history",
+    "query": "SAP SuccessFactors acquisition 2023 2024 2025 SAP SuccessFactors acquisition history M&A deals purchased companies",
+    "result_count": 9,
+    "cost_usd": 0.012,
+    "duration_ms": 6790,
+    "urls": [
+      "https://www.prnewswire.com/news-releases/sap-to-accelerate-cloud-strategy-with-acquisition-of-successfactors-134961708.html",
+      "https://www.reuters.com/article/business/successfactors-just-cant-stop-acquiring-even-while-its-being-acquired-idUS1950478447/",
+      "https://www.prnewswire.com/news-releases/successfactors-partners-applaud-sap-acquisition-139431948.html",
+      "https://www.globenewswire.com/news-release/2025/09/11/3148672/0/en/SAP-Completes-Acquisition-of-SmartRecruiters-Delivering-Innovation-and-AI-Powered-Recruiting-Differentiation-for-Global-Enterprises.html",
+      "https://www.globenewswire.com/de/news-release/2025/08/01/3125595/0/en/sap-to-acquire-smartrecruiters-integration-of-innovative-talent-acquisition-portfolio-will-help-companies-attract-and-retain-top-talent.html"
+    ],
+    "text_chars": 40568
+  },
+  {
+    "step": 27,
+    "elapsed_s": 170.9,
+    "timestamp": "21:18:54",
+    "category": "LLM",
+    "action": "synthesize:ma_appetite",
+    "prompt_preview": "You are a senior M&A research analyst writing buyer intelligence for SAP SuccessFactors. Section: ma_appetite | Goal: M&A Appetite Write 2-4 paragraphs of clean HTML (<p> tags, <strong> for key quotes",
+    "prompt_length": 8262,
+    "output_length": 1804,
+    "output_preview": "<p>SAP demonstrated a decisive M&A appetite in the cloud HCM space with its <strong>$3.4 billion acquisition of SuccessFactors in December 2011</strong>, paying a 52% premium over the closing share pr",
+    "duration_ms": 16012,
+    "returncode": 0
+  },
+  {
+    "step": 28,
+    "elapsed_s": 170.9,
+    "timestamp": "21:18:54",
+    "category": "SECTION",
+    "action": "DONE: M&A Appetite",
+    "key": "ma_appetite",
+    "html_chars": 1804,
+    "source_count": 9,
+    "stored_as": "sections.ma_appetite"
+  },
+  {
+    "step": 29,
+    "elapsed_s": 170.9,
+    "timestamp": "21:18:54",
+    "category": "SECTION",
+    "action": "START: Competitive Moat",
+    "key": "competitive_moat",
+    "templates": [
+      "strategic_fit"
+    ]
+  },
+  {
+    "step": 30,
+    "elapsed_s": 177.6,
+    "timestamp": "21:19:00",
+    "category": "EXA",
+    "action": "search:competitive_moat:strategic_fit",
+    "template": "strategic_fit",
+    "query": "SAP SuccessFactors SAP SuccessFactors competitive advantage moat market position differentiation strategy investment thesis",
+    "result_count": 8,
+    "cost_usd": 0.012,
+    "duration_ms": 6727,
+    "urls": [
+      "https://joshbersin.com/2024/10/successfactors-leapfrogs-hcm-capabilities-ai-skills-talent-intelligence-and-more/",
+      "https://www.linkedin.com/posts/saileshhotaxlri_hrtech-ai-chro-activity-7364640959747330048-zrg_",
+      "https://pitchgrade.com/research/workday-vs-sap-successfactors",
+      "https://6sense.com/tech/human-capital-management/sap-successfactors-hcm-market-share",
+      "https://www.appclonescript.com/sap-vs-workday-vs-oracle-hcm-pros-cons/"
+    ],
+    "text_chars": 34231
+  },
+  {
+    "step": 31,
+    "elapsed_s": 198.6,
+    "timestamp": "21:19:21",
+    "category": "LLM",
+    "action": "synthesize:competitive_moat",
+    "prompt_preview": "You are a senior M&A research analyst writing buyer intelligence for SAP SuccessFactors. Section: competitive_moat | Goal: Competitive Moat Write 2-4 paragraphs of clean HTML (<p> tags, <strong> for k",
+    "prompt_length": 8271,
+    "output_length": 2718,
+    "output_preview": "<p><strong>SAP SuccessFactors has built its competitive moat on three reinforcing advantages: suite-wide AI integration, unmatched global payroll breadth, and an open skills architecture.</strong> As ",
+    "duration_ms": 20475,
+    "returncode": 0
+  },
+  {
+    "step": 32,
+    "elapsed_s": 198.6,
+    "timestamp": "21:19:21",
+    "category": "SECTION",
+    "action": "DONE: Competitive Moat",
+    "key": "competitive_moat",
+    "html_chars": 2718,
+    "source_count": 8,
+    "stored_as": "sections.competitive_moat"
+  },
+  {
+    "step": 33,
+    "elapsed_s": 198.6,
+    "timestamp": "21:19:21",
+    "category": "SECTION",
+    "action": "START: Key Earnings Quotes",
+    "key": "earnings_quotes",
+    "templates": [
+      "earnings_call"
+    ]
+  },
+  {
+    "step": 34,
+    "elapsed_s": 205.3,
+    "timestamp": "21:19:28",
+    "category": "EXA",
+    "action": "search:earnings_quotes:earnings_call",
+    "template": "earnings_call",
+    "query": "SAP SuccessFactors CEO earnings call 2024 2025 strategy SAP SuccessFactors earnings call 2024 2025 CEO CFO quotes strategy growth",
+    "result_count": 8,
+    "cost_usd": 0.012,
+    "duration_ms": 6694,
+    "urls": [
+      "https://seekingalpha.com/article/4803242-sap-se-sap-q2-2025-earnings-call-transcript",
+      "https://seekingalpha.com/article/4752487-sap-se-sap-q4-2024-earnings-call-transcript",
+      "https://seekingalpha.com/article/4728141-sap-se-sap-q3-2024-earnings-call-transcript",
+      "https://seekingalpha.com/article/4777009-sap-se-sap-q1-2025-earnings-call-transcript",
+      "http://www.prnewswire.com/news-releases/sap-quarterly-statement-q4-2025-302673209.html"
+    ],
+    "text_chars": 29695
+  },
+  {
+    "step": 35,
+    "elapsed_s": 226.3,
+    "timestamp": "21:19:49",
+    "category": "LLM",
+    "action": "synthesize:earnings_quotes",
+    "prompt_preview": "You are a senior M&A research analyst writing buyer intelligence for SAP SuccessFactors. Section: earnings_quotes | Goal: Key Earnings Quotes Write 2-4 paragraphs of clean HTML (<p> tags, <strong> for",
+    "prompt_length": 8273,
+    "output_length": 1699,
+    "output_preview": "<p><strong>SAP has delivered consistent cloud-driven growth across recent quarters.</strong> In Q2 2025 (reported July 22, 2025), SAP posted EPS of $1.76, beating consensus estimates by $0.07, on reve",
+    "duration_ms": 20492,
+    "returncode": 0
+  },
+  {
+    "step": 36,
+    "elapsed_s": 226.3,
+    "timestamp": "21:19:49",
+    "category": "SECTION",
+    "action": "DONE: Key Earnings Quotes",
+    "key": "earnings_quotes",
+    "html_chars": 1699,
+    "source_count": 8,
+    "stored_as": "sections.earnings_quotes"
+  },
+  {
+    "step": 37,
+    "elapsed_s": 226.3,
+    "timestamp": "21:19:49",
+    "category": "SECTION",
+    "action": "START: Approach Strategy",
+    "key": "approach_strategy",
+    "templates": [
+      "buyer_contacts"
+    ]
+  },
+  {
+    "step": 38,
+    "elapsed_s": 227.1,
+    "timestamp": "21:19:50",
+    "category": "EXA",
+    "action": "search:approach_strategy:buyer_contacts",
+    "template": "buyer_contacts",
+    "query": "SAP SuccessFactors VP Corporate Development M&A LinkedIn",
+    "result_count": 5,
+    "cost_usd": 0.007,
+    "duration_ms": 860,
+    "urls": [
+      "https://linkedin.com/in/billjazbec",
+      "https://linkedin.com/in/thomas-assmann-92865484",
+      "https://linkedin.com/in/amauryqsg",
+      "https://linkedin.com/in/christian-wernet-ba1aa6136",
+      "https://linkedin.com/in/conradvoorsanger"
+    ],
+    "text_chars": 6978
+  },
+  {
+    "step": 39,
+    "elapsed_s": 250.7,
+    "timestamp": "21:20:14",
+    "category": "LLM",
+    "action": "synthesize:approach_strategy",
+    "prompt_preview": "You are a senior M&A research analyst writing buyer intelligence for SAP SuccessFactors. Section: approach_strategy | Goal: Approach Strategy Write 2-4 paragraphs of clean HTML (<p> tags, <strong> for",
+    "prompt_length": 7279,
+    "output_length": 2637,
+    "output_preview": "<p><strong>SAP's Corporate Development team is deep, global, and highly experienced in HCM acquisitions.</strong> The most direct path into SAP runs through <strong>Bill J., VP of Corporate Developmen",
+    "duration_ms": 23100,
+    "returncode": 0
+  },
+  {
+    "step": 40,
+    "elapsed_s": 250.7,
+    "timestamp": "21:20:14",
+    "category": "SECTION",
+    "action": "DONE: Approach Strategy",
+    "key": "approach_strategy",
+    "html_chars": 2637,
+    "source_count": 5,
+    "stored_as": "sections.approach_strategy"
+  },
+  {
+    "step": 41,
+    "elapsed_s": 250.7,
+    "timestamp": "21:20:14",
+    "category": "SECTION",
+    "action": "START: Golden Nuggets",
+    "key": "golden_nuggets",
+    "templates": [
+      "ma_history",
+      "earnings_call"
+    ]
+  },
+  {
+    "step": 42,
+    "elapsed_s": 257.0,
+    "timestamp": "21:20:20",
+    "category": "EXA",
+    "action": "search:golden_nuggets:ma_history",
+    "template": "ma_history",
+    "query": "SAP SuccessFactors acquisition 2023 2024 2025 SAP SuccessFactors surprising facts culture awards unique partnerships community",
+    "result_count": 10,
+    "cost_usd": 0.012,
+    "duration_ms": 6279,
+    "urls": [
+      "https://www.globenewswire.com/news-release/2025/09/11/3148672/0/en/SAP-Completes-Acquisition-of-SmartRecruiters-Delivering-Innovation-and-AI-Powered-Recruiting-Differentiation-for-Global-Enterprises.html",
+      "https://www.prnewswire.com/news-releases/sap-to-acquire-smartrecruiters-integrating-innovative-talent-acquisition-portfolio-will-help-customers-attract-and-retain-top-talent-302519400.html",
+      "https://www.prnewswire.com/news-releases/sap-to-accelerate-cloud-strategy-with-acquisition-of-successfactors-134961708.html",
+      "https://reuters.com/article/idINDEE7B302C20111204",
+      "https://www.reuters.com/article/us-sap-appraisals-idUSKCN10N0RO/"
+    ],
+    "text_chars": 44777
+  },
+  {
+    "step": 43,
+    "elapsed_s": 265.9,
+    "timestamp": "21:20:29",
+    "category": "EXA",
+    "action": "search:golden_nuggets:earnings_call",
+    "template": "earnings_call",
+    "query": "SAP SuccessFactors CEO earnings call 2024 2025 strategy SAP SuccessFactors surprising facts culture awards unique partnerships community",
+    "result_count": 8,
+    "cost_usd": 0.012,
+    "duration_ms": 8415,
+    "urls": [
+      "https://seekingalpha.com/article/4728141-sap-se-sap-q3-2024-earnings-call-transcript",
+      "https://seekingalpha.com/article/4752487-sap-se-sap-q4-2024-earnings-call-transcript",
+      "https://seekingalpha.com/article/4803242-sap-se-sap-q2-2025-earnings-call-transcript",
+      "https://seekingalpha.com/article/4863769-sap-se-sap-q4-2025-press-conference-call-transcript",
+      "https://prnewswire.com/news-releases/sap-quarterly-statement-q3-2025-302591882.html"
+    ],
+    "text_chars": 26932
+  },
+  {
+    "step": 44,
+    "elapsed_s": 286.6,
+    "timestamp": "21:20:49",
+    "category": "LLM",
+    "action": "synthesize:golden_nuggets",
+    "prompt_preview": "You are a senior M&A research analyst writing buyer intelligence for SAP SuccessFactors. Section: golden_nuggets | Goal: Golden Nuggets Write 2-4 paragraphs of clean HTML (<p> tags, <strong> for key q",
+    "prompt_length": 8267,
+    "output_length": 2141,
+    "output_preview": "<p><strong>SAP completed its acquisition of SmartRecruiters in September 2025</strong>, integrating a leading AI-native recruiting platform into the SAP SuccessFactors HCM suite. The deal, announced A",
+    "duration_ms": 20160,
+    "returncode": 0
+  },
+  {
+    "step": 45,
+    "elapsed_s": 286.6,
+    "timestamp": "21:20:49",
+    "category": "SECTION",
+    "action": "DONE: Golden Nuggets",
+    "key": "golden_nuggets",
+    "html_chars": 2141,
+    "source_count": 18,
+    "stored_as": "golden_nuggets (raw, will restructure)"
+  },
+  {
+    "step": 46,
+    "elapsed_s": 286.6,
+    "timestamp": "21:20:49",
+    "category": "PHASE",
+    "action": "GOLDEN NUGGETS EXTRACTION",
+    "raw_html_chars": 2141
+  },
+  {
+    "step": 47,
+    "elapsed_s": 310.0,
+    "timestamp": "21:21:13",
+    "category": "LLM",
+    "action": "extract_nuggets",
+    "prompt_preview": "Extract golden nuggets from this research about SAP SuccessFactors. Return a JSON array. Each nugget: {\"quote\": \"exact quote\", \"speaker\": \"Name, Title\", \"opener\": \"conversation starter about acquiring",
+    "prompt_length": 2419,
+    "output_length": 2625,
+    "output_preview": "```json [   {     \"quote\": \"Hiring the right people is not just an HR priority \u2014 it's a business priority.\",     \"speaker\": \"Muhammad Alam, Member of SAP Executive Board for Product & Engineering\",   ",
+    "duration_ms": 23395,
+    "returncode": 0
+  },
+  {
+    "step": 48,
+    "elapsed_s": 310.0,
+    "timestamp": "21:21:13",
+    "category": "TRANSFORM",
+    "action": "NUGGETS STRUCTURED",
+    "count": 4,
+    "stored_as": "golden_nuggets (array of {quote, speaker, opener, why})",
+    "speakers": [
+      "Muhammad Alam, Member of SAP Executive Board for Product & Engineering",
+      "Claudia Birle, Head of Global Talent Acquisition, Continental AG",
+      "Research analysis (no named speaker)",
+      "Research analysis (no named speaker)"
+    ]
+  },
+  {
+    "step": 49,
+    "elapsed_s": 310.0,
+    "timestamp": "21:21:13",
+    "category": "PHASE",
+    "action": "MARKET REPUTATION \u2014 PRODUCT DISCOVERY"
+  },
+  {
+    "step": 50,
+    "elapsed_s": 311.0,
+    "timestamp": "21:21:14",
+    "category": "EXA",
+    "action": "product_discovery",
+    "query": "SAP SuccessFactors products suite modules G2 Capterra product list",
+    "search_type": "auto",
+    "result_count": 8,
+    "cost_usd": 0.007,
+    "duration_ms": 1020,
+    "urls": [
+      "https://www.g2.com/sellers/sap",
+      "https://lmschef.com/lms-for-enterprise/",
+      "https://company.g2.com/news/g2_product_suites",
+      "https://www.rippling.com/blog/best-workforce-management-software",
+      "https://peoplemanagingpeople.com/tools/sap-successfactors-pricing/"
+    ],
+    "text_chars": 15680
+  },
+  {
+    "step": 51,
+    "elapsed_s": 321.3,
+    "timestamp": "21:21:24",
+    "category": "LLM",
+    "action": "discover_products",
+    "prompt_preview": "List distinct software products/modules offered by SAP SuccessFactors. Separately reviewable products (e.g. \"SAP SuccessFactors Recruiting\" not just \"SAP SuccessFactors\"). Return ONLY a JSON array of ",
+    "prompt_length": 6225,
+    "output_length": 346,
+    "output_preview": "```json [   \"SAP SuccessFactors Recruiting\",   \"SAP SuccessFactors Learning\",   \"SAP SuccessFactors Employee Central\",   \"SAP SuccessFactors Performance & Goals\",   \"SAP SuccessFactors Compensation\", ",
+    "duration_ms": 10275,
+    "returncode": 0
+  },
+  {
+    "step": 52,
+    "elapsed_s": 321.3,
+    "timestamp": "21:21:24",
+    "category": "TRANSFORM",
+    "action": "PRODUCTS DISCOVERED",
+    "count": 6,
+    "products": [
+      "SAP SuccessFactors Recruiting",
+      "SAP SuccessFactors Learning",
+      "SAP SuccessFactors Employee Central",
+      "SAP SuccessFactors Performance & Goals",
+      "SAP SuccessFactors Compensation",
+      "SAP SuccessFactors Succession & Development"
+    ],
+    "stored_as": "market_reputation.products_discovered"
+  },
+  {
+    "step": 53,
+    "elapsed_s": 322.4,
+    "timestamp": "21:21:25",
+    "category": "EXA",
+    "action": "reviews:sap-successfactors-recruiting",
+    "query": "\"SAP SuccessFactors Recruiting\" reviews G2 Capterra 2024 2025",
+    "search_type": "auto",
+    "result_count": 8,
+    "cost_usd": 0.007,
+    "duration_ms": 1095,
+    "urls": [
+      "https://www.peerspot.com/product_reviews/sap-successfactors-recruiting-review-10487873-by-manujgupta",
+      "https://www.g2.com/compare/sap-successfactors-vs-smartrecruiters",
+      "https://systemratings.com/review/sap-successfactors-recruiting-review-2025",
+      "https://www.itcentralstation.com/products/comparisons/sap-successfactors-recruiting_vs_smartrecruiters",
+      "https://www.peerspot.com/products/sap-successfactors-recruiting-alternatives-and-competitors"
+    ],
+    "text_chars": 16887
+  },
+  {
+    "step": 54,
+    "elapsed_s": 323.6,
+    "timestamp": "21:21:26",
+    "category": "EXA",
+    "action": "reviews:sap-successfactors-recruiting",
+    "query": "\"SAP SuccessFactors Recruiting\" complaints problems Reddit",
+    "search_type": "auto",
+    "result_count": 8,
+    "cost_usd": 0.007,
+    "duration_ms": 924,
+    "urls": [
+      "https://community.sap.com/t5/human-capital-management-q-a/successfactors-problem-hiring-employees-through-quot-manage-pending-hires/qaq-p/14033526",
+      "https://community.sap.com/t5/human-capital-management-q-a/problem-with-uploading-resumes-within-successfactors-recruiting/qaq-p/12670335",
+      "https://www.reddit.com/r/ResumeExperts/comments/1noiwxq/best_recruiting_software_for_hiring_and_talent/",
+      "https://community.sap.com/t5/human-capital-management-q-a/feedback-on-rcm/qaq-p/13595656",
+      "https://community.sap.com/t5/human-capital-management-q-a/preventing-closing-the-job-requisition-until-all-candidates-are-in-the/qaq-p/14124974"
+    ],
+    "text_chars": 15471
+  },
+  {
+    "step": 55,
+    "elapsed_s": 352.3,
+    "timestamp": "21:21:55",
+    "category": "LLM",
+    "action": "structure_reviews:sap-successfactors-recruiting",
+    "prompt_preview": "Extract reviews for \"SAP SuccessFactors Recruiting\". Return JSON: {\"positive\": [reviews], \"negative\": [reviews], \"total_raw\": N} Each review: {\"text\": \"1-3 sentences\", \"category\": \"billing|support|usa",
+    "prompt_length": 8451,
+    "output_length": 4485,
+    "output_preview": "```json {   \"positive\": [     {       \"text\": \"We are able to provide ROI measurement showing that what used to take 30 days for an open position now takes 50% or 70% of that time with AI features, so",
+    "duration_ms": 28337,
+    "returncode": 0
+  },
+  {
+    "step": 56,
+    "elapsed_s": 352.3,
+    "timestamp": "21:21:55",
+    "category": "TRANSFORM",
+    "action": "REVIEWS STRUCTURED: SAP SuccessFactors Recruiting",
+    "positive": 5,
+    "negative": 5,
+    "categories": [
+      "features",
+      "usability",
+      "pricing",
+      "onboarding",
+      "integration"
+    ],
+    "stored_as": "market_reputation.product_reviews.SAP SuccessFactors Recruiting"
+  },
+  {
+    "step": 57,
+    "elapsed_s": 353.2,
+    "timestamp": "21:21:56",
+    "category": "EXA",
+    "action": "reviews:sap-successfactors-learning",
+    "query": "\"SAP SuccessFactors Learning\" reviews G2 Capterra 2024 2025",
+    "search_type": "auto",
+    "result_count": 8,
+    "cost_usd": 0.007,
+    "duration_ms": 959,
+    "urls": [
+      "https://www.infotech.com/software-reviews/products/sap-successfactors-learning?c_id=323",
+      "https://www.g2.com/compare/linkedin-linkedin-learning-vs-sap-successfactors-learning",
+      "https://softwarereviews.com/products/sap-successfactors-learning",
+      "https://www.itcentralstation.com/product_reviews/sap-successfactors-learning-review-4553266-by-milan-orendac",
+      "https://technologyadvice.com/human-resources-software/"
+    ],
+    "text_chars": 13556
+  },
+  {
+    "step": 58,
+    "elapsed_s": 354.9,
+    "timestamp": "21:21:58",
+    "category": "EXA",
+    "action": "reviews:sap-successfactors-learning",
+    "query": "\"SAP SuccessFactors Learning\" complaints problems Reddit",
+    "search_type": "auto",
+    "result_count": 8,
+    "cost_usd": 0.007,
+    "duration_ms": 1324,
+    "urls": [
+      "https://community.successfactors.com/t5/sap-learning-q-a/learning-journey-progress-is-not-being-updated-continuous-error-message/qaa-p/14338838",
+      "https://community.successfactors.com/t5/sap-learning-q-a/problems-accessing-sap-learning-subscription-content/qaq-p/14340811",
+      "https://community.successfactors.com/t5/sap-learning-q-a/unable-to-access-my-certification-attempt-no-response-from-support-and-no/qaa-p/14339321/highlight/true",
+      "https://community.sap.com/t5/enterprise-resource-planning-q-a/unable-to-take-stay-current-in-sap-learning-hub/qaq-p/14346534",
+      "https://community.sap.com/t5/human-capital-management-q-a/status-of-the-study-program-with-reassignment-in-lms/qaq-p/14338411"
+    ],
+    "text_chars": 15199
+  },
+  {
+    "step": 59,
+    "elapsed_s": 394.2,
+    "timestamp": "21:22:37",
+    "category": "LLM",
+    "action": "structure_reviews:sap-successfactors-learning",
+    "prompt_preview": "Extract reviews for \"SAP SuccessFactors Learning\". Return JSON: {\"positive\": [reviews], \"negative\": [reviews], \"total_raw\": N} Each review: {\"text\": \"1-3 sentences\", \"category\": \"billing|support|usabi",
+    "prompt_length": 8449,
+    "output_length": 3503,
+    "output_preview": "Based on the data you provided, here's the extracted JSON. The source pages were mostly landing/comparison pages with limited review text \u2014 only PeerSpot had actual excerpts:  ```json {   \"positive\": ",
+    "duration_ms": 39062,
+    "returncode": 0
+  },
+  {
+    "step": 60,
+    "elapsed_s": 394.2,
+    "timestamp": "21:22:37",
+    "category": "TRANSFORM",
+    "action": "REVIEWS STRUCTURED: SAP SuccessFactors Learning",
+    "positive": 3,
+    "negative": 3,
+    "categories": [
+      "reporting",
+      "features",
+      "usability",
+      "compliance",
+      "integration",
+      "other"
+    ],
+    "stored_as": "market_reputation.product_reviews.SAP SuccessFactors Learning"
+  },
+  {
+    "step": 61,
+    "elapsed_s": 395.6,
+    "timestamp": "21:22:38",
+    "category": "EXA",
+    "action": "reviews:sap-successfactors-employee-central",
+    "query": "\"SAP SuccessFactors Employee Central\" reviews G2 Capterra 2024 2025",
+    "search_type": "auto",
+    "result_count": 8,
+    "cost_usd": 0.007,
+    "duration_ms": 1350,
+    "urls": [
+      "https://www.itcentralstation.com/products/sap-successfactors-employee-central-reviews",
+      "https://www.g2.com/compare/sap-successfactors-employee-central-vs-ukg-pro",
+      "https://www.g2.com/compare/sap-successfactors-employee-central-vs-servicenow-hr-service-delivery",
+      "http://www.turkeytextile.net/best-cash-flow-management-software-tools.html",
+      "https://www.itcentralstation.com/products/comparisons/sap-successfactors_vs_sap-successfactors-employee-central"
+    ],
+    "text_chars": 14165
+  },
+  {
+    "step": 62,
+    "elapsed_s": 397.0,
+    "timestamp": "21:22:40",
+    "category": "EXA",
+    "action": "reviews:sap-successfactors-employee-central",
+    "query": "\"SAP SuccessFactors Employee Central\" complaints problems Reddit",
+    "search_type": "auto",
+    "result_count": 8,
+    "cost_usd": 0.007,
+    "duration_ms": 1133,
+    "urls": [
+      "https://www.facebook.com/groups/2442414209355164/posts/3695460677383838/",
+      "https://community.sap.com/t5/human-capital-management-q-a/issues-in-thr81-system-based-accessment-successfactors-employee-central/qaq-p/14342367",
+      "https://community.sap.com/t5/human-capital-management-q-a/has-anyone-experienced-this-weird-issue-in-successfactors-random-name/qaq-p/12645595",
+      "https://community.sap.com/t5/human-capital-management-q-a/error-when-contingent-worker-is-hired-as-permanent-employee-sf-ad/qaq-p/13967967",
+      "https://community.sap.com/t5/human-capital-management-q-a/upsert-into-employee-central-successfactors-failing-for-bulk-records/qaq-p/12135706"
+    ],
+    "text_chars": 13825
+  },
+  {
+    "step": 63,
+    "elapsed_s": 416.7,
+    "timestamp": "21:23:00",
+    "category": "LLM",
+    "action": "structure_reviews:sap-successfactors-employee-central",
+    "prompt_preview": "Extract reviews for \"SAP SuccessFactors Employee Central\". Return JSON: {\"positive\": [reviews], \"negative\": [reviews], \"total_raw\": N} Each review: {\"text\": \"1-3 sentences\", \"category\": \"billing|suppo",
+    "prompt_length": 8457,
+    "output_length": 3093,
+    "output_preview": "```json {   \"positive\": [     {       \"text\": \"SAP SuccessFactors Employee Central is cloud-based, eliminating the need for any infrastructure with readily available data centers. It is very user-frie",
+    "duration_ms": 19355,
+    "returncode": 0
+  },
+  {
+    "step": 64,
+    "elapsed_s": 416.7,
+    "timestamp": "21:23:00",
+    "category": "TRANSFORM",
+    "action": "REVIEWS STRUCTURED: SAP SuccessFactors Employee Central",
+    "positive": 3,
+    "negative": 3,
+    "categories": [
+      "features",
+      "usability",
+      "pricing",
+      "onboarding",
+      "integration"
+    ],
+    "stored_as": "market_reputation.product_reviews.SAP SuccessFactors Employee Central"
+  },
+  {
+    "step": 65,
+    "elapsed_s": 418.3,
+    "timestamp": "21:23:01",
+    "category": "EXA",
+    "action": "reviews:sap-successfactors-performance-goals",
+    "query": "\"SAP SuccessFactors Performance & Goals\" reviews G2 Capterra 2024 2025",
+    "search_type": "auto",
+    "result_count": 8,
+    "cost_usd": 0.007,
+    "duration_ms": 1653,
+    "urls": [
+      "https://www.predictiveanalyticstoday.com/sap-successfactors-performance-goals-continuous-performance-management/",
+      "https://www.peerspot.com/products/comparisons/sap-successfactors_vs_sap-successfactors-performance-goals",
+      "https://www.peerspot.com/products/comparisons/manageable_vs_sap-successfactors-performance-goals",
+      "https://www.peerspot.com/products/comparisons/bamboohr_vs_sap-successfactors-performance-goals",
+      "https://www.peerspot.com/products/comparisons/leapsome_vs_sap-successfactors-performance-goals"
+    ],
+    "text_chars": 21426
+  },
+  {
+    "step": 66,
+    "elapsed_s": 419.6,
+    "timestamp": "21:23:02",
+    "category": "EXA",
+    "action": "reviews:sap-successfactors-performance-goals",
+    "query": "\"SAP SuccessFactors Performance & Goals\" complaints problems Reddit",
+    "search_type": "auto",
+    "result_count": 8,
+    "cost_usd": 0.007,
+    "duration_ms": 940,
+    "urls": [
+      "https://community.sap.com/t5/human-capital-management-q-a/accessing-success-factors-goals-gives-a-network-error-only-for-some-users/qaq-p/14340810",
+      "https://community.sap.com/t5/human-capital-management-q-a/goal-plan-state-not-updating-in-performance-form/qaq-p/14145717",
+      "https://community.sap.com/t5/human-capital-management-q-a/issue-with-goal-linking-feature-in-sap-sf/qaq-p/14329912",
+      "https://community.sap.com/t5/human-capital-management-learning-group/sap-successfactors-performance-and-goals-discussions/td-p/14329217",
+      "https://community.sap.com/t5/human-capital-management-q-a/question-about-using-two-goal-plans-in-a-varpay-form/qaq-p/14350136"
+    ],
+    "text_chars": 14367
+  },
+  {
+    "step": 67,
+    "elapsed_s": 457.9,
+    "timestamp": "21:23:41",
+    "category": "LLM",
+    "action": "structure_reviews:sap-successfactors-performance-goals",
+    "prompt_preview": "Extract reviews for \"SAP SuccessFactors Performance & Goals\". Return JSON: {\"positive\": [reviews], \"negative\": [reviews], \"total_raw\": N} Each review: {\"text\": \"1-3 sentences\", \"category\": \"billing|su",
+    "prompt_length": 8460,
+    "output_length": 523,
+    "output_preview": "I need WebFetch permission to pull actual reviews from G2, Capterra, etc. The data you pasted contains **zero usable reviews** \u2014 PeerSpot shows 0 reviews for this product, and the PredictiveAnalyticsT",
+    "duration_ms": 37974,
+    "returncode": 0
+  },
+  {
+    "step": 68,
+    "elapsed_s": 458.9,
+    "timestamp": "21:23:42",
+    "category": "EXA",
+    "action": "reviews:sap-successfactors-compensation",
+    "query": "\"SAP SuccessFactors Compensation\" reviews G2 Capterra 2024 2025",
+    "search_type": "auto",
+    "result_count": 8,
+    "cost_usd": 0.007,
+    "duration_ms": 1028,
+    "urls": [
+      "https://www.g2.com/compare/compport-compensation-management-vs-sap-successfactors",
+      "https://www.g2.com/compare/sap-successfactors-vs-xactly-incent",
+      "https://www.g2.com/compare/sap-successfactors-incentive-management-formerly-sap-commissions-vs-vistex",
+      "https://www.g2.com/compare/sap-successfactors-vs-beqom-pay-management",
+      "https://www.g2.com/compare/sap-successfactors-incentive-management-formerly-sap-commissions-vs-salesforce-spiff"
+    ],
+    "text_chars": 10113
+  },
+  {
+    "step": 69,
+    "elapsed_s": 460.0,
+    "timestamp": "21:23:43",
+    "category": "EXA",
+    "action": "reviews:sap-successfactors-compensation",
+    "query": "\"SAP SuccessFactors Compensation\" complaints problems Reddit",
+    "search_type": "auto",
+    "result_count": 8,
+    "cost_usd": 0.007,
+    "duration_ms": 781,
+    "urls": [
+      "https://www.compport.com/blog/5-reasons-why-you-should-not-manage-compensation-in-sap-successfactors",
+      "https://community.sap.com/t5/human-capital-management-q-a/mass-action-in-compensation-is-not-working-as-expected/qaq-p/13938501",
+      "https://community.sap.com/t5/human-capital-management-q-a/successfactors-compensation-move-employee-s-compensation-data-from-old/qaq-p/14362588",
+      "https://community.sap.com/t5/human-capital-management-q-a/issue-with-compensation-information-calculation-on-date-override/qaq-p/14153007",
+      "https://community.sap.com/t5/human-capital-management-q-a/sap-successfactors-compensation-statements/qaq-p/14129307"
+    ],
+    "text_chars": 15926
+  },
+  {
+    "step": 70,
+    "elapsed_s": 487.2,
+    "timestamp": "21:24:10",
+    "category": "LLM",
+    "action": "structure_reviews:sap-successfactors-compensation",
+    "prompt_preview": "Extract reviews for \"SAP SuccessFactors Compensation\". Return JSON: {\"positive\": [reviews], \"negative\": [reviews], \"total_raw\": N} Each review: {\"text\": \"1-3 sentences\", \"category\": \"billing|support|u",
+    "prompt_length": 8453,
+    "output_length": 840,
+    "output_preview": "The provided data contains **no actual reviews** \u2014 only G2 comparison page headers/navigation. I cannot fetch live review pages without WebFetch permission.  Here's what I can return based on the zero",
+    "duration_ms": 26944,
+    "returncode": 0
+  },
+  {
+    "step": 71,
+    "elapsed_s": 488.1,
+    "timestamp": "21:24:11",
+    "category": "EXA",
+    "action": "reviews:sap-successfactors-succession-development",
+    "query": "\"SAP SuccessFactors Succession & Development\" reviews G2 Capterra 2024 2025",
+    "search_type": "auto",
+    "result_count": 8,
+    "cost_usd": 0.007,
+    "duration_ms": 864,
+    "urls": [
+      "https://www.g2.com/compare/cascade-vs-sap-successfactors",
+      "https://www.peerspot.com/products/sap-successfactors-reviews?review_id=2066932",
+      "https://www.infotech.com/software-reviews/products/sap-successfactors-hcm?c_id=122",
+      "https://www.gartner.com/reviews/market/succession-planning-software",
+      "https://softwarereviews.com/categories/talent-management/compare/sumtotal-talent-development-vs-sap-successfactors-hcm"
+    ],
+    "text_chars": 11942
+  },
+  {
+    "step": 72,
+    "elapsed_s": 489.3,
+    "timestamp": "21:24:12",
+    "category": "EXA",
+    "action": "reviews:sap-successfactors-succession-development",
+    "query": "\"SAP SuccessFactors Succession & Development\" complaints problems Reddit",
+    "search_type": "auto",
+    "result_count": 8,
+    "cost_usd": 0.007,
+    "duration_ms": 904,
+    "urls": [
+      "https://community.sap.com/t5/human-capital-management-learning-group/sap-successfactors-succession-management-discussions/td-p/14329229",
+      "https://community.sap.com/t5/c-khhcw49343/SAP+SuccessFactors+Succession+%252526+Development/pd-p/73555000100800000776",
+      "https://community.sap.com/t5/human-capital-management-learning-group/sap-successfactors-career-development-planning-and-mentoring-discussions/td-p/14330002",
+      "https://community.sap.com/t5/human-capital-management-q-a/seeking-best-practices-for-succession-management/qaq-p/14068507",
+      "https://community.sap.com/t5/human-capital-management-q-a/sap-best-practices-succession-management-mdf-position-based-nomination/qaq-p/13988153"
+    ],
+    "text_chars": 12484
+  },
+  {
+    "step": 73,
+    "elapsed_s": 526.0,
+    "timestamp": "21:24:49",
+    "category": "LLM",
+    "action": "structure_reviews:sap-successfactors-succession-development",
+    "prompt_preview": "Extract reviews for \"SAP SuccessFactors Succession & Development\". Return JSON: {\"positive\": [reviews], \"negative\": [reviews], \"total_raw\": N} Each review: {\"text\": \"1-3 sentences\", \"category\": \"billi",
+    "prompt_length": 8465,
+    "output_length": 2652,
+    "output_preview": "The WebFetch tool requires your permission. Based solely on the data you provided, here's what I can extract:  ```json {   \"positive\": [     {       \"text\": \"SAP SuccessFactors has a low error rate. W",
+    "duration_ms": 36416,
+    "returncode": 0
+  },
+  {
+    "step": 74,
+    "elapsed_s": 526.0,
+    "timestamp": "21:24:49",
+    "category": "TRANSFORM",
+    "action": "REVIEWS STRUCTURED: SAP SuccessFactors Succession & Development",
+    "positive": 4,
+    "negative": 0,
+    "categories": [
+      "reporting",
+      "features"
+    ],
+    "stored_as": "market_reputation.product_reviews.SAP SuccessFactors Succession & Development"
+  },
+  {
+    "step": 75,
+    "elapsed_s": 526.0,
+    "timestamp": "21:24:49",
+    "category": "PHASE",
+    "action": "STOCK DATA FETCH",
+    "ticker": "SAP"
+  },
+  {
+    "step": 76,
+    "elapsed_s": 526.9,
+    "timestamp": "21:24:50",
+    "category": "EXA",
+    "action": "stock_data",
+    "query": "SAP stock price 2024 2025 2026 performance",
+    "search_type": "auto",
+    "result_count": 8,
+    "cost_usd": 0.007,
+    "duration_ms": 874,
+    "urls": [
+      "https://finance.yahoo.com/quote/SAP/history/",
+      "https://www.macrotrends.net/stocks/charts/SAP/sap-se/stock-price-history",
+      "https://www.tikr.com/blog/sap-fell-13-in-the-last-30-days-heres-how-much-the-stock-could-rise-in-2026",
+      "https://capital.com/en-int/market-updates/sap-stock-forecast-20-02-2026",
+      "https://finance.yahoo.com/quote/SAP.F/history/"
+    ],
+    "text_chars": 19759
+  },
+  {
+    "step": 77,
+    "elapsed_s": 549.3,
+    "timestamp": "21:25:12",
+    "category": "LLM",
+    "action": "extract_stock",
+    "prompt_preview": "Extract stock data for SAP SuccessFactors (ticker: SAP). Return ONLY JSON: {\"stock_price\": 142.30, \"price_change_24mo\": 18.2, \"market_cap\": \"$54B\"} DATA: [SAP SE (SAP) Stock Historical Prices & Data -",
+    "prompt_length": 4154,
+    "output_length": 925,
+    "output_preview": "Based on the data you provided, here's what I can extract:  **Current price area:** ~$164.02 (from Macrotrends, noting 52-week low is $163.77 which is \"0.2% below current share price\")  **24-month pri",
+    "duration_ms": 22392,
+    "returncode": 0
+  },
+  {
+    "step": 78,
+    "elapsed_s": 549.3,
+    "timestamp": "21:25:12",
+    "category": "TRANSFORM",
+    "action": "STOCK EXTRACTED",
+    "price": "$164.02",
+    "change_24mo": -12.5,
+    "market_cap": "$200B",
+    "stored_as": "stock_price, price_change_24mo, market_cap (root fields)"
+  },
+  {
+    "step": 79,
+    "elapsed_s": 549.3,
+    "timestamp": "21:25:12",
+    "category": "PHASE",
+    "action": "ASSEMBLE BUYER OBJECT"
+  },
+  {
+    "step": 80,
+    "elapsed_s": 549.3,
+    "timestamp": "21:25:12",
+    "category": "ASSEMBLE",
+    "action": "BUYER OBJECT COMPLETE",
+    "total_fields": 46,
+    "field_inventory": [
+      "buyer_name = \"SAP SuccessFactors\"",
+      "buyer_slug = \"sap-successfactors\"",
+      "buyer_type = \"Strategic\"",
+      "buyer_city = \"Newtown Square\"",
+      "buyer_state = \"PA\"",
+      "fit_score = 8",
+      "logo_domain = \"sap.com\"",
+      "ticker = \"SAP\"",
+      "sections.ceo_vision (string, 2024 chars)",
+      "sections.ma_appetite (string, 1804 chars)",
+      "sections.competitive_moat (string, 2718 chars)",
+      "sections.earnings_quotes (string, 1699 chars)",
+      "sections.approach_strategy (string, 2637 chars)",
+      "source_urls.hr_media_business (array[15])",
+      "source_urls.hr_domain_name (array[8])",
+      "source_urls.market_reputation (array[5])",
+      "source_urls.strategic_fit (array[15])",
+      "source_urls.ceo_vision (array[8])",
+      "source_urls.ma_appetite (array[9])",
+      "source_urls.competitive_moat (array[8])",
+      "source_urls.earnings_quotes (array[8])",
+      "source_urls.approach_strategy (array[5])",
+      "source_urls.golden_nuggets (array[18])",
+      "stock_price = \"$164.02\"",
+      "price_change_24mo = -12.5",
+      "market_cap = \"$200B\"",
+      "hr_media_business.narrative (string, 2006 chars)",
+      "hr_domain_name.narrative (string, 1718 chars)",
+      "strategic_fit (string, 2591 chars)",
+      "golden_nuggets (array[4])",
+      "market_reputation.narrative (string, 1828 chars)",
+      "market_reputation.products_discovered (array[4])",
+      "market_reputation.summary_stats.total_reviews_scraped = 78",
+      "market_reputation.summary_stats.reviews_passing_threshold = 26",
+      "market_reputation.product_reviews.SAP SuccessFactors Recruiting.positive (array[5])",
+      "market_reputation.product_reviews.SAP SuccessFactors Recruiting.negative (array[5])",
+      "market_reputation.product_reviews.SAP SuccessFactors Recruiting.total_raw = 2",
+      "market_reputation.product_reviews.SAP SuccessFactors Learning.positive (array[3])",
+      "market_reputation.product_reviews.SAP SuccessFactors Learning.negative (array[3])",
+      "market_reputation.product_reviews.SAP SuccessFactors Learning.total_raw = 73",
+      "market_reputation.product_reviews.SAP SuccessFactors Employee Central.positive (array[3])",
+      "market_reputation.product_reviews.SAP SuccessFactors Employee Central.negative (array[3])",
+      "market_reputation.product_reviews.SAP SuccessFactors Employee Central.total_raw = 3",
+      "market_reputation.product_reviews.SAP SuccessFactors Succession & Development.positive (array[4])",
+      "market_reputation.product_reviews.SAP SuccessFactors Succession & Development.negative (array[0])",
+      "market_reputation.product_reviews.SAP SuccessFactors Succession & Development.total_raw = 4"
+    ]
+  },
+  {
+    "step": 81,
+    "elapsed_s": 549.3,
+    "timestamp": "21:25:12",
+    "category": "FILE_WRITE",
+    "action": "per-buyer JSON: sap-successfactors",
+    "path": "/Users/clawdbot/Projects/master-crm-web/scripts/../public/data/debbie-research-sap-successfactors.json",
+    "size_bytes": 48599,
+    "keys": [
+      "buyer_name",
+      "buyer_slug",
+      "buyer_type",
+      "buyer_city",
+      "buyer_state",
+      "fit_score",
+      "logo_domain",
+      "ticker",
+      "sections",
+      "source_urls",
+      "stock_price",
+      "price_change_24mo",
+      "market_cap",
+      "hr_media_business",
+      "hr_domain_name",
+      "strategic_fit",
+      "golden_nuggets",
+      "market_reputation"
+    ]
+  },
+  {
+    "step": 82,
+    "elapsed_s": 549.3,
+    "timestamp": "21:25:12",
+    "category": "FILE_WRITE",
+    "action": "combined JSON (all buyers)",
+    "path": "/Users/clawdbot/Projects/master-crm-web/scripts/../public/data/debbie-buyer-research.json",
+    "size_bytes": 126978,
+    "keys": [
+      "buyers"
+    ]
+  },
+  {
+    "step": 83,
+    "elapsed_s": 549.3,
+    "timestamp": "21:25:12",
+    "category": "FILE_WRITE",
+    "action": "manifest (buyer index)",
+    "path": "/Users/clawdbot/Projects/master-crm-web/scripts/../public/data/debbie-buyers-manifest.json",
+    "size_bytes": 676,
+    "keys": "array[3]"
+  },
+  {
+    "step": 84,
+    "elapsed_s": 549.3,
+    "timestamp": "21:25:12",
+    "category": "PHASE",
+    "action": "GIT COMMIT + PUSH"
+  },
+  {
+    "step": 85,
+    "elapsed_s": 549.3,
+    "timestamp": "21:25:12",
+    "category": "GIT",
+    "action": "git add",
+    "command": "/Users/clawdbot/Projects/master-crm-web/scripts/.. add public/data/",
+    "returncode": 0,
+    "stdout_preview": "",
+    "stderr_preview": null
+  },
+  {
+    "step": 86,
+    "elapsed_s": 549.4,
+    "timestamp": "21:25:12",
+    "category": "GIT",
+    "action": "git commit",
+    "command": "commit -m [auto][traced] Add SAP SuccessFactors buyer research",
+    "returncode": 0,
+    "stdout_preview": "[main 06f72e8] [auto][traced] Add SAP SuccessFactors buyer research\n 2 files changed, 663 insertions",
+    "stderr_preview": null
+  },
+  {
+    "step": 87,
+    "elapsed_s": 550.7,
+    "timestamp": "21:25:14",
+    "category": "GIT",
+    "action": "git push",
+    "command": "-C /Users/clawdbot/Projects/master-crm-web/scripts/.. push",
+    "returncode": 0,
+    "stdout_preview": "",
+    "stderr_preview": null
+  },
+  {
+    "step": 88,
+    "elapsed_s": 550.7,
+    "timestamp": "21:25:14",
+    "category": "SYSTEM",
+    "action": "PIPELINE COMPLETE",
+    "total_steps": 87,
+    "total_elapsed_s": 550.7,
+    "total_exa_cost": 0.244,
+    "exa_searches": 27,
+    "llm_calls": 19,
+    "file_writes": 3
+  }
+]
