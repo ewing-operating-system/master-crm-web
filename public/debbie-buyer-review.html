@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buyer Review — HR.com Ltd | Debbie McGrath</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; background:#0d1117; color:#c9d1d9; line-height:1.5; font-size:13px; }
+
+/* ── TAB BAR ────────────────────────────── */
+.tab-bar { position:sticky; top:0; z-index:200; background:#0d1117; border-bottom:1px solid #30363d; padding:6px 16px; display:flex; align-items:center; gap:8px; overflow-x:auto; }
+.tab-bar::-webkit-scrollbar { height:0; }
+.tab-pill { padding:4px 12px; border-radius:14px; font-size:11px; font-weight:600; cursor:pointer; white-space:nowrap; border:1px solid #30363d; background:#161b22; color:#8b949e; transition:all .2s; position:relative; }
+.tab-pill:hover { border-color:#58a6ff; color:#c9d1d9; }
+.tab-pill.active { border-color:#58a6ff; color:#f0f6fc; background:#1f3d5c; }
+.tab-pill .dot { width:6px; height:6px; border-radius:50%; display:inline-block; margin-left:4px; vertical-align:middle; }
+.dot-green { background:#3fb950; }
+.dot-red { background:#f85149; }
+.progress-text { margin-left:auto; font-size:10px; color:#8b949e; white-space:nowrap; flex-shrink:0; }
+.progress-bar-bg { width:80px; height:4px; background:#21262d; border-radius:2px; overflow:hidden; flex-shrink:0; margin-left:6px; }
+.progress-bar-fill { height:100%; background:linear-gradient(90deg,#58a6ff,#a371f7); border-radius:2px; transition:width .3s; }
+
+/* ── ZONE A: PINNED HEADER (15vh max) ──── */
+.zone-a { position:fixed; top:37px; left:0; width:100%; max-height:15vh; z-index:150; background:#0d1117; border-bottom:2px solid #30363d; padding:6px 16px; overflow:hidden; display:grid; grid-template-columns:260px 1fr 280px; gap:12px; align-items:center; }
+.zone-a-left { display:flex; align-items:center; gap:8px; }
+.zone-a-left .buyer-title { font-size:15px; font-weight:700; color:#f0f6fc; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:160px; }
+.score-pill { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#fff; flex-shrink:0; }
+.score-high { background:#1a4731; border:2px solid #2ea043; }
+.score-med { background:#3d2f00; border:2px solid #d29922; }
+.score-low { background:#3d0c0c; border:2px solid #da3633; }
+.verdict-pills { display:flex; flex-wrap:wrap; gap:3px; margin-top:4px; }
+.verdict-pill { font-size:9px; padding:2px 7px; border-radius:10px; border:1px solid #30363d; background:#21262d; color:#8b949e; cursor:pointer; white-space:nowrap; transition:all .15s; }
+.verdict-pill:hover { border-color:#58a6ff; color:#c9d1d9; }
+.verdict-pill.sel-green { background:#1a4731; border-color:#2ea043; color:#3fb950; }
+.verdict-pill.sel-red { background:#3d0c0c; border-color:#da3633; color:#f85149; }
+.verdict-other-input { font-size:9px; padding:2px 6px; background:#0d1117; border:1px solid #30363d; border-radius:6px; color:#c9d1d9; width:90px; display:none; }
+.zone-a-center { display:flex; flex-wrap:wrap; gap:4px 12px; font-size:10px; color:#8b949e; align-items:center; }
+.zone-a-center .fact { white-space:nowrap; }
+.zone-a-center .fact-val { color:#c9d1d9; font-weight:500; }
+.zone-a-right { display:flex; flex-direction:column; gap:3px; }
+.zone-a-right textarea { font-size:10px; padding:4px 6px; background:#161b22; border:1px solid #30363d; border-radius:4px; color:#c9d1d9; resize:none; font-family:inherit; width:100%; }
+.zone-a-right textarea:focus { outline:none; border-color:#58a6ff; }
+
+/* ── 3-COLUMN BODY ──────────────────────── */
+.body-grid { display:grid; grid-template-columns:20% 1fr; margin-top:calc(37px + 15vh); transition:margin-right .3s; }
+.body-grid.nuggets-open { margin-right:25%; }
+.body-grid.nuggets-closed { margin-right:40px; }
+
+/* ── LEFT: FEEDBACK PANEL ───────────────── */
+.feedback-col { padding:12px 8px 12px 12px; }
+.feedback-sticky { position:sticky; top:calc(37px + 15vh + 8px); max-height:calc(100vh - 37px - 15vh - 16px); overflow-y:auto; }
+.feedback-sticky::-webkit-scrollbar { width:3px; }
+.feedback-sticky::-webkit-scrollbar-thumb { background:#30363d; border-radius:2px; }
+.fb-card { background:#161b22; border:1px solid #30363d; border-radius:8px; padding:10px; margin-bottom:8px; border-left:3px solid #30363d; transition:all .2s; }
+.fb-card.active { box-shadow:0 0 8px rgba(88,166,255,0.15); }
+.fb-card-label { font-size:10px; font-weight:700; color:#8b949e; text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; }
+.fb-radios { display:flex; flex-direction:column; gap:3px; margin-bottom:6px; }
+.fb-radio { display:flex; align-items:center; gap:5px; font-size:10px; color:#8b949e; cursor:pointer; }
+.fb-radio input { width:12px; height:12px; accent-color:#58a6ff; }
+.fb-radio.selected { color:#f0f6fc; }
+.fb-comment { font-size:10px; padding:4px 6px; background:#0d1117; border:1px solid #21262d; border-radius:4px; color:#c9d1d9; resize:vertical; font-family:inherit; width:100%; min-height:32px; }
+.fb-comment:focus { outline:none; border-color:#58a6ff; }
+
+/* Section border colors */
+.fb-border-header { border-left-color:#58a6ff; }
+.fb-border-media { border-left-color:#a371f7; }
+.fb-border-domain { border-left-color:#f5a623; }
+.fb-border-reputation { border-left-color:#e74c3c; }
+.fb-border-strategic { border-left-color:#3fb950; }
+.fb-border-ceo { border-left-color:#79b8ff; }
+.fb-border-ma { border-left-color:#f39c12; }
+.fb-border-earnings { border-left-color:#8b949e; }
+.fb-border-approach { border-left-color:#d2a8ff; }
+.fb-border-moat { border-left-color:#56d364; }
+.fb-border-challenges { border-left-color:#ff7b72; }
+.fb-border-pain-gain { border-left-color:#f85149; }
+
+/* ── CENTER: CONTENT ────────────────────── */
+.content-col { padding:12px 16px; }
+.buyer-section { margin-bottom:40px; scroll-margin-top:calc(37px + 15vh + 8px); }
+.buyer-divider { border:none; border-top:2px solid #21262d; margin:32px 0; }
+
+.card { background:#161b22; border:1px solid #30363d; border-radius:10px; padding:20px; margin-bottom:16px; }
+.card h3 { font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#58a6ff; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid #21262d; }
+.card p { margin-bottom:8px; font-size:13px; line-height:1.7; }
+.card p:last-child { margin-bottom:0; }
+
+/* Section border accents */
+.section-media { border-left:3px solid #a371f7; }
+.section-domain { border-left:3px solid #f5a623; }
+.section-reputation { border-left:3px solid #e74c3c; }
+.section-strategic { border-left:3px solid #3fb950; }
+.section-ceo { border-left:3px solid #79b8ff; }
+.section-ma { border-left:3px solid #f39c12; }
+.section-earnings { border-left:3px solid #8b949e; }
+.section-approach { border-left:3px solid #d2a8ff; }
+.section-moat { border-left:3px solid #56d364; }
+
+.narrative-box { background:#0d1117; border:1px solid #21262d; border-radius:8px; padding:14px 16px; }
+.narrative-box p { font-size:13px; line-height:1.75; }
+
+/* Header bar facts */
+.header-facts { display:grid; grid-template-columns:repeat(auto-fill, minmax(140px, 1fr)); gap:8px; }
+.fact-item { background:#0d1117; border:1px solid #21262d; border-radius:6px; padding:8px 10px; }
+.fact-label { font-size:9px; font-weight:700; letter-spacing:1px; color:#8b949e; text-transform:uppercase; }
+.fact-value { font-size:12px; font-weight:500; color:#f0f6fc; margin-top:2px; }
+
+/* Product accordion */
+.product-accordion { margin-bottom:8px; }
+.product-header { display:flex; align-items:center; gap:8px; padding:8px 12px; background:#0d1117; border:1px solid #21262d; border-radius:6px; cursor:pointer; transition:all .2s; }
+.product-header:hover { border-color:#58a6ff; }
+.product-header .arrow { transition:transform .2s; font-size:10px; color:#8b949e; }
+.product-header.open .arrow { transform:rotate(90deg); }
+.product-name { font-size:12px; font-weight:600; color:#f0f6fc; }
+.product-stats { font-size:10px; color:#8b949e; margin-left:auto; }
+.product-body { display:none; padding:8px 0; }
+.product-body.open { display:block; }
+.review-columns { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.review-col-header { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; }
+.review-col-positive .review-col-header { color:#3fb950; }
+.review-col-negative .review-col-header { color:#f85149; }
+.review-card { background:#161b22; border:1px solid #21262d; border-radius:6px; padding:8px 10px; margin-bottom:6px; font-size:11px; line-height:1.6; }
+.review-card-positive { border-left:3px solid #27ae60; }
+.review-card-negative { border-left:3px solid #e74c3c; }
+.review-meta { display:flex; gap:6px; align-items:center; margin-top:4px; font-size:9px; color:#8b949e; }
+.category-badge { padding:1px 6px; border-radius:8px; font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:.3px; }
+.cat-outcomes { background:rgba(63,185,80,0.15); color:#3fb950; }
+.cat-capabilities { background:rgba(88,166,255,0.15); color:#58a6ff; }
+.cat-efficiency { background:rgba(163,113,247,0.15); color:#a371f7; }
+.cat-data_integrity { background:rgba(248,81,73,0.15); color:#f85149; }
+.cat-workflow { background:rgba(245,166,35,0.15); color:#f5a623; }
+.cat-ux { background:rgba(121,184,255,0.15); color:#79b8ff; }
+.cat-support { background:rgba(210,168,255,0.15); color:#d2a8ff; }
+.cat-reliability { background:rgba(255,123,114,0.15); color:#ff7b72; }
+.cat-compliance { background:rgba(139,148,158,0.15); color:#8b949e; }
+.cat-integration { background:rgba(86,211,100,0.15); color:#56d364; }
+.score-tag { font-size:8px; color:#484f58; }
+
+/* Intelligence summary */
+.intel-summary { background:#0d1117; border:1px solid #1e5c1e; border-radius:8px; padding:12px 14px; margin-bottom:12px; }
+.intel-summary p { font-size:12px; line-height:1.7; }
+
+/* ── RIGHT: GOLDEN NUGGETS PANEL ────────── */
+.nuggets-panel { position:fixed; top:calc(37px + 15vh); right:0; width:25%; max-height:calc(100vh - 37px - 15vh); overflow-y:auto; background:#0d1117; border-left:1px solid #30363d; z-index:50; transition:transform .3s ease; padding:12px; }
+.nuggets-panel.closed { transform:translateX(calc(100% - 36px)); }
+.nuggets-panel::-webkit-scrollbar { width:3px; }
+.nuggets-panel::-webkit-scrollbar-thumb { background:#30363d; border-radius:2px; }
+.nuggets-toggle { position:absolute; left:0; top:50%; transform:translateY(-50%); width:28px; height:60px; background:#161b22; border:1px solid #30363d; border-right:none; border-radius:6px 0 0 6px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#f5a623; font-size:10px; z-index:51; left:-28px; }
+.nuggets-toggle:hover { background:#21262d; }
+.nuggets-title { font-size:11px; font-weight:700; color:#f5a623; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; padding-bottom:6px; border-bottom:1px solid #21262d; }
+.nugget-card { background:#161b22; border:1px solid #21262d; border-left:3px solid #f5a623; border-radius:8px; padding:12px; margin-bottom:10px; }
+.nugget-header { font-size:10px; font-weight:700; color:#f5a623; margin-bottom:6px; }
+.ceo-quote { font-family:'Playfair Display',Georgia,serif; font-style:italic; font-size:12px; color:#c9d1d9; line-height:1.6; margin-bottom:8px; padding:6px 0; border-bottom:1px solid #21262d; }
+.nugget-opener { background:#0b2e1a; border:1px solid #27ae60; border-radius:6px; padding:8px; margin-bottom:6px; }
+.nugget-opener .opener-label { font-size:8px; font-weight:700; letter-spacing:1px; color:#27ae60; text-transform:uppercase; margin-bottom:3px; }
+.nugget-opener p { color:#a3e4b8; font-size:11px; line-height:1.5; margin:0; }
+.nugget-why { font-size:11px; color:#8b949e; line-height:1.5; }
+.no-nuggets { color:#484f58; font-size:11px; font-style:italic; padding:20px 0; text-align:center; }
+
+/* ── AGENT SWARM ────────────────────────── */
+.swarm-container { text-align:center; padding:24px 16px; }
+.swarm-empty-msg { color:#484f58; font-size:12px; margin-bottom:12px; }
+.swarm-btn { display:inline-flex; align-items:center; gap:6px; padding:8px 20px; background:linear-gradient(135deg,#f5a623,#e8961c); color:#0d1117; border:none; border-radius:8px; font-size:13px; font-weight:700; cursor:pointer; transition:all .2s; }
+.swarm-btn:hover { transform:scale(1.03); box-shadow:0 0 16px rgba(245,166,35,0.3); }
+.swarm-input-area { margin-top:12px; display:none; }
+.swarm-input-area.open { display:block; }
+.swarm-textarea { width:100%; padding:8px 10px; background:#161b22; border:1px solid #30363d; border-radius:6px; color:#c9d1d9; font-size:12px; font-family:inherit; resize:none; }
+.swarm-textarea:focus { outline:none; border-color:#f5a623; }
+.swarm-actions { display:flex; gap:8px; justify-content:center; margin-top:8px; }
+.swarm-launch { padding:6px 16px; background:#f5a623; color:#0d1117; border:none; border-radius:6px; font-weight:700; font-size:12px; cursor:pointer; }
+.swarm-cancel { padding:6px 16px; background:transparent; color:#8b949e; border:1px solid #30363d; border-radius:6px; font-size:12px; cursor:pointer; }
+
+/* Swarm running animation */
+.swarm-running { display:none; flex-direction:column; align-items:center; padding:20px; }
+.swarm-running.active { display:flex; }
+.swarm-spinner { width:40px; height:40px; border:3px solid #21262d; border-top-color:#f5a623; border-radius:50%; animation:spin 1s linear infinite; margin-bottom:12px; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.swarm-status { font-size:11px; color:#f5a623; }
+
+/* Dancing robots */
+.swarm-robots { display:flex; gap:16px; justify-content:center; margin-bottom:12px; }
+.robot { width:40px; height:50px; position:relative; }
+.robot-body { width:24px; height:20px; background:#58a6ff; border-radius:4px; margin:0 auto; position:relative; }
+.robot-head { width:18px; height:14px; background:#79b8ff; border-radius:4px 4px 2px 2px; margin:0 auto 2px; position:relative; }
+.robot-eye { width:4px; height:4px; background:#0d1117; border-radius:50%; position:absolute; top:4px; }
+.robot-eye.left { left:3px; }
+.robot-eye.right { right:3px; }
+.robot-arm { width:6px; height:14px; background:#58a6ff; border-radius:3px; position:absolute; top:2px; }
+.robot-arm.left { left:-8px; }
+.robot-arm.right { right:-8px; }
+.robot-leg { width:6px; height:12px; background:#58a6ff; border-radius:0 0 3px 3px; position:absolute; bottom:-12px; }
+.robot-leg.left { left:3px; }
+.robot-leg.right { right:3px; }
+.robot-1 { animation:dance1 .6s ease-in-out infinite alternate; }
+.robot-2 { animation:dance2 .5s ease-in-out infinite alternate; animation-delay:.15s; }
+.robot-3 { animation:dance3 .7s ease-in-out infinite alternate; animation-delay:.3s; }
+@keyframes dance1 { 0%{transform:translateY(0) rotate(-5deg)} 100%{transform:translateY(-8px) rotate(5deg)} }
+@keyframes dance2 { 0%{transform:translateY(-4px) scaleY(1)} 100%{transform:translateY(4px) scaleY(.9)} }
+@keyframes dance3 { 0%{transform:translateY(0) rotate(5deg)} 100%{transform:translateY(-10px) rotate(-5deg)} }
+
+/* Swarm badge */
+.swarm-badge { display:inline-flex; align-items:center; gap:4px; font-size:9px; color:#f5a623; background:rgba(245,166,35,0.1); border:1px solid rgba(245,166,35,0.3); padding:2px 8px; border-radius:10px; margin-left:8px; }
+
+/* ── SECTION VALUE ROLLUP ───────────────── */
+.rollup-bar { position:fixed; bottom:0; left:0; width:100%; background:#161b22; border-top:1px solid #30363d; padding:6px 16px; z-index:100; display:none; font-size:10px; }
+.rollup-bar.visible { display:flex; align-items:center; gap:16px; }
+.rollup-item { display:flex; align-items:center; gap:4px; }
+.rollup-label { color:#8b949e; }
+.rollup-pct { font-weight:700; }
+.rollup-high { color:#f85149; }
+.rollup-low { color:#3fb950; }
+
+/* ── EXPORT BTN ─────────────────────────── */
+.export-btn { position:fixed; bottom:40px; right:16px; z-index:100; padding:6px 14px; background:#21262d; border:1px solid #30363d; border-radius:6px; color:#8b949e; font-size:10px; cursor:pointer; transition:all .2s; }
+.export-btn:hover { background:#30363d; color:#f0f6fc; border-color:#58a6ff; }
+
+/* ── TOAST ──────────────────────────────── */
+.toast { position:fixed; bottom:60px; right:16px; background:#161b22; border:1px solid #30363d; border-radius:8px; padding:10px 16px; font-size:12px; color:#c9d1d9; z-index:9999; opacity:0; transform:translateY(10px); transition:all .3s; pointer-events:none; }
+.toast.show { opacity:1; transform:translateY(0); }
+
+/* ── PAIN/GAIN MATRIX ───────────────────── */
+.pain-gain-matrix { width: 100%; border-collapse: collapse; margin: 16px 0; }
+.pain-gain-matrix th { background: #21262d; color: #f0f6fc; padding: 10px 12px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid #30363d; }
+.pain-gain-matrix td { padding: 10px 12px; border: 1px solid #30363d; font-size: 12px; line-height: 1.5; vertical-align: top; }
+.pain-gain-matrix tr:nth-child(even) { background: #161b22; }
+.pain-gain-matrix tr:nth-child(odd) { background: #0d1117; }
+.fit-strong { color: #3fb950; font-weight: 600; }
+.fit-moderate { color: #f5a623; }
+.fit-weak { color: #8b949e; font-style: italic; }
+.pain-category-badge { display: inline-block; padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: 600; margin-right: 6px; }
+
+/* ── RESPONSIVE ─────────────────────────── */
+@media (max-width:1200px) {
+  .nuggets-panel { transform:translateX(calc(100% - 36px)); }
+  .body-grid { margin-right:40px !important; }
+}
+@media (max-width:900px) {
+  .zone-a { grid-template-columns:1fr; max-height:none; padding:8px; }
+  .body-grid { grid-template-columns:1fr; margin-right:0 !important; }
+  .feedback-col { display:none; }
+  .nuggets-panel { display:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- TAB BAR -->
+<div class="tab-bar" id="tabBar"></div>
+
+<!-- ZONE A: PINNED HEADER -->
+<div class="zone-a" id="zoneA">
+  <div class="zone-a-left" id="zaLeft">
+    <div class="score-pill score-med" id="zaScore">—</div>
+    <div>
+      <div class="buyer-title" id="zaBuyerName">Loading...</div>
+      <div class="verdict-pills" id="zaVerdicts"></div>
+    </div>
+  </div>
+  <div class="zone-a-center" id="zaFacts"></div>
+  <div class="zone-a-right">
+    <textarea id="zaComment" rows="2" placeholder="Overall comments for this buyer..."></textarea>
+    <input type="text" class="verdict-other-input" id="zaOtherLabel" placeholder="Custom label...">
+  </div>
+</div>
+
+<!-- 3-COLUMN BODY -->
+<div class="body-grid nuggets-open" id="bodyGrid">
+  <!-- LEFT: FEEDBACK -->
+  <div class="feedback-col">
+    <div class="feedback-sticky" id="feedbackCol"></div>
+  </div>
+  <!-- CENTER: CONTENT -->
+  <div class="content-col" id="contentCol"></div>
+</div>
+
+<!-- RIGHT: GOLDEN NUGGETS -->
+<div class="nuggets-panel" id="nuggetsPanel">
+  <div class="nuggets-toggle" id="nuggetsToggle" title="Toggle nuggets">N</div>
+  <div class="nuggets-title">Golden Nuggets</div>
+  <div id="nuggetsContent"><div class="no-nuggets">Select a buyer to view nuggets</div></div>
+</div>
+
+<!-- EXPORT BUTTON -->
+<button class="export-btn" id="exportBtn" title="Push feedback summary to Supabase + copy to clipboard">Export Summary</button>
+
+<!-- SECTION VALUE ROLLUP -->
+<div class="rollup-bar" id="rollupBar"></div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="/supabase-config.js"></script>
+<script>
+(function(){
+'use strict';
+
+// ── Config ──────────────────────────────
+const SB_URL = window.__SUPABASE_URL;
+const SB_KEY = window.__SUPABASE_ANON_KEY;
+const SB_HEADERS = {'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'};
+const SB_UPSERT = {...SB_HEADERS,'Prefer':'return=representation,resolution=merge-duplicates'};
+
+let BUYERS = {};
+let BUYER_ORDER = [];
+let CURRENT_BUYER = null;
+let FEEDBACK_CACHE = {};
+let DEBOUNCE_TIMERS = {};
+
+// ── Toast ───────────────────────────────
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ── Slugify ─────────────────────────────
+function slugify(s) {
+  return s.toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').substring(0,60);
+}
+
+// ── Score class ─────────────────────────
+function scoreClass(s) { return s >= 8 ? 'score-high' : s >= 6 ? 'score-med' : 'score-low'; }
+
+// ── Category badge ──────────────────────
+function catBadge(cat) {
+  return '<span class="category-badge cat-'+(cat||'capabilities')+'">'+(cat||'—')+'</span>';
+}
+
+// ══════════════════════════════════════════
+// FEEDBACK SYSTEM
+// ══════════════════════════════════════════
+function saveFeedback(buyerSlug, buyerName, sectionKey, data) {
+  const payload = {buyer_slug:buyerSlug, buyer_name:buyerName, section_key:sectionKey, reviewer_name:'Debbie', entity:'next_chapter', ...data, updated_at:new Date().toISOString()};
+  fetch(SB_URL+'/rest/v1/debbie_buyer_review_feedback', {method:'POST', headers:SB_UPSERT, body:JSON.stringify(payload)})
+    .then(r => { if(!r.ok) console.error('Save failed', r.status); })
+    .catch(e => console.error('Save error', e));
+  // Update cache
+  const key = buyerSlug+'__'+sectionKey;
+  FEEDBACK_CACHE[key] = {...(FEEDBACK_CACHE[key]||{}), ...data};
+}
+
+function batchUpdateTopVerdict(buyerSlug, buyerName, verdict, customLabel) {
+  // Update all rows for this buyer with the new top_verdict
+  const data = {top_verdict:verdict, top_verdict_custom_label:customLabel||null};
+  // Get all section keys for this buyer from cache + known sections
+  const sections = ['top_level','header_bar','hr_media_business','hr_domain_name','market_reputation','pain_gain_match','strategic_fit','golden_nuggets','ceo_vision','ma_appetite','competitive_moat','earnings_quotes','approach_strategy','business_model','challenges'];
+  sections.forEach(sk => {
+    const key = buyerSlug+'__'+sk;
+    if (FEEDBACK_CACHE[key]) {
+      saveFeedback(buyerSlug, buyerName, sk, data);
+    }
+  });
+  // Always save the top_level row
+  saveFeedback(buyerSlug, buyerName, 'top_level', {...data, section_verdict:null});
+  updateTabDots();
+}
+
+function debounceSave(buyerSlug, buyerName, sectionKey, data, delay) {
+  const k = buyerSlug+'__'+sectionKey;
+  clearTimeout(DEBOUNCE_TIMERS[k]);
+  DEBOUNCE_TIMERS[k] = setTimeout(() => saveFeedback(buyerSlug, buyerName, sectionKey, data), delay||500);
+}
+
+async function loadAllFeedback() {
+  try {
+    const r = await fetch(SB_URL+'/rest/v1/debbie_buyer_review_feedback?reviewer_name=eq.Debbie&select=*', {headers:SB_HEADERS});
+    const rows = await r.json();
+    if (Array.isArray(rows)) {
+      rows.forEach(row => {
+        FEEDBACK_CACHE[row.buyer_slug+'__'+row.section_key] = row;
+      });
+    }
+  } catch(e) { console.error('Load feedback error', e); }
+}
+
+// ══════════════════════════════════════════
+// TAB BAR
+// ══════════════════════════════════════════
+function renderTabBar() {
+  const bar = document.getElementById('tabBar');
+  let html = '';
+  BUYER_ORDER.forEach((slug, i) => {
+    const b = BUYERS[slug];
+    html += '<div class="tab-pill'+(i===0?' active':'')+'" data-slug="'+slug+'">'+b.buyer_name+' ('+b.fit_score+')<span class="dot" id="dot-'+slug+'"></span></div>';
+  });
+  // Progress
+  const reviewed = BUYER_ORDER.filter(s => FEEDBACK_CACHE[s+'__top_level']?.top_verdict).length;
+  html += '<span class="progress-text">Reviewed: '+reviewed+'/'+BUYER_ORDER.length+'</span>';
+  html += '<div class="progress-bar-bg"><div class="progress-bar-fill" style="width:'+Math.round(100*reviewed/BUYER_ORDER.length)+'%"></div></div>';
+  bar.innerHTML = html;
+
+  bar.querySelectorAll('.tab-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      const section = document.getElementById('buyer-'+pill.dataset.slug);
+      if (section) section.scrollIntoView({behavior:'smooth'});
+    });
+  });
+  updateTabDots();
+}
+
+function updateTabDots() {
+  BUYER_ORDER.forEach(slug => {
+    const dot = document.getElementById('dot-'+slug);
+    if (!dot) return;
+    const fb = FEEDBACK_CACHE[slug+'__top_level'];
+    if (!fb?.top_verdict) { dot.className='dot'; return; }
+    if (fb.top_verdict==='tier_1_target'||fb.top_verdict==='good_target') {
+      dot.className='dot dot-green';
+    } else {
+      dot.className='dot dot-red';
+    }
+  });
+  // Update progress
+  const reviewed = BUYER_ORDER.filter(s => FEEDBACK_CACHE[s+'__top_level']?.top_verdict).length;
+  const pText = document.querySelector('.progress-text');
+  if (pText) pText.textContent = 'Reviewed: '+reviewed+'/'+BUYER_ORDER.length;
+  const pFill = document.querySelector('.progress-bar-fill');
+  if (pFill) pFill.style.width = Math.round(100*reviewed/BUYER_ORDER.length)+'%';
+}
+
+// ══════════════════════════════════════════
+// ZONE A (PINNED HEADER)
+// ══════════════════════════════════════════
+function updateZoneA(slug) {
+  if (!slug || !BUYERS[slug]) return;
+  const b = BUYERS[slug];
+  CURRENT_BUYER = slug;
+
+  document.getElementById('zaBuyerName').textContent = b.buyer_name;
+  const scorePill = document.getElementById('zaScore');
+  scorePill.textContent = b.fit_score;
+  scorePill.className = 'score-pill '+scoreClass(b.fit_score);
+
+  // Verdict pills
+  const verdicts = [
+    {val:'tier_1_target',label:'Tier 1',cls:'sel-green'},
+    {val:'good_target',label:'Good',cls:'sel-green'},
+    {val:'remove_personal',label:'Rm Personal',cls:'sel-red'},
+    {val:'remove_no_business_fit',label:'Rm No Fit',cls:'sel-red'},
+    {val:'remove_company_health',label:'Rm Health',cls:'sel-red'},
+    {val:'remove_other',label:'Rm Other',cls:'sel-red'},
+  ];
+  const fb = FEEDBACK_CACHE[slug+'__top_level'] || {};
+  let vpHtml = '';
+  verdicts.forEach(v => {
+    const sel = fb.top_verdict === v.val ? ' '+v.cls : '';
+    vpHtml += '<span class="verdict-pill'+sel+'" data-verdict="'+v.val+'">'+v.label+'</span>';
+  });
+  document.getElementById('zaVerdicts').innerHTML = vpHtml;
+
+  // Wire verdict clicks
+  document.querySelectorAll('#zaVerdicts .verdict-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      const v = pill.dataset.verdict;
+      document.querySelectorAll('#zaVerdicts .verdict-pill').forEach(p => p.className='verdict-pill');
+      pill.classList.add(v.startsWith('remove')?'sel-red':'sel-green');
+      const otherInput = document.getElementById('zaOtherLabel');
+      if (v === 'remove_other') { otherInput.style.display='block'; } else { otherInput.style.display='none'; }
+      batchUpdateTopVerdict(slug, b.buyer_name, v, otherInput.value);
+      toast('Verdict saved: '+v.replace(/_/g,' '));
+    });
+  });
+
+  // Other label
+  const otherInput = document.getElementById('zaOtherLabel');
+  otherInput.style.display = fb.top_verdict === 'remove_other' ? 'block' : 'none';
+  otherInput.value = fb.top_verdict_custom_label || '';
+  otherInput.onblur = () => {
+    if (fb.top_verdict === 'remove_other') {
+      batchUpdateTopVerdict(slug, b.buyer_name, 'remove_other', otherInput.value);
+    }
+  };
+
+  // Comment
+  const comment = document.getElementById('zaComment');
+  comment.value = fb.top_comment || '';
+  comment.onblur = () => debounceSave(slug, b.buyer_name, 'top_level', {top_comment:comment.value}, 300);
+
+  // Facts
+  const h = b.header || {};
+  const facts = [
+    {l:'Location', v:(b.city||'')+(b.state?', '+b.state:'')},
+    {l:'Employees', v:h.employees||'N/A'},
+    {l:'Domain', v:h.domain||'N/A'},
+    {l:'Industry', v:h.industry||'N/A'},
+    {l:'HR Products', v:h.hr_products||'N/A'},
+    {l:'HR Rev %', v:h.hr_revenue_pct||'N/A'},
+  ];
+  document.getElementById('zaFacts').innerHTML = facts.map(f =>
+    '<span class="fact"><span class="fact-val">'+f.v+'</span></span>'
+  ).join(' <span style="color:#30363d">|</span> ');
+}
+
+// ══════════════════════════════════════════
+// RENDER SECTIONS
+// ══════════════════════════════════════════
+const SECTION_CONFIG = [
+  {key:'hr_media_business', title:'HR.com Media Business', border:'media', fbBorder:'fb-border-media'},
+  {key:'hr_domain_name', title:'HR.com Domain Name (#87 Global)', border:'domain', fbBorder:'fb-border-domain'},
+  {key:'market_reputation', title:'Market Reputation', border:'reputation', fbBorder:'fb-border-reputation'},
+  {key:'pain_gain_match', title:'Pain / Gain Match', border:'pain-gain', fbBorder:'fb-border-pain-gain'},
+  {key:'strategic_fit', title:'Strategic Fit', border:'strategic', fbBorder:'fb-border-strategic'},
+  {key:'ceo_vision', title:'CEO Vision & Strategy', border:'ceo', fbBorder:'fb-border-ceo'},
+  {key:'ma_appetite', title:'M&A Appetite', border:'ma', fbBorder:'fb-border-ma'},
+  {key:'competitive_moat', title:'Competitive Moat', border:'moat', fbBorder:'fb-border-moat'},
+  {key:'earnings_quotes', title:'Key Earnings Quotes', border:'earnings', fbBorder:'fb-border-earnings'},
+  {key:'approach_strategy', title:'Approach Strategy', border:'approach', fbBorder:'fb-border-approach'},
+];
+
+function renderBuyerContent(slug) {
+  const b = BUYERS[slug];
+  let html = '';
+
+  SECTION_CONFIG.forEach(cfg => {
+    // pain_gain_match is injected manually after market_reputation — skip it here
+    if (cfg.key === 'pain_gain_match') return;
+    const content = getSectionContent(b, cfg.key);
+    if (content === null && cfg.key !== 'hr_media_business' && cfg.key !== 'hr_domain_name' && cfg.key !== 'market_reputation' && cfg.key !== 'strategic_fit') return;
+
+    html += '<div class="card section-'+cfg.border+' research-section" data-section-key="'+cfg.key+'" data-buyer-slug="'+slug+'" id="section-'+slug+'-'+cfg.key+'">';
+    html += '<h3>'+cfg.title+(b.buyer_name?' — '+b.buyer_name:'')+'</h3>';
+
+    if (content === null) {
+      html += renderSwarmButton(slug, b.buyer_name, cfg.key);
+    } else if (cfg.key === 'market_reputation') {
+      html += renderMarketReputation(b);
+    } else {
+      html += '<div class="narrative-box">'+content+'</div>';
+    }
+    html += '</div>';
+
+    // Inject Pain/Gain Match immediately after Market Reputation
+    if (cfg.key === 'market_reputation') {
+      html += renderPainGainMatch(b);
+    }
+  });
+
+  return html;
+}
+
+function getSectionContent(b, key) {
+  if (key === 'hr_media_business') {
+    const n = b.hr_media_business?.narrative;
+    return (n && n !== '<p>Narrative pending for '+b.buyer_name+'.</p>') ? n : null;
+  }
+  if (key === 'hr_domain_name') {
+    const n = b.hr_domain_name?.narrative;
+    return (n && n !== '<p>Narrative pending for '+b.buyer_name+'.</p>') ? n : null;
+  }
+  if (key === 'market_reputation') {
+    const rep = b.market_reputation;
+    return (rep && rep.products_discovered && rep.products_discovered.length > 0) ? 'HAS_DATA' : null;
+  }
+  if (key === 'pain_gain_match') {
+    // Show feedback card whenever market_reputation has negative reviews
+    const reviews = b.market_reputation?.product_reviews || {};
+    const hasNeg = Object.values(reviews).some(d => (d.negative||[]).length > 0);
+    return hasNeg ? 'HAS_DATA' : null;
+  }
+  if (key === 'strategic_fit') return b.strategic_fit ? '<p>'+b.strategic_fit+'</p>' : null;
+  if (key === 'golden_nuggets') return null; // Rendered in side panel
+  const sec = b.sections?.[key];
+  return sec && sec.length > 50 ? sec : null;
+}
+
+function renderMarketReputation(b) {
+  const rep = b.market_reputation;
+  if (!rep || !rep.products_discovered || rep.products_discovered.length === 0) return '';
+
+  let html = '';
+  // Intelligence summary
+  if (rep.intelligence_summary) {
+    html += '<div class="intel-summary"><p>'+rep.intelligence_summary.replace(/\n\n/g,'</p><p>')+'</p></div>';
+  }
+  // Stats
+  const stats = rep.summary_stats || {};
+  html += '<div style="font-size:10px;color:#8b949e;margin-bottom:12px;">'+
+    stats.total_reviews_scraped+' reviews scraped | '+stats.reviews_passing_threshold+' passed quality filter | '+
+    rep.products_discovered.length+' products analyzed</div>';
+
+  // Product accordions
+  (rep.product_reviews ? Object.entries(rep.product_reviews) : []).forEach(([product, data]) => {
+    const posCount = (data.positive||[]).length;
+    const negCount = (data.negative||[]).length;
+    const prodSlug = slugify(product);
+    html += '<div class="product-accordion">';
+    html += '<div class="product-header" onclick="this.classList.toggle(\'open\');this.nextElementSibling.classList.toggle(\'open\')">';
+    html += '<span class="arrow">&#9654;</span>';
+    html += '<span class="product-name">'+product+'</span>';
+    html += '<span class="product-stats">'+posCount+'+ / '+negCount+'&minus; ('+data.total_raw+' scraped)</span>';
+    html += '</div>';
+    html += '<div class="product-body">';
+    // Per-product feedback mini-card
+    const prodFbKey = 'market_reputation__'+prodSlug;
+    const prodFb = FEEDBACK_CACHE[b.buyer_slug+'__'+prodFbKey] || {};
+    html += '<div style="background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:8px 10px;margin-bottom:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">';
+    html += '<span style="font-size:9px;color:#8b949e;font-weight:700;text-transform:uppercase;">Product Feedback:</span>';
+    [{val:'keep',label:'Keep',cls:'sel-green'},{val:'remove_irrelevant',label:'Remove — Irrelevant',cls:'sel-red'},{val:'remove_inaccurate',label:'Remove — Inaccurate',cls:'sel-red'}].forEach(opt => {
+      const sel = prodFb.product_verdict===opt.val ? ' '+opt.cls : '';
+      html += '<span class="verdict-pill'+sel+'" onclick="productVerdictChange(\''+b.buyer_slug+'\',\''+b.buyer_name+'\',\''+prodFbKey+'\',\''+opt.val+'\',this)" style="font-size:9px;padding:2px 8px;">'+opt.label+'</span>';
+    });
+    html += '<input type="text" class="fb-comment" style="flex:1;min-width:120px;height:24px;font-size:9px;" placeholder="Product notes..." value="'+(prodFb.section_comment||'').replace(/"/g,'&quot;')+'" onblur="sectionCommentBlur(\''+b.buyer_slug+'\',\''+b.buyer_name+'\',\''+prodFbKey+'\',this.value)">';
+    html += '</div>';
+    html += '<div class="review-columns">';
+
+    // Positive column
+    html += '<div class="review-col-positive"><div class="review-col-header">Positive</div>';
+    (data.positive||[]).forEach(r => {
+      html += '<div class="review-card review-card-positive">';
+      html += r.text.substring(0,300)+(r.text.length>300?'...':'');
+      html += '<div class="review-meta">'+catBadge(r.category)+' <span class="score-tag">Score: '+(r.scores?r.scores.informativeness+r.scores.specificity+r.scores.polarity:'?')+'</span>';
+      html += ' <span>'+r.source+'</span>';
+      if (r.source_url || r.url) html += ' <a href="'+(r.source_url||r.url)+'" target="_blank" style="color:#58a6ff;font-size:9px;">link</a>';
+      html += '</div></div>';
+    });
+    if (!data.positive?.length) html += '<div style="color:#484f58;font-size:10px;">No qualifying positive reviews found</div>';
+    html += '</div>';
+
+    // Negative column
+    html += '<div class="review-col-negative"><div class="review-col-header">Negative</div>';
+    (data.negative||[]).forEach(r => {
+      html += '<div class="review-card review-card-negative">';
+      html += r.text.substring(0,300)+(r.text.length>300?'...':'');
+      html += '<div class="review-meta">'+catBadge(r.category)+' <span class="score-tag">Score: '+(r.scores?r.scores.informativeness+r.scores.specificity+r.scores.polarity:'?')+'</span>';
+      html += ' <span>'+r.source+'</span>';
+      if (r.source_url || r.url) html += ' <a href="'+(r.source_url||r.url)+'" target="_blank" style="color:#58a6ff;font-size:9px;">link</a>';
+      html += '</div></div>';
+    });
+    if (!data.negative?.length) html += '<div style="color:#484f58;font-size:10px;">No qualifying negative reviews found</div>';
+    html += '</div>';
+
+    html += '</div></div></div>';
+  });
+  return html;
+}
+
+// ── PAIN / GAIN MATCH ───────────────────
+function renderPainGainMatch(buyer) {
+    const painCategories = {};
+    const reviews = buyer.market_reputation?.product_reviews || {};
+
+    for (const [product, data] of Object.entries(reviews)) {
+        for (const review of (data.negative || [])) {
+            const cat = review.category || 'other';
+            if (!painCategories[cat]) painCategories[cat] = { count: 0, examples: [] };
+            painCategories[cat].count++;
+            if (painCategories[cat].examples.length < 2) {
+                painCategories[cat].examples.push(review.text?.substring(0, 100) + '...');
+            }
+        }
+    }
+
+    if (Object.keys(painCategories).length === 0) {
+        return '<div class="card research-section" data-section-key="pain_gain_match" data-buyer-slug="'+buyer.buyer_slug+'" style="border-left: 3px solid #f85149;"><h3 style="color:#f0f6fc; margin:0 0 8px;">Pain / Gain Match</h3><p style="color:#8b949e;">No negative reviews found — run Market Reputation research first.</p></div>';
+    }
+
+    const solutionMap = {
+        outcomes: {
+            media: { strength: 'strong', text: 'HR.com events & webcasts drive measurable pipeline — 2M practitioners = direct lead gen channel' },
+            domain: { strength: 'moderate', text: 'hr.com traffic (#87 global) captures high-intent HR buyers searching for solutions' },
+            community: { strength: 'strong', text: 'MyPeople.ai behavioral data shows which solutions practitioners actually adopt' }
+        },
+        capabilities: {
+            media: { strength: 'strong', text: 'Content library (5000+ webcasts) fills product education gaps their tools lack' },
+            domain: { strength: 'weak', text: 'Domain authority lends credibility but doesn\'t directly add capabilities' },
+            community: { strength: 'strong', text: 'Practitioner feedback loop identifies feature gaps before competitors do' }
+        },
+        efficiency: {
+            media: { strength: 'moderate', text: 'Pre-built content & certification programs reduce customer onboarding time' },
+            domain: { strength: 'weak', text: 'SEO traffic reduces customer acquisition cost but doesn\'t improve product efficiency' },
+            community: { strength: 'strong', text: 'Community-sourced workflows and templates accelerate user adoption' }
+        },
+        data_integrity: {
+            media: { strength: 'moderate', text: 'Educational content on compliance & data handling reduces user error' },
+            domain: { strength: 'weak', text: 'Limited direct impact on data integrity' },
+            community: { strength: 'strong', text: '2M practitioners reporting data issues = early warning system for bugs at scale' }
+        },
+        workflow: {
+            media: { strength: 'strong', text: 'Best-practice workflow templates from conferences & research reduce friction' },
+            domain: { strength: 'weak', text: 'Domain doesn\'t directly address workflow issues' },
+            community: { strength: 'strong', text: 'Peer-validated workflows from practitioners who solved the same problems' }
+        },
+        ux: {
+            media: { strength: 'moderate', text: 'UX research & benchmarking content informs better product design decisions' },
+            domain: { strength: 'weak', text: 'Domain prestige doesn\'t fix UX' },
+            community: { strength: 'strong', text: 'Direct user feedback channel — practitioners describe exactly what\'s broken' }
+        },
+        support: {
+            media: { strength: 'strong', text: 'Self-service knowledge base from 5000+ webcasts deflects support tickets' },
+            domain: { strength: 'moderate', text: 'hr.com as support portal increases discoverability of help resources' },
+            community: { strength: 'strong', text: 'Peer support network — practitioners help each other, reducing vendor support load' }
+        },
+        reliability: {
+            media: { strength: 'weak', text: 'Content doesn\'t directly improve uptime' },
+            domain: { strength: 'weak', text: 'Domain doesn\'t affect reliability' },
+            community: { strength: 'moderate', text: 'Community reports outages faster than monitoring — crowdsourced incident detection' }
+        },
+        compliance: {
+            media: { strength: 'strong', text: 'Certification programs & compliance content keep practitioners audit-ready' },
+            domain: { strength: 'moderate', text: 'hr.com brand authority adds trust signal for compliance-sensitive buyers' },
+            community: { strength: 'strong', text: 'Regulatory change alerts propagate through practitioner network in real-time' }
+        },
+        integration: {
+            media: { strength: 'moderate', text: 'Integration guides & vendor comparison content reduces evaluation time' },
+            domain: { strength: 'weak', text: 'Limited direct impact on integrations' },
+            community: { strength: 'strong', text: 'Practitioners share real integration experiences — which combos work, which don\'t' }
+        }
+    };
+
+    const sorted = Object.entries(painCategories).sort((a, b) => b[1].count - a[1].count);
+    const strengthIcon = (s) => s === 'strong' ? '●●●' : s === 'moderate' ? '●●○' : '●○○';
+
+    let html = '<div class="card research-section" data-section-key="pain_gain_match" data-buyer-slug="'+buyer.buyer_slug+'" style="border-left: 3px solid #f85149; padding: 20px;">';
+    html += '<h3 style="color:#f0f6fc; margin:0 0 4px; border:none; padding:0; font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:1px;">Pain / Gain Match</h3>';
+    html += '<p style="color:#8b949e; font-size:12px; margin:0 0 16px;">Negative review themes mapped to HR.com\'s 3 offerings — how ownership solves their users\' problems</p>';
+
+    html += '<table class="pain-gain-matrix">';
+    html += '<thead><tr>';
+    html += '<th style="width:15%">Pain Category</th>';
+    html += '<th style="width:5%; text-align:center">#</th>';
+    html += '<th style="width:26%">HR.com Media<br><span style="font-weight:400;opacity:0.6">2M members · 5K webcasts · certs</span></th>';
+    html += '<th style="width:26%">HR.com Domain<br><span style="font-weight:400;opacity:0.6">#87 global · SEO authority · traffic</span></th>';
+    html += '<th style="width:26%">HR.com Community<br><span style="font-weight:400;opacity:0.6">MyPeople.ai · engagement data</span></th>';
+    html += '</tr></thead><tbody>';
+
+    for (const [cat, data] of sorted) {
+        const map = solutionMap[cat] || { media: { strength: 'weak', text: 'Requires analysis' }, domain: { strength: 'weak', text: 'Requires analysis' }, community: { strength: 'weak', text: 'Requires analysis' } };
+        html += '<tr>';
+        html += '<td><span class="pain-category-badge" style="background:#21262d;color:#f85149">'+cat.replace('_', ' ')+'</span></td>';
+        html += '<td style="text-align:center;color:#f85149;font-weight:600">'+data.count+'</td>';
+        html += '<td><span class="fit-'+map.media.strength+'">'+strengthIcon(map.media.strength)+'</span> <span style="color:#c9d1d9;font-size:11px">'+map.media.text+'</span></td>';
+        html += '<td><span class="fit-'+map.domain.strength+'">'+strengthIcon(map.domain.strength)+'</span> <span style="color:#c9d1d9;font-size:11px">'+map.domain.text+'</span></td>';
+        html += '<td><span class="fit-'+map.community.strength+'">'+strengthIcon(map.community.strength)+'</span> <span style="color:#c9d1d9;font-size:11px">'+map.community.text+'</span></td>';
+        html += '</tr>';
+    }
+
+    html += '</tbody></table></div>';
+    return html;
+}
+
+// ── AGENT SWARM BUTTON ──────────────────
+function renderSwarmButton(buyerSlug, buyerName, sectionKey) {
+  const id = buyerSlug+'-'+sectionKey;
+  return '<div class="swarm-container" id="swarm-'+id+'">'+
+    '<div class="swarm-empty-msg">No data available for this section.</div>'+
+    '<button class="swarm-btn" onclick="openSwarm(\''+buyerSlug+'\',\''+buyerName+'\',\''+sectionKey+'\')">&#x1F41D; Agent Swarm</button>'+
+    '<div class="swarm-input-area" id="swarm-input-'+id+'">'+
+      '<textarea class="swarm-textarea" id="swarm-text-'+id+'" rows="3" placeholder="What should we look for? Be specific — company, topic, source preference. Or leave blank for auto-research."></textarea>'+
+      '<div class="swarm-actions">'+
+        '<button class="swarm-launch" onclick="launchSwarm(\''+buyerSlug+'\',\''+buyerName+'\',\''+sectionKey+'\')">&#x1F680; Launch</button>'+
+        '<button class="swarm-cancel" onclick="closeSwarm(\''+buyerSlug+'\',\''+sectionKey+'\')">Cancel</button>'+
+      '</div>'+
+    '</div>'+
+    '<div class="swarm-running" id="swarm-running-'+id+'">'+
+      '<div class="swarm-robots">'+
+        '<div class="robot robot-1"><div class="robot-head"><div class="robot-eye left"></div><div class="robot-eye right"></div></div><div class="robot-body"><div class="robot-arm left"></div><div class="robot-arm right"></div><div class="robot-leg left"></div><div class="robot-leg right"></div></div></div>'+
+        '<div class="robot robot-2"><div class="robot-head"><div class="robot-eye left"></div><div class="robot-eye right"></div></div><div class="robot-body"><div class="robot-arm left"></div><div class="robot-arm right"></div><div class="robot-leg left"></div><div class="robot-leg right"></div></div></div>'+
+        '<div class="robot robot-3"><div class="robot-head"><div class="robot-eye left"></div><div class="robot-eye right"></div></div><div class="robot-body"><div class="robot-arm left"></div><div class="robot-arm right"></div><div class="robot-leg left"></div><div class="robot-leg right"></div></div></div>'+
+      '</div>'+
+      '<div class="swarm-spinner"></div>'+
+      '<div class="swarm-status">Agents working...</div>'+
+    '</div>'+
+  '</div>';
+}
+
+window.openSwarm = function(slug, name, key) {
+  document.getElementById('swarm-input-'+slug+'-'+key).classList.add('open');
+};
+window.closeSwarm = function(slug, key) {
+  document.getElementById('swarm-input-'+slug+'-'+key).classList.remove('open');
+};
+// ── SECTION-SPECIFIC PROMPT CONFIGS ─────
+const SWARM_SECTION_CONFIG = {
+  ceo_vision: {
+    goal: 'Find CEO/executive quotes about vision, strategy, and growth priorities',
+    sources: 'earnings calls, conference keynotes, interviews, annual letters to shareholders',
+    exa_templates: ['earnings_call','strategic_fit'],
+    fallback_query: '{name} CEO vision strategy growth priorities HR technology'
+  },
+  golden_nuggets: {
+    goal: 'Find specific executive quotes that reveal acquisition appetite, content strategy needs, or HR platform gaps',
+    sources: 'earnings transcripts, investor day presentations, conference panels',
+    exa_templates: ['earnings_call','ma_history'],
+    fallback_query: '{name} executive quote acquisition strategy content platform HR'
+  },
+  ma_appetite: {
+    goal: 'Find evidence of recent M&A activity, stated acquisition criteria, and deal pipeline signals',
+    sources: 'press releases, deal announcements, investor presentations',
+    exa_templates: ['ma_history','buyer_search'],
+    fallback_query: '{name} acquisition deal M&A strategy 2025 2026'
+  },
+  market_reputation: {
+    goal: 'Find user reviews, complaints, and praise about this company HR products across Reddit, G2, Trustpilot, Capterra',
+    sources: 'Reddit, G2 Crowd, Trustpilot, Capterra',
+    exa_templates: ['reviews_search'],
+    fallback_query: '{name} HR software review complaint recommendation'
+  },
+  competitive_moat: {
+    goal: 'Identify competitive advantages, market position, and defensibility of their HR business',
+    sources: 'analyst reports, industry comparisons, market share data',
+    exa_templates: ['company_search','strategic_fit'],
+    fallback_query: '{name} competitive advantage market position HR technology moat'
+  },
+  earnings_quotes: {
+    goal: 'Extract verbatim executive quotes from earnings calls about HR, content, or acquisition strategy',
+    sources: 'SeekingAlpha transcripts, Motley Fool, Nasdaq earnings call transcripts',
+    exa_templates: ['earnings_call'],
+    fallback_query: '{name} earnings call transcript CEO quote HR content acquisition'
+  },
+  hr_media_business: {
+    goal: 'Research how this company could leverage an HR media platform (events, content, community, certifications)',
+    sources: 'strategy announcements, content marketing analysis, media M&A deals',
+    exa_templates: ['strategic_fit','company_search'],
+    fallback_query: '{name} content media platform HR community strategy acquisition'
+  },
+  hr_domain_name: {
+    goal: 'Research this company digital strategy and how premium domain ownership could increase their value',
+    sources: 'SEO analysis, digital marketing strategy, domain valuations',
+    exa_templates: ['company_search'],
+    fallback_query: '{name} digital strategy SEO domain brand authority HR traffic'
+  },
+  approach_strategy: {
+    goal: 'Find the best angle to approach this buyer — recent hires, org changes, public statements about growth',
+    sources: 'LinkedIn, press releases, earnings calls, conference presentations',
+    exa_templates: ['buyer_contacts','strategic_fit'],
+    fallback_query: '{name} VP corporate development M&A hiring growth strategy'
+  },
+  strategic_fit: {
+    goal: 'Find strategic rationale for why this buyer would acquire an HR media/community platform',
+    sources: 'analyst reports, investor presentations, acquisition announcements',
+    exa_templates: ['strategic_fit','ma_history'],
+    fallback_query: '{name} HR media community acquisition strategy content platform'
+  }
+};
+
+function enhancePrompt(userInput, buyerName, sectionKey, previousSearches) {
+  const config = SWARM_SECTION_CONFIG[sectionKey] || SWARM_SECTION_CONFIG.ceo_vision;
+
+  // Build avoid list from failed/poor previous searches
+  const avoidQueries = previousSearches
+    .filter(s => s.status === 'failed' || s.result_quality === 'poor')
+    .map(s => s.actual_query)
+    .filter(Boolean);
+
+  // Build the enhanced query
+  const baseQuery = userInput || config.fallback_query.replace(/\{name\}/g, buyerName);
+
+  return {
+    enhanced_prompt: baseQuery,
+    goal: config.goal,
+    sources: config.sources,
+    exa_templates: config.exa_templates,
+    avoid_queries: avoidQueries,
+    buyer_name: buyerName,
+    section_key: sectionKey,
+    user_guidance: userInput,
+    previous_search_count: previousSearches.length,
+    successful_previous: previousSearches.filter(s => s.status === 'success' && s.result_quality !== 'poor').length
+  };
+}
+
+async function checkPreviousSearches(buyerName) {
+  try {
+    const url = SB_URL+'/rest/v1/research_executions?'+new URLSearchParams({
+      'company_name': 'eq.'+buyerName,
+      'select': 'method_code,actual_query,status,result_quality,executed_at',
+      'order': 'executed_at.desc',
+      'limit': '20'
+    });
+    const r = await fetch(url, {headers:SB_HEADERS});
+    const rows = await r.json();
+    return Array.isArray(rows) ? rows : [];
+  } catch(e) {
+    console.warn('Previous search check failed:', e);
+    return [];
+  }
+}
+
+window.launchSwarm = async function(slug, name, key) {
+  const id = slug+'-'+key;
+  const userInput = document.getElementById('swarm-text-'+id).value;
+  const statusContainer = document.getElementById('swarm-running-'+id);
+  const statusEl = statusContainer.querySelector('.swarm-status');
+
+  // Show running state
+  document.getElementById('swarm-input-'+id).classList.remove('open');
+  statusContainer.classList.add('active');
+  document.querySelector('#swarm-'+id+' .swarm-btn').style.display='none';
+  document.querySelector('#swarm-'+id+' .swarm-empty-msg').textContent='';
+  statusEl.textContent = 'Checking previous searches...';
+
+  // Step 1: Dedup — check what's been searched before for this buyer
+  const previousSearches = await checkPreviousSearches(name);
+  if (previousSearches.length > 0) {
+    statusEl.textContent = 'Found '+previousSearches.length+' prior searches. Enhancing prompt to avoid repeats...';
+    await new Promise(r => setTimeout(r, 800)); // brief pause so user can read
+  }
+
+  // Step 2: Enhance the prompt with section-specific config + dedup avoidance
+  const enhanced = enhancePrompt(userInput, name, key, previousSearches);
+  statusEl.textContent = 'Submitting to agent queue...';
+
+  // Step 3: Submit to agent_queue with full enhanced payload
+  const payload = {
+    agent_name: 'swarm_enrichment',
+    record_type: 'buyer_section',
+    record_id: slug+'__'+key,
+    entity: 'next_chapter',
+    priority: 'high',
+    status: 'pending',
+    payload: JSON.stringify({
+      buyer_slug: slug,
+      buyer_name: name,
+      section_key: key,
+      enhanced_prompt: enhanced.enhanced_prompt,
+      goal: enhanced.goal,
+      sources: enhanced.sources,
+      exa_templates: enhanced.exa_templates,
+      avoid_queries: enhanced.avoid_queries,
+      user_guidance: enhanced.user_guidance,
+      previous_search_count: enhanced.previous_search_count,
+      successful_previous: enhanced.successful_previous,
+      callback_field: key
+    })
+  };
+
+  try {
+    const r = await fetch(SB_URL+'/rest/v1/agent_queue', {
+      method:'POST',
+      headers:{...SB_HEADERS,'Prefer':'return=representation'},
+      body:JSON.stringify(payload)
+    });
+    const rows = await r.json();
+    const queueId = Array.isArray(rows) ? rows[0]?.id : rows?.id;
+    if (queueId) {
+      statusEl.textContent = 'Agents dispatched. Polling for results...';
+      pollSwarmResult(queueId, slug, name, key);
+    } else {
+      statusEl.textContent = 'Queue submit failed — no ID returned';
+    }
+  } catch(e) {
+    statusEl.textContent = 'Error: '+e.message;
+  }
+};
+
+function pollSwarmResult(queueId, slug, name, key) {
+  const id = slug+'-'+key;
+  const statusEl = document.getElementById('swarm-running-'+id).querySelector('.swarm-status');
+  let polls = 0;
+  const interval = setInterval(async () => {
+    polls++;
+    statusEl.textContent = 'Agents working... ('+Math.round(polls*5)+'s)';
+    try {
+      const r = await fetch(SB_URL+'/rest/v1/agent_queue?id=eq.'+queueId+'&select=status,error_message', {headers:SB_HEADERS});
+      const [item] = await r.json();
+      if (item?.status === 'done') {
+        clearInterval(interval);
+        statusEl.textContent = 'Complete! Reloading data...';
+        // Reload JSON and re-render section
+        const freshData = await fetch('/data/debbie-buyer-research.json?t='+Date.now()).then(r=>r.json());
+        if (freshData.buyers[slug]) {
+          BUYERS[slug] = freshData.buyers[slug];
+          const sectionEl = document.getElementById('section-'+slug+'-'+key);
+          if (sectionEl) {
+            const content = getSectionContent(BUYERS[slug], key);
+            if (content && content !== null) {
+              const narrative = key==='market_reputation' ? renderMarketReputation(BUYERS[slug]) : '<div class="narrative-box">'+content+'</div>';
+              sectionEl.innerHTML = '<h3>'+SECTION_CONFIG.find(c=>c.key===key).title+' — '+name+' <span class="swarm-badge">Swarm-generated</span></h3>'+narrative;
+            }
+          }
+        }
+        toast('Agent Swarm complete — '+key.replace(/_/g,' ')+' updated');
+      }
+      if (item?.status === 'failed') {
+        clearInterval(interval);
+        statusEl.textContent = 'Failed: '+(item.error_message||'Unknown error')+'. Try again.';
+      }
+    } catch(e) { /* keep polling */ }
+    if (polls >= 60) { clearInterval(interval); statusEl.textContent = 'Still running. Refresh page in a few minutes.'; }
+  }, 5000);
+}
+
+// ── FEEDBACK COLUMN ─────────────────────
+function renderFeedbackColumn(slug) {
+  const b = BUYERS[slug];
+  let html = '';
+
+  SECTION_CONFIG.forEach(cfg => {
+    const content = getSectionContent(b, cfg.key);
+    if (content === null && cfg.key !== 'hr_media_business' && cfg.key !== 'hr_domain_name' && cfg.key !== 'market_reputation' && cfg.key !== 'strategic_fit') return;
+
+    const fb = FEEDBACK_CACHE[slug+'__'+cfg.key] || {};
+    html += '<div class="fb-card '+cfg.fbBorder+'" data-section-key="'+cfg.key+'" data-buyer-slug="'+slug+'" id="fb-'+slug+'-'+cfg.key+'">';
+    html += '<div class="fb-card-label">'+cfg.title+'</div>';
+    html += '<div class="fb-radios">';
+    [{val:'accurate_relevant_valuable',label:'Accurate, relevant, valuable'},
+     {val:'accurate_not_relevant',label:'Accurate, not relevant'},
+     {val:'remove_altogether',label:'Remove this content'}].forEach(opt => {
+      const checked = fb.section_verdict===opt.val ? ' checked' : '';
+      const selClass = fb.section_verdict===opt.val ? ' selected' : '';
+      html += '<label class="fb-radio'+selClass+'"><input type="radio" name="fb-'+slug+'-'+cfg.key+'" value="'+opt.val+'"'+checked+' onchange="sectionVerdictChange(\''+slug+'\',\''+b.buyer_name+'\',\''+cfg.key+'\',this.value)"> '+opt.label+'</label>';
+    });
+    html += '</div>';
+    html += '<textarea class="fb-comment" placeholder="Comments..." onblur="sectionCommentBlur(\''+slug+'\',\''+b.buyer_name+'\',\''+cfg.key+'\',this.value)">'+(fb.section_comment||'')+'</textarea>';
+    html += '</div>';
+  });
+
+  return html;
+}
+
+window.sectionVerdictChange = function(slug, name, key, val) {
+  saveFeedback(slug, name, key, {section_verdict:val});
+  toast('Section feedback saved');
+  updateRollup();
+};
+window.sectionCommentBlur = function(slug, name, key, val) {
+  debounceSave(slug, name, key, {section_comment:val}, 300);
+};
+window.productVerdictChange = function(slug, name, prodFbKey, val, el) {
+  // Clear sibling selections, highlight this one
+  el.parentElement.querySelectorAll('.verdict-pill').forEach(p => p.className='verdict-pill');
+  el.classList.add(val==='keep'?'sel-green':'sel-red');
+  saveFeedback(slug, name, prodFbKey, {product_verdict:val});
+  toast('Product feedback saved');
+};
+
+// ── GOLDEN NUGGETS ──────────────────────
+function renderNuggets(slug) {
+  const b = BUYERS[slug];
+  const nuggets = b?.golden_nuggets || [];
+  const el = document.getElementById('nuggetsContent');
+
+  if (!nuggets.length) {
+    el.innerHTML = '<div class="no-nuggets">No golden nuggets available for '+b.buyer_name+' yet</div>';
+    return;
+  }
+
+  let html = '';
+  nuggets.forEach((n, i) => {
+    html += '<div class="nugget-card">';
+    html += '<div class="nugget-header">Nugget '+(i+1)+(n.speaker?' — '+n.speaker:'')+'</div>';
+    if (n.quote) html += '<div class="ceo-quote">&ldquo;'+n.quote+'&rdquo;</div>';
+    if (n.opener) html += '<div class="nugget-opener"><div class="opener-label">OPENER</div><p>'+n.opener+'</p></div>';
+    if (n.why) html += '<div class="nugget-why"><strong>Why it works:</strong> '+n.why+'</div>';
+    html += '</div>';
+  });
+  el.innerHTML = html;
+}
+
+// ── NUGGETS TOGGLE ──────────────────────
+document.getElementById('nuggetsToggle').addEventListener('click', () => {
+  const panel = document.getElementById('nuggetsPanel');
+  const grid = document.getElementById('bodyGrid');
+  panel.classList.toggle('closed');
+  if (panel.classList.contains('closed')) {
+    grid.classList.remove('nuggets-open');
+    grid.classList.add('nuggets-closed');
+  } else {
+    grid.classList.remove('nuggets-closed');
+    grid.classList.add('nuggets-open');
+  }
+});
+
+// ── INTERSECTION OBSERVER ───────────────
+function setupObservers() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
+        const slug = entry.target.dataset.buyerSlug;
+        const key = entry.target.dataset.sectionKey;
+        // Highlight feedback card
+        document.querySelectorAll('.fb-card').forEach(c => c.classList.remove('active'));
+        const fbCard = document.getElementById('fb-'+slug+'-'+key);
+        if (fbCard) {
+          fbCard.classList.add('active');
+          fbCard.scrollIntoView({behavior:'smooth',block:'nearest'});
+        }
+      }
+    });
+  }, {threshold:0.3, rootMargin:'-'+Math.round(window.innerHeight*0.15+37)+'px 0px 0px 0px'});
+
+  document.querySelectorAll('.research-section').forEach(el => observer.observe(el));
+
+  // Buyer-level observer for Zone A + nuggets + tab + feedback col
+  const buyerObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.1) {
+        const slug = entry.target.id.replace('buyer-','');
+        if (slug !== CURRENT_BUYER) {
+          updateZoneA(slug);
+          renderNuggets(slug);
+          // Update feedback column
+          document.getElementById('feedbackCol').innerHTML = renderFeedbackColumn(slug);
+          // Update active tab
+          document.querySelectorAll('.tab-pill').forEach(p => p.classList.toggle('active', p.dataset.slug===slug));
+        }
+      }
+    });
+  }, {threshold:0.1, rootMargin:'-'+Math.round(window.innerHeight*0.15+37)+'px 0px -50% 0px'});
+
+  document.querySelectorAll('.buyer-section').forEach(el => buyerObserver.observe(el));
+}
+
+// ── EXPORT ──────────────────────────────
+document.getElementById('exportBtn').addEventListener('click', async () => {
+  const summary = {buyers:[]};
+  BUYER_ORDER.forEach(slug => {
+    const b = BUYERS[slug];
+    const topFb = FEEDBACK_CACHE[slug+'__top_level'] || {};
+    const sections = {};
+    SECTION_CONFIG.forEach(cfg => {
+      const fb = FEEDBACK_CACHE[slug+'__'+cfg.key];
+      if (fb) sections[cfg.key] = {verdict:fb.section_verdict, comment:fb.section_comment};
+    });
+    summary.buyers.push({
+      buyer_name:b.buyer_name, buyer_slug:slug, fit_score:b.fit_score,
+      top_verdict:topFb.top_verdict, top_verdict_custom_label:topFb.top_verdict_custom_label,
+      top_comment:topFb.top_comment, sections:sections
+    });
+  });
+
+  // Push to Supabase
+  try {
+    await fetch(SB_URL+'/rest/v1/debbie_review_exports', {
+      method:'POST', headers:SB_HEADERS,
+      body:JSON.stringify({
+        export_type:'summary',
+        buyer_count:BUYER_ORDER.length,
+        reviewed_count:summary.buyers.filter(b=>b.top_verdict).length,
+        payload:summary
+      })
+    });
+    toast('Summary exported to Supabase');
+  } catch(e) { console.error('Export failed', e); }
+
+  // Also copy to clipboard as fallback
+  try {
+    let text = 'DEBBIE BUYER REVIEW SUMMARY\n'+new Date().toISOString()+'\n\n';
+    summary.buyers.forEach(b => {
+      text += b.buyer_name+' ('+b.fit_score+') — '+(b.top_verdict||'NOT REVIEWED').replace(/_/g,' ').toUpperCase()+'\n';
+      if (b.top_comment) text += '  Comment: '+b.top_comment+'\n';
+      Object.entries(b.sections).forEach(([k,v]) => {
+        if (v.verdict) text += '  '+k+': '+v.verdict.replace(/_/g,' ')+(v.comment?' — '+v.comment:'')+'\n';
+      });
+      text += '\n';
+    });
+    await navigator.clipboard.writeText(text);
+    toast('Also copied to clipboard');
+  } catch(e) { /* clipboard may fail */ }
+});
+
+// ── SECTION VALUE ROLLUP ────────────────
+function updateRollup() {
+  const sectionCounts = {};
+  Object.entries(FEEDBACK_CACHE).forEach(([key, fb]) => {
+    if (!fb.section_verdict || key.endsWith('__top_level')) return;
+    const sectionKey = key.split('__')[1];
+    if (!sectionCounts[sectionKey]) sectionCounts[sectionKey] = {total:0,remove:0};
+    sectionCounts[sectionKey].total++;
+    if (fb.section_verdict === 'remove_altogether') sectionCounts[sectionKey].remove++;
+  });
+
+  const items = Object.entries(sectionCounts)
+    .map(([k,v]) => ({key:k, pct:Math.round(100*v.remove/v.total), total:v.total}))
+    .filter(i => i.total >= 2)
+    .sort((a,b) => b.pct-a.pct);
+
+  const bar = document.getElementById('rollupBar');
+  if (items.length === 0) { bar.classList.remove('visible'); return; }
+  bar.classList.add('visible');
+  bar.innerHTML = '<span style="color:#8b949e;font-weight:600;">Section Health:</span> ' +
+    items.map(i => '<span class="rollup-item"><span class="rollup-label">'+i.key.replace(/_/g,' ')+'</span> <span class="rollup-pct '+(i.pct>=50?'rollup-high':'rollup-low')+'">'+i.pct+'% remove</span></span>').join('');
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+async function init() {
+  // Load feedback first
+  await loadAllFeedback();
+
+  // Load buyer data
+  let data;
+  try {
+    const r = await fetch('/data/debbie-buyer-research.json');
+    data = await r.json();
+  } catch(e) {
+    document.getElementById('contentCol').innerHTML = '<div style="padding:40px;text-align:center;color:#f85149;">'+
+      '<h2>Research data not found</h2><p>Run: python3 scripts/debbie_buyer_research.py</p></div>';
+    return;
+  }
+
+  BUYERS = data.buyers || {};
+  // Sort by fit_score descending
+  BUYER_ORDER = Object.keys(BUYERS).sort((a,b) => (BUYERS[b].fit_score||0)-(BUYERS[a].fit_score||0));
+
+  if (!BUYER_ORDER.length) {
+    document.getElementById('contentCol').innerHTML = '<div style="padding:40px;text-align:center;color:#8b949e;">No buyers found in research data.</div>';
+    return;
+  }
+
+  // Render tab bar
+  renderTabBar();
+
+  // Render all buyer sections
+  let contentHtml = '';
+  BUYER_ORDER.forEach((slug, i) => {
+    contentHtml += '<section class="buyer-section" id="buyer-'+slug+'">';
+    contentHtml += renderBuyerContent(slug);
+    if (i < BUYER_ORDER.length - 1) contentHtml += '<hr class="buyer-divider">';
+    contentHtml += '</section>';
+  });
+  document.getElementById('contentCol').innerHTML = contentHtml;
+
+  // Initialize Zone A with first buyer
+  updateZoneA(BUYER_ORDER[0]);
+
+  // Render feedback for first buyer
+  document.getElementById('feedbackCol').innerHTML = renderFeedbackColumn(BUYER_ORDER[0]);
+
+  // Render nuggets for first buyer
+  renderNuggets(BUYER_ORDER[0]);
+
+  // Setup scroll observers
+  setupObservers();
+
+  // Update rollup
+  updateRollup();
+}
+
+init();
+})();
+</script>
+
+<script src="/comment-widget.js"></script>
+<script src="/notification-bell.js"></script>
+<script src="/version-widget.js"></script>
+</body>
+</html>

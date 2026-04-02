@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HR.com — Master Data Audit</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #0d1117;
+    color: #c9d1d9;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  .top-nav {
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    padding: 8px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+  }
+  .top-nav .brand { font-weight: 700; color: #f0f6fc; font-size: 13px; }
+  .top-nav a { color: #58a6ff; text-decoration: none; font-size: 13px; }
+  .top-nav a:hover { text-decoration: underline; }
+  .top-nav .sep { color: #30363d; }
+
+  /* ── HEADER ── */
+  .page-header {
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    padding: 22px 32px 18px;
+  }
+  .page-header h1 { font-size: 22px; font-weight: 700; color: #f0f6fc; }
+  .page-header p { font-size: 13px; color: #8b949e; margin-top: 3px; }
+
+  /* ── SUMMARY BAR ── */
+  .summary-bar {
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    padding: 12px 32px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .summary-stat { display: flex; align-items: baseline; gap: 6px; }
+  .summary-stat .num { font-size: 20px; font-weight: 700; color: #f0f6fc; }
+  .summary-stat .label { font-size: 12px; color: #8b949e; }
+  .summary-bar .sep { width: 1px; height: 28px; background: #30363d; }
+  .summary-stat .num.red { color: #f85149; }
+  .summary-stat .num.yellow { color: #d29922; }
+  .summary-stat .num.green { color: #3fb950; }
+
+  /* ── MAIN LAYOUT ── */
+  .main { max-width: 1280px; margin: 0 auto; padding: 28px 32px; }
+
+  /* ── SECTION LABELS ── */
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #8b949e;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 12px;
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #21262d;
+  }
+
+  /* ── ISSUES PANEL ── */
+  .issues-panel {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-left: 3px solid #f85149;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 8px;
+  }
+  .issues-panel h3 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #f0f6fc;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .issue-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 6px 0;
+    border-bottom: 1px solid #21262d;
+    font-size: 13px;
+  }
+  .issue-item:last-child { border-bottom: none; }
+  .issue-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+  .dot-red { background: #f85149; }
+  .dot-yellow { background: #d29922; }
+  .dot-blue { background: #58a6ff; }
+  .issue-label { color: #8b949e; font-size: 11px; text-transform: uppercase; flex-shrink: 0; margin-top: 2px; }
+  .issue-text { color: #c9d1d9; }
+
+  /* ── REDUNDANCY PANEL ── */
+  .redundancy-panel {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-left: 3px solid #d29922;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 8px;
+  }
+  .redundancy-panel h3 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #f0f6fc;
+    margin-bottom: 10px;
+  }
+  .redundancy-item {
+    padding: 6px 0;
+    border-bottom: 1px solid #21262d;
+    font-size: 13px;
+    color: #c9d1d9;
+  }
+  .redundancy-item:last-child { border-bottom: none; }
+  .redundancy-item strong { color: #d29922; }
+
+  /* ── TABLE CARDS GRID ── */
+  .tables-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+  }
+
+  /* ── TABLE CARD (Level 1) ── */
+  .table-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+  .table-card:hover { border-color: #58a6ff; }
+  .table-card.expanded { border-color: #58a6ff; }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .card-header:hover { background: #1c2128; }
+
+  .health-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .health-green { background: #3fb950; box-shadow: 0 0 6px rgba(63,185,80,0.4); }
+  .health-yellow { background: #d29922; box-shadow: 0 0 6px rgba(210,153,34,0.4); }
+  .health-red { background: #f85149; box-shadow: 0 0 6px rgba(248,81,73,0.4); }
+
+  .card-info { flex: 1; min-width: 0; }
+  .card-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #f0f6fc;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .card-meta { font-size: 12px; color: #8b949e; margin-top: 2px; }
+  .card-row-count {
+    font-size: 18px;
+    font-weight: 700;
+    color: #58a6ff;
+    min-width: 36px;
+    text-align: right;
+  }
+  .card-chevron {
+    color: #8b949e;
+    font-size: 12px;
+    transition: transform 0.2s;
+    margin-left: 4px;
+  }
+  .table-card.expanded .card-chevron { transform: rotate(180deg); }
+
+  /* ── LEVEL 2: FIELDS LIST ── */
+  .fields-panel {
+    display: none;
+    border-top: 1px solid #30363d;
+    background: #0d1117;
+  }
+  .table-card.expanded .fields-panel { display: block; }
+
+  .fields-loading {
+    padding: 16px;
+    font-size: 13px;
+    color: #8b949e;
+    text-align: center;
+  }
+
+  .field-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 16px;
+    border-bottom: 1px solid #21262d;
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  .field-row:last-child { border-bottom: none; }
+  .field-row:hover { background: #1c2128; }
+  .field-row.active { background: #1c2128; }
+
+  .field-health-bar {
+    width: 48px;
+    height: 4px;
+    background: #21262d;
+    border-radius: 2px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .field-health-fill { height: 100%; border-radius: 2px; }
+
+  .field-name {
+    font-size: 13px;
+    color: #c9d1d9;
+    font-weight: 500;
+    min-width: 0;
+    flex: 1;
+  }
+  .field-type {
+    font-size: 11px;
+    color: #8b949e;
+    background: #21262d;
+    padding: 2px 6px;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .field-populated {
+    font-size: 11px;
+    color: #8b949e;
+    flex-shrink: 0;
+    min-width: 60px;
+    text-align: right;
+  }
+  .field-sample {
+    font-size: 11px;
+    color: #58a6ff;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .field-chevron {
+    color: #8b949e;
+    font-size: 11px;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+  .field-row.active .field-chevron { transform: rotate(180deg); }
+
+  /* ── LEVEL 3: DATA VIEW ── */
+  .data-panel {
+    display: none;
+    background: #161b22;
+    border-top: 1px solid #21262d;
+    border-bottom: 1px solid #21262d;
+    padding: 12px 16px;
+  }
+  .data-panel.open { display: block; }
+
+  .data-value-list { display: flex; flex-direction: column; gap: 6px; }
+  .data-value-item {
+    background: #0d1117;
+    border: 1px solid #21262d;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  .data-value-row-label {
+    font-size: 10px;
+    color: #8b949e;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+  .data-value-text {
+    color: #c9d1d9;
+    word-break: break-word;
+    white-space: pre-wrap;
+  }
+  .data-value-text.truncated { max-height: 60px; overflow: hidden; position: relative; }
+  .data-value-text.truncated::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 24px;
+    background: linear-gradient(transparent, #0d1117);
+  }
+  .show-full-btn {
+    background: none;
+    border: none;
+    color: #58a6ff;
+    font-size: 11px;
+    cursor: pointer;
+    padding: 2px 0;
+    margin-top: 2px;
+  }
+  .show-full-btn:hover { text-decoration: underline; }
+  .data-null { color: #30363d; font-style: italic; }
+  .data-empty { color: #30363d; font-style: italic; font-size: 11px; }
+
+  /* ── NC-WIDE SECTION ── */
+  .nc-wide-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+  }
+
+  /* ── BADGE ── */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .badge-green { background: #1a3a1a; color: #3fb950; }
+  .badge-yellow { background: #3a2a10; color: #d29922; }
+  .badge-red { background: #3a1a1a; color: #f85149; }
+  .badge-blue { background: #1a2a3a; color: #58a6ff; }
+  .badge-gray { background: #21262d; color: #8b949e; }
+
+  /* ── LOADING SPINNER ── */
+  .spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid #30363d;
+    border-top-color: #58a6ff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── MISC ── */
+  .text-muted { color: #8b949e; }
+  .text-sm { font-size: 12px; }
+  .mb-4 { margin-bottom: 4px; }
+  .mt-16 { margin-top: 16px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    .main { padding: 16px; }
+    .tables-grid { grid-template-columns: 1fr; }
+    .summary-bar { gap: 16px; padding: 12px 16px; }
+    .field-sample { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="top-nav">
+  <span class="brand">Next Chapter M&amp;A</span>
+  <span class="sep">|</span>
+  <a href="index.html">Home</a>
+  <a href="hrcom-ltd-hub.html">HR.com Hub</a>
+  <a href="dashboard.html">Dashboard</a>
+</div>
+
+<!-- HEADER -->
+<div class="page-header">
+  <h1>HR.com — Master Data Audit</h1>
+  <p>Inside-out view of every Supabase record associated with HR.com as a sell-side client. Click a table to drill in, click a field to see values.</p>
+</div>
+
+<!-- SUMMARY BAR -->
+<div class="summary-bar" id="summaryBar">
+  <div class="summary-stat"><span class="num" id="sumTables"><span class="spinner"></span></span><span class="label">tables</span></div>
+  <div class="sep"></div>
+  <div class="summary-stat"><span class="num" id="sumRows"><span class="spinner"></span></span><span class="label">total rows</span></div>
+  <div class="sep"></div>
+  <div class="summary-stat"><span class="num" id="sumBuyers">68</span><span class="label">buyers</span></div>
+  <div class="sep"></div>
+  <div class="summary-stat"><span class="num red" id="sumIssues">6</span><span class="label">data issues</span></div>
+  <div class="sep"></div>
+  <div class="summary-stat"><span class="num yellow" id="sumCost"><span class="spinner"></span></span><span class="label">total cost</span></div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- ISSUES -->
+  <div class="section-label">Known Data Issues</div>
+  <div class="issues-panel">
+    <h3>
+      <span style="color:#f85149">&#9888;</span>
+      6 flagged issues requiring attention
+    </h3>
+    <div class="issue-item">
+      <div class="issue-dot dot-red"></div>
+      <span class="issue-label">Tag</span>
+      <span class="issue-text">4 buyers have <code style="background:#21262d;padding:1px 5px;border-radius:3px;font-size:11px">entity='HR.com Ltd'</code> instead of <code style="background:#21262d;padding:1px 5px;border-radius:3px;font-size:11px">next_chapter</code> — will be excluded from NC dashboards</span>
+    </div>
+    <div class="issue-item">
+      <div class="issue-dot dot-yellow"></div>
+      <span class="issue-label">Gap</span>
+      <span class="issue-text">4 buyers are missing <code style="background:#21262d;padding:1px 5px;border-radius:3px;font-size:11px">one_pager_json</code> — no one-pager content generated for these buyers</span>
+    </div>
+    <div class="issue-item">
+      <div class="issue-dot dot-red"></div>
+      <span class="issue-label">Corrupt</span>
+      <span class="issue-text">1 buyer (MyPeople.ai) has a corrupted <code style="background:#21262d;padding:1px 5px;border-radius:3px;font-size:11px">buyer_type</code> value — likely a parse error from enrichment</span>
+    </div>
+    <div class="issue-item">
+      <div class="issue-dot dot-red"></div>
+      <span class="issue-label">Wrong side</span>
+      <span class="issue-text"><code style="background:#21262d;padding:1px 5px;border-radius:3px;font-size:11px">dossier_final.deal_side='buy'</code> but HR.com is a sell-side client — incorrect classification stored</span>
+    </div>
+    <div class="issue-item">
+      <div class="issue-dot dot-yellow"></div>
+      <span class="issue-label">Research</span>
+      <span class="issue-text">3 Exa research executions failed — those buyers have incomplete intelligence profiles</span>
+    </div>
+    <div class="issue-item">
+      <div class="issue-dot dot-blue"></div>
+      <span class="issue-label">Activity</span>
+      <span class="issue-text">0 letters sent &bull; 0 calls made &bull; 0 buyer feedback collected — deal is fully pre-outreach</span>
+    </div>
+  </div>
+
+  <!-- REDUNDANCY -->
+  <div class="section-label" style="margin-top:16px">Redundancy Detected</div>
+  <div class="redundancy-panel">
+    <h3>&#9888; Overlapping Data Structures</h3>
+    <div class="redundancy-item"><strong>engagement_buyers vs buyer_intelligence</strong> — Both store buyer company profiles for the same 68 buyers. <code style="background:#21262d;padding:1px 5px;border-radius:3px;font-size:11px">engagement_buyers</code> is proposal-scoped; <code style="background:#21262d;padding:1px 5px;border-radius:3px;font-size:11px">buyer_intelligence</code> is company-scoped. Overlapping fields: company description, AUM, HQ, buyer type.</div>
+    <div class="redundancy-item"><strong>deal_research vs dossier_final</strong> — <code style="background:#21262d;padding:1px 5px;border-radius:3px;font-size:11px">deal_research</code> has 6 rows of raw research; <code style="background:#21262d;padding:1px 5px;border-radius:3px;font-size:11px">dossier_final</code> has 1 compiled dossier. There is partial overlap in narrative fields — research synthesis exists in both.</div>
+    <div class="redundancy-item"><strong>research_executions vs deal_research</strong> — Execution log tracks what was run; deal_research stores the output. Both reference the same company. No cleanup pipeline to retire stale execution records after results are written.</div>
+    <div class="redundancy-item"><strong>page_versions vs page_comments</strong> — Both are keyed on company_name with no foreign key constraint to proposals. Risk of orphaned records if company_name changes.</div>
+  </div>
+
+  <!-- HR.COM SPECIFIC TABLES -->
+  <div class="section-label">HR.com Specific Tables</div>
+  <div class="tables-grid" id="hrcomGrid">
+    <div style="grid-column:1/-1;padding:20px;text-align:center;color:#8b949e;font-size:13px">
+      <span class="spinner"></span> Loading tables...
+    </div>
+  </div>
+
+  <!-- NC-WIDE TABLES -->
+  <div class="section-label">NC-Wide Tables (entity='next_chapter')</div>
+  <div class="nc-wide-grid" id="ncWideGrid">
+    <div style="grid-column:1/-1;padding:20px;text-align:center;color:#8b949e;font-size:13px">
+      <span class="spinner"></span> Loading tables...
+    </div>
+  </div>
+
+</div>
+
+<!-- WIDGETS -->
+<script src="/supabase-config.js"></script>
+<script>
+// ─── CONFIG ───────────────────────────────────────────────────────────────────
+const SB_URL = window.__SUPABASE_URL;
+const SB_KEY = window.__SUPABASE_ANON_KEY;
+const PROPOSAL_ID = '63642786-ab16-456d-bac3-8f277f36ddc5';
+const COMPANY_NAME = 'HR.com Ltd';
+const SB_HEADERS = {
+  'apikey': SB_KEY,
+  'Authorization': 'Bearer ' + SB_KEY,
+  'Content-Type': 'application/json',
+  'Prefer': 'count=exact'
+};
+
+// ─── TABLE DEFINITIONS ────────────────────────────────────────────────────────
+const HRCOM_TABLES = [
+  {
+    key: 'proposals',
+    label: 'proposals',
+    desc: 'Master deal record for HR.com',
+    url: () => `${SB_URL}/rest/v1/proposals?company_name=eq.${encodeURIComponent(COMPANY_NAME)}&select=*`,
+    expectedRows: 1
+  },
+  {
+    key: 'engagement_buyers',
+    label: 'engagement_buyers',
+    desc: 'Buyer list for this proposal',
+    url: () => `${SB_URL}/rest/v1/engagement_buyers?proposal_id=eq.${PROPOSAL_ID}&select=*`,
+    expectedRows: 68
+  },
+  {
+    key: 'buyer_intelligence',
+    label: 'buyer_intelligence',
+    desc: 'Buyer intelligence by seller company',
+    url: () => `${SB_URL}/rest/v1/buyer_intelligence?seller_company=eq.${encodeURIComponent(COMPANY_NAME)}&select=*`,
+    expectedRows: 68
+  },
+  {
+    key: 'deal_research',
+    label: 'deal_research',
+    desc: 'Raw research runs for HR.com',
+    url: () => `${SB_URL}/rest/v1/deal_research?company_name=eq.${encodeURIComponent(COMPANY_NAME)}&select=*`,
+    expectedRows: 6
+  },
+  {
+    key: 'dossier_final',
+    label: 'dossier_final',
+    desc: 'Compiled sell-side dossier',
+    url: () => `${SB_URL}/rest/v1/dossier_final?company_name=eq.${encodeURIComponent(COMPANY_NAME)}&select=*`,
+    expectedRows: 1
+  },
+  {
+    key: 'research_executions',
+    label: 'research_executions',
+    desc: 'Exa research execution log',
+    url: () => `${SB_URL}/rest/v1/research_executions?company_name=eq.${encodeURIComponent(COMPANY_NAME)}&select=*`,
+    expectedRows: 9
+  },
+  {
+    key: 'page_versions',
+    label: 'page_versions',
+    desc: 'Page version history',
+    url: () => `${SB_URL}/rest/v1/page_versions?company_name=eq.${encodeURIComponent(COMPANY_NAME)}&select=*`,
+    expectedRows: 4
+  },
+  {
+    key: 'page_comments',
+    label: 'page_comments',
+    desc: 'Internal page comments',
+    url: () => `${SB_URL}/rest/v1/page_comments?company_name=eq.${encodeURIComponent(COMPANY_NAME)}&select=*`,
+    expectedRows: 4
+  },
+  {
+    key: 'client_interactions',
+    label: 'client_interactions',
+    desc: 'Client touchpoint log',
+    url: () => `${SB_URL}/rest/v1/client_interactions?company_name=eq.${encodeURIComponent(COMPANY_NAME)}&select=*`,
+    expectedRows: 34
+  },
+  {
+    key: 'meeting_transcripts',
+    label: 'meeting_transcripts',
+    desc: 'Meeting transcript (by title)',
+    url: () => `${SB_URL}/rest/v1/meeting_transcripts?title=ilike.*${encodeURIComponent('HR.com')}*&select=*`,
+    expectedRows: 1
+  },
+  {
+    key: 're_enrichment_results',
+    label: 're_enrichment_results',
+    desc: 'RE enrichment results (buyer_name)',
+    url: () => `${SB_URL}/rest/v1/re_enrichment_results?select=*&limit=200`,
+    expectedRows: 3,
+    filterNote: 'filtered by buyer_name'
+  },
+  {
+    key: 'debbie_buyer_review_feedback',
+    label: 'debbie_buyer_review_feedback',
+    desc: 'Buyer review feedback from Debbie',
+    url: () => `${SB_URL}/rest/v1/debbie_buyer_review_feedback?select=*&limit=200`,
+    expectedRows: 0,
+    filterNote: 'all records'
+  }
+];
+
+const NC_WIDE_TABLES = [
+  {
+    key: 'agent_queue',
+    label: 'agent_queue',
+    desc: 'Agent task queue (NC)',
+    url: () => `${SB_URL}/rest/v1/agent_queue?entity=eq.next_chapter&select=*`,
+  },
+  {
+    key: 'agent_runs',
+    label: 'agent_runs',
+    desc: 'Agent execution history (NC)',
+    url: () => `${SB_URL}/rest/v1/agent_runs?entity=eq.next_chapter&select=*`,
+  },
+  {
+    key: 'campaigns',
+    label: 'campaigns',
+    desc: 'Campaign definitions (NC)',
+    url: () => `${SB_URL}/rest/v1/campaigns?entity=eq.next_chapter&select=*`,
+  },
+  {
+    key: 'cost_budget',
+    label: 'cost_budget',
+    desc: 'Cost budgets (NC)',
+    url: () => `${SB_URL}/rest/v1/cost_budget?entity=eq.next_chapter&select=*`,
+  },
+  {
+    key: 'cost_log',
+    label: 'cost_log',
+    desc: 'Cost log entries (NC)',
+    url: () => `${SB_URL}/rest/v1/cost_log?entity=eq.next_chapter&select=*`,
+  },
+  {
+    key: 'sent_log',
+    label: 'sent_log',
+    desc: 'Outbound letter sent log (NC)',
+    url: () => `${SB_URL}/rest/v1/sent_log?entity=eq.next_chapter&select=*`,
+  },
+  {
+    key: 'dialer_queue',
+    label: 'dialer_queue',
+    desc: 'Dialer queue entries (NC)',
+    url: () => `${SB_URL}/rest/v1/dialer_queue?entity=eq.next_chapter&select=*`,
+  },
+  {
+    key: 'outreach_queue',
+    label: 'outreach_queue',
+    desc: 'Outreach queue (NC)',
+    url: () => `${SB_URL}/rest/v1/outreach_queue?entity=eq.next_chapter&select=*`,
+  }
+];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+const tableData = {}; // key -> { rows, cols }
+let totalRows = 0;
+let totalCost = 0;
+
+// ─── FETCH HELPERS ────────────────────────────────────────────────────────────
+async function fetchTable(url) {
+  try {
+    const r = await fetch(url, { headers: SB_HEADERS });
+    if (!r.ok) {
+      const err = await r.text();
+      console.warn('Fetch failed', url, r.status, err);
+      return null;
+    }
+    const data = await r.json();
+    return Array.isArray(data) ? data : [];
+  } catch (e) {
+    console.warn('Fetch error', url, e);
+    return null;
+  }
+}
+
+// ─── COLUMN ANALYSIS ──────────────────────────────────────────────────────────
+function analyzeColumns(rows) {
+  if (!rows || rows.length === 0) return [];
+  const keys = Object.keys(rows[0]);
+  return keys.map(col => {
+    const values = rows.map(r => r[col]);
+    const populated = values.filter(v => v !== null && v !== undefined && v !== '').length;
+    const pct = rows.length > 0 ? Math.round((populated / rows.length) * 100) : 0;
+    const sample = values.find(v => v !== null && v !== undefined && v !== '');
+    const sampleStr = sample !== undefined ? formatSample(sample) : null;
+    // infer type
+    let type = 'text';
+    if (col.endsWith('_id') || col === 'id') type = 'uuid';
+    else if (col.endsWith('_at') || col.endsWith('_date') || col.includes('timestamp')) type = 'timestamp';
+    else if (typeof sample === 'number') type = 'number';
+    else if (typeof sample === 'boolean') type = 'boolean';
+    else if (sample !== null && typeof sample === 'object') type = 'json';
+    return { col, populated, total: rows.length, pct, sample: sampleStr, type };
+  });
+}
+
+function formatSample(val) {
+  if (val === null || val === undefined) return null;
+  if (typeof val === 'object') {
+    const s = JSON.stringify(val);
+    return s.length > 80 ? s.slice(0, 80) + '…' : s;
+  }
+  const s = String(val);
+  return s.length > 80 ? s.slice(0, 80) + '…' : s;
+}
+
+function healthClass(pct) {
+  if (pct >= 90) return 'health-green';
+  if (pct >= 50) return 'health-yellow';
+  return 'health-red';
+}
+
+function overallHealth(cols) {
+  if (!cols || cols.length === 0) return 'health-red';
+  const avg = cols.reduce((s, c) => s + c.pct, 0) / cols.length;
+  return healthClass(avg);
+}
+
+function healthBadgeClass(pct) {
+  if (pct >= 90) return 'badge-green';
+  if (pct >= 50) return 'badge-yellow';
+  return 'badge-red';
+}
+
+// ─── RENDER TABLE CARD ────────────────────────────────────────────────────────
+function renderCard(def, rows, gridEl) {
+  const count = rows ? rows.length : 0;
+  const cols = rows ? analyzeColumns(rows) : [];
+  tableData[def.key] = { rows, cols };
+  totalRows += count;
+
+  const health = (count === 0) ? 'health-red' : overallHealth(cols);
+
+  const card = document.createElement('div');
+  card.className = 'table-card';
+  card.id = 'card-' + def.key;
+
+  // Build health description
+  let healthDesc = '';
+  if (count === 0) healthDesc = 'No data found';
+  else if (health === 'health-green') healthDesc = 'Fields well-populated';
+  else if (health === 'health-yellow') healthDesc = 'Some gaps';
+  else healthDesc = 'Many empty fields';
+
+  const noteHtml = def.filterNote ? ` &middot; <span style="color:#8b949e">${def.filterNote}</span>` : '';
+  const expectedNote = def.expectedRows !== undefined && count !== def.expectedRows
+    ? ` <span style="color:#d29922;font-size:11px">(expected ${def.expectedRows})</span>` : '';
+
+  card.innerHTML = `
+    <div class="card-header" onclick="toggleCard('${def.key}')">
+      <div class="health-dot ${health}"></div>
+      <div class="card-info">
+        <div class="card-name">${def.label}</div>
+        <div class="card-meta">${def.desc}${noteHtml}</div>
+      </div>
+      <div class="card-row-count">${count}${expectedNote}</div>
+      <div class="card-chevron">&#9660;</div>
+    </div>
+    <div class="fields-panel" id="fields-${def.key}">
+      ${count === 0
+        ? '<div class="fields-loading data-empty">No rows — nothing to inspect</div>'
+        : renderFieldsList(def.key, cols, rows)
+      }
+    </div>
+  `;
+
+  gridEl.appendChild(card);
+}
+
+// ─── RENDER FIELDS LIST (Level 2) ─────────────────────────────────────────────
+function renderFieldsList(tableKey, cols, rows) {
+  if (!cols || cols.length === 0) return '<div class="fields-loading">No columns detected</div>';
+
+  return cols.map((c, i) => {
+    const barColor = c.pct >= 90 ? '#3fb950' : c.pct >= 50 ? '#d29922' : '#f85149';
+    const sampleHtml = c.sample
+      ? `<span class="field-sample" title="${escHtml(c.sample)}">${escHtml(c.sample)}</span>`
+      : `<span class="field-sample data-null">null</span>`;
+
+    return `
+      <div class="field-row" id="fr-${tableKey}-${i}" onclick="toggleField('${tableKey}', ${i})">
+        <div class="field-health-bar"><div class="field-health-fill" style="width:${c.pct}%;background:${barColor}"></div></div>
+        <div class="field-name">${escHtml(c.col)}</div>
+        <div class="field-type">${c.type}</div>
+        ${sampleHtml}
+        <div class="field-populated">${c.populated}/${c.total}</div>
+        <div class="field-chevron">&#9660;</div>
+      </div>
+      <div class="data-panel" id="dp-${tableKey}-${i}"></div>
+    `;
+  }).join('');
+}
+
+// ─── TOGGLE CARD (Level 1) ────────────────────────────────────────────────────
+function toggleCard(key) {
+  const card = document.getElementById('card-' + key);
+  card.classList.toggle('expanded');
+}
+
+// ─── TOGGLE FIELD (Level 3) ───────────────────────────────────────────────────
+function toggleField(tableKey, colIdx) {
+  const frEl = document.getElementById(`fr-${tableKey}-${colIdx}`);
+  const dpEl = document.getElementById(`dp-${tableKey}-${colIdx}`);
+  const isOpen = dpEl.classList.contains('open');
+
+  if (isOpen) {
+    dpEl.classList.remove('open');
+    frEl.classList.remove('active');
+    return;
+  }
+
+  // Close others in same table
+  const card = document.getElementById('card-' + tableKey);
+  card.querySelectorAll('.data-panel.open').forEach(el => el.classList.remove('open'));
+  card.querySelectorAll('.field-row.active').forEach(el => el.classList.remove('active'));
+
+  frEl.classList.add('active');
+  dpEl.classList.add('open');
+
+  // Render data if not yet rendered
+  if (!dpEl.dataset.rendered) {
+    dpEl.dataset.rendered = '1';
+    const td = tableData[tableKey];
+    if (!td || !td.rows || td.rows.length === 0) {
+      dpEl.innerHTML = '<div class="data-empty">No rows</div>';
+      return;
+    }
+    const col = td.cols[colIdx].col;
+    const values = td.rows.map((row, ri) => ({ rowIdx: ri + 1, val: row[col] }));
+    dpEl.innerHTML = renderDataValues(values);
+  }
+}
+
+// ─── RENDER DATA VALUES (Level 3) ─────────────────────────────────────────────
+function renderDataValues(values) {
+  const items = values.map(({ rowIdx, val }) => {
+    if (val === null || val === undefined) {
+      return `<div class="data-value-item"><div class="data-value-row-label">Row ${rowIdx}</div><span class="data-null">NULL</span></div>`;
+    }
+    const str = typeof val === 'object' ? JSON.stringify(val, null, 2) : String(val);
+    const id = `dv-${Math.random().toString(36).slice(2)}`;
+    const needsTrunc = str.length > 200;
+    return `
+      <div class="data-value-item">
+        <div class="data-value-row-label">Row ${rowIdx}</div>
+        <div class="data-value-text ${needsTrunc ? 'truncated' : ''}" id="${id}">${escHtml(str)}</div>
+        ${needsTrunc ? `<button class="show-full-btn" onclick="showFull('${id}', this)">Show full</button>` : ''}
+      </div>
+    `;
+  }).join('');
+  return `<div class="data-value-list">${items}</div>`;
+}
+
+function showFull(id, btn) {
+  const el = document.getElementById(id);
+  el.classList.remove('truncated');
+  btn.remove();
+}
+
+// ─── ESCAPE HTML ──────────────────────────────────────────────────────────────
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+// ─── LOAD ALL TABLES ──────────────────────────────────────────────────────────
+async function loadAll() {
+  const hrcomGrid = document.getElementById('hrcomGrid');
+  const ncWideGrid = document.getElementById('ncWideGrid');
+
+  hrcomGrid.innerHTML = '';
+  ncWideGrid.innerHTML = '';
+
+  let tablesLoaded = 0;
+
+  // Load HR.com-specific tables
+  const hrcomPromises = HRCOM_TABLES.map(async def => {
+    const rows = await fetchTable(def.url());
+    renderCard(def, rows, hrcomGrid);
+    tablesLoaded++;
+    updateSummary(tablesLoaded);
+  });
+
+  // Load NC-wide tables
+  const ncPromises = NC_WIDE_TABLES.map(async def => {
+    const rows = await fetchTable(def.url());
+    renderCard(def, rows, ncWideGrid);
+    tablesLoaded++;
+    updateSummary(tablesLoaded);
+  });
+
+  await Promise.all([...hrcomPromises, ...ncPromises]);
+
+  // Final summary
+  updateSummary(tablesLoaded, true);
+  loadCostSummary();
+}
+
+function updateSummary(loaded, final) {
+  document.getElementById('sumTables').textContent = loaded;
+  document.getElementById('sumRows').textContent = totalRows.toLocaleString();
+}
+
+async function loadCostSummary() {
+  // Try to sum cost from cost_log for NC
+  const td = tableData['cost_log'];
+  if (td && td.rows && td.rows.length > 0) {
+    const total = td.rows.reduce((s, r) => {
+      const v = parseFloat(r.cost || r.amount || r.total_cost || r.value || 0);
+      return s + (isNaN(v) ? 0 : v);
+    }, 0);
+    if (total > 0) {
+      document.getElementById('sumCost').textContent = '$' + total.toFixed(2);
+      return;
+    }
+  }
+  // Fallback: try cost_budget
+  const tb = tableData['cost_budget'];
+  if (tb && tb.rows && tb.rows.length > 0) {
+    const total = tb.rows.reduce((s, r) => {
+      const v = parseFloat(r.spent || r.used || r.cost || 0);
+      return s + (isNaN(v) ? 0 : v);
+    }, 0);
+    if (total > 0) {
+      document.getElementById('sumCost').textContent = '$' + total.toFixed(2);
+      return;
+    }
+  }
+  document.getElementById('sumCost').textContent = '—';
+}
+
+// ─── BOOT ────────────────────────────────────────────────────────────────────
+if (SB_URL && SB_KEY) {
+  loadAll();
+} else {
+  document.getElementById('hrcomGrid').innerHTML =
+    '<div style="grid-column:1/-1;padding:24px;text-align:center;color:#f85149">Supabase not configured — ensure supabase-config.js is loaded</div>';
+  document.getElementById('ncWideGrid').innerHTML = '';
+}
+</script>
+<script src="/comment-widget.js"></script>
+<script src="/notification-bell.js"></script>
+<script src="/version-widget.js"></script>
+</body>
+</html>

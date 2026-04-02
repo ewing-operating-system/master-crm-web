@@ -176,6 +176,11 @@ def agent_researcher(conn, item):
     log(f"  Researcher: would research {item['record_id']} — full implementation in next phase")
     return "done", None
 
+def agent_swarm_enrichment(conn, item):
+    """Run Agent Swarm enrichment for a buyer research section."""
+    from lib.swarm_enrichment import agent_swarm_enrichment as _run
+    return _run(conn, item)
+
 # ─── Agent Router ────────────────────────────────────────────────────────────
 
 AGENTS = {
@@ -183,6 +188,7 @@ AGENTS = {
     "certifier": agent_certifier,
     "nurturer": agent_nurturer,
     "researcher": agent_researcher,
+    "swarm_enrichment": agent_swarm_enrichment,
 }
 
 def process_item(conn, item):
