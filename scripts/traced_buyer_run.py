@@ -54,38 +54,115 @@ def trace(category, action, details):
 def slugify(s):
     return re.sub(r'[^a-z0-9]+', '-', s.lower().strip()).strip('-')[:80]
 
+def select_best_content(texts, max_chars=12000):
+    """Score and rank Exa results by M&A relevance before passing to LLM.
+    Instead of hard-truncating at 8K, we score each result and take the best ones."""
+    if not texts:
+        return ""
+
+    scored = []
+    for text in texts:
+        score = 0
+        t = text.lower()
+        # Financial signals: numbers, revenue, employees, market cap
+        if re.search(r'\$[\d,.]+[BMK]?', text):
+            score += 3
+        if any(w in t for w in ['revenue', 'ebitda', 'margin', 'profit', 'earnings']):
+            score += 2
+        # M&A signals: acquisition, deal, purchased, merged
+        if any(w in t for w in ['acqui', 'merger', 'deal', 'purchased', 'transaction']):
+            score += 3
+        # Quote signals: said, stated, announced, according to
+        if any(w in t for w in ['" said', 'stated', 'announced', 'according to']):
+            score += 2
+        # Recency signals: 2025, 2026, recent, latest
+        if any(w in t for w in ['2025', '2026', 'recent', 'latest']):
+            score += 1
+        # Length bonus: longer content tends to be more detailed
+        if len(text) > 500:
+            score += 1
+        if len(text) > 1500:
+            score += 1
+        scored.append((score, text))
+
+    # Sort by score descending, take best until max_chars
+    scored.sort(key=lambda x: -x[0])
+    selected = []
+    total_chars = 0
+    for score, text in scored:
+        if total_chars + len(text) > max_chars:
+            # Take partial if it would push us over but we have room
+            remaining = max_chars - total_chars
+            if remaining > 500:
+                selected.append(text[:remaining])
+            break
+        selected.append(text)
+        total_chars += len(text)
+
+    return "\n\n---\n\n".join(selected)
+
 def parse_cost(resp):
     raw = resp.get("costDollars", 0.0)
     return float(raw.get("total", 0.0)) if isinstance(raw, dict) else float(raw or 0.0)
 
 # ── LLM wrapper with tracing ─────────────────────────────────────────────────
 
+OPENROUTER_KEY = os.environ.get("OPENROUTER_API_KEY", "")
+
+def _call_openrouter(prompt, timeout=120):
+    """Fallback LLM via OpenRouter when claude CLI is not available."""
+    try:
+        payload = json.dumps({
+            "model": "deepseek/deepseek-chat",
+            "messages": [{"role": "user", "content": prompt}],
+            "temperature": 0.3,
+            "max_tokens": 4000,
+        })
+        result = subprocess.run(
+            ["curl", "-s", "-X", "POST", "https://openrouter.ai/api/v1/chat/completions",
+             "-H", f"Authorization: Bearer {OPENROUTER_KEY}",
+             "-H", "Content-Type: application/json",
+             "-d", payload],
+            capture_output=True, text=True, timeout=timeout,
+        )
+        if result.returncode == 0 and result.stdout.strip():
+            data = json.loads(result.stdout)
+            return data.get("choices", [{}])[0].get("message", {}).get("content", "").strip()
+    except Exception:
+        pass
+    return None
+
 def llm(prompt, timeout=120, label="llm_call"):
     t0 = time.time()
+    output = None
+    source = "claude_cli"
+
+    # Try claude CLI first
     try:
         result = subprocess.run(
             ["claude", "-p", "--output-format", "text"],
             input=prompt, capture_output=True, text=True, timeout=timeout,
         )
-        elapsed_ms = int((time.time() - t0) * 1000)
-        output = result.stdout.strip() if result.returncode == 0 else None
-        trace("LLM", label, {
-            "full_prompt": prompt,
-            "full_output": output or "FAILED",
-            "prompt_length": len(prompt),
-            "output_length": len(output) if output else 0,
-            "duration_ms": elapsed_ms,
-            "returncode": result.returncode,
-        })
-        return output
-    except Exception as e:
-        elapsed_ms = int((time.time() - t0) * 1000)
-        trace("LLM", f"{label} FAILED", {
-            "full_prompt": prompt,
-            "error": str(e),
-            "duration_ms": elapsed_ms,
-        })
-        return None
+        if result.returncode == 0 and result.stdout.strip():
+            output = result.stdout.strip()
+    except Exception:
+        pass
+
+    # Fallback to OpenRouter if claude CLI failed
+    if not output and OPENROUTER_KEY:
+        source = "openrouter"
+        output = _call_openrouter(prompt, timeout)
+
+    elapsed_ms = int((time.time() - t0) * 1000)
+    trace("LLM", label, {
+        "full_prompt": prompt,
+        "full_output": output or "FAILED",
+        "prompt_length": len(prompt),
+        "output_length": len(output) if output else 0,
+        "duration_ms": elapsed_ms,
+        "source": source,
+    })
+    return output
 
 # ── Exa wrapper with tracing ─────────────────────────────────────────────────
 
@@ -207,34 +284,46 @@ def build_sections(name):
     return [
         {"key": "hr_media_business", "title": "HR.com Media Business",
          "templates": ["company_search", "company_financials"],
-         "topic": f"{name} HR.com media business model revenue advertising learning marketplace"},
+         "topic": f"{name} operates in the HR technology space and could benefit from acquiring HR.com's media audience of 2 million HR professionals, learning marketplace, and advertising revenue"},
         {"key": "hr_domain_name", "title": "HR.com Domain Name Value",
          "templates": ["strategic_fit"],
-         "topic": f"{name} HR.com domain name value premium domain HR technology branding"},
+         "topic": f"HR media, content, and domain authority that would give {name} a premium brand presence and SEO advantage in the HR technology market"},
         {"key": "market_reputation", "title": "Market Reputation",
          "templates": ["reviews_search"],
-         "topic": f"{name} products reviews ratings complaints customer satisfaction"},
+         "topic": f"{name} customer satisfaction, product reviews, and market reputation that would affect their ability to integrate an acquired HR media platform"},
         {"key": "strategic_fit", "title": "Strategic Fit",
          "templates": ["strategic_fit", "company_financials"],
-         "topic": f"{name} HR technology strategy content marketing HR.com acquisition synergy"},
+         "topic": f"HR media, content, and learning businesses that would complement {name}'s existing platform and strengthen their position in the HR technology market"},
         {"key": "ceo_vision", "title": "CEO Vision & Strategy",
          "templates": ["earnings_call"],
-         "topic": f"{name} CEO vision strategy growth priorities HR technology 2025"},
+         "topic": f"{name} CEO has signaled interest in acquiring content, media, or learning platforms to expand their HR technology ecosystem"},
         {"key": "ma_appetite", "title": "M&A Appetite",
          "templates": ["ma_history"],
-         "topic": f"{name} acquisition history M&A deals purchased companies"},
+         "topic": f"{name} has a pattern of acquiring companies in adjacent HR technology markets and would be a natural buyer for an HR media and learning platform"},
         {"key": "competitive_moat", "title": "Competitive Moat",
          "templates": ["strategic_fit"],
-         "topic": f"{name} competitive advantage moat market position differentiation"},
+         "topic": f"competitive advantages in HR technology that would be strengthened by acquiring a media and content platform with millions of HR professionals"},
         {"key": "earnings_quotes", "title": "Key Earnings Quotes",
          "templates": ["earnings_call"],
-         "topic": f"{name} earnings call 2024 2025 CEO CFO quotes strategy growth"},
+         "topic": f"{name} CEO and CFO have discussed acquisition strategy, growth through M&A, and investment in content or media during recent earnings calls"},
         {"key": "approach_strategy", "title": "Approach Strategy",
          "templates": ["buyer_contacts"],
-         "topic": f"{name} corporate development VP M&A business development contact"},
+         "topic": f"corporate development and M&A leadership at {name} who would evaluate an acquisition of an HR media company"},
         {"key": "golden_nuggets", "title": "Golden Nuggets",
          "templates": ["ma_history", "earnings_call"],
-         "topic": f"{name} surprising facts culture awards unique partnerships community"},
+         "topic": f"{name} executives have made surprising statements about acquiring media businesses, content platforms, or expanding into HR learning and community"},
+        {"key": "recent_news", "title": "Recent News & Developments",
+         "templates": ["ma_history"],
+         "topic": f"{name} has recently announced leadership changes, restructuring, new product launches, or strategic partnerships that would affect their interest in acquiring an HR media company"},
+        {"key": "employee_sentiment", "title": "Employee Sentiment",
+         "templates": ["reviews_search"],
+         "topic": f"{name} employees describe their experience working at the company, including culture, leadership, and whether the company is growing or cutting back"},
+        {"key": "technology_architecture", "title": "Technology Architecture",
+         "templates": ["strategic_fit"],
+         "topic": f"{name} technology platform, API capabilities, and integration architecture that would determine how easily they could integrate an acquired HR media and learning platform"},
+        {"key": "pricing_model", "title": "Pricing Model & Revenue Mix",
+         "templates": ["company_financials"],
+         "topic": f"{name} pricing strategy, subscription model, and revenue breakdown by segment showing how recurring revenue and customer retention drive their business"},
     ]
 
 # ── Main ──────────────────────────────────────────────────────────────────────
@@ -263,6 +352,8 @@ def main():
     sections = build_sections(buyer_name)
     section_results = []
     golden_nuggets_raw = ""
+    golden_nuggets_raw_exa = ""  # Raw Exa results for nugget extraction (not synthesized)
+    seen_urls = set()  # Track URLs across all searches for dedup
 
     # ══════════════════════════════════════════════════════════════════════════
     # PHASE 1: SECTION RESEARCH (10 sections, 13 template searches)
@@ -277,6 +368,9 @@ def main():
         section_urls = []
 
         for tmpl_name in section["templates"]:
+            # Use topic as-is for topic-driven templates (strategic_fit, earnings_call, ma_history)
+            # These templates already embed {company_name} via the topic text, so we pass
+            # company_name separately only for templates that need it independently
             kwargs = {"company_name": buyer_name, "topic": section["topic"],
                       "city": args.city, "state": args.state, "vertical": "HR Technology", "owner_name": ""}
 
@@ -287,15 +381,26 @@ def main():
             section_urls.extend(urls)
             time.sleep(0.5)
 
-        # Synthesize
+        # Synthesize — dedup URLs across all sections
         combined = "\n\n---\n\n".join(section_texts)
-        unique_urls = list(dict.fromkeys(section_urls))
+        unique_urls = [u for u in dict.fromkeys(section_urls) if u not in seen_urls]
+        seen_urls.update(unique_urls)
 
         if combined:
-            html = llm(f"""You are a senior M&A research analyst writing buyer intelligence for {buyer_name}.
+            # Select highest-value content instead of hard truncation
+            best_content = select_best_content(section_texts, max_chars=12000)
+            html = llm(f"""You are a senior M&A analyst at an advisory firm. Your client is selling HR.com — a media and learning platform with 2M+ HR professionals — to potential acquirers. You are writing buyer intelligence about {buyer_name}.
+
 Section: {key} | Goal: {section['title']}
-Write 2-4 paragraphs of clean HTML (<p> tags, <strong> for key quotes). Stick to verifiable facts.
-RAW RESEARCH:\n{combined[:8000]}\nReturn ONLY HTML.""", label=f"synthesize:{key}")
+
+Write 2-4 paragraphs of clean HTML (<p> tags, <strong> for key quotes, exact numbers). Focus on:
+- Deal rationale: Why would {buyer_name} want to acquire HR.com?
+- Integration synergies: What capabilities would they gain?
+- Negotiation leverage: What makes this buyer motivated or desperate?
+- Red flags: Anything that would make this deal harder or less likely?
+
+Stick to verifiable facts with specific numbers, dates, and names. Attribute quotes to speakers.
+RAW RESEARCH:\n{best_content}\nReturn ONLY HTML.""", label=f"synthesize:{key}")
             if not html:
                 html = f"<p>Synthesis failed for {section['title']}.</p>"
         else:
@@ -304,6 +409,7 @@ RAW RESEARCH:\n{combined[:8000]}\nReturn ONLY HTML.""", label=f"synthesize:{key}
         section_results.append((key, html, unique_urls))
         if key == "golden_nuggets":
             golden_nuggets_raw = html
+            golden_nuggets_raw_exa = combined  # Keep raw Exa text for nugget extraction
 
         trace("SECTION", f"DONE: {section['title']}", {
             "key": key, "html_chars": len(html), "source_count": len(unique_urls),
@@ -318,9 +424,21 @@ RAW RESEARCH:\n{combined[:8000]}\nReturn ONLY HTML.""", label=f"synthesize:{key}
     # ══════════════════════════════════════════════════════════════════════════
     trace("PHASE", "GOLDEN NUGGETS EXTRACTION", {"raw_html_chars": len(golden_nuggets_raw)})
 
-    nuggets_output = llm(f"""Extract golden nuggets from this research about {buyer_name}. Return a JSON array.
-Each nugget: {{"quote": "exact quote", "speaker": "Name, Title", "opener": "conversation starter about acquiring HR.com", "why": "M&A relevance"}}
-3-5 nuggets. ONLY valid JSON array.\nSOURCE:\n{golden_nuggets_raw[:6000]}""", label="extract_nuggets")
+    # Use raw Exa search results (not synthesized HTML) so we get actual quotes with attribution
+    nugget_source = golden_nuggets_raw_exa if golden_nuggets_raw_exa else golden_nuggets_raw
+    nuggets_output = llm(f"""You are extracting golden nuggets from RAW search results about {buyer_name} for an M&A advisor selling HR.com.
+
+Find 3-5 surprising, specific, quotable statements from executives or analysts that reveal:
+- Why {buyer_name} would want to acquire an HR media and learning platform
+- Their appetite for acquisitions in adjacent markets
+- Specific pain points or gaps in their product portfolio
+- Bold strategic commitments from leadership
+
+Return a JSON array. Each nugget MUST have an exact quote from the source material:
+{{"quote": "exact verbatim quote from the text", "speaker": "Full Name, Title at Company", "opener": "conversation starter connecting this quote to why they should acquire HR.com", "why": "how this signals M&A interest or strategic fit"}}
+
+ONLY valid JSON array. 3-5 nuggets.
+RAW SEARCH RESULTS:\n{nugget_source[:12000]}""", label="extract_nuggets")
 
     nuggets = []
     if nuggets_output:
@@ -341,7 +459,7 @@ Each nugget: {{"quote": "exact quote", "speaker": "Name, Title", "opener": "conv
     trace("PHASE", "MARKET REPUTATION — PRODUCT DISCOVERY", {})
 
     # Step 3a: Discover products
-    prod_texts, prod_cost = traced_exa_raw(exa, f"{buyer_name} products suite modules G2 Capterra product list",
+    prod_texts, prod_cost = traced_exa_raw(exa, f"{buyer_name} offers a suite of HR products and platforms that can be individually reviewed, including modules for recruiting, payroll, learning, and performance management",
                                             "auto", "product_discovery")
     total_cost += prod_cost
 
@@ -368,8 +486,8 @@ Return ONLY a JSON array of 3-8 product names.\nDATA:\n{prod_combined[:6000]}"""
     all_product_reviews = {}
     for product in products:
         product_texts = []
-        for query, stype in [(f'"{product}" reviews G2 Capterra 2024 2025', "auto"),
-                              (f'"{product}" complaints problems Reddit', "auto")]:
+        for query, stype in [(f'Customers review {product} on G2 and Capterra, describing what they love and hate about the platform', "auto"),
+                              (f'Users of {product} share their honest experience on Reddit, including complaints, workarounds, and what they wish was better', "auto")]:
             texts, cost = traced_exa_raw(exa, query, stype, f"reviews:{slugify(product)}")
             total_cost += cost
             product_texts.extend(texts)
@@ -382,7 +500,7 @@ Return ONLY a JSON array of 3-8 product names.\nDATA:\n{prod_combined[:6000]}"""
         output = llm(f"""Extract reviews for "{product}". Return JSON:
 {{"positive": [reviews], "negative": [reviews], "total_raw": N}}
 Each review: {{"text": "1-3 sentences", "category": "billing|support|usability|features|reliability|integration|pricing|onboarding|reporting|compliance|other", "source": "G2|Capterra|Reddit|etc", "source_url": "", "scores": {{"informativeness": 1-3, "specificity": 1-3, "polarity": 1-3}}}}
-3-6 per sentiment. ONLY JSON.\nDATA:\n{combined[:8000]}""", timeout=120, label=f"structure_reviews:{slugify(product)}")
+3-6 per sentiment. ONLY JSON.\nDATA:\n{combined[:12000]}""", timeout=120, label=f"structure_reviews:{slugify(product)}")
 
         if output:
             try:

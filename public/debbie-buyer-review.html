@@ -64,6 +64,10 @@ body { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; backgrou
 .fb-border-moat { border-left-color:#56d364; }
 .fb-border-challenges { border-left-color:#ff7b72; }
 .fb-border-pain-gain { border-left-color:#f85149; }
+.fb-border-news { border-left-color:#ff9f43; }
+.fb-border-sentiment { border-left-color:#ee5a24; }
+.fb-border-tech { border-left-color:#0abde3; }
+.fb-border-pricing { border-left-color:#10ac84; }
 
 /* ── CENTER: CONTENT ────────────────────── */
 .content-col { padding:12px 16px; }
@@ -85,6 +89,10 @@ body { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; backgrou
 .section-earnings { border-left:3px solid #8b949e; }
 .section-approach { border-left:3px solid #d2a8ff; }
 .section-moat { border-left:3px solid #56d364; }
+.section-news { border-left:3px solid #ff9f43; }
+.section-sentiment { border-left:3px solid #ee5a24; }
+.section-tech { border-left:3px solid #0abde3; }
+.section-pricing { border-left:3px solid #10ac84; }
 
 .narrative-box { background:#0d1117; border:1px solid #21262d; border-radius:8px; padding:14px 16px; }
 .narrative-box p { font-size:13px; line-height:1.75; }
@@ -529,6 +537,10 @@ const SECTION_CONFIG = [
   {key:'competitive_moat', title:'Competitive Moat', border:'moat', fbBorder:'fb-border-moat'},
   {key:'earnings_quotes', title:'Key Earnings Quotes', border:'earnings', fbBorder:'fb-border-earnings'},
   {key:'approach_strategy', title:'Approach Strategy', border:'approach', fbBorder:'fb-border-approach'},
+  {key:'recent_news', title:'Recent News & Developments', border:'news', fbBorder:'fb-border-news'},
+  {key:'employee_sentiment', title:'Employee Sentiment', border:'sentiment', fbBorder:'fb-border-sentiment'},
+  {key:'technology_architecture', title:'Technology Architecture', border:'tech', fbBorder:'fb-border-tech'},
+  {key:'pricing_model', title:'Pricing Model & Revenue Mix', border:'pricing', fbBorder:'fb-border-pricing'},
 ];
 
 function renderBuyerContent(slug) {
@@ -539,7 +551,9 @@ function renderBuyerContent(slug) {
     // pain_gain_match is injected manually after market_reputation — skip it here
     if (cfg.key === 'pain_gain_match') return;
     const content = getSectionContent(b, cfg.key);
-    if (content === null && cfg.key !== 'hr_media_business' && cfg.key !== 'hr_domain_name' && cfg.key !== 'market_reputation' && cfg.key !== 'strategic_fit') return;
+    const alwaysShow = ['hr_media_business','hr_domain_name','market_reputation','strategic_fit',
+      'recent_news','employee_sentiment','technology_architecture','pricing_model'];
+    if (content === null && !alwaysShow.includes(cfg.key)) return;
 
     html += '<div class="card section-'+cfg.border+' research-section" data-section-key="'+cfg.key+'" data-buyer-slug="'+slug+'" id="section-'+slug+'-'+cfg.key+'">';
     html += '<h3>'+cfg.title+(b.buyer_name?' — '+b.buyer_name:'')+'</h3>';
@@ -581,7 +595,12 @@ function getSectionContent(b, key) {
     const hasNeg = Object.values(reviews).some(d => (d.negative||[]).length > 0);
     return hasNeg ? 'HAS_DATA' : null;
   }
-  if (key === 'strategic_fit') return b.strategic_fit ? '<p>'+b.strategic_fit+'</p>' : null;
+  if (key === 'strategic_fit') {
+    // strategic_fit can be a string (legacy) or in sections
+    if (typeof b.strategic_fit === 'string' && b.strategic_fit.length > 50) return b.strategic_fit;
+    if (b.sections?.strategic_fit && b.sections.strategic_fit.length > 50) return b.sections.strategic_fit;
+    return null;
+  }
   if (key === 'golden_nuggets') return null; // Rendered in side panel
   const sec = b.sections?.[key];
   return sec && sec.length > 50 ? sec : null;
@@ -631,7 +650,7 @@ function renderMarketReputation(b) {
     html += '<div class="review-col-positive"><div class="review-col-header">Positive</div>';
     (data.positive||[]).forEach(r => {
       html += '<div class="review-card review-card-positive">';
-      html += r.text.substring(0,300)+(r.text.length>300?'...':'');
+      html += r.text;
       html += '<div class="review-meta">'+catBadge(r.category)+' <span class="score-tag">Score: '+(r.scores?r.scores.informativeness+r.scores.specificity+r.scores.polarity:'?')+'</span>';
       html += ' <span>'+r.source+'</span>';
       if (r.source_url || r.url) html += ' <a href="'+(r.source_url||r.url)+'" target="_blank" style="color:#58a6ff;font-size:9px;">link</a>';
@@ -644,7 +663,7 @@ function renderMarketReputation(b) {
     html += '<div class="review-col-negative"><div class="review-col-header">Negative</div>';
     (data.negative||[]).forEach(r => {
       html += '<div class="review-card review-card-negative">';
-      html += r.text.substring(0,300)+(r.text.length>300?'...':'');
+      html += r.text;
       html += '<div class="review-meta">'+catBadge(r.category)+' <span class="score-tag">Score: '+(r.scores?r.scores.informativeness+r.scores.specificity+r.scores.polarity:'?')+'</span>';
       html += ' <span>'+r.source+'</span>';
       if (r.source_url || r.url) html += ' <a href="'+(r.source_url||r.url)+'" target="_blank" style="color:#58a6ff;font-size:9px;">link</a>';
@@ -669,7 +688,7 @@ function renderPainGainMatch(buyer) {
             if (!painCategories[cat]) painCategories[cat] = { count: 0, examples: [] };
             painCategories[cat].count++;
             if (painCategories[cat].examples.length < 2) {
-                painCategories[cat].examples.push(review.text?.substring(0, 100) + '...');
+                painCategories[cat].examples.push(review.text || '');
             }
         }
     }
@@ -854,6 +873,30 @@ const SWARM_SECTION_CONFIG = {
     sources: 'analyst reports, investor presentations, acquisition announcements',
     exa_templates: ['strategic_fit','ma_history'],
     fallback_query: '{name} HR media community acquisition strategy content platform'
+  },
+  recent_news: {
+    goal: 'Find recent news about leadership changes, restructuring, product launches, or strategic partnerships that signal acquisition interest',
+    sources: 'press releases, news articles, SEC filings, company blog',
+    exa_templates: ['ma_history'],
+    fallback_query: '{name} has recently announced leadership changes or strategic partnerships that would affect their interest in acquiring an HR media company'
+  },
+  employee_sentiment: {
+    goal: 'Find employee reviews revealing culture, morale, growth trajectory, and whether the company is expanding or cutting back',
+    sources: 'Glassdoor, Blind, Indeed, LinkedIn posts',
+    exa_templates: ['reviews_search'],
+    fallback_query: 'Employees at {name} describe their experience working at the company including culture management and growth opportunities'
+  },
+  technology_architecture: {
+    goal: 'Find details about their technology platform, API capabilities, and integration architecture that would affect M&A integration complexity',
+    sources: 'developer docs, API references, technology blog posts, conference talks',
+    exa_templates: ['strategic_fit'],
+    fallback_query: '{name} technology platform API capabilities and integration architecture for their HR products'
+  },
+  pricing_model: {
+    goal: 'Find pricing strategy, subscription tiers, revenue mix, and customer retention metrics that reveal business model strength',
+    sources: 'pricing pages, analyst reports, earnings calls, customer reviews mentioning pricing',
+    exa_templates: ['company_financials'],
+    fallback_query: '{name} pricing strategy subscription model and revenue breakdown showing how recurring revenue drives their business'
   }
 };
 
@@ -1011,7 +1054,9 @@ function renderFeedbackColumn(slug) {
 
   SECTION_CONFIG.forEach(cfg => {
     const content = getSectionContent(b, cfg.key);
-    if (content === null && cfg.key !== 'hr_media_business' && cfg.key !== 'hr_domain_name' && cfg.key !== 'market_reputation' && cfg.key !== 'strategic_fit') return;
+    const alwaysShowFb = ['hr_media_business','hr_domain_name','market_reputation','strategic_fit',
+      'recent_news','employee_sentiment','technology_architecture','pricing_model'];
+    if (content === null && !alwaysShowFb.includes(cfg.key)) return;
 
     const fb = FEEDBACK_CACHE[slug+'__'+cfg.key] || {};
     html += '<div class="fb-card '+cfg.fbBorder+'" data-section-key="'+cfg.key+'" data-buyer-slug="'+slug+'" id="fb-'+slug+'-'+cfg.key+'">';

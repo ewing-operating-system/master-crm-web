@@ -136,23 +136,28 @@ PE_PORTFOLIO = {
 REVIEW_SOURCES = {
     "reddit": {
         "domains": ["reddit.com"],
-        "query_template": '"{product_name}" review OR complaint OR love OR terrible OR amazing',
+        "query_template": "Users of {product_name} describe their experience with the platform, including what works well and what frustrates them about the product",
         "num_results": 10,
     },
     "g2": {
         "domains": ["g2.com"],
-        "query_template": '"{product_name}" reviews pros cons',
+        "query_template": "{product_name} customer reviews showing strengths and weaknesses that would matter to a company considering acquiring or competing with this product",
         "num_results": 10,
     },
     "trustpilot": {
         "domains": ["trustpilot.com"],
-        "query_template": '"{product_name}" OR "{buyer_name}" review',
+        "query_template": "Customer reviews of {product_name} by {buyer_name} describing their satisfaction and complaints with the product",
         "num_results": 8,
     },
     "capterra": {
         "domains": ["capterra.com"],
-        "query_template": '"{product_name}" reviews pros cons alternatives',
+        "query_template": "Companies evaluating {product_name} alternatives describe what they wish was better about the product and what competitors offer instead",
         "num_results": 10,
+    },
+    "glassdoor": {
+        "domains": ["glassdoor.com"],
+        "query_template": "Employees at {buyer_name} describe their experience working at the company, including culture, management, compensation, and growth opportunities",
+        "num_results": 8,
     },
 }
 
@@ -168,10 +173,10 @@ def fetch_company_profile(buyer, exa):
     # Query 1: Company overview
     try:
         overview = exa.raw_search(
-            query=f"{name} company profile employees revenue domain industry HR products overview",
-            search_type="deep", num_results=8, content_mode="text", max_characters=5000,
-            include_domains=["crunchbase.com", "zoominfo.com", "linkedin.com",
-                             "finance.yahoo.com", "sec.gov", "macrotrends.net"]
+            query=f"{name} is a company in the HR technology industry with a specific employee count, annual revenue, and product portfolio that would make it an attractive acquisition target or acquirer",
+            search_type="deep", num_results=8, content_mode="text", max_characters=8000,
+            exclude_domains=["swottemplate.com", "portersfiveforce.com", "pestel-analysis.com",
+                             "matrixbcg.com", "template.net", "slideteam.net"]
         )
         overview_text = "\n".join(r.get("text", "") for r in overview.get("results", []))
         overview_urls = [r.get("url", "") for r in overview.get("results", []) if r.get("url")]
@@ -184,10 +189,10 @@ def fetch_company_profile(buyer, exa):
     # Query 2: HR revenue percentage
     try:
         hr_rev = exa.raw_search(
-            query=f"{name} HR human resources revenue segment breakdown percentage annual report 10-K",
-            search_type="deep", num_results=5, content_mode="text", max_characters=5000,
-            include_domains=["sec.gov", "seekingalpha.com", "macrotrends.net",
-                             "bloomberg.com", "investor.paychex.com", "investor.workday.com"]
+            query=f"{name} annual report or 10-K filing showing what percentage of total revenue comes from their HR, human resources, or human capital management segment",
+            search_type="deep", num_results=5, content_mode="text", max_characters=8000,
+            exclude_domains=["swottemplate.com", "portersfiveforce.com", "pestel-analysis.com",
+                             "matrixbcg.com", "template.net", "slideteam.net"]
         )
         hr_rev_text = "\n".join(r.get("text", "") for r in hr_rev.get("results", []))
     except Exception as e:
@@ -208,10 +213,10 @@ def fetch_company_profile(buyer, exa):
 If a field is not available, use "N/A (private)" for private companies or "N/A" otherwise.
 
 Search results:
-{overview_text[:6000]}
+{overview_text[:12000]}
 
 HR Revenue data:
-{hr_rev_text[:4000]}
+{hr_rev_text[:8000]}
 
 Return ONLY the JSON object."""
 
@@ -255,7 +260,7 @@ def discover_products(buyer_name, profile, exa):
     domain = profile.get("domain", "")
     try:
         result = exa.raw_search(
-            query=f"{buyer_name} HR products suite platform list features pricing",
+            query=f"{buyer_name} offers a suite of HR products and platforms that can be individually reviewed, including modules for recruiting, payroll, learning, performance management, and workforce planning",
             search_type="deep", num_results=10, content_mode="text", max_characters=8000,
             include_domains=["g2.com", "capterra.com", "getapp.com", "trustradius.com",
                              domain] if domain and domain != "N/A" else
@@ -307,7 +312,7 @@ def scrape_product_reviews(buyer_name, product, exa):
                 if len(text) < 30:
                     continue
                 raw_reviews.append({
-                    "text": text[:1500],
+                    "text": text[:2500],
                     "url": r.get("url", ""),
                     "source": source_name,
                     "title": r.get("title", ""),
@@ -331,7 +336,7 @@ def score_reviews(raw_reviews, product_name, buyer_name):
     for i in range(0, len(raw_reviews), batch_size):
         batch = raw_reviews[i:i + batch_size]
         reviews_text = "\n---\n".join(
-            f"REVIEW {j+1} (source: {r['source']}):\n{r['text'][:500]}"
+            f"REVIEW {j+1} (source: {r['source']}):\n{r['text'][:1000]}"
             for j, r in enumerate(batch)
         )
 
@@ -424,9 +429,9 @@ def scrape_buyer_reputation(buyer_name, profile, exa):
         if raw:
             scored = score_reviews(raw, product, search_name)
             passing = [r for r in scored
-                       if r["scores"]["informativeness"] >= 6
-                       and r["scores"]["specificity"] >= 6
-                       and r["scores"]["polarity"] >= 7]
+                       if r["scores"]["informativeness"] >= 5
+                       and r["scores"]["specificity"] >= 5
+                       and r["scores"]["polarity"] >= 5]
             passing.sort(key=lambda r: sum(r["scores"].values()), reverse=True)
         else:
             passing = []
@@ -493,8 +498,8 @@ def generate_narratives(buyer, profile, exa):
     # Exa context query
     try:
         context = exa.raw_search(
-            query=f"{name} content media platform acquisition HR technology strategy",
-            search_type="deep", num_results=5, content_mode="text", max_characters=5000,
+            query=f"{name} has a content and media strategy in the HR technology space that could be strengthened by acquiring a platform with millions of HR professionals and thousands of learning resources",
+            search_type="deep", num_results=5, content_mode="text", max_characters=8000,
         )
         context_text = "\n".join(r.get("text", "") for r in context.get("results", []))
         context_urls = [r.get("url", "") for r in context.get("results", []) if r.get("url")]

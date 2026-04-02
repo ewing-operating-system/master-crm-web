@@ -55,14 +55,14 @@ NEWS_DOMAINS = [
 # ══════════════════════════════════════════════════════════
 TEMPLATES = {
 
-    # ── Template 1: Company Search ────────────────────────
+    # ── Template 1: Company Search (buy-side: who is this buyer?) ─────
     "company_search": {
-        "query": "{company_name} {city} {state} {vertical} company",
+        "query": "{company_name} is a {vertical} company based in {city}, {state} that could acquire a media and learning platform in the HR space",
         "type": "deep",
         "category": "company",
         "num_results": 8,
-        "content_mode": "highlights",
-        "max_characters": 2000,
+        "content_mode": "text",
+        "max_characters": 5000,
         "use_autoprompt": True,
         "exclude_domains": SEO_EXCLUDE,
         "include_domains": [],
@@ -70,14 +70,14 @@ TEMPLATES = {
         "include_text": None,
     },
 
-    # ── Template 2: Owner/Founder Search ──────────────────
+    # ── Template 2: Owner/Founder Search (sell-side: who built this?) ─
     "owner_search": {
-        "query": "{company_name} owner founder president {city}",
+        "query": "The founder or owner of {company_name} in {city} has built a {vertical} business that could be a compelling acquisition for a strategic buyer or PE platform",
         "type": "auto",
         "category": "people",
         "num_results": 5,
         "content_mode": "highlights",
-        "max_characters": 2000,
+        "max_characters": 3000,
         "use_autoprompt": True,
         "exclude_domains": [],
         "include_domains": LINKEDIN_DOMAINS,
@@ -87,12 +87,12 @@ TEMPLATES = {
 
     # ── Template 3: Reviews and Reputation ────────────────
     "reviews_search": {
-        "query": "{company_name} reviews BBB rating {city}",
+        "query": "{company_name} in {city} has a strong reputation with customers as shown by BBB ratings, Google reviews, and industry recognition",
         "type": "auto",
         "category": "news",
-        "num_results": 5,
-        "content_mode": "highlights",
-        "max_characters": 2000,
+        "num_results": 8,
+        "content_mode": "text",
+        "max_characters": 3000,
         "use_autoprompt": False,
         "exclude_domains": SEO_EXCLUDE,
         "include_domains": [],
@@ -100,44 +100,44 @@ TEMPLATES = {
         "include_text": None,
     },
 
-    # ── Template 4: Financial Signals ─────────────────────
+    # ── Template 4: Financial Signals (sell-side: why is this attractive?) ─
     "financials_search": {
-        "query": "{company_name} {city} employees revenue size",
+        "query": "{company_name} in {city} {state} is an attractive acquisition target with strong revenue, employee base, and recurring customer relationships in {vertical}",
         "type": "deep",
         "category": "company",
         "num_results": 8,
         "content_mode": "text",
-        "max_characters": 5000,
+        "max_characters": 8000,
         "use_autoprompt": True,
         "exclude_domains": SEO_EXCLUDE,
-        "include_domains": FINANCIAL_DOMAINS,
+        "include_domains": [],
         "max_age_hours": None,
         "include_text": None,
     },
 
     # ── Template 5: Industry M&A Activity ─────────────────
     "industry_ma": {
-        "query": "{vertical} company acquisition multiples 2025 2026",
+        "query": "Recent acquisitions and deal multiples in the {vertical} industry show strong buyer demand for companies like those in {state}",
         "type": "auto",
         "category": "news",
         "num_results": 10,
-        "content_mode": "highlights",
-        "max_characters": 2000,
+        "content_mode": "text",
+        "max_characters": 3000,
         "use_autoprompt": True,
         "exclude_domains": SEO_EXCLUDE,
         "include_domains": [],
-        "max_age_hours": 48,
+        "max_age_hours": 720,
         "include_text": "acquisition",
     },
 
     # ── Template 6: Buyer Identification ──────────────────
     "buyer_search": {
-        "query": "{vertical} companies acquired {state} 2024 2025 PE roll-up",
+        "query": "Private equity firms and strategic acquirers that have purchased {vertical} companies in {state} through roll-up strategies or platform acquisitions",
         "type": "auto",
         "category": "company",
         "num_results": 12,
-        "content_mode": "highlights",
-        "max_characters": 2000,
+        "content_mode": "text",
+        "max_characters": 3000,
         "use_autoprompt": True,
         "exclude_domains": SEO_EXCLUDE,
         "include_domains": [],
@@ -145,14 +145,14 @@ TEMPLATES = {
         "include_text": None,
     },
 
-    # ── Template 7: Earnings Call Quotes ──────────────────
+    # ── Template 7: Earnings Call Quotes (buy-side: CEO signals on M&A) ─
     "earnings_call": {
-        "query": "{company_name} CEO earnings call 2024 2025 strategy {topic}",
+        "query": "{company_name} CEO recently discussed plans to grow through acquisition, expand into adjacent markets, or invest in content and media during an earnings call or investor presentation",
         "type": "deep",
         "category": None,
         "num_results": 8,
         "content_mode": "text",
-        "max_characters": 5000,
+        "max_characters": 8000,
         "use_autoprompt": False,
         "exclude_domains": SEO_EXCLUDE,
         "include_domains": TRANSCRIPT_DOMAINS,
@@ -160,29 +160,29 @@ TEMPLATES = {
         "include_text": None,
     },
 
-    # ── Template 8: M&A Deal History ──────────────────────
+    # ── Template 8: M&A Deal History (buy-side: acquisition pattern) ──
     "ma_history": {
-        "query": "{company_name} acquisition 2023 2024 2025 {topic}",
+        "query": "{company_name} has acquired companies in adjacent markets in recent years to strengthen its platform and expand its capabilities",
         "type": "deep",
         "category": "news",
         "num_results": 10,
         "content_mode": "text",
-        "max_characters": 5000,
+        "max_characters": 8000,
         "use_autoprompt": True,
         "exclude_domains": SEO_EXCLUDE,
-        "include_domains": NEWS_DOMAINS,
+        "include_domains": [],
         "max_age_hours": 720,
         "include_text": None,
     },
 
     # ── Template 9: Buyer Contact Search ──────────────────
     "buyer_contacts": {
-        "query": "{company_name} VP Corporate Development M&A LinkedIn",
+        "query": "The person leading corporate development and M&A transactions at {company_name} on LinkedIn",
         "type": "auto",
         "category": "people",
         "num_results": 5,
         "content_mode": "highlights",
-        "max_characters": 2000,
+        "max_characters": 3000,
         "use_autoprompt": False,
         "exclude_domains": [],
         "include_domains": LINKEDIN_DOMAINS,
@@ -190,14 +190,14 @@ TEMPLATES = {
         "include_text": None,
     },
 
-    # ── Template 10: Strategic Fit Signals ────────────────
+    # ── Template 10: Strategic Fit Signals (buy-side: why acquire?) ───
     "strategic_fit": {
-        "query": "{company_name} {topic} strategy investment thesis",
+        "query": "{company_name} has a strategic interest in acquiring businesses that complement its existing platform, especially in {topic}",
         "type": "deep",
         "category": None,
         "num_results": 8,
         "content_mode": "text",
-        "max_characters": 5000,
+        "max_characters": 8000,
         "use_autoprompt": True,
         "exclude_domains": SEO_EXCLUDE,
         "include_domains": [],
@@ -205,29 +205,29 @@ TEMPLATES = {
         "include_text": None,
     },
 
-    # ── Template 11: Company Financials (Buyer) ───────────
+    # ── Template 11: Company Financials (buy-side: can they afford it?) ─
     "company_financials": {
-        "query": "{company_name} annual revenue employees company overview",
+        "query": "{company_name} annual revenue, employee count, and financial performance show the company has the resources and strategic rationale to pursue acquisitions",
         "type": "deep",
         "category": "company",
         "num_results": 8,
         "content_mode": "text",
-        "max_characters": 5000,
+        "max_characters": 8000,
         "use_autoprompt": True,
         "exclude_domains": SEO_EXCLUDE,
-        "include_domains": FINANCIAL_DOMAINS,
+        "include_domains": [],
         "max_age_hours": None,
         "include_text": None,
     },
 
     # ── Template 12: Contact Enrichment ───────────────────
     "contact_enrichment": {
-        "query": '"{owner_name}" "{company_name}" {city} {state} phone email contact LinkedIn',
+        "query": "{owner_name} is the owner of {company_name} in {city}, {state} and can be reached by phone, email, or LinkedIn",
         "type": "auto",
         "category": "people",
         "num_results": 5,
         "content_mode": "highlights",
-        "max_characters": 2000,
+        "max_characters": 3000,
         "use_autoprompt": False,
         "exclude_domains": [],
         "include_domains": [],
