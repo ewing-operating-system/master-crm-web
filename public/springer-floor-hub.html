@@ -10,7 +10,6 @@
 <style>
   /* === RESET === */
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
 
   /* === BASE === */
   body {
@@ -111,6 +110,14 @@
     min-height: calc(100vh - 160px);
   }
 
+  /* === SCROLL BEHAVIOR === */
+  html {
+    scroll-behavior: smooth;
+  }
+  .card[id] {
+    scroll-margin-top: 100px;
+  }
+
   /* === SIDEBAR === */
   .sidebar {
     width: 220px;
@@ -120,9 +127,11 @@
     padding: 20px 0;
     position: sticky;
     top: 90px;
+    align-self: flex-start;
     height: fit-content;
     max-height: calc(100vh - 120px);
     overflow-y: auto;
+    z-index: 50;
   }
   .sidebar-heading {
     font-size: 11px;
@@ -167,9 +176,6 @@
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 20px;
-  }
-  .card[id] {
-    scroll-margin-top: 100px;
   }
   .card h2 {
     font-size: 16px;
@@ -327,22 +333,8 @@
     .badge { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
   }
 </style>
-<link rel="stylesheet" href="section-controls.css">
-<link rel="stylesheet" href="mobile-fixes.css">
 </head>
 <body>
-<!-- NAV:START -->
-<div class="nc-nav" style="background:#f6f8fa;border-bottom:1px solid #d0d7de;padding:8px 20px;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:999">
-  <span style="font-weight:700;color:#0d1117;margin-right:8px">Next Chapter M&amp;A</span>
-  <span style="color:#d0d7de">|</span>
-  <style>.nc-nav a{color:#0969da;text-decoration:none;font-weight:500}.nc-nav a:hover{text-decoration:underline}</style>
-  <a href="index.html">Home</a>
-      <a href="system-overview.html">System Overview</a>
-</div>
-<!-- NAV:END -->
-
-
-
 
 <!-- HEADER -->
 <div class="page-header">
@@ -362,7 +354,7 @@
   <a href="/dashboard.html">Home</a>
 <a href="/dashboard.html">Dashboard</a>
 <a href="/springer-floor-hub.html" class="active">Company Hub</a>
-<a href="/ebitda-levers-flooring.html">EBITDA Levers</a>
+<a href="/springer-floor-ebitda-levers.html">EBITDA Levers</a>
 <a href="#history">Version History</a>
 
 </div>
@@ -376,9 +368,8 @@
     <a href="#overview" class="sidebar-link">Overview</a>
 <a href="#your-company-story" class="sidebar-link">Your Company Story</a>
 <a href="#contacts" class="sidebar-link">Contacts</a>
-<a href="#call-intelligence" class="sidebar-link">Call Intelligence</a>
 <a href="#buyer-outreach-strategy" class="sidebar-link">Buyer Outreach Strategy</a>
-<a href="#potential-acquirers-35" class="sidebar-link">Potential Acquirers (35)</a>
+<a href="#potential-acquirers-46" class="sidebar-link">Potential Acquirers (46)</a>
 <a href="#outreach-scripts" class="sidebar-link">Outreach Scripts</a>
 <a href="#plays-amp-emails-sent" class="sidebar-link">Plays &amp; Emails Sent</a>
 <a href="#documents-amp-files" class="sidebar-link">Documents &amp; Files</a>
@@ -393,19 +384,17 @@
         <span class="badge green">engagement_active</span>
         <span class="badge blue">Quality: 82</span>
         <span class="badge green">Cost: $0.00</span>
-        <span class="badge blue">35 Potential Acquirers</span>
+        <span class="badge blue">46 Potential Acquirers</span>
         <span class="badge blue">2 Contacts</span>
-        <span class="badge green">2 Calls Logged</span>
-        <span class="badge orange">Meeting Set</span>
     </div>
 
     <div class="card" id="overview">
         <h2>Overview</h2>
         <div class="grid4">
-            <div class="stat"><div class="num">35</div><div class="label">Potential Acquirers</div></div>
+            <div class="stat"><div class="num">46</div><div class="label">Potential Acquirers</div></div>
             <div class="stat"><div class="num">10</div><div class="label">Scripts Ready</div></div>
             <div class="stat"><div class="num">0</div><div class="label">Letters Sent</div></div>
-            <div class="stat"><div class="num">4</div><div class="label">Documents</div></div>
+            <div class="stat"><div class="num">0</div><div class="label">Documents</div></div>
         </div>
         
     </div>
@@ -424,57 +413,19 @@ The company also employs a rug specialist who teaches IICRC certification course
         <table>
             <tr><th>Name</th><th>Title</th><th>Email</th><th>Phone</th><th>LinkedIn</th></tr>
             <tr>
-            <td>Eddie Holman</td>
-            <td>General Manager / Co-Owner</td>
-            <td>e.holman@springerfloorcare.com</td>
-            <td>(515) 707-4231</td>
-            <td><a href="https://www.linkedin.com/in/eddie-holman-5946bb89" target="_blank">LinkedIn</a></td>
+            <td>Terri Holman</td>
+            <td></td>
+            <td></td>
+            <td>(515) 223-9336</td>
+            <td>—</td>
         </tr><tr>
             <td>Terri Holman</td>
-            <td>Co-Owner</td>
+            <td></td>
             <td></td>
             <td>(515) 223-9336</td>
             <td>—</td>
         </tr>
         </table>
-    </div>
-
-    <div class="highlight-card" id="call-intelligence">
-        <h2>Call Intelligence</h2>
-        <table>
-            <tr><th>Date</th><th>Type</th><th>Rep</th><th>Contact</th><th>Duration</th><th>Outcome</th></tr>
-            <tr>
-                <td>Feb 27, 2026</td>
-                <td>Cold Call</td>
-                <td>Mark DeChant</td>
-                <td>Eddie Holman</td>
-                <td>6:01</td>
-                <td><span class="badge green" style="font-size:10px">Meeting Set</span></td>
-            </tr>
-            <tr>
-                <td>Mar 23, 2026</td>
-                <td>Follow-up</td>
-                <td>Mark DeChant</td>
-                <td>Eddie Holman</td>
-                <td>0:49</td>
-                <td><span class="badge blue" style="font-size:10px">Voicemail + Email Sent</span></td>
-            </tr>
-        </table>
-        <div style="margin-top:16px">
-            <div class="script-label">Key Intel from Feb 27 Call</div>
-            <div class="narrative-box">
-<strong>Motivation:</strong> Eddie (70) and Terri (68) ready to full-time retire. All family is down south. They snowbird in Mesa, AZ.
-
-<strong>Company History:</strong> Springer Professional Home Services was originally a pest control company. When it was sold to an international firm, the acquirer didn't want the carpet side. Eddie and Terri bought the carpet cleaning division and renamed it Springer Floor Care. They've been running it for 8 years.
-
-<strong>Personal:</strong> Terri recently had knee replacement surgery — Eddie described himself as "playing male nurse." Warm and personable on the call.
-
-<strong>Call Quality Score:</strong> 82.25/100 — Effective objection handling, secured specific follow-up time.
-
-<strong>Next Step:</strong> Meeting with Chris (CII president) was scheduled for Tuesday 10 AM Central.
-
-<strong>Mar 23 Follow-up:</strong> Mark called back, left voicemail with market intelligence email. Eddie briefly answered but was unavailable. Awaiting callback at 480-266-8846.</div>
-        </div>
     </div>
 
     <div class="card" id="proposal">
@@ -488,375 +439,376 @@ One of the most impressive achievements is the Forever Kleen quarterly maintenan
     </div>
 
     <div class="card" id="buyers">
-        <h2>Potential Acquirers (35)</h2>
+        <h2>Potential Acquirers (46)</h2>
         <table>
             <tr><th>Company</th><th>Type</th><th>Location</th><th>Fit</th><th>DNC</th><th>Script</th><th>Status</th></tr>
-        <tr>
-            <td><a href="springer-floor_rainbow-international-neighborly-kkr.html">Rainbow International (Neighborly/KKR)</a></td>
+            <tr>
+            <td>Rainbow International (Neighborly/KKR)</td>
             <td>restoration</td>
             <td>Waco, TX</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_belfor-holdings.html">Belfor Holdings</a></td>
+        </tr><tr>
+            <td>Belfor Holdings</td>
             <td>restoration</td>
             <td>Birmingham, MI</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_roark-capital-servicemaster-brands.html">Roark Capital / ServiceMaster Brands</a></td>
+        </tr><tr>
+            <td>Roark Capital / ServiceMaster Brands</td>
             <td>PE Roll-up</td>
             <td>Atlanta, GA</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_guardian-restoration-partners.html">Guardian Restoration Partners</a></td>
+        </tr><tr>
+            <td>Guardian Restoration Partners</td>
             <td>private_equity</td>
             <td>Denver, CO</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">researched</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_kinderhook-industries.html">Kinderhook Industries</a></td>
+        </tr><tr>
+            <td>Kinderhook Industries</td>
             <td>PE</td>
             <td>New York, NY</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_kellermeyer-bergensons-services-kbs.html">Kellermeyer Bergensons Services (KBS)</a></td>
+        </tr><tr>
+            <td>Kellermeyer Bergensons Services (KBS)</td>
             <td>strategic</td>
             <td>New York, NY</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_abm-industries.html">ABM Industries</a></td>
+        </tr><tr>
+            <td>ABM Industries</td>
             <td>Strategic Acquirer</td>
             <td>New York, NY</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_firstservice-brands.html">FirstService Brands</a></td>
+        </tr><tr>
+            <td>FirstService Brands</td>
             <td>strategic</td>
             <td>Toronto, ON</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_stanley-steemer.html">Stanley Steemer</a></td>
+        </tr><tr>
+            <td>Stanley Steemer</td>
             <td>Industry Consolidator</td>
             <td>Dublin, OH</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_the-riverside-company-millicare.html">The Riverside Company / milliCare</a></td>
+        </tr><tr>
+            <td>The Riverside Company / milliCare</td>
             <td>PE Roll-up</td>
             <td>New York, NY</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_premium-service-brands.html">Premium Service Brands</a></td>
+        </tr><tr>
+            <td>Premium Service Brands</td>
             <td>roll-up</td>
             <td>Charlottesville, VA</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_aftermath-services-kinderhook.html">Aftermath Services (Kinderhook)</a></td>
+        </tr><tr>
+            <td>Aftermath Services (Kinderhook)</td>
             <td>restoration</td>
             <td>Aurora, IL</td>
             <td>8</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_jan-pro-cleaning-disinfecting.html">Jan-Pro Cleaning & Disinfecting</a></td>
+        </tr><tr>
+            <td>Jan-Pro Cleaning &amp; Disinfecting</td>
             <td>consolidator</td>
             <td>Alpharetta, GA</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_seacoast-capital.html">Seacoast Capital</a></td>
+        </tr><tr>
+            <td>Seacoast Capital</td>
             <td>PE</td>
             <td>Danvers, MA</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_zerorez.html">Zerorez</a></td>
+        </tr><tr>
+            <td>Zerorez</td>
             <td>franchise_system</td>
             <td>Pleasant Grove, UT</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">researched</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_building-services-of-america-bsa.html">Building Services of America (BSA)</a></td>
+        </tr><tr>
+            <td>Building Services of America (BSA)</td>
             <td>roll-up</td>
             <td>Atlanta, GA</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_coit-cleaning-and-restoration.html">COIT Cleaning and Restoration</a></td>
+        </tr><tr>
+            <td>COIT Cleaning and Restoration</td>
             <td>Industry Consolidator</td>
             <td>San Francisco, CA</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_nexclean.html">NEXClean</a></td>
+        </tr><tr>
+            <td>NEXClean</td>
             <td>Industry Consolidator</td>
             <td>West Chester, PA</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_marsden-holding.html">Marsden Holding</a></td>
+        </tr><tr>
+            <td>Marsden Holding</td>
             <td>Industry Consolidator</td>
             <td>St. Paul, MN</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_harvard-maintenance.html">Harvard Maintenance</a></td>
+        </tr><tr>
+            <td>Harvard Maintenance</td>
             <td>strategic</td>
             <td>New York, NY</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_paul-davis-restoration.html">Paul Davis Restoration</a></td>
+        </tr><tr>
+            <td>Paul Davis Restoration</td>
             <td>restoration</td>
             <td>Jacksonville, FL</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_restoration-1.html">Restoration 1</a></td>
+        </tr><tr>
+            <td>Restoration 1</td>
             <td>restoration</td>
             <td>Waco, TX</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_pritchard-industries.html">Pritchard Industries</a></td>
+        </tr><tr>
+            <td>Pritchard Industries</td>
             <td>Industry Consolidator</td>
             <td>New York, NY</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_openworks.html">OpenWorks</a></td>
+        </tr><tr>
+            <td>OpenWorks</td>
             <td>consolidator</td>
             <td>Phoenix, AZ</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_anago-cleaning-systems.html">Anago Cleaning Systems</a></td>
+        </tr><tr>
+            <td>Anago Cleaning Systems</td>
             <td>consolidator</td>
             <td>Pompano Beach, FL</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_gi-partners.html">GI Partners</a></td>
+        </tr><tr>
+            <td>GI Partners</td>
             <td>PE</td>
             <td>San Francisco, CA</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_incline-equity-partners.html">Incline Equity Partners</a></td>
+        </tr><tr>
+            <td>Incline Equity Partners</td>
             <td>PE</td>
             <td>Pittsburgh, PA</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_compass-group-eurest-services.html">Compass Group / Eurest Services</a></td>
+        </tr><tr>
+            <td>Compass Group / Eurest Services</td>
             <td>strategic</td>
             <td>Charlotte, NC</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_centre-partners.html">Centre Partners</a></td>
+        </tr><tr>
+            <td>Centre Partners</td>
             <td>PE</td>
             <td>New York, NY</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_vanguard-cleaning-systems.html">Vanguard Cleaning Systems</a></td>
+        </tr><tr>
+            <td>Vanguard Cleaning Systems</td>
             <td>consolidator</td>
             <td>San Mateo, CA</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_coverall-north-america.html">Coverall North America</a></td>
+        </tr><tr>
+            <td>Coverall North America</td>
             <td>consolidator</td>
             <td>Deerfield Beach, FL</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_summit-park.html">Summit Park</a></td>
+        </tr><tr>
+            <td>Summit Park</td>
             <td>PE</td>
             <td>Charlotte, NC</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_h-i-g-capital.html">H.I.G. Capital</a></td>
+        </tr><tr>
+            <td>H.I.G. Capital</td>
             <td>PE</td>
             <td>Miami, FL</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_servpro-industries.html">SERVPRO Industries</a></td>
+        </tr><tr>
+            <td>SERVPRO Industries</td>
             <td>franchise_system</td>
             <td>Gallatin, TN</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">researched</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_puroclean.html">PuroClean</a></td>
+        </tr><tr>
+            <td>PuroClean</td>
             <td>franchise_system</td>
             <td>Tamarac, FL</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">researched</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_city-wide-facility-solutions.html">City Wide Facility Solutions</a></td>
+        </tr><tr>
+            <td>City Wide Facility Solutions</td>
             <td>franchise_system</td>
             <td>Lenexa, KS</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">researched</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_rainier-partners.html">Rainier Partners</a></td>
+        </tr><tr>
+            <td>Rainier Partners</td>
             <td>PE Roll-up</td>
             <td>Seattle, WA</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_blusky-restoration.html">BluSky Restoration</a></td>
+        </tr><tr>
+            <td>BluSky Restoration</td>
             <td>restoration</td>
             <td>Dallas, TX</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_cintas-corporation.html">Cintas Corporation</a></td>
+        </tr><tr>
+            <td>Cintas Corporation</td>
             <td>Strategic Acquirer</td>
             <td>Cincinnati, OH</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_ati-restoration.html">ATI Restoration</a></td>
+        </tr><tr>
+            <td>ATI Restoration</td>
             <td>restoration</td>
             <td>Anaheim, CA</td>
             <td>6</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">identified</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_heaven-s-best-carpet-cleaning.html">Heaven's Best Carpet Cleaning</a></td>
+        </tr><tr>
+            <td>Heaven's Best Carpet Cleaning</td>
             <td>franchise_system</td>
             <td>Rexburg, ID</td>
             <td>4</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">researched</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_quickdry-pro.html">QuickDry Pro</a></td>
+        </tr><tr>
+            <td>QuickDry Pro</td>
             <td>strategic_buyer</td>
             <td>Gardner, KS</td>
             <td>4</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">researched</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_oxi-fresh-carpet-cleaning.html">Oxi Fresh Carpet Cleaning</a></td>
+        </tr><tr>
+            <td>Oxi Fresh Carpet Cleaning</td>
             <td>franchise_system</td>
             <td>Lakewood, CO</td>
             <td>4</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">researched</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_chem-dry-international.html">Chem-Dry International</a></td>
+        </tr><tr>
+            <td>Chem-Dry International</td>
             <td>franchise_system</td>
             <td>Nashville, TN</td>
             <td>4</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">researched</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_corvus-janitorial.html">Corvus Janitorial</a></td>
+        </tr><tr>
+            <td>Corvus Janitorial</td>
             <td>franchise_system</td>
             <td>Chicago, IL</td>
             <td>4</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">researched</span></td>
-        </tr>
-        <tr>
-            <td><a href="springer-floor_heartland-home-services.html">Heartland Home Services</a></td>
+        </tr><tr>
+            <td>Heartland Home Services</td>
             <td>private_equity</td>
             <td>Macomb, MI</td>
             <td>4</td>
-            <td><span class="badge green" style="font-size:10px">✓ Ready</span></td>
+            <td><span class="badge red" style="font-size:10px">DNC</span></td>
+            <td>—</td>
             <td><span class="badge gray" style="font-size:10px">researched</span></td>
         </tr>
         </table>
@@ -864,32 +816,21 @@ One of the most impressive achievements is the Forever Kleen quarterly maintenan
 
     <div class="card" id="scripts">
         <h2>Outreach Scripts</h2>
-        <div class="script-label">Email</div><div class="script-box">Subject: Midwest Floor Care Operation — Potential milliCare Add-On
+        <div class="script-label">Email</div><div class="script-box">Dear [Buyer's Name],
 
-Mr. Kohl,
+I'm reaching out on behalf of Springer Floor Care LLC, a top-tier floor care company in Des Moines with $900K revenue and 17 years of established operations under current ownership. Key highlights:
 
-We represent the owners of a commercial floor care company in Des Moines, IA — a market we noticed is currently a gap in milliCare's franchise footprint.
+- Recurring revenue via Forever Kleen quarterly programs (unlimited callbacks)
+- First area rug salon in Iowa with in-warehouse cleaning capabilities
+- WoolSafe/ARCS certified, 4.9-star Google reviews (83+)
+- Flat-rate pricing model and 25+ community service area
 
-The business has an established commercial client base, experienced crews, and a reputation that mirrors the service standards milliCare is known for. Given Riverside's investment thesis around building density in the Clintar/milliCare platform, we thought this deserved a direct conversation.
+With $135K EBITDA and a valuation range of $472K-$1.08M, this is a rare chance to acquire a turnkey operation with loyal clients and specialized services. Would you be open to a confidential discussion this week?
 
-Our clients are selective about who they'd partner with. They asked us to approach only groups with the operational infrastructure to grow what they've built.
-
-Would you have fifteen minutes this week or next to discuss whether this fits your current acquisition criteria?
-
-Best,
-Ewing Gillaspy
-Next Chapter Advisory
-(515) 868-0608</div><div class="script-label">Call Script</div><div class="script-box">Hi Stewart, this is Ewing Gillaspy with Next Chapter Advisory. I'll be brief — we represent the owners of a commercial floor care operation in Des Moines. Given Riverside's investment in milliCare, we thought this could be a strong Midwest add-on to the platform.
-
-Talking points:
-- Established commercial accounts, trained crews, Des Moines market
-- Fills geographic gap in milliCare's franchise network
-- Owners are selective — approaching only strategic fits
-- Ask: Does this align with your current acquisition criteria for milliCare?</div><div class="script-label">LinkedIn</div><div class="script-box">Stewart — our firm represents the owners of a commercial floor care operation in Des Moines. Given milliCare's Midwest expansion, we thought it could be a strong platform add-on. Worth a brief conversation?</div><div class="script-label">Letter</div><div class="script-box">Dear Mr. Kohl,
-
-I'm reaching out because our firm represents the owners of a well-established commercial floor care operation in Des Moines, Iowa — a market we understand aligns with milliCare's national expansion strategy.
-
-The company services a strong base of commercial accounts across central Iowa, with long-standing client relationships, trained technicians, and consistent revenue. Given Riverside's investment in milliCare and the Clintar platform, we believe this operation could serve as a</div>
+Best regards,
+[Your Name]
+Next Chapter Capital
+[Your Contact Info]</div><div class="script-label">Call Script</div><div class="script-box">Hi [Buyer's Name], this is [Your Name] with Next Chapter Capital. I'm calling because we're representing Springer Floor Care, a highly reputable floor care business in Des Moines with $900K revenue and a 4.9-star rating. Their unique Forever Kleen program and first-in-Iowa rug salon deliver sticky, recurring revenue. Is acquiring a turnkey operation in the floor care space something you'd explore this year? [Pause] Great—let's schedule a brief call to discuss the details. When's a good time?</div><div class="script-label">LinkedIn</div><div class="script-box">Hi [First Name], I'm assisting the owners of Springer Floor Care (Des Moines' top-rated floor care co, 900K revenue) in exploring acquisition opportunities. Their recurring Forever Kleen program &amp; rug salon make them a standout. Open to a quick chat if you're eyeing growth in this space.</div>
     </div>
 
     <div class="card" id="plays">
@@ -907,18 +848,14 @@ The company services a strong base of commercial accounts across central Iowa, w
 
     <div class="card" id="files">
         <h2>Documents &amp; Files</h2>
-        <ul><li><a href="springer-floor_marsden-holding.html" target="_blank">Proposal: interactive-springer-floor.html</a></li><li><a href="springer-floor_marsden-holding.html" target="_blank">Proposal: springer-floor.html</a></li><li><a href="dataroom-springer-floor.html" target="_blank">Data Room: springer-floor.html</a></li><li><a href="meeting-springer-floor_2026-03-29_discovery.html" target="_blank">Meeting Prep: springer-floor_2026-03-29_discovery.html</a></li></ul>
+        <ul><li style='color:#8b949e'>No files generated yet</li></ul>
     </div>
 
     <div class="card" id="history">
         <h2>Pipeline History</h2>
         <table>
             <tr><th>Step</th><th>Tool</th><th>Status</th><th>Cost</th><th>Date</th></tr>
-            <tr><td>Cold Call #1</td><td>Salesfinity</td><td><span class="badge green" style="font-size:10px">Meeting Set</span></td><td>—</td><td>Feb 27, 2026</td></tr>
-            <tr><td>Follow-up Call</td><td>Salesfinity</td><td><span class="badge blue" style="font-size:10px">Voicemail</span></td><td>—</td><td>Mar 23, 2026</td></tr>
-            <tr><td>Buyer Research (27 targets)</td><td>Exa.ai</td><td><span class="badge green" style="font-size:10px">Complete</span></td><td>$3.30</td><td>Mar 29, 2026</td></tr>
-            <tr><td>Meeting Prep Generated</td><td>Meeting Engine v2</td><td><span class="badge green" style="font-size:10px">Complete</span></td><td>—</td><td>Mar 29, 2026</td></tr>
-            <tr><td>Call Intel Synced</td><td>Salesfinity → CRM</td><td><span class="badge green" style="font-size:10px">Complete</span></td><td>—</td><td>Mar 30, 2026</td></tr>
+            <tr><td colspan="5" style="color:#8b949e">No pipeline history</td></tr>
         </table>
     </div>
   </div>
@@ -928,38 +865,38 @@ The company services a strong base of commercial accounts across central Iowa, w
 <!-- FOOTER -->
 <div class="page-footer">
   <strong>Next Chapter M&A Advisory</strong> | Sell-Side Engagement<br>
-  Generated March 30, 2026 04:30 PM | INTERNAL — Admin View | Call intel synced from Salesfinity
+  Generated April 01, 2026 06:22 PM | INTERNAL — Admin View
 </div>
 
 <!-- WIDGETS -->
 <script src="/comment-widget.js"></script>
-<script src="/notification-bell.js"></script>
 <script src="/version-widget.js"></script>
 
 
-<script src="section-controls.js"></script>
+<!-- SCROLL-SPY: highlights active sidebar link as user scrolls -->
 <script>
-/* Sidebar scroll-spy: highlight active link as you scroll */
 (function() {
-  const links = document.querySelectorAll('.sidebar-link');
-  const sections = [];
-  links.forEach(link => {
-    const id = link.getAttribute('href')?.replace('#', '');
-    const el = id && document.getElementById(id);
-    if (el) sections.push({ id, el, link });
+  var links = document.querySelectorAll('.sidebar-link');
+  var sections = [];
+  links.forEach(function(link) {
+    var id = link.getAttribute('href');
+    if (id) id = id.replace('#', '');
+    var el = id && document.getElementById(id);
+    if (el) sections.push({ id: id, el: el, link: link });
   });
   if (!sections.length) return;
   function updateActive() {
-    let current = sections[0];
-    for (const s of sections) {
-      if (s.el.getBoundingClientRect().top <= 120) current = s;
+    var current = sections[0];
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i].el.getBoundingClientRect().top <= 120) current = sections[i];
     }
-    links.forEach(l => l.classList.remove('active'));
+    links.forEach(function(l) { l.classList.remove('active'); });
     current.link.classList.add('active');
   }
   window.addEventListener('scroll', updateActive, { passive: true });
   updateActive();
 })();
 </script>
+
 </body>
 </html>
