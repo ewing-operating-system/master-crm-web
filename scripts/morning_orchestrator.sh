@@ -62,7 +62,7 @@ if [[ "$FIX_COUNT" == "0" ]]; then
     git add public/system-health.html
     git commit -m "[auto] daily health check — all clear ($TIMESTAMP)" \
       --author="Morning Audit <noreply@clawdbot.local>" 2>/dev/null || true
-    git push 2>/dev/null || log "WARN: git push failed"
+    bash "$REPO_ROOT/scripts/deploy.sh" --skip-commit 2>/dev/null || log "WARN: deploy failed"
     log "Health page updated and deployed."
   fi
   exit 0
@@ -149,8 +149,8 @@ git add public/system-health.html 2>/dev/null || true
 if ! git diff --cached --quiet 2>/dev/null; then
   git commit -m "[auto] morning audit — $FIX_COUNT issue(s) found ($TIMESTAMP)" \
     --author="Morning Audit <noreply@clawdbot.local>" 2>/dev/null || true
-  git push 2>/dev/null || log "WARN: git push failed"
-  log "Changes committed and pushed."
+  bash "$REPO_ROOT/scripts/deploy.sh" --skip-commit 2>/dev/null || log "WARN: deploy failed"
+  log "Changes committed and deployed."
 fi
 
 log "Morning orchestration complete."

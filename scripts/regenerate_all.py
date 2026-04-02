@@ -116,7 +116,7 @@ def check_git_remote() -> bool:
 
 
 def git_commit_and_push(files) -> bool:
-    """Stage files, commit, push. Returns True on success."""
+    """Stage files, commit, push, AND deploy to Vercel. Returns True on success."""
     rel_files = [str(f.relative_to(REPO_ROOT)) for f in files]
     try:
         subprocess.run(
@@ -130,12 +130,12 @@ def git_commit_and_push(files) -> bool:
             check=True
         )
         subprocess.run(
-            ["git", "-C", str(REPO_ROOT), "push"],
-            check=True
+            ["bash", str(REPO_ROOT / "scripts" / "deploy.sh"), "--skip-commit"],
+            check=True, timeout=180
         )
         return True
     except subprocess.CalledProcessError as exc:
-        log(f"ERROR: git operation failed -- {exc}")
+        log(f"ERROR: deploy failed -- {exc}")
         return False
 
 

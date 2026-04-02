@@ -1184,7 +1184,7 @@ def process_transcript(transcript: dict, skip_existing: bool = True) -> Optional
 
 
 def deploy_changes(pages: list[str]):
-    """Commit and push new meeting pages."""
+    """Commit, push, AND deploy to Vercel. Git push alone does NOT trigger Vercel."""
     if not pages:
         return
 
@@ -1200,13 +1200,13 @@ def deploy_changes(pages: list[str]):
             cwd=str(PROJECT_ROOT), capture_output=True,
         )
         result = subprocess.run(
-            ["git", "push"],
-            cwd=str(PROJECT_ROOT), capture_output=True, text=True, timeout=60,
+            ["bash", str(PROJECT_ROOT / "scripts" / "deploy.sh"), "--skip-commit"],
+            cwd=str(PROJECT_ROOT), capture_output=True, text=True, timeout=180,
         )
         if result.returncode == 0:
-            log.info("Pushed to git. Vercel will deploy automatically.")
+            log.info("Pushed and deployed to Vercel.")
         else:
-            log.warning("Git push failed: %s", result.stderr[:300])
+            log.warning("Deploy failed: %s", result.stderr[:300])
     except Exception as e:
         log.error("Deploy error: %s", e)
 

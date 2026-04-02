@@ -122,15 +122,15 @@ def trigger_regeneration(item):
                 "cd /Users/clawdbot/Projects/master-crm-web && "
                 "git add public/data/*.json && "
                 'git commit -m "[auto] update research data" && '
-                "git push"
+                "bash scripts/deploy.sh --skip-commit"
             )
             git_result = subprocess.run(
-                git_cmd, shell=True, capture_output=True, text=True, timeout=120
+                git_cmd, shell=True, capture_output=True, text=True, timeout=180
             )
             if git_result.returncode == 0:
-                log(f"  Git push OK (swarm data for '{company}')")
+                log(f"  Deployed OK (swarm data for '{company}')")
             else:
-                log(f"  Git push FAILED: {git_result.stderr.strip()[:200]}")
+                log(f"  Deploy FAILED: {git_result.stderr.strip()[:200]}")
     except Exception as e:
         log(f"  Regen exception (non-fatal): {e}")
 

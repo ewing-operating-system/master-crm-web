@@ -104,13 +104,39 @@ Public paths (always accessible): `/login.html`, `/api/*`, `/outputs/`, `/runnin
 2. **DNC is universal.** One block = blocked everywhere, all entities, all channels.
 3. **ONE Supabase instance.** Never create new projects or instances.
 4. **Never sign up for new services** without explicit approval.
-5. **Always commit + push** after changes.
+5. **Always deploy via `scripts/deploy.sh`.** Git push does NOT auto-deploy. See DEPLOYMENT below.
 6. **Letters before calls.** Mail sends first, enrichment (cell/email) is post-letter.
 7. **250/150 Governor.** Max 250 letters per batch. Hard stop until 150 contacts called 5x each.
 8. **Verify schema before coding.** Query `?limit=1&select=*` to confirm table/column names exist.
 9. **Never generate reports from memory.** Read actual data first.
 10. **Multi-LLM consensus** required before customer-facing documents.
 11. **If a key fails, STOP.** Do not sign up for replacements.
+
+## DEPLOYMENT — CRITICAL
+
+**Vercel's GitHub webhook integration is NOT connected.** `git push` alone does NOT deploy to Vercel. Every push MUST be followed by an explicit Vercel deploy.
+
+### How to deploy
+```bash
+# After committing, use deploy.sh (handles git push + vercel deploy --prod):
+bash scripts/deploy.sh --skip-commit
+
+# Or let it commit for you:
+bash scripts/deploy.sh --files "public/some-page.html" --message "update page"
+```
+
+### From Python scripts
+```python
+subprocess.run(["bash", "scripts/deploy.sh", "--skip-commit"], cwd=PROJECT_ROOT, timeout=180)
+```
+
+### Safety net
+A watchdog cron runs every 5 minutes (`scripts/deploy_watchdog.sh`). It compares `origin/main` HEAD to `.last_deployed_commit`. If they differ, it forces a Vercel deploy. This catches manual pushes and any script that slips through.
+
+### Rules
+- **NEVER use raw `git push` in scripts.** Always use `scripts/deploy.sh --skip-commit`.
+- **NEVER assume "pushed = deployed".** Always verify the live site after deploy.
+- **NEVER write log messages like "Vercel will auto-deploy"** — it won't.
 
 ## DATA PIPELINE RULES (Critical — prevents research from going invisible)
 

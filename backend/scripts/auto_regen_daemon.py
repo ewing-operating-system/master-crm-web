@@ -125,15 +125,22 @@ def deploy_to_vercel():
                 cwd=str(repo_dir), check=True
             )
 
-            push_result = subprocess.run(
-                ["git", "push"],
-                capture_output=True, text=True, cwd=str(repo_dir), timeout=60
-            )
+            deploy_script = repo_dir / "scripts" / "deploy.sh"
+            if deploy_script.exists():
+                push_result = subprocess.run(
+                    ["bash", str(deploy_script), "--skip-commit"],
+                    capture_output=True, text=True, cwd=str(repo_dir), timeout=180
+                )
+            else:
+                push_result = subprocess.run(
+                    ["git", "push"],
+                    capture_output=True, text=True, cwd=str(repo_dir), timeout=60
+                )
             if push_result.returncode == 0:
-                log.info(f"Pushed changes from {repo_dir.name}")
+                log.info(f"Deployed changes from {repo_dir.name}")
                 changes_pushed = True
             else:
-                log.error(f"Push failed for {repo_dir.name}: {push_result.stderr[:200]}")
+                log.error(f"Deploy failed for {repo_dir.name}: {push_result.stderr[:200]}")
 
         except Exception as e:
             log.error(f"Deploy error for {repo_dir.name}: {e}")

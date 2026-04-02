@@ -513,13 +513,13 @@ DATA: {combined[:4000]}""", timeout=60, label="extract_stock")
     # ══════════════════════════════════════════════════════════════════════════
     # PHASE 6: GIT + DEPLOY
     # ══════════════════════════════════════════════════════════════════════════
-    trace("PHASE", "GIT COMMIT + PUSH", {})
+    trace("PHASE", "GIT COMMIT + DEPLOY", {})
     for cmd_label, cmd in [
         ("git add", ["git", "-C", REPO_ROOT, "add", "public/data/"]),
         ("git commit", ["git", "-C", REPO_ROOT, "commit", "-m", f"[auto][traced] Add {buyer_name} buyer research"]),
-        ("git push", ["git", "-C", REPO_ROOT, "push"]),
+        ("deploy", ["bash", os.path.join(REPO_ROOT, "scripts", "deploy.sh"), "--skip-commit"]),
     ]:
-        r = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=180)
         trace("GIT", cmd_label, {
             "command": " ".join(cmd[-3:]),
             "returncode": r.returncode,

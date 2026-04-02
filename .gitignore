@@ -3,3 +3,6 @@
 .DS_Store
 lib/extracted/
 backups/
+.last_deployed_commit
+logs/deploy.log
+logs/deploy_watchdog.log

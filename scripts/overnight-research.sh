@@ -221,8 +221,8 @@ for c in json.load(sys.stdin):
     git commit -m "Overnight research: ${total_researched} companies enriched to SAP quality
 
 Co-Authored-By: OpenClaw Researcher <noreply@openclaw.ai>" 2>>"$LOG_FILE" || true
-    git push origin main 2>>"$LOG_FILE" || true
-    log "✅ Pushed to GitHub — Vercel will auto-deploy"
+    bash ~/Projects/master-crm-web/scripts/deploy.sh --skip-commit 2>>"$LOG_FILE" || true
+    log "✅ Pushed to GitHub and deployed to Vercel"
   else
     log "No local file changes to commit"
   fi
