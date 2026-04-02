@@ -51,22 +51,33 @@
     }
     .hub-link:hover { text-decoration: underline; }
 
-    /* ── Audio bar ──────────────────────────────────── */
-    .audio-bar {
-      background: #0d1117; border-bottom: 1px solid #21262d;
-      padding: 12px 28px; flex-shrink: 0;
-      display: flex; align-items: center; gap: 14px;
+    /* ── Video player ───────────────────────────────── */
+    .player-section {
+      background: #000; border-bottom: 1px solid #21262d;
+      flex-shrink: 0; position: relative;
     }
-    .play-link {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: #238636; color: #fff; border: none;
-      padding: 8px 20px; border-radius: 6px; font-size: 13px;
-      font-weight: 500; cursor: pointer; text-decoration: none;
-      transition: background 0.15s;
+    .player-section video {
+      width: 100%; max-height: 280px; display: block;
+      background: #000;
     }
-    .play-link:hover { background: #2ea043; }
-    .play-link svg { width: 16px; height: 16px; fill: currentColor; }
-    .audio-meta { color: #484f58; font-size: 12px; }
+    .player-loading {
+      display: flex; align-items: center; justify-content: center;
+      padding: 40px; color: #484f58; font-size: 13px; gap: 10px;
+    }
+    .player-loading .spinner {
+      width: 18px; height: 18px; border: 2px solid #30363d;
+      border-top-color: #58a6ff; border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .player-fallback {
+      display: none; padding: 16px 28px;
+      background: #161b22; text-align: center;
+    }
+    .player-fallback a {
+      color: #58a6ff; text-decoration: none; font-size: 13px;
+    }
+    .player-fallback a:hover { text-decoration: underline; }
 
     /* ── Summary strip ─────────────────────────────── */
     .summary-strip {
@@ -129,6 +140,11 @@
     .utterance:hover {
       background: #161b22;
       border-left-color: #30363d;
+      cursor: pointer;
+    }
+    .utterance.active {
+      background: rgba(31,111,235,0.08);
+      border-left-color: #1f6feb;
     }
     .speaker-row {
       display: flex; align-items: baseline; gap: 8px; margin-bottom: 2px;
@@ -268,12 +284,15 @@
     <div class="hub-links"><a href="/next-chapter-hub.html" class="hub-link">Next Chapter Account Page</a> <a href="/hrcom-hub.html" class="hub-link">Hrcom Account Page</a> </div>
   </header>
 
-  <div class="audio-bar">
-    <a class="play-link" href="https://app.fireflies.ai/view/01KN3D8S57CX196DC5C6MZ8YHB" target="_blank" rel="noopener">
-      <svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6z"/></svg>
-      Listen to Recording
-    </a>
-    <span class="audio-meta">34 min &middot; Opens in Fireflies</span>
+  <div class="player-section" id="player-section">
+    <div class="player-loading" id="player-loading">
+      <div class="spinner"></div>
+      Loading recording...
+    </div>
+    <video id="meeting-video" controls preload="none" style="display:none"></video>
+    <div class="player-fallback" id="player-fallback">
+      <a href="https://app.fireflies.ai/view/01KN3D8S57CX196DC5C6MZ8YHB" target="_blank" rel="noopener">Open recording in Fireflies &rarr;</a>
+    </div>
   </div>
 
   <div class="summary-strip">
@@ -1312,7 +1331,98 @@
     const SUPABASE_URL = window.__SUPABASE_URL;
     const SUPABASE_KEY = window.__SUPABASE_ANON_KEY;
     const TRANSCRIPT_ID = '31b9455e-9046-45b2-b6c1-6d5287b8f059';
+    const FIREFLIES_ID = '01KN3D8S57CX196DC5C6MZ8YHB';
 
+    // ── Video player setup ──────────────────────────
+    const video = document.getElementById('meeting-video');
+    const loading = document.getElementById('player-loading');
+    const fallback = document.getElementById('player-fallback');
+    const utterances = document.querySelectorAll('.utterance');
+    let videoReady = false;
+
+    (async function loadMedia() {
+      try {
+        const resp = await fetch('/api/meetings/media-url?id=' + FIREFLIES_ID);
+        const data = await resp.json();
+
+        const src = data.video_url || data.audio_url;
+        if (src) {
+          video.src = src;
+          video.style.display = 'block';
+          loading.style.display = 'none';
+          videoReady = true;
+
+          video.addEventListener('error', () => {
+            video.style.display = 'none';
+            fallback.style.display = 'block';
+          });
+        } else {
+          loading.style.display = 'none';
+          fallback.style.display = 'block';
+        }
+      } catch (e) {
+        loading.style.display = 'none';
+        fallback.style.display = 'block';
+      }
+    })();
+
+    // ── Transcript ↔ Video sync ─────────────────────
+    // Click utterance → seek video
+    utterances.forEach(u => {
+      u.addEventListener('click', (e) => {
+        if (e.target.closest('.btn-approve, .btn-reject')) return;
+        const time = parseFloat(u.dataset.time);
+        if (videoReady && !isNaN(time)) {
+          video.currentTime = time;
+          video.play();
+          highlightUtterance(u);
+          video.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
+    });
+
+    // Video timeupdate → highlight + scroll transcript
+    let lastHighlighted = null;
+    if (video) {
+      video.addEventListener('timeupdate', () => {
+        const t = video.currentTime;
+        let closest = null;
+        let closestDist = Infinity;
+
+        utterances.forEach(u => {
+          const uTime = parseFloat(u.dataset.time);
+          if (!isNaN(uTime) && uTime <= t) {
+            const dist = t - uTime;
+            if (dist < closestDist) {
+              closestDist = dist;
+              closest = u;
+            }
+          }
+        });
+
+        if (closest && closest !== lastHighlighted) {
+          highlightUtterance(closest);
+          // Auto-scroll transcript panel to keep active line visible
+          const panel = closest.closest('.transcript-panel');
+          if (panel) {
+            const uTop = closest.offsetTop - panel.offsetTop;
+            const panelScroll = panel.scrollTop;
+            const panelHeight = panel.clientHeight;
+            if (uTop < panelScroll + 60 || uTop > panelScroll + panelHeight - 80) {
+              panel.scrollTo({ top: uTop - 100, behavior: 'smooth' });
+            }
+          }
+        }
+      });
+    }
+
+    function highlightUtterance(el) {
+      if (lastHighlighted) lastHighlighted.classList.remove('active');
+      el.classList.add('active');
+      lastHighlighted = el;
+    }
+
+    // ── Learning approval ───────────────────────────
     async function approveLearning(learningId, approved) {
       const btn = event.target;
       btn.disabled = true;
