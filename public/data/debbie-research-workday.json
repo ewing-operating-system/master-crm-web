@@ -167,42 +167,57 @@
   "market_reputation": {
     "narrative": "<p>Workday holds a <strong>1.1 out of 5 rating on Trustpilot based on over 440 reviews</strong>, with the majority of reviewers expressing significant dissatisfaction. Most complaints center on the job applicant experience, citing password issues, application failures, and poor customer service. Notably, the Trustpilot profile remains <strong>unclaimed by Workday</strong>, suggesting limited engagement with public consumer feedback channels.</p>\n\n<p>Despite poor end-user sentiment, Workday maintains strong institutional standing. The company earned <strong>unanimous praise from the Pleasanton City Council</strong> when approved for its new six-story LEED Platinum headquarters adjacent to the West Dublin-Pleasanton BART station \u2014 the city's tallest office building, housing 2,200 employees. City Manager Nelson Fialho stated, <strong>\"We're very excited about this new Workday project for many reasons, not the least of which is Workday's commitment to and investment in Pleasanton.\"</strong> The company also committed to purchasing all furnishings through local vendors, keeping sales tax revenue in the city.</p>\n\n<p>Workday's local workforce has grown to <strong>more than 4,660 employees in Pleasanton and 10,500 worldwide</strong>, with over 40 office locations globally. However, the company announced <strong>over 100 job cuts at its Pleasanton office on February 11, 2026</strong>, part of a broader wave of Bay Area tech layoffs. The company also recently sold a large office building in the city, reflecting industry-wide adjustments to workforce and real estate footprints amid economic headwinds.</p>",
     "products_discovered": [
-      "Workday HCM (Human Capital Management)"
+      "Workday Human Capital Management",
+      "Workday Financial Management",
+      "Workday Adaptive Planning",
+      "Workday Recruiting",
+      "Workday Spend Management"
     ],
     "summary_stats": {
-      "total_reviews_scraped": 8,
-      "reviews_passing_threshold": 7
+      "total_reviews_scraped": 111,
+      "reviews_passing_threshold": 37
     },
     "product_reviews": {
-      "Workday HCM": {
+      "Workday Human Capital Management": {
         "positive": [
           {
-            "text": "Workday HCM receives a 4.5 out of 5 rating based on 755 reviews from enterprise users, indicating strong overall satisfaction among large organizations with 1,000+ employees.",
+            "text": "The Workday HR application is the best HR application I have ever used. It provides features and functionality that outperform its competitors.",
             "category": "features",
             "source": "Gartner Peer Insights",
-            "source_url": "https://www.gartner.com/reviews/market/cloud-hcm-suites-for-1000-employees/vendor/workday-hcm/product/workday-hcm/likes-dislikes",
-            "scores": {
-              "informativeness": 2,
-              "specificity": 1,
-              "polarity": 2
-            }
-          },
-          {
-            "text": "Workday can be very useful when we can access it. The platform consolidates clocking in, assignments, and employer-issued tasks into one system.",
-            "category": "features",
-            "source": "PissedConsumer",
-            "source_url": "https://workday.pissedconsumer.com/review.html",
+            "source_url": "https://www.gartner.com/reviews/market/cloud-hcm-suites-for-1000-employees/vendor/workday-hcm/product/workday-hcm",
             "scores": {
               "informativeness": 1,
               "specificity": 1,
-              "polarity": 1
+              "polarity": 3
             }
           },
           {
-            "text": "Workday HCM is reviewed across multiple related markets including Talent Management (156 reviews), Corporate Learning Technologies (71 reviews), and Talent Analytics (30 reviews), suggesting broad platform coverage.",
+            "text": "Workday HCM is adaptable, flexible, scalable, and global. It includes Skills Cloud for data-driven talent strategies and provides clean, coherent data with transparent ML models.",
             "category": "features",
             "source": "Gartner Peer Insights",
-            "source_url": "https://www.gartner.com/reviews/market/cloud-hcm-suites-for-1000-employees/vendor/workday-hcm/product/workday-hcm/likes-dislikes",
+            "source_url": "https://www.gartner.com/reviews/market/cloud-hcm-suites-for-1000-employees/vendor/workday-hcm/product/workday-hcm",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 2,
+              "polarity": 3
+            }
+          },
+          {
+            "text": "Workday unlocks engagement by empowering employees and managers with simplified, unified experiences, leading to increased retention and performance.",
+            "category": "usability",
+            "source": "Gartner Peer Insights",
+            "source_url": "https://www.gartner.com/reviews/market/cloud-hcm-suites-for-1000-employees/vendor/workday-hcm/product/workday-hcm",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 1,
+              "polarity": 3
+            }
+          },
+          {
+            "text": "Workday provides a unified, extensible foundation that automates processes and proactively manages compliance across global operations.",
+            "category": "compliance",
+            "source": "Gartner Peer Insights",
+            "source_url": "https://www.gartner.com/reviews/market/cloud-hcm-suites-for-1000-employees/vendor/workday-hcm/product/workday-hcm",
             "scores": {
               "informativeness": 2,
               "specificity": 2,
@@ -212,51 +227,398 @@
         ],
         "negative": [
           {
-            "text": "Password changes are required too frequently without advance notification, causing employees to get locked out of the app. There is no direct way to change passwords remotely unless at a designated computer on the job site.",
-            "category": "usability",
-            "source": "PissedConsumer",
-            "source_url": "https://workday.pissedconsumer.com/review.html",
-            "scores": {
-              "informativeness": 3,
-              "specificity": 3,
-              "polarity": 3
-            }
-          },
-          {
-            "text": "Workday locks users out before notifying them to change or update their password, making it impossible to complete tasks or clock in/out away from the job site. Counter-productive to what this app is for.",
-            "category": "usability",
-            "source": "PissedConsumer",
-            "source_url": "https://workday.pissedconsumer.com/review.html",
-            "scores": {
-              "informativeness": 3,
-              "specificity": 3,
-              "polarity": 3
-            }
-          },
-          {
-            "text": "Workday has a 2.0 out of 5 rating on PissedConsumer based on 60 rated reviews, with 44 out of 60 reviewers giving it 1 star. Top complaint categories include job access, password issues, and background checks.",
-            "category": "usability",
-            "source": "PissedConsumer",
-            "source_url": "https://workday.pissedconsumer.com/review.html",
-            "scores": {
-              "informativeness": 3,
-              "specificity": 3,
-              "polarity": 3
-            }
-          },
-          {
-            "text": "No option for email or text-based verification code to reset passwords. Users run out of passwords due to frequent forced changes and resort to random strings they cannot remember.",
-            "category": "usability",
-            "source": "PissedConsumer",
-            "source_url": "https://workday.pissedconsumer.com/review.html",
+            "text": "Workday HCM best serves large enterprises and multinational corporations \u2014 smaller businesses with simpler HR needs may find it overly complex and expensive for their requirements.",
+            "category": "pricing",
+            "source": "PeopleManagingPeople",
+            "source_url": "https://peoplemanagingpeople.com/tools/workday-review/",
             "scores": {
               "informativeness": 2,
-              "specificity": 3,
-              "polarity": 3
+              "specificity": 2,
+              "polarity": 2
+            }
+          },
+          {
+            "text": "Workday is designed for companies with 1,000+ employees, making it a poor fit for small and mid-size businesses that need lighter-weight HCM solutions.",
+            "category": "usability",
+            "source": "Gartner Peer Insights",
+            "source_url": "https://www.gartner.com/reviews/market/cloud-hcm-suites-for-1000-employees/vendor/workday-hcm/product/workday-hcm",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 2,
+              "polarity": 2
+            }
+          },
+          {
+            "text": "Workday HCM does not publicly disclose pricing, requiring prospective buyers to go through a sales process to get quotes, which makes cost comparison difficult.",
+            "category": "pricing",
+            "source": "PeopleManagingPeople",
+            "source_url": "https://peoplemanagingpeople.com/tools/workday-review/",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 2,
+              "polarity": 2
             }
           }
         ],
-        "total_raw": 815
+        "total_raw": 331
+      },
+      "Workday Financial Management": {
+        "positive": [
+          {
+            "text": "Workday has the ability for direct bank connections \u2014 every finance customer uses them. It can handle full payroll including direct payments to employees.",
+            "category": "features",
+            "source": "Reddit",
+            "source_url": "https://www.reddit.com/r/workday/comments/1r2dgjj/how_does_workday_payroll_work/",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 2,
+              "polarity": 2
+            }
+          },
+          {
+            "text": "Workday Financial Management is a native cloud solution built on a global foundation designed to enable accounting teams to operate with greater productivity, superior insights, and adapt to changing business needs.",
+            "category": "features",
+            "source": "TrustRadius",
+            "source_url": "https://www.trustradius.com/products/workday-financial-management/reviews",
+            "scores": {
+              "informativeness": 1,
+              "specificity": 1,
+              "polarity": 2
+            }
+          },
+          {
+            "text": "Good for basics \u2014 Workday Financial Management provides core financial management capabilities expected from a modern cloud solution, going beyond just managing financial processes to achieve greater insight and improve financial consolidation.",
+            "category": "features",
+            "source": "TrustRadius",
+            "source_url": "https://www.trustradius.com/products/workday-financial-management/reviews?qs=product-usage",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 1,
+              "polarity": 2
+            }
+          }
+        ],
+        "negative": [
+          {
+            "text": "Good for basics but you'll need add-ons to be effective. The core product alone isn't sufficient for complex financial operations.",
+            "category": "features",
+            "source": "TrustRadius",
+            "source_url": "https://www.trustradius.com/products/workday-financial-management/reviews?qs=product-usage",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 2,
+              "polarity": 2
+            }
+          },
+          {
+            "text": "I am floored by the fact that Workday cannot generate a 941 or a file to upload W2 data to the SSA. IMO, Workday does not offer a 'true' payroll system.",
+            "category": "compliance",
+            "source": "Reddit",
+            "source_url": "https://www.reddit.com/r/workday/comments/1r2dgjj/how_does_workday_payroll_work/",
+            "scores": {
+              "informativeness": 3,
+              "specificity": 3,
+              "polarity": 3
+            }
+          },
+          {
+            "text": "The real trick isn't paying the employees \u2014 it's doing all the tax filing. That's usually why in-house teams also use OSV or ADP alongside Workday.",
+            "category": "integration",
+            "source": "Reddit",
+            "source_url": "https://www.reddit.com/r/workday/comments/1r2dgjj/how_does_workday_payroll_work/",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 2,
+              "polarity": 2
+            }
+          }
+        ],
+        "total_raw": 6
+      },
+      "Workday Adaptive Planning": {
+        "positive": [
+          {
+            "text": "Adaptive has great reporting features and many options for designing models. Data integrations and support tooling with critical vendors round out the product as a great tool for medium-sized businesses.",
+            "category": "reporting",
+            "source": "Gartner",
+            "source_url": "https://www.gartner.com/reviews/market/financial-planning-software/vendor/workday-hcm/product/workday-adaptive-planning",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 2,
+              "polarity": 2
+            }
+          },
+          {
+            "text": "Intuitive and user-friendly interface makes it easy to navigate, create reports, and customize dashboards. Drag-and-drop functionalities in Reporting simplify report design and customization.",
+            "category": "usability",
+            "source": "TrustRadius",
+            "source_url": "https://www.trustradius.com/products/workday-adaptive-planning/reviews/all",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 2,
+              "polarity": 2
+            }
+          },
+          {
+            "text": "Extensive customization options allow tailored sheets, reports, and dashboards. Custom dimensions and attributes in Budgeting facilitate easy data analysis and manipulation.",
+            "category": "features",
+            "source": "TrustRadius",
+            "source_url": "https://www.trustradius.com/products/workday-adaptive-planning/reviews/all",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 2,
+              "polarity": 2
+            }
+          },
+          {
+            "text": "Efficient customer support with quick assistance, helpful guides, and continuous software improvements contributing positively to user experience.",
+            "category": "support",
+            "source": "TrustRadius",
+            "source_url": "https://www.trustradius.com/products/workday-adaptive-planning/reviews/all",
+            "scores": {
+              "informativeness": 1,
+              "specificity": 1,
+              "polarity": 2
+            }
+          },
+          {
+            "text": "Composite score of 8.4/10 and CX score of 8.5/10 across 40 reviews. Strong marks for expense, budget, capital, revenue, and workforce management capabilities.",
+            "category": "features",
+            "source": "SoftwareReviews",
+            "source_url": "https://softwarereviews.com/products/workday-adaptive-planning",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 2,
+              "polarity": 2
+            }
+          }
+        ],
+        "negative": [
+          {
+            "text": "No product innovation and falling behind peers. Increasing reliance on consultants to implement and maintain the platform.",
+            "category": "features",
+            "source": "Gartner",
+            "source_url": "https://www.gartner.com/reviews/market/financial-planning-software/vendor/workday-hcm/product/workday-adaptive-planning",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 2,
+              "polarity": 3
+            }
+          },
+          {
+            "text": "Finance tracking is limited to basic reports with multiple levels or drill-down. Hard to fully grasp without exporting data and massaging in something else like Excel.",
+            "category": "reporting",
+            "source": "TrustRadius",
+            "source_url": "https://www.trustradius.com/products/workday-adaptive-planning/reviews/all",
+            "scores": {
+              "informativeness": 3,
+              "specificity": 3,
+              "polarity": 3
+            }
+          },
+          {
+            "text": "Expense reporting aspects are repetitive and hard to fully optimize. Budgeting either isn't included or requires an extra fee.",
+            "category": "pricing",
+            "source": "TrustRadius",
+            "source_url": "https://www.trustradius.com/products/workday-adaptive-planning/reviews/all",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 2,
+              "polarity": 2
+            }
+          },
+          {
+            "text": "Not the best solution in any single category like HR or finance. Mid-size organizations on shoestring budgets may struggle with limited IT resources to manage the platform.",
+            "category": "usability",
+            "source": "TrustRadius",
+            "source_url": "https://www.trustradius.com/products/workday-adaptive-planning/reviews/all",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 2,
+              "polarity": 2
+            }
+          },
+          {
+            "text": "Capterra rating of 4.3 and G2 rating of 4.3 place it below most competitors in the workforce planning category, trailing tools like Teamhood (4.9/4.6), Runn (4.8/4.5), and ClickUp (4.7/4.7).",
+            "category": "other",
+            "source": "Capterra",
+            "source_url": "https://teamhood.com/productivity/workforce-planning-tools/",
+            "scores": {
+              "informativeness": 3,
+              "specificity": 3,
+              "polarity": 2
+            }
+          }
+        ],
+        "total_raw": 9
+      },
+      "Workday Recruiting": {
+        "positive": [
+          {
+            "text": "Workday HCM provides a comprehensive talent management solution that integrates recruiting, performance, compensation, and succession planning into one unified platform.",
+            "category": "features",
+            "source": "DevOpsSchool",
+            "source_url": "https://www.devopsschool.com/blog/top-10-talent-management-tools-in-2025-features-pros-cons-comparison/",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 2,
+              "polarity": 2
+            }
+          },
+          {
+            "text": "Workday Recruiting offers capabilities such as candidate management, internal HR, and resume parsing as a web-based applicant tracking and recruitment management solution for businesses of all sizes.",
+            "category": "features",
+            "source": "ITQlick",
+            "source_url": "https://www.itqlick.com/workday-recruiting",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 2,
+              "polarity": 2
+            }
+          },
+          {
+            "text": "Workday Recruiting supports both desktop and mobile platforms, making it accessible for recruiters on the go.",
+            "category": "usability",
+            "source": "ITQlick",
+            "source_url": "https://www.itqlick.com/workday-recruiting",
+            "scores": {
+              "informativeness": 1,
+              "specificity": 1,
+              "polarity": 2
+            }
+          },
+          {
+            "text": "Workday offers in-built hiring and a wide variety of payroll features integrated into one system.",
+            "category": "features",
+            "source": "Jibble",
+            "source_url": "https://www.jibble.io/us-hr-software-reviews/US-payroll/workday",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 1,
+              "polarity": 2
+            }
+          }
+        ],
+        "negative": [
+          {
+            "text": "Workday Recruiting ranked 109 out of 222 applicant tracking systems, placing it in the bottom half of the category with an ITQlick score of 75/100.",
+            "category": "other",
+            "source": "ITQlick",
+            "source_url": "https://www.itqlick.com/workday-recruiting",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 3,
+              "polarity": 2
+            }
+          },
+          {
+            "text": "Workday has expensive pricing and no free version to test, making it difficult for companies to evaluate before committing.",
+            "category": "pricing",
+            "source": "Jibble",
+            "source_url": "https://www.jibble.io/us-hr-software-reviews/US-payroll/workday",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 2,
+              "polarity": 3
+            }
+          },
+          {
+            "text": "Workday Recruiting's pricing scored only 5 out of 10, rated as average cost, which may deter smaller organizations.",
+            "category": "pricing",
+            "source": "ITQlick",
+            "source_url": "https://www.itqlick.com/workday-recruiting",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 2,
+              "polarity": 2
+            }
+          }
+        ],
+        "total_raw": 7
+      },
+      "Workday Spend Management": {
+        "positive": [
+          {
+            "text": "Workday Spend Management scores a 7.7/10 on customer experience, with reviewers noting the seamless expense capture and submission workflow across desktop and mobile.",
+            "category": "usability",
+            "source": "SoftwareReviews",
+            "source_url": "https://softwarereviews.com/products/workday-spend-management",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 1,
+              "polarity": 2
+            }
+          },
+          {
+            "text": "Composite score of 7.4/10 across 48 reviews in the Expense Management category, indicating generally favorable reception among enterprise users.",
+            "category": "features",
+            "source": "SoftwareReviews",
+            "source_url": "https://softwarereviews.com/products/workday-spend-management",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 1,
+              "polarity": 2
+            }
+          },
+          {
+            "text": "Expense reporting described as seamless with easy capture, submit, and approval workflows that work on the go, suggesting strong mobile parity.",
+            "category": "usability",
+            "source": "SoftwareReviews",
+            "source_url": "https://softwarereviews.com/products/workday-spend-management",
+            "scores": {
+              "informativeness": 1,
+              "specificity": 1,
+              "polarity": 2
+            }
+          }
+        ],
+        "negative": [
+          {
+            "text": "Workday is pushing a per-seat pricing model that extends to AI agents, raising concerns about cost escalation as automation increases within the platform.",
+            "category": "pricing",
+            "source": "Reddit",
+            "source_url": "https://www.reddit.com/r/workday/comments/1in2jlw/the_contrast_here/",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 2,
+              "polarity": 2
+            }
+          },
+          {
+            "text": "Internal morale reported at an all-time low, with employees citing a blatant lack of regard from leadership \u2014 a signal of potential support and product quality risks.",
+            "category": "support",
+            "source": "Reddit",
+            "source_url": "https://www.reddit.com/r/workday/comments/1in2jlw/the_contrast_here/",
+            "scores": {
+              "informativeness": 2,
+              "specificity": 2,
+              "polarity": 3
+            }
+          },
+          {
+            "text": "Implementation pitfalls include data migration delays and inadequate testing cycles. Teams that wait too long to clean legacy data face repeated practice runs that push timelines back months.",
+            "category": "onboarding",
+            "source": "Reddit",
+            "source_url": "https://www.reddit.com/r/workday/comments/1qh8bzk/what_are_some_of_the_common_pitfalls_in_workday/",
+            "scores": {
+              "informativeness": 3,
+              "specificity": 2,
+              "polarity": 2
+            }
+          },
+          {
+            "text": "Compared unfavorably to competitors like Rippling and Concur on G2 comparison pages, suggesting the product may lag in specific procurement analytics and expense workflow areas.",
+            "category": "features",
+            "source": "G2",
+            "source_url": "https://www.g2.com/compare/rippling-vs-workday-spend-management",
+            "scores": {
+              "informativeness": 1,
+              "specificity": 1,
+              "polarity": 1
+            }
+          }
+        ],
+        "total_raw": 48
       }
     }
   },

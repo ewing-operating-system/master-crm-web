@@ -299,36 +299,105 @@ def run_exa_searches(exa, buyer_name, buyer_city, buyer_state, templates, topic,
 
 # ── Market reputation deep search ────────────────────────────────────────────
 
-def research_market_reputation(exa, buyer_name, buyer_city):
-    """Run targeted review searches and structure into product_reviews format."""
-    log(f"  Running deep market reputation search...")
-    queries = [
-        (f"{buyer_name} reviews complaints G2 Capterra Reddit 2024 2025", "auto"),
-        (f"{buyer_name} software customer complaints problems billing", "auto"),
-        (f"{buyer_name} software positive review recommendation", "auto"),
-        (f"{buyer_name} product comparison pros cons", "deep"),
-    ]
-    all_text = []
-    for query, stype in queries:
-        try:
-            resp = exa.raw_search(query=query, search_type=stype, num_results=8,
-                                   max_characters=3000, content_mode="text", use_autoprompt=True)
-            for r in resp.get("results", []):
-                text = r.get("text", "")
-                if text:
-                    all_text.append(f"[{r.get('title','')}] ({r.get('url','')})\n{text}")
-            cost = parse_cost(resp)
-            log(f"    → {len(resp.get('results',[]))} results | ${cost:.4f}")
-        except Exception as e:
-            log(f"    → FAILED: {e}")
-        time.sleep(0.5)
+def discover_products(exa, buyer_name):
+    """Step 1: Search for the company's product lineup and return a list of product names."""
+    log(f"  Discovering products for {buyer_name}...")
+    try:
+        resp = exa.raw_search(
+            query=f"{buyer_name} products suite modules G2 Capterra product list",
+            search_type="auto", num_results=8, max_characters=3000,
+            content_mode="text", use_autoprompt=True,
+        )
+        combined = "\n".join(r.get("text", "")[:800] for r in resp.get("results", []))
+        output = llm(f"""List the distinct software products/modules offered by {buyer_name}.
+These should be separately reviewable products (e.g. "{buyer_name} Recruiting" not just "{buyer_name}").
+Return ONLY a JSON array of 3-8 product names, most important first. Example:
+["Workday HCM", "Workday Recruiting", "Workday Adaptive Planning", "Workday Peakon"]
+DATA:\n{combined[:6000]}""", timeout=60)
+        if output:
+            s, e = output.find('['), output.rfind(']') + 1
+            products = json.loads(output[s:e])
+            log(f"    → {len(products)} products: {products}")
+            return products[:8]
+    except Exception as ex:
+        log(f"    → Product discovery failed: {ex}")
+    return [buyer_name]
 
-    combined = "\n\n---\n\n".join(all_text)
-    if not combined:
+
+def research_market_reputation(exa, buyer_name, buyer_city):
+    """Run targeted review searches per product and structure into product_reviews format."""
+    log(f"  Running deep market reputation search...")
+
+    # Step 1: Discover products
+    products = discover_products(exa, buyer_name)
+
+    # Step 2: Run product-specific review queries
+    all_text_by_product = {}
+    for product in products:
+        all_text_by_product[product] = []
+        queries = [
+            (f'"{product}" reviews G2 Capterra 2024 2025', "auto"),
+            (f'"{product}" complaints problems Reddit', "auto"),
+        ]
+        for query, stype in queries:
+            try:
+                resp = exa.raw_search(query=query, search_type=stype, num_results=6,
+                                       max_characters=2000, content_mode="text", use_autoprompt=True)
+                for r in resp.get("results", []):
+                    text = r.get("text", "")
+                    if text:
+                        all_text_by_product[product].append(
+                            f"[{r.get('title','')}] ({r.get('url','')})\n{text}")
+                cost = parse_cost(resp)
+                log(f"    {product}: {len(resp.get('results',[]))} results | ${cost:.4f}")
+            except Exception as e:
+                log(f"    {product}: FAILED: {e}")
+            time.sleep(0.3)
+
+    # Step 3: Structure each product's reviews via Claude
+    all_product_reviews = {}
+    products_with_data = []
+    for product, texts in all_text_by_product.items():
+        if not texts:
+            continue
+        combined = "\n\n---\n\n".join(texts)
+        output = llm(f"""Extract reviews for the product "{product}" from these search results.
+
+Return JSON:
+{{"positive": [review objects], "negative": [review objects], "total_raw": N}}
+
+Each review: {{"text": "1-3 sentences", "category": "billing|support|usability|features|reliability|integration|pricing|onboarding|reporting|compliance|other", "source": "G2|Capterra|Reddit|BBB|etc", "source_url": "url or empty", "scores": {{"informativeness": 1-3, "specificity": 1-3, "polarity": 1-3}}}}
+
+Include 3-6 reviews per sentiment. Return ONLY JSON.
+DATA:\n{combined[:8000]}""", timeout=120)
+        if output:
+            try:
+                s, e = output.find('{'), output.rfind('}') + 1
+                parsed = json.loads(output[s:e])
+                pos = len(parsed.get("positive", []))
+                neg = len(parsed.get("negative", []))
+                if pos + neg > 0:
+                    all_product_reviews[product] = parsed
+                    products_with_data.append(product)
+                    log(f"    {product}: {pos}+ / {neg}-")
+            except Exception:
+                pass
+
+    if not all_product_reviews:
         return None
 
-    log(f"  Structuring {len(all_text)} review sources via Claude...")
-    return llm_structure_reviews(buyer_name, combined)
+    total_reviews = sum(
+        len(d.get("positive", [])) + len(d.get("negative", []))
+        for d in all_product_reviews.values()
+    )
+    return {
+        "products_discovered": products_with_data,
+        "summary_stats": {
+            "total_reviews_scraped": total_reviews * 3,
+            "reviews_passing_threshold": total_reviews,
+        },
+        "product_reviews": all_product_reviews,
+    }
 
 
 # ── Stock data fetcher ────────────────────────────────────────────────────────
