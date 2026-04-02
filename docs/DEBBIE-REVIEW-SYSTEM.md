@@ -132,6 +132,56 @@ python3 scripts/run_one_buyer_test.py \
 | Earnings Quotes | earnings_quotes | `.sections.earnings_quotes` | In sections sub-object |
 | Approach Strategy | approach_strategy | `.sections.approach_strategy` | In sections sub-object |
 
+## Traced Research Pipeline (PRODUCTION — use this)
+
+`scripts/traced_buyer_run.py` is the production script for buyer research. It does everything `run_one_buyer_test.py` does, plus captures a **full untruncated audit trail** of every step.
+
+### What "untruncated" means
+- Every Exa search query in full
+- Every Exa result (full text of every web page returned)
+- Every LLM prompt sent (complete, not previewed)
+- Every LLM output received (complete, not previewed)
+- Every file write (path, size, field names)
+- Every git operation (command, return code)
+
+### CLI Usage (identical flags to run_one_buyer_test.py)
+
+```bash
+python3 scripts/traced_buyer_run.py \
+  --buyer "SAP SuccessFactors" --city "Newtown Square" --state PA \
+  --ticker SAP --domain sap.com
+```
+
+### Output
+- Per-buyer JSON: `public/data/debbie-research-{slug}.json`
+- Combined JSON: `public/data/debbie-buyer-research.json`
+- Manifest: `public/data/debbie-buyers-manifest.json`
+- **Trace Markdown:** `docs/TRACE-{slug}-{YYYYMMDD-HHMM}.md` (full audit)
+- **Trace JSON:** `docs/TRACE-{slug}-{YYYYMMDD-HHMM}.json` (raw structured data)
+- Auto git commit + push → Vercel deploys
+
+### Batch Run (multiple buyers)
+
+Run sequentially — each buyer takes ~9 minutes, costs ~$0.25 Exa:
+
+```bash
+buyers=(
+  "Workday|Pleasanton|CA|WDAY|workday.com"
+  "Oracle HCM|Austin|TX|ORCL|oracle.com"
+  "ADP|Roseland|NJ|ADP|adp.com"
+  "Paychex|Rochester|NY|PAYX|paychex.com"
+)
+for entry in "${buyers[@]}"; do
+  IFS='|' read -r name city state ticker domain <<< "$entry"
+  python3 scripts/traced_buyer_run.py \
+    --buyer "$name" --city "$city" --state "$state" \
+    --ticker "$ticker" --domain "$domain"
+done
+```
+
+### Critical: Trace docs must NEVER be truncated
+The trace exists so Ewing can audit exactly what data went in and came out. If prompts or outputs are previewed/truncated, the trace is useless. The `full_prompt`, `full_output`, and `full_texts` fields must contain the complete content.
+
 ## Cost per Buyer
 
 ~$0.15-0.25 Exa + ~$0.02 Claude synthesis = ~$0.20 total per buyer

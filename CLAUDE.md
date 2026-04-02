@@ -63,6 +63,15 @@ Watchdog cron (`scripts/deploy_watchdog.sh`) runs every 5 min as safety net.
 
 ## DATA PIPELINE
 
+### Buyer Research Pipeline
+```bash
+# Single buyer (production — always use traced version)
+python3 scripts/traced_buyer_run.py --buyer "ADP" --city Roseland --state NJ --ticker ADP --domain adp.com
+
+# Outputs: per-buyer JSON, manifest, trace docs, auto git push
+# See docs/DEBBIE-REVIEW-SYSTEM.md for batch run syntax and full spec
+```
+
 Supabase writes do NOT appear on site automatically. Three steps required:
 1. **Write to Supabase** — correct table/columns
 2. **Regenerate pages** — `scripts/regenerate.py` rebuilds HTML
@@ -96,3 +105,4 @@ When in doubt, score 6. Never use floats or scores above 8.
 - `docs/LETTER-TEMPLATE-ENGINE-EXECUTION.md` — Letter scoring and generation
 - `docs/MEETING-PAGE-V2-SPEC.md` — Interactive meeting prep pages
 - `docs/ENGAGEMENT-BUYERS-MIGRATION-BRIEF.md` — engagement_buyers audit
+- `docs/DEBBIE-REVIEW-SYSTEM.md` — Debbie buyer review pages, traced pipeline, data contract, batch run process
