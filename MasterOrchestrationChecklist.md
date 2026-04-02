@@ -33,7 +33,7 @@
 | Setting | Value |
 |---------|-------|
 | Project | `master-crm-web` |
-| Production URL | `master-crm-web.vercel.app` |
+| Production URL | `master-crm-web-eight.vercel.app` |
 | Output directory | `public` |
 | Build command | `echo 'Static site - no build needed'` |
 | Functions | `api/**/*.js` (30s max duration) |

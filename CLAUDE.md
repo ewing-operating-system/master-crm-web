@@ -70,7 +70,7 @@ PORTAL_PW_AIRCONTROL, PORTAL_PW_DESIGNPRECAST, PORTAL_PW_WIESER
 
 **Auth flow:** `POST /api/auth/login` → sets `portal_session` cookie (HttpOnly, 7-day) → middleware gates pages by company slug. Admin password grants all-company access.
 
-**Portal gating is currently DISABLED.** Set `PORTAL_GATING_ENABLED=true` in Vercel to re-enable.
+**Portal gating has been removed.** All pages are publicly accessible.
 
 Public paths (always accessible): `/login.html`, `/api/*`, `/outputs/`, `/running-log.html`, `/system-overview.html`, `/version-history.html`, `/feature-roadmap.html`
 
