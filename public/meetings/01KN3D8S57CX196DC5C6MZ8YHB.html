@@ -285,12 +285,12 @@
   </header>
 
   <div class="player-section" id="player-section">
-    <div class="player-loading" id="player-loading">
+    <div class="player-loading" id="player-loading" style="display:flex">
       <div class="spinner"></div>
       Loading recording...
     </div>
-    <video id="meeting-video" controls preload="none" style="display:none"></video>
-    <div class="player-fallback" id="player-fallback">
+    <video id="meeting-video" controls preload="metadata"  style="display:none"></video>
+    <div class="player-fallback" id="player-fallback" style="display:none">
       <a href="https://app.fireflies.ai/view/01KN3D8S57CX196DC5C6MZ8YHB" target="_blank" rel="noopener">Open recording in Fireflies &rarr;</a>
     </div>
   </div>
@@ -1340,31 +1340,38 @@
     const utterances = document.querySelectorAll('.utterance');
     let videoReady = false;
 
-    (async function loadMedia() {
-      try {
-        const resp = await fetch('/api/meetings/media-url?id=' + FIREFLIES_ID);
-        const data = await resp.json();
+    // Wait for metadata before allowing seek/play
+    video.addEventListener('loadedmetadata', () => {
+      videoReady = true;
+      loading.style.display = 'none';
+    });
 
-        const src = data.video_url || data.audio_url;
-        if (src) {
-          video.src = src;
-          video.style.display = 'block';
-          loading.style.display = 'none';
-          videoReady = true;
+    video.addEventListener('error', () => {
+      video.style.display = 'none';
+      loading.style.display = 'none';
+      fallback.style.display = 'block';
+    });
 
-          video.addEventListener('error', () => {
-            video.style.display = 'none';
+    // If no src baked in, try the API
+    if (!video.src || video.src === window.location.href) {
+      (async function loadMedia() {
+        try {
+          const resp = await fetch('/api/meetings/media-url?id=' + FIREFLIES_ID);
+          const data = await resp.json();
+          const src = data.video_url || data.audio_url;
+          if (src) {
+            video.src = src;
+            video.style.display = 'block';
+          } else {
+            loading.style.display = 'none';
             fallback.style.display = 'block';
-          });
-        } else {
+          }
+        } catch (e) {
           loading.style.display = 'none';
           fallback.style.display = 'block';
         }
-      } catch (e) {
-        loading.style.display = 'none';
-        fallback.style.display = 'block';
-      }
-    })();
+      })();
+    }
 
     // ── Transcript ↔ Video sync ─────────────────────
     // Click utterance → seek video
@@ -1374,7 +1381,7 @@
         const time = parseFloat(u.dataset.time);
         if (videoReady && !isNaN(time)) {
           video.currentTime = time;
-          video.play();
+          video.play().catch(() => {});
           highlightUtterance(u);
           video.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
@@ -1405,11 +1412,11 @@
           // Auto-scroll transcript panel to keep active line visible
           const panel = closest.closest('.transcript-panel');
           if (panel) {
-            const uTop = closest.offsetTop - panel.offsetTop;
-            const panelScroll = panel.scrollTop;
-            const panelHeight = panel.clientHeight;
-            if (uTop < panelScroll + 60 || uTop > panelScroll + panelHeight - 80) {
-              panel.scrollTo({ top: uTop - 100, behavior: 'smooth' });
+            const panelRect = panel.getBoundingClientRect();
+            const uRect = closest.getBoundingClientRect();
+            const relTop = uRect.top - panelRect.top;
+            if (relTop < 60 || relTop > panelRect.height - 80) {
+              panel.scrollTo({ top: panel.scrollTop + relTop - 100, behavior: 'smooth' });
             }
           }
         }
