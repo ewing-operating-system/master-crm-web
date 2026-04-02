@@ -63,8 +63,8 @@ def load_env(path: Path) -> dict:
 
 ENV = load_env(ENV_FILE)
 
-SUPABASE_URL = ENV.get("MASTER_CRM_SUPABASE_URL", "").rstrip("/")
-SUPABASE_KEY = ENV.get("MASTER_CRM_SUPABASE_SERVICE_ROLE_KEY", "")
+SUPABASE_URL = os.environ.get("SUPABASE_URL", ENV.get("MASTER_CRM_SUPABASE_URL", "")).rstrip("/")
+SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", ENV.get("MASTER_CRM_SUPABASE_SERVICE_ROLE_KEY", ""))
 
 
 # ── Slug helpers ─────────────────────────────────────────────────────────────
@@ -333,22 +333,22 @@ def supabase_get(table: str, params: str = "") -> list:
 
 
 # ── POLL MODE — Fireflies via claude CLI ──────────────────────────────────────
-FIREFLIES_PROMPT = """\
+FIREFLIES_PROMPT_TEMPLATE = """\
 Use the Fireflies MCP tool to fetch transcripts from the last 30 minutes.
 Call: mcp__claude_ai_Fireflies__fireflies_get_recent_transcripts with fromDate set to {from_iso}
 or use mcp__claude_ai_Fireflies__fireflies_search with a date range query.
 
 Return ONLY a JSON array (no markdown, no prose). Each element must have:
-{
+{{
   "transcript_id": "...",
   "title": "...",
   "date": "ISO-8601 datetime",
   "duration_seconds": 123,
-  "participants": [{"email": "...", "name": "..."}],
+  "participants": [{{"email": "...", "name": "..."}}],
   "summary": "...",
   "action_items": ["..."],
   "transcript_text": "first 2000 chars of transcript"
-}
+}}
 
 If there are no transcripts in the last 30 minutes, return an empty JSON array: []
 """
@@ -358,7 +358,7 @@ def poll_fireflies() -> list[dict]:
     """Use `claude -p` to invoke Fireflies MCP and return transcript dicts."""
     from_dt  = datetime.now(timezone.utc) - timedelta(minutes=30)
     from_iso = from_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
-    prompt   = FIREFLIES_PROMPT.format(from_iso=from_iso)
+    prompt   = FIREFLIES_PROMPT_TEMPLATE.format(from_iso=from_iso)
 
     log.info("Invoking claude CLI for Fireflies poll (last 30 min since %s)…", from_iso)
     try:

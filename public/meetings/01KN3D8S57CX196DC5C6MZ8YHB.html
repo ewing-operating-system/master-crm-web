@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hr.com Proposal Review with Debbie — Meeting Transcript</title>
+  <meta name="page-type" content="meeting-transcript">
+  <meta name="transcript-id" content="31b9455e-9046-45b2-b6c1-6d5287b8f059">
+  <meta name="entities" content="next_chapter,hrcom">
+  <script src="/supabase-config.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0d1117; color: #c9d1d9; font-family: "Segoe UI", system-ui, -apple-system, sans-serif; }
+
+    /* Header */
+    .meeting-header {
+      background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);
+      border-bottom: 1px solid #30363d;
+      padding: 24px 32px;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .meeting-header h1 { font-size: 22px; color: #f0f6fc; margin-bottom: 8px; }
+    .meeting-meta { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; font-size: 13px; color: #8b949e; }
+    .meeting-meta span { display: flex; align-items: center; gap: 4px; }
+    .entity-badge {
+      display: inline-block; padding: 3px 10px; border-radius: 12px;
+      color: #fff; font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+    }
+    .hub-links { margin-top: 8px; }
+    .hub-link {
+      color: #58a6ff; text-decoration: none; font-size: 12px; margin-right: 16px;
+    }
+    .hub-link:hover { text-decoration: underline; }
+
+    /* Audio player */
+    .audio-section {
+      padding: 16px 32px;
+      background: #161b22;
+      border-bottom: 1px solid #30363d;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .audio-section audio { flex: 1; max-width: 600px; height: 40px; }
+    .audio-label { color: #8b949e; font-size: 13px; }
+
+    /* Summary */
+    .summary-section {
+      padding: 16px 32px;
+      background: #161b22;
+      border-bottom: 1px solid #30363d;
+    }
+    .summary-section h3 { color: #f0f6fc; font-size: 14px; margin-bottom: 8px; }
+    .summary-text { color: #c9d1d9; font-size: 13px; line-height: 1.6; }
+
+    /* Main layout */
+    .main-content {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      height: calc(100vh - 200px);
+    }
+    @media (max-width: 900px) {
+      .main-content { grid-template-columns: 1fr; }
+      .learnings-panel { max-height: 50vh; }
+    }
+
+    /* Transcript panel */
+    .transcript-panel {
+      padding: 24px 32px;
+      overflow-y: auto;
+      border-right: 1px solid #30363d;
+    }
+    .transcript-panel h2 {
+      color: #f0f6fc; font-size: 16px; margin-bottom: 16px;
+      padding-bottom: 8px; border-bottom: 1px solid #30363d;
+    }
+    .utterance {
+      margin-bottom: 16px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .utterance:hover { background: #161b22; }
+    .speaker-row {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 4px;
+    }
+    .timestamp {
+      color: #484f58; font-size: 11px; font-family: monospace;
+      cursor: pointer;
+    }
+    .timestamp:hover { color: #58a6ff; }
+    .speaker-name {
+      color: #58a6ff; font-weight: 600; font-size: 13px;
+    }
+    .speaker-text {
+      color: #c9d1d9; font-size: 13px; line-height: 1.6;
+      margin-left: 0; margin-bottom: 4px;
+    }
+
+    /* Learnings panel */
+    .learnings-panel {
+      padding: 24px 16px;
+      overflow-y: auto;
+      background: #0d1117;
+    }
+    .learnings-panel h2 {
+      color: #f0f6fc; font-size: 16px; margin-bottom: 4px;
+    }
+    .learnings-subtitle {
+      color: #8b949e; font-size: 12px; margin-bottom: 16px;
+    }
+    .learning-card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 10px;
+      transition: border-color 0.2s;
+    }
+    .learning-card:hover { border-color: #58a6ff; }
+    .learning-card.approved { border-left: 3px solid #27ae60; }
+    .learning-card.rejected { border-left: 3px solid #e74c3c; opacity: 0.6; }
+    .learning-header {
+      display: flex; align-items: center; gap: 6px; margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+    .learning-icon { font-size: 14px; }
+    .learning-category {
+      background: #21262d; color: #8b949e; font-size: 10px;
+      padding: 2px 8px; border-radius: 10px; text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .learning-entity {
+      background: #1a1a2e; color: #58a6ff; font-size: 10px;
+      padding: 2px 8px; border-radius: 10px;
+    }
+    .learning-confidence {
+      color: #484f58; font-size: 10px; margin-left: auto;
+    }
+    .learning-text {
+      color: #c9d1d9; font-size: 12px; line-height: 1.5;
+      margin-bottom: 8px;
+    }
+    .learning-actions {
+      display: flex; gap: 6px; align-items: center;
+    }
+    .btn-approve, .btn-reject {
+      padding: 4px 14px; border-radius: 4px; border: 1px solid #30363d;
+      font-size: 11px; cursor: pointer; transition: all 0.15s;
+    }
+    .btn-approve {
+      background: #1a3a2a; color: #27ae60; border-color: #27ae60;
+    }
+    .btn-approve:hover { background: #27ae60; color: #fff; }
+    .btn-reject {
+      background: #3a1a1a; color: #e74c3c; border-color: #e74c3c;
+    }
+    .btn-reject:hover { background: #e74c3c; color: #fff; }
+    .status-tag {
+      font-size: 11px; padding: 3px 10px; border-radius: 4px;
+    }
+    .approved-tag { background: #1a3a2a; color: #27ae60; }
+    .rejected-tag { background: #3a1a1a; color: #e74c3c; }
+
+    /* Filter bar */
+    .filter-bar {
+      display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 4px 10px; border-radius: 12px; border: 1px solid #30363d;
+      background: #161b22; color: #8b949e; font-size: 11px; cursor: pointer;
+    }
+    .filter-btn.active { background: #1f6feb; color: #fff; border-color: #1f6feb; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0d1117; }
+    ::-webkit-scrollbar-thumb { background: #30363d; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #484f58; }
+  </style>
+</head>
+<body>
+  <header class="meeting-header">
+    <h1>Hr.com Proposal Review with Debbie</h1>
+    <div class="meeting-meta">
+      <span>April 1, 2026</span>
+      <span>34 min</span>
+      <span>Debbie McGrath, Mark DeChant, Ewing Gillaspy, John Kelly</span>
+      <span class="entity-badge" style="background:#2c3e50">Next Chapter</span> <span class="entity-badge" style="background:#6c757d">Hrcom</span> 
+    </div>
+    <div class="hub-links"><a href="/next-chapter-hub.html" class="hub-link">Next Chapter Account Page</a> <a href="/hrcom-hub.html" class="hub-link">Hrcom Account Page</a> </div>
+  </header>
+
+  <div class="audio-section">
+    <span class="audio-label">Recording:</span>
+    <audio controls preload="none" src="https://cdn.fireflies.ai/01KN3D8S57CX196DC5C6MZ8YHB/audio.mp3"></audio>
+  </div>
+
+  <div class="summary-section">
+    <h3>Summary</h3>
+    <p class="summary-text">The team discussed strategies to maximize the value of HR.com and its associated assets through a competitive and collaborative deal process. By avoiding exclusivity, they aim to create competition and drive offers higher. The assets are being treated as separate deals—domain, media business, and My People community platform—to target diverse buyer profiles. Andrew Miller, a domain specialist who sold chat.com to Sam Altman, will handle the domain sale separately. Fee structures, competitive positioning, and a meeting with Andrew Thursday at 3pm ET were agreed upon.</p>
+  </div>
+
+  <div class="main-content">
+    <div class="transcript-panel">
+      <h2>Transcript</h2>
+      <div class="utterance" data-time="5.0">
+  <div class="speaker-row">
+    <span class="timestamp">[00:05]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">This meeting is being recorded.</p>
+</div>
+<div class="utterance" data-time="10.0">
+  <div class="speaker-row">
+    <span class="timestamp">[00:10]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">Oh.</p>
+  <p class="speaker-text">Am I in the wrong place, Man?</p>
+  <p class="speaker-text">I thought I was in the wrong place.</p>
+  <p class="speaker-text">So you showed up.</p>
+</div>
+<div class="utterance" data-time="21.0">
+  <div class="speaker-row">
+    <span class="timestamp">[00:21]</span>
+    <span class="speaker-name">Mark DeChant</span>
+  </div>
+  <p class="speaker-text">Who knows what calendar we'll use today.</p>
+</div>
+<div class="utterance" data-time="26.0">
+  <div class="speaker-row">
+    <span class="timestamp">[00:26]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">Maples out there.</p>
+</div>
+<div class="utterance" data-time="31.0">
+  <div class="speaker-row">
+    <span class="timestamp">[00:31]</span>
+    <span class="speaker-name">John Kelly</span>
+  </div>
+  <p class="speaker-text">Yeah.</p>
+</div>
+<div class="utterance" data-time="36.0">
+  <div class="speaker-row">
+    <span class="timestamp">[00:36]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">What is going on?</p>
+  <p class="speaker-text">It's not like either one of.</p>
+</div>
+<div class="utterance" data-time="43.0">
+  <div class="speaker-row">
+    <span class="timestamp">[00:43]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">Come here.</p>
+  <p class="speaker-text">Come here.</p>
+</div>
+<div class="utterance" data-time="50.0">
+  <div class="speaker-row">
+    <span class="timestamp">[00:50]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">What is going on?</p>
+  <p class="speaker-text">Maple.</p>
+  <p class="speaker-text">Maple.</p>
+  <p class="speaker-text">Oh.</p>
+  <p class="speaker-text">I'm just gonna say it out loud as a reminder to myself so you.</p>
+  <p class="speaker-text">For you to hear, I need to delete my Revs up Zoom account because it's still signing into some computers and stuff.</p>
+  <p class="speaker-text">It's like, okay, yeah, whole big orchestration and we'll save some money.</p>
+  <p class="speaker-text">Give somebody else thought.</p>
+</div>
+<div class="utterance" data-time="69.0">
+  <div class="speaker-row">
+    <span class="timestamp">[01:09]</span>
+    <span class="speaker-name">Mark DeChant</span>
+  </div>
+  <p class="speaker-text">I already deleted that, but check it out.</p>
+</div>
+<div class="utterance" data-time="74.0">
+  <div class="speaker-row">
+    <span class="timestamp">[01:14]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">There he is.</p>
+  <p class="speaker-text">Fresh shave man, glistening.</p>
+  <p class="speaker-text">I'm talking about the top.</p>
+  <p class="speaker-text">You're still on mute, but that's okay.</p>
+  <p class="speaker-text">We've heard it.</p>
+</div>
+<div class="utterance" data-time="87.0">
+  <div class="speaker-row">
+    <span class="timestamp">[01:27]</span>
+    <span class="speaker-name">Mark DeChant</span>
+  </div>
+  <p class="speaker-text">I was gonna say.</p>
+</div>
+<div class="utterance" data-time="92.0">
+  <div class="speaker-row">
+    <span class="timestamp">[01:32]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">I was gonna say.</p>
+</div>
+<div class="utterance" data-time="97.0">
+  <div class="speaker-row">
+    <span class="timestamp">[01:37]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">Don't tell them.</p>
+</div>
+<div class="utterance" data-time="102.0">
+  <div class="speaker-row">
+    <span class="timestamp">[01:42]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">Yeah.</p>
+</div>
+<div class="utterance" data-time="107.0">
+  <div class="speaker-row">
+    <span class="timestamp">[01:47]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">No, no, no.</p>
+</div>
+<div class="utterance" data-time="112.0">
+  <div class="speaker-row">
+    <span class="timestamp">[01:52]</span>
+    <span class="speaker-name">John Kelly</span>
+  </div>
+  <p class="speaker-text">There you go.</p>
+  <p class="speaker-text">I'm just gonna say something nasty, Mark.</p>
+</div>
+<div class="utterance" data-time="119.0">
+  <div class="speaker-row">
+    <span class="timestamp">[01:59]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">Anyway.</p>
+</div>
+<div class="utterance" data-time="124.0">
+  <div class="speaker-row">
+    <span class="timestamp">[02:04]</span>
+    <span class="speaker-name">John Kelly</span>
+  </div>
+  <p class="speaker-text">No, no, it's not.</p>
+  <p class="speaker-text">It's not really shaped on top at all.</p>
+  <p class="speaker-text">That's the funny thing.</p>
+  <p class="speaker-text">So, of course, I'm setting up everything again, new on the new ID next chapter thing that you gave me.</p>
+  <p class="speaker-text">And as I'm doing that, you know, cameras, microphones, everything, you know, you got to get Zoom meetings to work.</p>
+  <p class="speaker-text">It's just funny.</p>
+  <p class="speaker-text">There's a.</p>
+  <p class="speaker-text">There's an application there that just allows you to set up, reconfigure everything instantly.</p>
+  <p class="speaker-text">I just don't know where it is.</p>
+</div>
+<div class="utterance" data-time="145.0">
+  <div class="speaker-row">
+    <span class="timestamp">[02:25]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">It's called backup to icloud, John.</p>
+  <p class="speaker-text">That's all.</p>
+  <p class="speaker-text">There you go.</p>
+</div>
+<div class="utterance" data-time="154.0">
+  <div class="speaker-row">
+    <span class="timestamp">[02:34]</span>
+    <span class="speaker-name">Mark DeChant</span>
+  </div>
+  <p class="speaker-text">Debbie.</p>
+</div>
+<div class="utterance" data-time="159.0">
+  <div class="speaker-row">
+    <span class="timestamp">[02:39]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">Hi.</p>
+  <p class="speaker-text">Hey, Mark.</p>
+  <p class="speaker-text">Deb McGrath.</p>
+</div>
+<div class="utterance" data-time="168.0">
+  <div class="speaker-row">
+    <span class="timestamp">[02:48]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">Hi, Deb.</p>
+  <p class="speaker-text">Well, we sent you a bunch of stuff, probably more than you wanted, and.</p>
+</div>
+<div class="utterance" data-time="175.0">
+  <div class="speaker-row">
+    <span class="timestamp">[02:55]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">All on one nice website, though, right?</p>
+  <p class="speaker-text">So.</p>
+</div>
+<div class="utterance" data-time="182.0">
+  <div class="speaker-row">
+    <span class="timestamp">[03:02]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">Yeah.</p>
+  <p class="speaker-text">Yeah.</p>
+  <p class="speaker-text">You know, I got caught between two projects, and I end up publishing to the original one just for the purposes of getting something to you.</p>
+  <p class="speaker-text">I like the research section better on that one.</p>
+  <p class="speaker-text">You had some questions.</p>
+  <p class="speaker-text">Let's.</p>
+  <p class="speaker-text">Let's start with the questions.</p>
+  <p class="speaker-text">The SAP one.</p>
+</div>
+<div class="utterance" data-time="201.0">
+  <div class="speaker-row">
+    <span class="timestamp">[03:21]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">I was just expecting to see the SAP narrative, and I couldn't find it until I found the hamburger menu.</p>
+  <p class="speaker-text">Oh.</p>
+  <p class="speaker-text">So just.</p>
+  <p class="speaker-text">So last night I told you.</p>
+  <p class="speaker-text">Oh, I found it.</p>
+  <p class="speaker-text">Right.</p>
+  <p class="speaker-text">So it was just that.</p>
+  <p class="speaker-text">Yeah.</p>
+  <p class="speaker-text">So.</p>
+  <p class="speaker-text">So I get it.</p>
+  <p class="speaker-text">So is that website, like, anybody can get at it?</p>
+  <p class="speaker-text">Is.</p>
+  <p class="speaker-text">It should be behind a firewall or something like.</p>
+</div>
+<div class="utterance" data-time="230.0">
+  <div class="speaker-row">
+    <span class="timestamp">[03:50]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">Oh, it's.</p>
+</div>
+<div class="utterance" data-time="235.0">
+  <div class="speaker-row">
+    <span class="timestamp">[03:55]</span>
+    <span class="speaker-name">Mark DeChant</span>
+  </div>
+  <p class="speaker-text">It's gonna.</p>
+</div>
+<div class="utterance" data-time="240.0">
+  <div class="speaker-row">
+    <span class="timestamp">[04:00]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">It's gonna.</p>
+  <p class="speaker-text">It's.</p>
+  <p class="speaker-text">As soon as we decide to work together or not, I'm taking it down.</p>
+  <p class="speaker-text">It's not.</p>
+  <p class="speaker-text">It's not a functional site.</p>
+  <p class="speaker-text">The other one's, the other one's password protected.</p>
+  <p class="speaker-text">I'll.</p>
+  <p class="speaker-text">I'll add gating right now.</p>
+</div>
+<div class="utterance" data-time="259.0">
+  <div class="speaker-row">
+    <span class="timestamp">[04:19]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">Okay.</p>
+  <p class="speaker-text">Okay.</p>
+  <p class="speaker-text">I just want to double check that.</p>
+  <p class="speaker-text">But what do you mean the other.</p>
+</div>
+<div class="utterance" data-time="270.0">
+  <div class="speaker-row">
+    <span class="timestamp">[04:30]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">One, the one in the loom video is the one that we work out of.</p>
+</div>
+<div class="utterance" data-time="275.0">
+  <div class="speaker-row">
+    <span class="timestamp">[04:35]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">Okay.</p>
+</div>
+<div class="utterance" data-time="280.0">
+  <div class="speaker-row">
+    <span class="timestamp">[04:40]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">That is not Debbie's deal room.</p>
+  <p class="speaker-text">It's our own system that's got all.</p>
+</div>
+<div class="utterance" data-time="287.0">
+  <div class="speaker-row">
+    <span class="timestamp">[04:47]</span>
+    <span class="speaker-name">John Kelly</span>
+  </div>
+  <p class="speaker-text">The staging site Deb.</p>
+  <p class="speaker-text">And you don't see that.</p>
+</div>
+<div class="utterance" data-time="294.0">
+  <div class="speaker-row">
+    <span class="timestamp">[04:54]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">Okay.</p>
+  <p class="speaker-text">Okay, fine, thanks.</p>
+  <p class="speaker-text">Like I could add some narrative to some of the companies you have on there and help whether it's good or bad.</p>
+  <p class="speaker-text">Right.</p>
+  <p class="speaker-text">Because there's some people there that, like Sherm for example, they were one of the lowest bidders the last time I went to market and they're probably not worth spending a lot of time on it.</p>
+  <p class="speaker-text">Like, honestly, they, they would, they would never pony up for the domain name, although they should.</p>
+  <p class="speaker-text">They would, they would probably be interested in the company, the media company, if it was less than what they offered before, which it could be right.</p>
+  <p class="speaker-text">If we sell the domain for premium.</p>
+  <p class="speaker-text">But they were never, they were never a value buyer.</p>
+  <p class="speaker-text">The other thing is in the nar, there's some, just some wrong things in the narrative.</p>
+  <p class="speaker-text">So maybe in translation.</p>
+  <p class="speaker-text">So like the, the offers that I had before went from a low of 5, like to 45.</p>
+  <p class="speaker-text">Okay.</p>
+  <p class="speaker-text">That's the wide range they were.</p>
+  <p class="speaker-text">I ended up taking one in the middle that didn't work.</p>
+  <p class="speaker-text">But the 45 you have in that thing was just for the domain name.</p>
+  <p class="speaker-text">That was not true.</p>
+  <p class="speaker-text">Nobody, nobody offered just for the domain name.</p>
+  <p class="speaker-text">I don't think anybody was talking to, was really understood the value of the domain name.</p>
+</div>
+<div class="utterance" data-time="335.0">
+  <div class="speaker-row">
+    <span class="timestamp">[05:35]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">Got it.</p>
+</div>
+<div class="utterance" data-time="340.0">
+  <div class="speaker-row">
+    <span class="timestamp">[05:40]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">So everybody was for everything.</p>
+  <p class="speaker-text">Yeah, yeah.</p>
+  <p class="speaker-text">And that then, and honestly that the high valuations were more VCs that were going to put money in and value the company really high.</p>
+  <p class="speaker-text">So that's, that's why I wasn't interested in any of those.</p>
+  <p class="speaker-text">So that makes sense.</p>
+</div>
+<div class="utterance" data-time="353.0">
+  <div class="speaker-row">
+    <span class="timestamp">[05:53]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">That makes a ton of sense.</p>
+</div>
+<div class="utterance" data-time="358.0">
+  <div class="speaker-row">
+    <span class="timestamp">[05:58]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">Okay.</p>
+  <p class="speaker-text">And then like even the SAP or the workday stuff, like Carl's gone.</p>
+  <p class="speaker-text">Right.</p>
+  <p class="speaker-text">So I don't know how like how accurate this needs to be if it's just a, like there's just things changing so fast.</p>
+  <p class="speaker-text">Right.</p>
+  <p class="speaker-text">So how does it pick that up?</p>
+  <p class="speaker-text">So, so we just work together more collaboratively.</p>
+  <p class="speaker-text">So you know you're not looking for Carl because he's gone.</p>
+</div>
+<div class="utterance" data-time="377.0">
+  <div class="speaker-row">
+    <span class="timestamp">[06:17]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">Yes.</p>
+  <p class="speaker-text">And just, and so this is me running the low cost models just to put something together so we can look at it honestly.</p>
+  <p class="speaker-text">So this is Deep Seq's cheapest model.</p>
+  <p class="speaker-text">This is Gemini's cheapest model.</p>
+  <p class="speaker-text">They both do the research, they send it to slightly more expensive and we're going to run it again with your feedback.</p>
+  <p class="speaker-text">I actually already built the system to put your feedback in, so.</p>
+</div>
+<div class="utterance" data-time="392.0">
+  <div class="speaker-row">
+    <span class="timestamp">[06:32]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">Okay.</p>
+  <p class="speaker-text">Oh, okay.</p>
+</div>
+<div class="utterance" data-time="399.0">
+  <div class="speaker-row">
+    <span class="timestamp">[06:39]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">That's exactly how I want to run this model and is give you a sense of what the cheat models found.</p>
+  <p class="speaker-text">Take your expert fine tuning basic machine learning exercise and then take it back to them and have them go look for specific EXA searches.</p>
+  <p class="speaker-text">Are EXA engines going to recreate its searches based on what you say in your feedback?</p>
+  <p class="speaker-text">Yes.</p>
+</div>
+<div class="utterance" data-time="410.0">
+  <div class="speaker-row">
+    <span class="timestamp">[06:50]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">Okay.</p>
+  <p class="speaker-text">Even like, and I don't know if this is just a working document for us.</p>
+</div>
+<div class="utterance" data-time="417.0">
+  <div class="speaker-row">
+    <span class="timestamp">[06:57]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">Yes, yes.</p>
+  <p class="speaker-text">This is the audience for this entire thing.</p>
+  <p class="speaker-text">We have the whole audience here.</p>
+  <p class="speaker-text">Yes.</p>
+</div>
+<div class="utterance" data-time="428.0">
+  <div class="speaker-row">
+    <span class="timestamp">[07:08]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">Okay, that's fine.</p>
+  <p class="speaker-text">Like just things in regards to my health that I can't travel.</p>
+  <p class="speaker-text">Like, I don't know how relevant that is but, but I wouldn't want it people to say, oh, she has a health issue, because I don't.</p>
+  <p class="speaker-text">Right.</p>
+  <p class="speaker-text">I just, I just need a hip replacement.</p>
+  <p class="speaker-text">So as long as it's only between us to start, then that's fine.</p>
+  <p class="speaker-text">That's just some of the feedback.</p>
+  <p class="speaker-text">Now I did talk to Andrew Miller from the Tomb two letter domain specialist, right.</p>
+  <p class="speaker-text">And, and I, I think I've told you guys, like, he can get us a bigger premium than, I don't believe in the bundling that you guys had.</p>
+  <p class="speaker-text">Like, he, he can get the domain done fast.</p>
+  <p class="speaker-text">Okay.</p>
+  <p class="speaker-text">And at a premium.</p>
+  <p class="speaker-text">He doesn't, he, he says, like, look, I'll work with you guys, right?</p>
+  <p class="speaker-text">If, if, if they want the rest of business, I'll flip it over to them.</p>
+  <p class="speaker-text">I'm like, I want nothing to do with my people.</p>
+  <p class="speaker-text">I want nothing to do with the media property.</p>
+  <p class="speaker-text">I'll, I'll let other people work on it.</p>
+  <p class="speaker-text">But you, you just got to let me go strong in my lane.</p>
+  <p class="speaker-text">Now he says if, if you guys come up with something and you and Deb, you think it's somebody who wants to buy all of it, then I'm fine with that too.</p>
+  <p class="speaker-text">Right.</p>
+  <p class="speaker-text">But let's just figure out how to work together to make sure you being Deb McGrath get the most value.</p>
+  <p class="speaker-text">So what?</p>
+  <p class="speaker-text">I, what.</p>
+  <p class="speaker-text">I talked to him this morning.</p>
+  <p class="speaker-text">I told him I was going to meet with you guys today and he said, great.</p>
+  <p class="speaker-text">Like I said, can I just put you guys in touch so we can just all get that idea done and all work together for the best outcome?</p>
+  <p class="speaker-text">And I kind of said you guys would be very keen on that.</p>
+  <p class="speaker-text">And he said, that's great.</p>
+  <p class="speaker-text">I will, I will help them do their job.</p>
+  <p class="speaker-text">You can help him do his.</p>
+  <p class="speaker-text">Does that make sense?</p>
+</div>
+<div class="utterance" data-time="493.0">
+  <div class="speaker-row">
+    <span class="timestamp">[08:13]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">Happy to meet with him Happening.</p>
+  <p class="speaker-text">Yeah, yeah, yeah.</p>
+  <p class="speaker-text">It's, it's an intriguing space and we're going to run into this again eventually.</p>
+  <p class="speaker-text">So having a contact like that's great.</p>
+</div>
+<div class="utterance" data-time="504.0">
+  <div class="speaker-row">
+    <span class="timestamp">[08:24]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">Yeah.</p>
+  <p class="speaker-text">He gave me a couple examples that he just did deals with where people wanted the whole thing and then he came in and said, okay, that's fine.</p>
+  <p class="speaker-text">But you know, if you, if you're going to buy this business and then take that domain and flip it because it's worth a lot more than you're buying it for.</p>
+  <p class="speaker-text">I just want to make the buyer aware of that.</p>
+  <p class="speaker-text">And if that's your intention, then, you know, they need, they need to be part of that or they need to keep the domain name.</p>
+  <p class="speaker-text">If you're not going to use it, they need to keep that domain name.</p>
+  <p class="speaker-text">And then he says that usually gets them more money.</p>
+  <p class="speaker-text">So anyway, he gave me lots of examples.</p>
+</div>
+<div class="utterance" data-time="523.0">
+  <div class="speaker-row">
+    <span class="timestamp">[08:43]</span>
+    <span class="speaker-name">John Kelly</span>
+  </div>
+  <p class="speaker-text">So again, Deb, is Andrew asking for exclusivity?</p>
+</div>
+<div class="utterance" data-time="528.0">
+  <div class="speaker-row">
+    <span class="timestamp">[08:48]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">Well, he's, he's asking his initial base contract does, but he's willing to carve out that and how he would work with you and me to get this done.</p>
+</div>
+<div class="utterance" data-time="533.0">
+  <div class="speaker-row">
+    <span class="timestamp">[08:53]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">Okay.</p>
+</div>
+<div class="utterance" data-time="538.0">
+  <div class="speaker-row">
+    <span class="timestamp">[08:58]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">Right.</p>
+  <p class="speaker-text">So, yeah, the only reason I asked.</p>
+</div>
+<div class="utterance" data-time="545.0">
+  <div class="speaker-row">
+    <span class="timestamp">[09:05]</span>
+    <span class="speaker-name">John Kelly</span>
+  </div>
+  <p class="speaker-text">Is the Rolodex that we have.</p>
+  <p class="speaker-text">Right.</p>
+  <p class="speaker-text">I have.</p>
+  <p class="speaker-text">Etc.</p>
+  <p class="speaker-text">I can make a couple quick phone calls into two, three, four of these places.</p>
+  <p class="speaker-text">Very, very high.</p>
+  <p class="speaker-text">Yeah, you know, I don't know if that's beneficial or not, but you know, it's, it's a different play than he might have because I know these people personally.</p>
+</div>
+<div class="utterance" data-time="562.0">
+  <div class="speaker-row">
+    <span class="timestamp">[09:22]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">Yeah, he, like, he knows like Sam Altman.</p>
+  <p class="speaker-text">He sold a couple domain names.</p>
+  <p class="speaker-text">He, he sold chat.com to him.</p>
+  <p class="speaker-text">He's trying to sell world.com to him because Sam owns world.org so he, he knows those type of people.</p>
+  <p class="speaker-text">But he, I would say he typically deals with at a different level than, than, than you or I would in trying to sell this business.</p>
+  <p class="speaker-text">It's like people have corp. Development teams that are looking for assets to buy.</p>
+  <p class="speaker-text">He typically deals with a CFO or a CEO.</p>
+  <p class="speaker-text">He says sometimes if it's a big brand, like you know, a ba.com like you just know you got to go to British Airways and then that's a marketing play, not a CFO or a CEO play.</p>
+  <p class="speaker-text">Yeah.</p>
+</div>
+<div class="utterance" data-time="583.0">
+  <div class="speaker-row">
+    <span class="timestamp">[09:43]</span>
+    <span class="speaker-name">John Kelly</span>
+  </div>
+  <p class="speaker-text">So that's again, what I'm implying is I also might know the CFO or CEO.</p>
+</div>
+<div class="utterance" data-time="588.0">
+  <div class="speaker-row">
+    <span class="timestamp">[09:48]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">Yeah, yeah, yeah.</p>
+  <p class="speaker-text">For, for some of the hr, like that's the issue.</p>
+  <p class="speaker-text">We all, for a lot of these,.</p>
+</div>
+<div class="utterance" data-time="597.0">
+  <div class="speaker-row">
+    <span class="timestamp">[09:57]</span>
+    <span class="speaker-name">John Kelly</span>
+  </div>
+  <p class="speaker-text">Just, you Know, as former.</p>
+  <p class="speaker-text">Like, I used to run the global support team.</p>
+  <p class="speaker-text">So I was managing, you know, the literally top 200 accounts for Oracle, the top 400, remember the premier customer network at SAP.</p>
+  <p class="speaker-text">So some of these folks still haven't Rolodex.</p>
+  <p class="speaker-text">I just wasn't sure if we can make, if that was a way that we would open the door to an opportunity.</p>
+  <p class="speaker-text">If he was just asking and we can talk to him.</p>
+  <p class="speaker-text">So I think that's great.</p>
+</div>
+<div class="utterance" data-time="614.0">
+  <div class="speaker-row">
+    <span class="timestamp">[10:14]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">I think, I think we can make this competitive and collaborative and, and shared.</p>
+  <p class="speaker-text">And I have a bounty for the person that actually finds the buyer.</p>
+  <p class="speaker-text">I think, I think we could achieve all that with a, with a conversation.</p>
+</div>
+<div class="utterance" data-time="623.0">
+  <div class="speaker-row">
+    <span class="timestamp">[10:23]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">I mean, I agree, I agree.</p>
+</div>
+<div class="utterance" data-time="628.0">
+  <div class="speaker-row">
+    <span class="timestamp">[10:28]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">So, yeah, I mean, we can just say, look, you know, we'll split some portion of something and then, you know, you, you find the deal, you get a cherry on top.</p>
+  <p class="speaker-text">If we find the deal, we get a cherry on top.</p>
+  <p class="speaker-text">Now we're, now we're humming together and sharing notes.</p>
+</div>
+<div class="utterance" data-time="637.0">
+  <div class="speaker-row">
+    <span class="timestamp">[10:37]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">Yeah, yeah, yep.</p>
+  <p class="speaker-text">And I told him, you guys have a place to put notes.</p>
+  <p class="speaker-text">So, yeah, invite all that and share it, then, then that will help document it.</p>
+  <p class="speaker-text">Right.</p>
+  <p class="speaker-text">And I also think sometimes Doc, talking to two people, talking to the same person just brings more excitement or energy or urgency to it.</p>
+</div>
+<div class="utterance" data-time="650.0">
+  <div class="speaker-row">
+    <span class="timestamp">[10:50]</span>
+    <span class="speaker-name">John Kelly</span>
+  </div>
+  <p class="speaker-text">Yeah.</p>
+</div>
+<div class="utterance" data-time="655.0">
+  <div class="speaker-row">
+    <span class="timestamp">[10:55]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">So.</p>
+  <p class="speaker-text">So, so I'm pretty sure, you guys, I'm pretty sure between us, we can figure out how to make it work.</p>
+</div>
+<div class="utterance" data-time="662.0">
+  <div class="speaker-row">
+    <span class="timestamp">[11:02]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">Definitely.</p>
+</div>
+<div class="utterance" data-time="667.0">
+  <div class="speaker-row">
+    <span class="timestamp">[11:07]</span>
+    <span class="speaker-name">John Kelly</span>
+  </div>
+  <p class="speaker-text">Absolutely.</p>
+</div>
+<div class="utterance" data-time="672.0">
+  <div class="speaker-row">
+    <span class="timestamp">[11:12]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">Okay.</p>
+  <p class="speaker-text">So.</p>
+  <p class="speaker-text">So that was my next step with you guys and then just to go through the rest.</p>
+  <p class="speaker-text">So, so, so do you want me to go through that like page by page and make sure it's accurate or.</p>
+</div>
+<div class="utterance" data-time="683.0">
+  <div class="speaker-row">
+    <span class="timestamp">[11:23]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">No, no, no, no, let's.</p>
+  <p class="speaker-text">As far as the proposal goes, did you have a preferred option from those three?</p>
+</div>
+<div class="utterance" data-time="690.0">
+  <div class="speaker-row">
+    <span class="timestamp">[11:30]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">I. I did not get into that much detail on all the pages.</p>
+  <p class="speaker-text">Right.</p>
+  <p class="speaker-text">So keep in mind I got off a red eye yesterday.</p>
+</div>
+<div class="utterance" data-time="699.0">
+  <div class="speaker-row">
+    <span class="timestamp">[11:39]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">Sure.</p>
+</div>
+<div class="utterance" data-time="704.0">
+  <div class="speaker-row">
+    <span class="timestamp">[11:44]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">I went to bed super early last night in a back to back meeting.</p>
+  <p class="speaker-text">So if you want me to go through all those pages or focus just on the proposal page or like, what do you want me to focus on?</p>
+</div>
+<div class="utterance" data-time="711.0">
+  <div class="speaker-row">
+    <span class="timestamp">[11:51]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">Meeting with Andrew.</p>
+  <p class="speaker-text">Study this page.</p>
+  <p class="speaker-text">We might need a custom option that we don't have based on this conversation today.</p>
+  <p class="speaker-text">So I will, after Andrew's conversation, we'll have a fourth option which we will be us and Andrew.</p>
+  <p class="speaker-text">And you know what we talked about.</p>
+</div>
+<div class="utterance" data-time="724.0">
+  <div class="speaker-row">
+    <span class="timestamp">[12:04]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">Okay, let.</p>
+  <p class="speaker-text">I'm gonna send you.</p>
+  <p class="speaker-text">Deb, can I interrupt?</p>
+  <p class="speaker-text">Real quick.</p>
+  <p class="speaker-text">Deb offered a copy of which contract was it or.</p>
+  <p class="speaker-text">Or another example Delancey contract, which is the investment advisors I used for when I went to market in 2021.</p>
+</div>
+<div class="utterance" data-time="739.0">
+  <div class="speaker-row">
+    <span class="timestamp">[12:19]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">Okay.</p>
+</div>
+<div class="utterance" data-time="744.0">
+  <div class="speaker-row">
+    <span class="timestamp">[12:24]</span>
+    <span class="speaker-name">John Kelly</span>
+  </div>
+  <p class="speaker-text">Hey, you.</p>
+  <p class="speaker-text">And have you seen it?</p>
+  <p class="speaker-text">Because I'd still love to see it.</p>
+</div>
+<div class="utterance" data-time="753.0">
+  <div class="speaker-row">
+    <span class="timestamp">[12:33]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">I'm going to send it to you.</p>
+</div>
+<div class="utterance" data-time="758.0">
+  <div class="speaker-row">
+    <span class="timestamp">[12:38]</span>
+    <span class="speaker-name">Mark DeChant</span>
+  </div>
+  <p class="speaker-text">Yeah.</p>
+</div>
+<div class="utterance" data-time="763.0">
+  <div class="speaker-row">
+    <span class="timestamp">[12:43]</span>
+    <span class="speaker-name">John Kelly</span>
+  </div>
+  <p class="speaker-text">For reference, no matter what.</p>
+  <p class="speaker-text">Personally, I'd love to read it.</p>
+  <p class="speaker-text">Be great if you're okay.</p>
+</div>
+<div class="utterance" data-time="772.0">
+  <div class="speaker-row">
+    <span class="timestamp">[12:52]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">Yeah.</p>
+</div>
+<div class="utterance" data-time="777.0">
+  <div class="speaker-row">
+    <span class="timestamp">[12:57]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">And also what after going to.</p>
+  <p class="speaker-text">And capital and doing some work with them, if the deal size is over 100 million and expectation, you typically see a 2% fee.</p>
+</div>
+<div class="utterance" data-time="784.0">
+  <div class="speaker-row">
+    <span class="timestamp">[13:04]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">Yeah, yeah.</p>
+  <p class="speaker-text">It's not gonna be over 100 million, guys.</p>
+</div>
+<div class="utterance" data-time="791.0">
+  <div class="speaker-row">
+    <span class="timestamp">[13:11]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">Yeah, the, the threshold, the linear that I've seen in pricing, it just, just in my, just what I've seen the lines of demarcation seem to be about 150 and 10, where under 10, you know, people want 8% pretty, pretty regularly.</p>
+  <p class="speaker-text">And, and right around 50 it starts.</p>
+  <p class="speaker-text">Starts to settle at 5 and right around 100 it goes down to 2 and it kind of, it goes all the way to one.</p>
+  <p class="speaker-text">You know, it kind of settles at a one and a half higher up from that.</p>
+</div>
+<div class="utterance" data-time="802.0">
+  <div class="speaker-row">
+    <span class="timestamp">[13:22]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">Yeah, yeah.</p>
+  <p class="speaker-text">It's kind of, you know, when Andrew started at 20, got him down to 10 now, like chipping away at other things that he's going to pay for or have to do.</p>
+</div>
+<div class="utterance" data-time="809.0">
+  <div class="speaker-row">
+    <span class="timestamp">[13:29]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">Quick story for you.</p>
+  <p class="speaker-text">When I was selling this roofing company to Bessemer Trust out of New York, after $560,000 spent by them for quality of earnings that took eight weeks, they finally made an offer for 73.</p>
+  <p class="speaker-text">And I called, I called somebody back that had previously turned us down and I said, this thing's about to go.</p>
+  <p class="speaker-text">You know, do you really not want it?</p>
+  <p class="speaker-text">And got a really terrible offer for 91.</p>
+  <p class="speaker-text">And this is what we need and this is what we want.</p>
+  <p class="speaker-text">And then I called back Bessemer and I said, hey, I've got an LOI from another source.</p>
+  <p class="speaker-text">That's not my lead.</p>
+  <p class="speaker-text">I'm going to get paid less.</p>
+  <p class="speaker-text">That was all true.</p>
+  <p class="speaker-text">And I'd rather see these guys end up with you because you already bought two roofing companies and know what you're doing and they see that too.</p>
+  <p class="speaker-text">But you know, this other offer is just too good for them to not take the cash and deal with the headaches.</p>
+  <p class="speaker-text">And they paid 88.</p>
+  <p class="speaker-text">Two days later, they went from 73 to 88 with two phone calls two days later.</p>
+</div>
+<div class="utterance" data-time="840.0">
+  <div class="speaker-row">
+    <span class="timestamp">[14:00]</span>
+    <span class="speaker-name">Debbie McGrath</span>
+  </div>
+  <p class="speaker-text">So three o' clock tomorrow I will review that document.</p>
+  <p class="speaker-text">If you put a password on it, can you just send me that or whatever.</p>
+  <p class="speaker-text">Okay.</p>
+  <p class="speaker-text">Awesome.</p>
+</div>
+<div class="utterance" data-time="851.0">
+  <div class="speaker-row">
+    <span class="timestamp">[14:11]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">Awesome.</p>
+</div>
+<div class="utterance" data-time="856.0">
+  <div class="speaker-row">
+    <span class="timestamp">[14:16]</span>
+    <span class="speaker-name">Mark DeChant</span>
+  </div>
+  <p class="speaker-text">Okay, thanks.</p>
+</div>
+<div class="utterance" data-time="861.0">
+  <div class="speaker-row">
+    <span class="timestamp">[14:21]</span>
+    <span class="speaker-name">Ewing Gillaspy</span>
+  </div>
+  <p class="speaker-text">Good seeing you.</p>
+</div>
+
+    </div>
+
+    <div class="learnings-panel">
+      <h2>Extracted Learnings</h2>
+      <p class="learnings-subtitle">Review and approve what was learned from this meeting</p>
+
+      <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterLearnings('all')">All</button>
+        <button class="filter-btn" onclick="filterLearnings('next_chapter')">Next Chapter</button>
+        <button class="filter-btn" onclick="filterLearnings('hrcom')">Hrcom</button>
+        
+        <button class="filter-btn" onclick="filterLearnings('pending')">Pending</button>
+        <button class="filter-btn" onclick="filterLearnings('approved')">Approved</button>
+      </div>
+
+      <div id="learnings-list">
+        
+<div class="learning-card " id="learning-09af135c-1dda-4036-84ac-9da18b74d7b3" data-entity="hrcom">
+  <div class="learning-header">
+    <span class="learning-icon">&#x1F4B0;</span>
+    <span class="learning-category">Budget</span>
+    <span class="learning-entity">Hrcom</span>
+    <span class="learning-confidence">95%</span>
+  </div>
+  <p class="learning-text">Previous offers ranged from $5M to $45M for the full business (domain + media + community). The $45M was NOT domain-only as previously thought — all offers were for everything.</p>
+  <div class="learning-actions">
+    <button class="btn-approve" onclick="approveLearning('09af135c-1dda-4036-84ac-9da18b74d7b3', true)">Agree</button>
+<button class="btn-reject" onclick="approveLearning('09af135c-1dda-4036-84ac-9da18b74d7b3', false)">Reject</button>
+  </div>
+</div>
+<div class="learning-card " id="learning-40aae0c3-81c3-450a-94cf-88377ffc93eb" data-entity="hrcom">
+  <div class="learning-header">
+    <span class="learning-icon">&#x1F4B0;</span>
+    <span class="learning-category">Budget</span>
+    <span class="learning-entity">Hrcom</span>
+    <span class="learning-confidence">90%</span>
+  </div>
+  <p class="learning-text">High valuations ($45M range) came from VCs wanting to invest and value the company high — Debbie was NOT interested in VC offers.</p>
+  <div class="learning-actions">
+    <button class="btn-approve" onclick="approveLearning('40aae0c3-81c3-450a-94cf-88377ffc93eb', true)">Agree</button>
+<button class="btn-reject" onclick="approveLearning('40aae0c3-81c3-450a-94cf-88377ffc93eb', false)">Reject</button>
+  </div>
+</div>
+<div class="learning-card " id="learning-fd0163fe-c7ba-4fc0-a8a0-4e03948cda7e" data-entity="hrcom">
+  <div class="learning-header">
+    <span class="learning-icon">&#x2694;</span>
+    <span class="learning-category">Competitive</span>
+    <span class="learning-entity">Hrcom</span>
+    <span class="learning-confidence">85%</span>
+  </div>
+  <p class="learning-text">SHRM identified as potential buyer for the media business but would NOT pay premium for the domain. They'd buy the media company at media valuation.</p>
+  <div class="learning-actions">
+    <button class="btn-approve" onclick="approveLearning('fd0163fe-c7ba-4fc0-a8a0-4e03948cda7e', true)">Agree</button>
+<button class="btn-reject" onclick="approveLearning('fd0163fe-c7ba-4fc0-a8a0-4e03948cda7e', false)">Reject</button>
+  </div>
+</div>
+<div class="learning-card " id="learning-4cd7a909-ceac-4f88-afc2-a4f31f6a403e" data-entity="hrcom">
+  <div class="learning-header">
+    <span class="learning-icon">&#x2694;</span>
+    <span class="learning-category">Competitive</span>
+    <span class="learning-entity">Hrcom</span>
+    <span class="learning-confidence">85%</span>
+  </div>
+  <p class="learning-text">Sherm/SHRM was one of the lowest bidders last time and is unlikely to pay premium. Not worth heavy pursuit for domain sale.</p>
+  <div class="learning-actions">
+    <button class="btn-approve" onclick="approveLearning('4cd7a909-ceac-4f88-afc2-a4f31f6a403e', true)">Agree</button>
+<button class="btn-reject" onclick="approveLearning('4cd7a909-ceac-4f88-afc2-a4f31f6a403e', false)">Reject</button>
+  </div>
+</div>
+<div class="learning-card " id="learning-2f92ad0a-56c2-4925-b789-4d8ad6b694f1" data-entity="hrcom">
+  <div class="learning-header">
+    <span class="learning-icon">&#x1F464;</span>
+    <span class="learning-category">Decision Maker</span>
+    <span class="learning-entity">Hrcom</span>
+    <span class="learning-confidence">95%</span>
+  </div>
+  <p class="learning-text">Andrew Miller (domain specialist from Boston) is now involved. He sold chat.com to Sam Altman, trying to sell world.com. Deals at CFO/CEO level. Meeting scheduled Thursday 3pm ET.</p>
+  <div class="learning-actions">
+    <button class="btn-approve" onclick="approveLearning('2f92ad0a-56c2-4925-b789-4d8ad6b694f1', true)">Agree</button>
+<button class="btn-reject" onclick="approveLearning('2f92ad0a-56c2-4925-b789-4d8ad6b694f1', false)">Reject</button>
+  </div>
+</div>
+<div class="learning-card " id="learning-0c4bc75d-e79a-4952-834a-2b7b608844ed" data-entity="next_chapter">
+  <div class="learning-header">
+    <span class="learning-icon">&#x27A1;</span>
+    <span class="learning-category">Next Step</span>
+    <span class="learning-entity">Next Chapter</span>
+    <span class="learning-confidence">90%</span>
+  </div>
+  <p class="learning-text">Strategy shift: assets will be separated into 3 distinct deals — domain (Andrew leads), media business (NC leads), and My People community platform (separate play). No exclusivity for any party.</p>
+  <div class="learning-actions">
+    <button class="btn-approve" onclick="approveLearning('0c4bc75d-e79a-4952-834a-2b7b608844ed', true)">Agree</button>
+<button class="btn-reject" onclick="approveLearning('0c4bc75d-e79a-4952-834a-2b7b608844ed', false)">Reject</button>
+  </div>
+</div>
+<div class="learning-card " id="learning-0413f7b4-28ab-49cd-8c62-c64ebc20a2cd" data-entity="next_chapter">
+  <div class="learning-header">
+    <span class="learning-icon">&#x27A1;</span>
+    <span class="learning-category">Next Step</span>
+    <span class="learning-entity">Next Chapter</span>
+    <span class="learning-confidence">90%</span>
+  </div>
+  <p class="learning-text">Need to create a custom 4th proposal option incorporating Andrew Miller collaboration after Thursday meeting. Previous 3 options don't account for domain being sold separately.</p>
+  <div class="learning-actions">
+    <button class="btn-approve" onclick="approveLearning('0413f7b4-28ab-49cd-8c62-c64ebc20a2cd', true)">Agree</button>
+<button class="btn-reject" onclick="approveLearning('0413f7b4-28ab-49cd-8c62-c64ebc20a2cd', false)">Reject</button>
+  </div>
+</div>
+<div class="learning-card " id="learning-d4c4a2c6-eae3-4bc2-9d4a-d63e11ffdf7d" data-entity="hrcom">
+  <div class="learning-header">
+    <span class="learning-icon">&#x1F4CB;</span>
+    <span class="learning-category">Requirement</span>
+    <span class="learning-entity">Hrcom</span>
+    <span class="learning-confidence">95%</span>
+  </div>
+  <p class="learning-text">My People is NOT a general HR platform — it's a white-label community platform for HR tech vendors (Workday, Salesforce, etc.) to run their customer communities. Target audience is vendors, not end users.</p>
+  <div class="learning-actions">
+    <button class="btn-approve" onclick="approveLearning('d4c4a2c6-eae3-4bc2-9d4a-d63e11ffdf7d', true)">Agree</button>
+<button class="btn-reject" onclick="approveLearning('d4c4a2c6-eae3-4bc2-9d4a-d63e11ffdf7d', false)">Reject</button>
+  </div>
+</div>
+<div class="learning-card " id="learning-20d572f6-f357-4874-bbf0-e9415c179e45" data-entity="hrcom">
+  <div class="learning-header">
+    <span class="learning-icon">&#x1F4C5;</span>
+    <span class="learning-category">Timeline</span>
+    <span class="learning-entity">Hrcom</span>
+    <span class="learning-confidence">90%</span>
+  </div>
+  <p class="learning-text">Debbie has hip surgery scheduled April 29. Blood work Monday April 6. Domain sale should close fast per Andrew. Media business will take longer due to due diligence.</p>
+  <div class="learning-actions">
+    <button class="btn-approve" onclick="approveLearning('20d572f6-f357-4874-bbf0-e9415c179e45', true)">Agree</button>
+<button class="btn-reject" onclick="approveLearning('20d572f6-f357-4874-bbf0-e9415c179e45', false)">Reject</button>
+  </div>
+</div>
+<div class="learning-card " id="learning-1d8c0ea2-64bd-487b-be28-af09c70b9a7b" data-entity="hrcom">
+  <div class="learning-header">
+    <span class="learning-icon">&#x1F6D1;</span>
+    <span class="learning-category">Objection</span>
+    <span class="learning-entity">Hrcom</span>
+    <span class="learning-confidence">90%</span>
+  </div>
+  <p class="learning-text">Debbie flagged fee structure as high compared to traditional investment bankers. She'll share the Delancey contract as benchmark. Andrew started at 20%, negotiated to 10%.</p>
+  <div class="learning-actions">
+    <button class="btn-approve" onclick="approveLearning('1d8c0ea2-64bd-487b-be28-af09c70b9a7b', true)">Agree</button>
+<button class="btn-reject" onclick="approveLearning('1d8c0ea2-64bd-487b-be28-af09c70b9a7b', false)">Reject</button>
+  </div>
+</div>
+<div class="learning-card " id="learning-4c7aa3be-803c-409e-9a77-ebedabfbc524" data-entity="next_chapter">
+  <div class="learning-header">
+    <span class="learning-icon">&#x1F91D;</span>
+    <span class="learning-category">Relationship</span>
+    <span class="learning-entity">Next Chapter</span>
+    <span class="learning-confidence">85%</span>
+  </div>
+  <p class="learning-text">Ewing shared the Bessemer Trust roofing company story ($73M to $88M with two phone calls by creating competition) to demonstrate NC's value proposition of creating competitive deal dynamics.</p>
+  <div class="learning-actions">
+    <button class="btn-approve" onclick="approveLearning('4c7aa3be-803c-409e-9a77-ebedabfbc524', true)">Agree</button>
+<button class="btn-reject" onclick="approveLearning('4c7aa3be-803c-409e-9a77-ebedabfbc524', false)">Reject</button>
+  </div>
+</div>
+<div class="learning-card " id="learning-f282a3b6-e90e-4aa8-92dd-39c4c2a7c12c" data-entity="hrcom">
+  <div class="learning-header">
+    <span class="learning-icon">&#x1F4CB;</span>
+    <span class="learning-category">Requirement</span>
+    <span class="learning-entity">Hrcom</span>
+    <span class="learning-confidence">90%</span>
+  </div>
+  <p class="learning-text">Research website needs password protection ASAP. Debbie concerned about public access to deal research. The main CRM site is already password-protected but the published research site is not.</p>
+  <div class="learning-actions">
+    <button class="btn-approve" onclick="approveLearning('f282a3b6-e90e-4aa8-92dd-39c4c2a7c12c', true)">Agree</button>
+<button class="btn-reject" onclick="approveLearning('f282a3b6-e90e-4aa8-92dd-39c4c2a7c12c', false)">Reject</button>
+  </div>
+</div>
+<div class="learning-card " id="learning-9dda5543-afc6-4fc9-bf48-7d70ec27144e" data-entity="hrcom">
+  <div class="learning-header">
+    <span class="learning-icon">&#x26A0;</span>
+    <span class="learning-category">Pain Point</span>
+    <span class="learning-entity">Hrcom</span>
+    <span class="learning-confidence">85%</span>
+  </div>
+  <p class="learning-text">SAP narrative had factual errors — Carl is gone from SAP/Workday. Research needs to account for rapid personnel changes at target companies. Debbie wants collaborative feedback loop to keep research accurate.</p>
+  <div class="learning-actions">
+    <button class="btn-approve" onclick="approveLearning('9dda5543-afc6-4fc9-bf48-7d70ec27144e', true)">Agree</button>
+<button class="btn-reject" onclick="approveLearning('9dda5543-afc6-4fc9-bf48-7d70ec27144e', false)">Reject</button>
+  </div>
+</div>
+<div class="learning-card " id="learning-0a611bff-b55e-48bf-9b4b-32dc7016d785" data-entity="hrcom">
+  <div class="learning-header">
+    <span class="learning-icon">&#x2694;</span>
+    <span class="learning-category">Competitive</span>
+    <span class="learning-entity">Hrcom</span>
+    <span class="learning-confidence">80%</span>
+  </div>
+  <p class="learning-text">Salesforce is restricting API access to customer data — blocking external platforms from pulling data. This affects My People's integration model and may require export-based approaches instead of real-time APIs.</p>
+  <div class="learning-actions">
+    <button class="btn-approve" onclick="approveLearning('0a611bff-b55e-48bf-9b4b-32dc7016d785', true)">Agree</button>
+<button class="btn-reject" onclick="approveLearning('0a611bff-b55e-48bf-9b4b-32dc7016d785', false)">Reject</button>
+  </div>
+</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = window.__SUPABASE_URL;
+    const SUPABASE_KEY = window.__SUPABASE_ANON_KEY;
+    const TRANSCRIPT_ID = '31b9455e-9046-45b2-b6c1-6d5287b8f059';
+
+    async function approveLearning(learningId, approved) {
+      const btn = event.target;
+      btn.disabled = true;
+      btn.textContent = approved ? 'Approving...' : 'Rejecting...';
+
+      try {
+        const resp = await fetch('/api/meetings/approve-learning', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ learning_id: learningId, approved: approved })
+        });
+
+        const data = await resp.json();
+        if (data.success) {
+          const card = document.getElementById('learning-' + learningId);
+          const actions = card.querySelector('.learning-actions');
+          if (approved) {
+            card.classList.add('approved');
+            card.classList.remove('rejected');
+            actions.innerHTML = '<span class="status-tag approved-tag">Approved</span>';
+          } else {
+            card.classList.add('rejected');
+            card.classList.remove('approved');
+            actions.innerHTML = '<span class="status-tag rejected-tag">Rejected</span>';
+          }
+        } else {
+          alert('Error: ' + (data.error || 'Unknown error'));
+          btn.disabled = false;
+          btn.textContent = approved ? 'Agree' : 'Reject';
+        }
+      } catch (err) {
+        alert('Network error: ' + err.message);
+        btn.disabled = false;
+        btn.textContent = approved ? 'Agree' : 'Reject';
+      }
+    }
+
+    function filterLearnings(filter) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+
+      document.querySelectorAll('.learning-card').forEach(card => {
+        if (filter === 'all') {
+          card.style.display = '';
+        } else if (filter === 'pending') {
+          card.style.display = (!card.classList.contains('approved') && !card.classList.contains('rejected')) ? '' : 'none';
+        } else if (filter === 'approved') {
+          card.style.display = card.classList.contains('approved') ? '' : 'none';
+        } else {
+          card.style.display = card.dataset.entity === filter ? '' : 'none';
+        }
+      });
+    }
+
+    // Click timestamp to seek audio
+    document.querySelectorAll('.timestamp').forEach(ts => {
+      ts.addEventListener('click', () => {
+        const utterance = ts.closest('.utterance');
+        const time = parseFloat(utterance.dataset.time);
+        const audio = document.querySelector('audio');
+        if (audio && !isNaN(time)) {
+          audio.currentTime = time;
+          audio.play();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
