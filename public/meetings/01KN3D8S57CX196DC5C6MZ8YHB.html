@@ -21,32 +21,32 @@
     .meeting-header {
       background: #161b22;
       border-bottom: 1px solid #30363d;
-      padding: 8px 20px 6px;
+      padding: 20px 28px 16px;
       flex-shrink: 0;
     }
     .header-top {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 12px; flex-wrap: wrap;
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
     }
     .meeting-header h1 {
-      font-size: 16px; font-weight: 600; color: #f0f6fc;
+      font-size: 20px; font-weight: 600; color: #f0f6fc;
       letter-spacing: -0.3px;
     }
-    .header-badges { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+    .header-badges { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
     .entity-badge {
-      display: inline-flex; align-items: center; padding: 2px 10px;
-      border-radius: 16px; color: #fff; font-size: 10px;
+      display: inline-flex; align-items: center; padding: 4px 12px;
+      border-radius: 16px; color: #fff; font-size: 11px;
       font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase;
     }
     .meta-row {
-      display: flex; gap: 16px; flex-wrap: wrap; align-items: center;
-      font-size: 12px; color: #8b949e; margin-top: 4px;
+      display: flex; gap: 20px; flex-wrap: wrap; align-items: center;
+      font-size: 13px; color: #8b949e; margin-top: 10px;
     }
-    .meta-item { display: flex; align-items: center; gap: 4px; }
-    .meta-icon { opacity: 0.6; font-size: 11px; }
-    .hub-links { margin-top: 2px; display: flex; gap: 12px; }
+    .meta-item { display: flex; align-items: center; gap: 5px; }
+    .meta-icon { opacity: 0.6; }
+    .hub-links { margin-top: 8px; display: flex; gap: 16px; }
     .hub-link {
-      color: #58a6ff; text-decoration: none; font-size: 11px;
+      color: #58a6ff; text-decoration: none; font-size: 12px;
       display: flex; align-items: center; gap: 4px;
     }
     .hub-link:hover { text-decoration: underline; }
@@ -57,12 +57,12 @@
       flex-shrink: 0; position: relative;
     }
     .player-section video {
-      width: 100%; max-height: 220px; display: block;
+      width: 100%; max-height: 280px; display: block;
       background: #000;
     }
     .player-loading {
       display: flex; align-items: center; justify-content: center;
-      padding: 24px; color: #484f58; font-size: 13px; gap: 10px;
+      padding: 40px; color: #484f58; font-size: 13px; gap: 10px;
     }
     .player-loading .spinner {
       width: 18px; height: 18px; border: 2px solid #30363d;
@@ -82,40 +82,31 @@
     /* ── Summary strip ─────────────────────────────── */
     .summary-strip {
       background: #161b22; border-bottom: 1px solid #21262d;
-      padding: 6px 20px; flex-shrink: 0;
-    }
-    .summary-toggle {
-      display: flex; align-items: center; gap: 6px; cursor: pointer;
-      user-select: none; background: none; border: none; padding: 0;
+      padding: 14px 28px; flex-shrink: 0;
     }
     .summary-strip h3 {
       color: #8b949e; font-size: 10px; text-transform: uppercase;
-      letter-spacing: 1px; font-weight: 600; margin: 0;
+      letter-spacing: 1px; margin-bottom: 6px; font-weight: 600;
     }
-    .summary-chevron {
-      color: #484f58; font-size: 10px; transition: transform 0.2s;
-    }
-    .summary-strip.collapsed .summary-chevron { transform: rotate(-90deg); }
-    .summary-strip.collapsed .summary-text { display: none; }
     .summary-text {
-      color: #c9d1d9; font-size: 12px; line-height: 1.5;
-      margin-top: 4px;
+      color: #c9d1d9; font-size: 13px; line-height: 1.55;
+      max-width: 900px;
     }
 
     /* ── Speaker legend ────────────────────────────── */
     .speaker-legend {
       background: #0d1117; border-bottom: 1px solid #21262d;
-      padding: 5px 20px; flex-shrink: 0;
-      display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+      padding: 10px 28px; flex-shrink: 0;
+      display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
     }
     .speaker-legend-label {
-      color: #484f58; font-size: 9px; text-transform: uppercase;
-      letter-spacing: 1px; margin-right: 2px;
+      color: #484f58; font-size: 10px; text-transform: uppercase;
+      letter-spacing: 1px; margin-right: 4px;
     }
     .speaker-chip {
-      display: inline-flex; align-items: center; gap: 3px;
-      font-size: 11px; color: var(--speaker-color); font-weight: 500;
-      padding: 2px 8px; border-radius: 12px;
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 12px; color: var(--speaker-color); font-weight: 500;
+      padding: 3px 10px; border-radius: 12px;
       background: color-mix(in srgb, var(--speaker-color) 12%, transparent);
       border: 1px solid color-mix(in srgb, var(--speaker-color) 25%, transparent);
     }
@@ -123,30 +114,27 @@
     /* ── Main two-column layout ────────────────────── */
     .main-content {
       display: grid;
-      grid-template-columns: 1fr 320px;
+      grid-template-columns: 1fr 400px;
       flex: 1; min-height: 0;
     }
     @media (max-width: 960px) {
       .main-content { grid-template-columns: 1fr; grid-template-rows: 1fr auto; }
     }
-    @media (min-width: 1400px) {
-      .main-content { grid-template-columns: 1fr 360px; }
-    }
 
     /* ── Transcript panel ──────────────────────────── */
     .transcript-panel {
-      overflow-y: auto; padding: 12px 24px 40px;
+      overflow-y: auto; padding: 20px 28px 40px;
       border-right: 1px solid #21262d;
     }
     .transcript-panel h2 {
-      color: #f0f6fc; font-size: 12px; font-weight: 600;
+      color: #f0f6fc; font-size: 13px; font-weight: 600;
       text-transform: uppercase; letter-spacing: 0.8px;
-      margin-bottom: 10px; padding-bottom: 6px;
+      margin-bottom: 16px; padding-bottom: 10px;
       border-bottom: 1px solid #21262d;
     }
     .utterance {
-      margin-bottom: 1px; padding: 5px 10px;
-      border-radius: 4px; transition: background 0.2s;
+      margin-bottom: 2px; padding: 6px 10px;
+      border-radius: 4px; transition: background 0.15s;
       border-left: 2px solid transparent;
     }
     .utterance:hover {
@@ -155,11 +143,11 @@
       cursor: pointer;
     }
     .utterance.active {
-      background: rgba(31,111,235,0.06);
+      background: rgba(31,111,235,0.08);
       border-left-color: #1f6feb;
     }
     .speaker-row {
-      display: flex; align-items: baseline; gap: 8px; margin-bottom: 1px;
+      display: flex; align-items: baseline; gap: 8px; margin-bottom: 2px;
     }
     .timestamp {
       color: #484f58; font-size: 10px; font-family: "SF Mono", "Fira Code", monospace;
@@ -170,30 +158,13 @@
       font-weight: 600; font-size: 12px;
     }
     .speaker-text {
-      color: #c9d1d9; font-size: 14px; line-height: 1.65;
+      color: #c9d1d9; font-size: 13px; line-height: 1.55;
       margin-left: 46px; margin-bottom: 2px;
-    }
-
-    /* ── Word highlight animation ──────────────────── */
-    .speaker-text .word {
-      transition: color 0.15s, background 0.15s;
-      border-radius: 2px; padding: 0 1px;
-    }
-    .speaker-text .word.spoken {
-      color: #f0f6fc;
-    }
-    .speaker-text .word.current-word {
-      color: #fff;
-      background: rgba(88, 166, 255, 0.25);
-      box-shadow: 0 0 6px rgba(88, 166, 255, 0.15);
-    }
-    .speaker-text .word.future {
-      color: #6e7681;
     }
 
     /* ── Learnings panel ───────────────────────────── */
     .learnings-panel {
-      overflow-y: auto; padding: 12px 14px 40px;
+      overflow-y: auto; padding: 20px 18px 40px;
       background: #0d1117;
     }
     .learnings-header {
@@ -310,7 +281,7 @@
       <span class="meta-item"><span class="meta-icon">&#x23F1;</span> 34 min</span>
       <span class="meta-item"><span class="meta-icon">&#x1F465;</span> Debbie McGrath, Mark DeChant, Ewing Gillaspy, John Kelly</span>
     </div>
-    <div class="hub-links"><a href="/hrcom-ltd-hub.html" class="hub-link">HR.com Hub Page</a></div>
+    <div class="hub-links"><a href="/next-chapter-hub.html" class="hub-link">Next Chapter Account Page</a> <a href="/hrcom-hub.html" class="hub-link">Hrcom Account Page</a> </div>
   </header>
 
   <div class="player-section" id="player-section">
@@ -318,17 +289,14 @@
       <div class="spinner"></div>
       Loading recording...
     </div>
-    <video id="meeting-video" controls preload="metadata" src="https://cdn.fireflies.ai/01KN3D8S57CX196DC5C6MZ8YHB/video.mp4?Expires=1775316983&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uZmlyZWZsaWVzLmFpLzAxS04zRDhTNTdDWDE5NkRDNUM2TVo4WUhCL3ZpZGVvLm1wNCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc3NTMxNjk4M319fV19&Signature=lDVfesbYBlQHvcPIV7Vdxw56UlJanEWskmGx5GpVoNNEkEp5qIkQzO6w7OISzoOAIBYub1R-GASU~R5LtbdfIZHviHK62oxXS16V0BLvforMTstg2ZHYlYeRjRIW7wA1d~OBWhztnupFj2MsayGyRdeHlUbE1wBX9ZsnYsNmBJUnAHMsoOnqKGFdvINnEo~7-z1UvH6KH7fYlA0HZv-NkVaJs14cSt3djPX~OLWCCULwM9wqwSM-NGxafo-yAgt7AAr2pYpK--S8NzBsZSVCmGgkEHAZsw2V-5ZqC4uSMCDcDUsLhztRue3yKaQlWwv0fUj80PUbwrHt-fLeoMV4Wg__&Key-Pair-Id=K25ZJR0UZVF4CM" style="display:block"></video>
+    <video id="meeting-video" controls preload="metadata" src="https://cdn.fireflies.ai/01KN3D8S57CX196DC5C6MZ8YHB/video.mp4?Expires=1775324192&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uZmlyZWZsaWVzLmFpLzAxS04zRDhTNTdDWDE5NkRDNUM2TVo4WUhCL3ZpZGVvLm1wNCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc3NTMyNDE5Mn19fV19&Signature=otMYS2mdd4AMo9hI0BpJKPrJmd2oKRlG3s~EWlMvKWLCQk8byZgkZw5M8SI~MP1Mb8Lc-cYCLTVbsm4VnXR-Egbh~hJWyjBUuC3vbSr68PT1Ohcp~7RHMs52PtSB03t1akzly2PiCHvC7uQPJwktA5UaW0wgonvtHkoYoMhlixpXn6VCHCkhOpUSVuT0XE6Xdissx2Y70pBXe6ZCfWHNWAPWh8-mTexZKOrpBtN1x7vES9xdFYBdOCyop-3vBGT-1VZgnLAFAmEIp6MGb7rTW73P3GL3FfukMagcr36--uF35sfx~wDr6MRlgpCUFPSFRxbz4GZ-rks-iGtL28a~iw__&Key-Pair-Id=K25ZJR0UZVF4CM" style="display:block"></video>
     <div class="player-fallback" id="player-fallback" style="display:none">
       <a href="https://app.fireflies.ai/view/01KN3D8S57CX196DC5C6MZ8YHB" target="_blank" rel="noopener">Open recording in Fireflies &rarr;</a>
     </div>
   </div>
 
-  <div class="summary-strip" id="summary-strip">
-    <button class="summary-toggle" onclick="document.getElementById('summary-strip').classList.toggle('collapsed')">
-      <span class="summary-chevron">&#x25BC;</span>
-      <h3>Summary</h3>
-    </button>
+  <div class="summary-strip">
+    <h3>Summary</h3>
     <p class="summary-text">The team discussed strategies to maximize the value of HR.com and its associated assets through a competitive and collaborative deal process. By avoiding exclusivity, they aim to create competition and drive offers higher. The assets are being treated as separate deals—domain, media business, and My People community platform—to target diverse buyer profiles. Andrew Miller, a domain specialist who sold chat.com to Sam Altman, will handle the domain sale separately. Fee structures, competitive positioning, and a meeting with Andrew Thursday at 3pm ET were agreed upon.</p>
   </div>
 
@@ -1365,70 +1333,6 @@
     const TRANSCRIPT_ID = '31b9455e-9046-45b2-b6c1-6d5287b8f059';
     const FIREFLIES_ID = '01KN3D8S57CX196DC5C6MZ8YHB';
 
-    // ── Word-level tokenization ─────────────────────
-    // Split all speaker-text paragraphs into individual word spans
-    // so we can highlight them as the video plays
-    const allWordData = []; // {el, utteranceStart, utteranceEnd, wordStart, wordEnd}
-
-    function tokenizeTranscript() {
-      const utteranceEls = document.querySelectorAll('.utterance');
-      const uArr = Array.from(utteranceEls);
-
-      uArr.forEach((u, idx) => {
-        const startTime = parseFloat(u.dataset.time) || 0;
-        // End time = next utterance start, or start + 15s for last one
-        const nextTime = (idx + 1 < uArr.length)
-          ? (parseFloat(uArr[idx + 1].dataset.time) || startTime + 15)
-          : startTime + 15;
-
-        // Collect all text nodes within this utterance's .speaker-text elements
-        const paragraphs = u.querySelectorAll('.speaker-text');
-        let totalWords = 0;
-        const paraWordCounts = [];
-
-        paragraphs.forEach(p => {
-          const text = p.textContent.trim();
-          const words = text.split(/\s+/).filter(w => w.length > 0);
-          paraWordCounts.push(words.length);
-          totalWords += words.length;
-        });
-
-        if (totalWords === 0) return;
-
-        const duration = nextTime - startTime;
-        const timePerWord = duration / totalWords;
-        let wordIdx = 0;
-
-        paragraphs.forEach((p, pi) => {
-          const text = p.textContent.trim();
-          const words = text.split(/\s+/).filter(w => w.length > 0);
-          if (words.length === 0) return;
-
-          p.innerHTML = words.map((w, wi) => {
-            const globalIdx = wordIdx + wi;
-            const wStart = startTime + globalIdx * timePerWord;
-            const wEnd = wStart + timePerWord;
-            return `<span class="word future" data-ws="${wStart.toFixed(2)}" data-we="${wEnd.toFixed(2)}">${w}</span>`;
-          }).join(' ');
-
-          // Register word data for fast lookup
-          const spans = p.querySelectorAll('.word');
-          spans.forEach(span => {
-            allWordData.push({
-              el: span,
-              ws: parseFloat(span.dataset.ws),
-              we: parseFloat(span.dataset.we),
-              utterance: u
-            });
-          });
-
-          wordIdx += words.length;
-        });
-      });
-    }
-
-    tokenizeTranscript();
-
     // ── Video player setup ──────────────────────────
     const video = document.getElementById('meeting-video');
     const loading = document.getElementById('player-loading');
@@ -1436,6 +1340,7 @@
     const utterances = document.querySelectorAll('.utterance');
     let videoReady = false;
 
+    // Wait for metadata before allowing seek/play
     video.addEventListener('loadedmetadata', () => {
       videoReady = true;
       loading.style.display = 'none';
@@ -1447,6 +1352,7 @@
       fallback.style.display = 'block';
     });
 
+    // If no src baked in, try the API
     if (!video.src || video.src === window.location.href) {
       (async function loadMedia() {
         try {
@@ -1468,6 +1374,7 @@
     }
 
     // ── Transcript ↔ Video sync ─────────────────────
+    // Click utterance → seek video
     utterances.forEach(u => {
       u.addEventListener('click', (e) => {
         if (e.target.closest('.btn-approve, .btn-reject')) return;
@@ -1481,97 +1388,40 @@
       });
     });
 
-    // Word-level highlighting + utterance tracking
+    // Video timeupdate → highlight + scroll transcript
     let lastHighlighted = null;
-    let lastWordIdx = -1;
-    let rafId = null;
+    if (video) {
+      video.addEventListener('timeupdate', () => {
+        const t = video.currentTime;
+        let closest = null;
+        let closestDist = Infinity;
 
-    function syncWords() {
-      if (!video || video.paused) { rafId = null; return; }
-      const t = video.currentTime;
-
-      // Binary search for the current word
-      let lo = 0, hi = allWordData.length - 1, best = -1;
-      while (lo <= hi) {
-        const mid = (lo + hi) >> 1;
-        if (allWordData[mid].ws <= t) { best = mid; lo = mid + 1; }
-        else { hi = mid - 1; }
-      }
-
-      if (best !== lastWordIdx && best >= 0) {
-        // Clear previous current-word
-        if (lastWordIdx >= 0 && lastWordIdx < allWordData.length) {
-          allWordData[lastWordIdx].el.classList.remove('current-word');
-          allWordData[lastWordIdx].el.classList.add('spoken');
-          allWordData[lastWordIdx].el.classList.remove('future');
-        }
-
-        // Mark all words before current as spoken, after as future
-        // Only update a small window around the change for performance
-        const windowSize = 40;
-        const rangeStart = Math.max(0, best - windowSize);
-        const rangeEnd = Math.min(allWordData.length - 1, best + windowSize);
-
-        for (let i = rangeStart; i <= rangeEnd; i++) {
-          const wd = allWordData[i];
-          if (i < best) {
-            if (wd.el.classList.contains('future')) {
-              wd.el.classList.remove('future');
-              wd.el.classList.add('spoken');
+        utterances.forEach(u => {
+          const uTime = parseFloat(u.dataset.time);
+          if (!isNaN(uTime) && uTime <= t) {
+            const dist = t - uTime;
+            if (dist < closestDist) {
+              closestDist = dist;
+              closest = u;
             }
-            wd.el.classList.remove('current-word');
-          } else if (i === best) {
-            wd.el.classList.remove('future');
-            wd.el.classList.add('spoken', 'current-word');
-          } else {
-            if (wd.el.classList.contains('spoken')) {
-              wd.el.classList.remove('spoken');
-              wd.el.classList.add('future');
-            }
-            wd.el.classList.remove('current-word');
           }
-        }
+        });
 
-        // Utterance-level highlight
-        const currentUtterance = allWordData[best].utterance;
-        if (currentUtterance !== lastHighlighted) {
-          highlightUtterance(currentUtterance);
-          const panel = currentUtterance.closest('.transcript-panel');
+        if (closest && closest !== lastHighlighted) {
+          highlightUtterance(closest);
+          // Auto-scroll transcript panel to keep active line visible
+          const panel = closest.closest('.transcript-panel');
           if (panel) {
             const panelRect = panel.getBoundingClientRect();
-            const uRect = currentUtterance.getBoundingClientRect();
+            const uRect = closest.getBoundingClientRect();
             const relTop = uRect.top - panelRect.top;
-            if (relTop < 40 || relTop > panelRect.height - 100) {
-              panel.scrollTo({ top: panel.scrollTop + relTop - 120, behavior: 'smooth' });
+            if (relTop < 60 || relTop > panelRect.height - 80) {
+              panel.scrollTo({ top: panel.scrollTop + relTop - 100, behavior: 'smooth' });
             }
           }
         }
-
-        lastWordIdx = best;
-      }
-
-      rafId = requestAnimationFrame(syncWords);
-    }
-
-    // Use requestAnimationFrame for smooth 60fps word tracking
-    video.addEventListener('play', () => {
-      if (!rafId) rafId = requestAnimationFrame(syncWords);
-    });
-    video.addEventListener('pause', () => {
-      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
-    });
-
-    // On seek, reset word states
-    video.addEventListener('seeked', () => {
-      const t = video.currentTime;
-      allWordData.forEach((wd, i) => {
-        wd.el.classList.remove('current-word', 'spoken', 'future');
-        if (wd.we <= t) wd.el.classList.add('spoken');
-        else wd.el.classList.add('future');
       });
-      lastWordIdx = -1;
-      if (!video.paused && !rafId) rafId = requestAnimationFrame(syncWords);
-    });
+    }
 
     function highlightUtterance(el) {
       if (lastHighlighted) lastHighlighted.classList.remove('active');
