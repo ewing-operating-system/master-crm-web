@@ -3,28 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Buyer Review — HR.com Ltd | Debbie McGrath</title>
+<title id="pageTitle">Buyer Review — HR.com Ltd</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; background:#0d1117; color:#c9d1d9; line-height:1.5; font-size:13px; }
 
-/* ── TAB BAR ────────────────────────────── */
-.tab-bar { position:sticky; top:0; z-index:200; background:#0d1117; border-bottom:1px solid #30363d; padding:6px 16px; display:flex; align-items:center; gap:8px; overflow-x:auto; }
-.tab-bar::-webkit-scrollbar { height:0; }
-.tab-pill { padding:4px 12px; border-radius:14px; font-size:11px; font-weight:600; cursor:pointer; white-space:nowrap; border:1px solid #30363d; background:#161b22; color:#8b949e; transition:all .2s; position:relative; }
-.tab-pill:hover { border-color:#58a6ff; color:#c9d1d9; }
-.tab-pill.active { border-color:#58a6ff; color:#f0f6fc; background:#1f3d5c; }
-.tab-pill .dot { width:6px; height:6px; border-radius:50%; display:inline-block; margin-left:4px; vertical-align:middle; }
-.dot-green { background:#3fb950; }
-.dot-red { background:#f85149; }
-.progress-text { margin-left:auto; font-size:10px; color:#8b949e; white-space:nowrap; flex-shrink:0; }
-.progress-bar-bg { width:80px; height:4px; background:#21262d; border-radius:2px; overflow:hidden; flex-shrink:0; margin-left:6px; }
-.progress-bar-fill { height:100%; background:linear-gradient(90deg,#58a6ff,#a371f7); border-radius:2px; transition:width .3s; }
-
 /* ── ZONE A: PINNED HEADER (15vh max) ──── */
-.zone-a { position:fixed; top:37px; left:0; width:100%; max-height:15vh; z-index:150; background:#0d1117; border-bottom:2px solid #30363d; padding:6px 16px; overflow:hidden; display:grid; grid-template-columns:260px 1fr 280px; gap:12px; align-items:center; }
+.zone-a { position:fixed; top:29px; left:0; width:100%; max-height:15vh; z-index:150; background:#0d1117; border-bottom:2px solid #30363d; padding:6px 16px; overflow:hidden; display:grid; grid-template-columns:260px 1fr 280px; gap:12px; align-items:center; }
 .zone-a-left { display:flex; align-items:center; gap:8px; }
 .zone-a-left .buyer-title { font-size:15px; font-weight:700; color:#f0f6fc; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:160px; }
 .score-pill { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#fff; flex-shrink:0; }
@@ -45,13 +32,13 @@ body { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; backgrou
 .zone-a-right textarea:focus { outline:none; border-color:#58a6ff; }
 
 /* ── 3-COLUMN BODY ──────────────────────── */
-.body-grid { display:grid; grid-template-columns:20% 1fr; margin-top:calc(37px + 15vh); transition:margin-right .3s; }
+.body-grid { display:grid; grid-template-columns:20% 1fr; margin-top:calc(29px + 15vh); transition:margin-right .3s; }
 .body-grid.nuggets-open { margin-right:25%; }
 .body-grid.nuggets-closed { margin-right:40px; }
 
 /* ── LEFT: FEEDBACK PANEL ───────────────── */
 .feedback-col { padding:12px 8px 12px 12px; }
-.feedback-sticky { position:sticky; top:calc(37px + 15vh + 8px); max-height:calc(100vh - 37px - 15vh - 16px); overflow-y:auto; }
+.feedback-sticky { position:sticky; top:calc(29px + 15vh + 8px); max-height:calc(100vh - 29px - 15vh - 16px); overflow-y:auto; }
 .feedback-sticky::-webkit-scrollbar { width:3px; }
 .feedback-sticky::-webkit-scrollbar-thumb { background:#30363d; border-radius:2px; }
 .fb-card { background:#161b22; border:1px solid #30363d; border-radius:8px; padding:10px; margin-bottom:8px; border-left:3px solid #30363d; transition:all .2s; }
@@ -144,7 +131,7 @@ body { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; backgrou
 .intel-summary p { font-size:12px; line-height:1.7; }
 
 /* ── RIGHT: GOLDEN NUGGETS PANEL ────────── */
-.nuggets-panel { position:fixed; top:calc(37px + 15vh); right:0; width:25%; max-height:calc(100vh - 37px - 15vh); overflow-y:auto; background:#0d1117; border-left:1px solid #30363d; z-index:50; transition:transform .3s ease; padding:12px; }
+.nuggets-panel { position:fixed; top:calc(29px + 15vh); right:0; width:25%; max-height:calc(100vh - 29px - 15vh); overflow-y:auto; background:#0d1117; border-left:1px solid #30363d; z-index:50; transition:transform .3s ease; padding:12px; }
 .nuggets-panel.closed { transform:translateX(calc(100% - 36px)); }
 .nuggets-panel::-webkit-scrollbar { width:3px; }
 .nuggets-panel::-webkit-scrollbar-thumb { background:#30363d; border-radius:2px; }
@@ -247,12 +234,16 @@ body { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; backgrou
 </head>
 <body>
 
-<!-- TAB BAR -->
-<div class="tab-bar" id="tabBar"></div>
+<!-- BACK LINK -->
+<div style="position:fixed;top:0;left:0;z-index:300;padding:6px 16px;background:#0d1117;border-bottom:1px solid #21262d;width:100%;display:flex;align-items:center;">
+  <a href="debbie-review-index.html" style="color:#58a6ff;font-size:11px;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:4px;">&larr; Back to all buyers</a>
+</div>
 
 <!-- ZONE A: PINNED HEADER -->
 <div class="zone-a" id="zoneA">
   <div class="zone-a-left" id="zaLeft">
+    <img id="zaLogo" src="" alt="" width="40" height="40" style="border-radius:6px;object-fit:contain;display:none;flex-shrink:0;" onerror="this.style.display='none';document.getElementById('zaLogoFallback').style.display='flex';">
+    <div id="zaLogoFallback" style="display:none;width:40px;height:40px;border-radius:6px;background:#1f3d5c;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#58a6ff;flex-shrink:0;"></div>
     <div class="score-pill score-med" id="zaScore">—</div>
     <div>
       <div class="buyer-title" id="zaBuyerName">Loading...</div>
@@ -403,23 +394,7 @@ function renderTabBar() {
 }
 
 function updateTabDots() {
-  BUYER_ORDER.forEach(slug => {
-    const dot = document.getElementById('dot-'+slug);
-    if (!dot) return;
-    const fb = FEEDBACK_CACHE[slug+'__top_level'];
-    if (!fb?.top_verdict) { dot.className='dot'; return; }
-    if (fb.top_verdict==='tier_1_target'||fb.top_verdict==='good_target') {
-      dot.className='dot dot-green';
-    } else {
-      dot.className='dot dot-red';
-    }
-  });
-  // Update progress
-  const reviewed = BUYER_ORDER.filter(s => FEEDBACK_CACHE[s+'__top_level']?.top_verdict).length;
-  const pText = document.querySelector('.progress-text');
-  if (pText) pText.textContent = 'Reviewed: '+reviewed+'/'+BUYER_ORDER.length;
-  const pFill = document.querySelector('.progress-bar-fill');
-  if (pFill) pFill.style.width = Math.round(100*reviewed/BUYER_ORDER.length)+'%';
+  // No-op in single-buyer mode (tab bar is not rendered)
 }
 
 // ══════════════════════════════════════════
@@ -429,6 +404,24 @@ function updateZoneA(slug) {
   if (!slug || !BUYERS[slug]) return;
   const b = BUYERS[slug];
   CURRENT_BUYER = slug;
+
+  // Update page title
+  document.title = 'Buyer Review — ' + b.buyer_name + ' | HR.com Ltd';
+
+  // Logo
+  const logo = document.getElementById('zaLogo');
+  const logoFallback = document.getElementById('zaLogoFallback');
+  if (b.logo_domain) {
+    logo.src = 'https://logo.clearbit.com/' + b.logo_domain;
+    logo.alt = b.buyer_name + ' logo';
+    logo.style.display = 'block';
+    logoFallback.style.display = 'none';
+    logoFallback.textContent = (b.buyer_name || '?')[0].toUpperCase();
+  } else {
+    logo.style.display = 'none';
+    logoFallback.style.display = 'flex';
+    logoFallback.textContent = (b.buyer_name || '?')[0].toUpperCase();
+  }
 
   document.getElementById('zaBuyerName').textContent = b.buyer_name;
   const scorePill = document.getElementById('zaScore');
@@ -480,19 +473,46 @@ function updateZoneA(slug) {
   comment.value = fb.top_comment || '';
   comment.onblur = () => debounceSave(slug, b.buyer_name, 'top_level', {top_comment:comment.value}, 300);
 
-  // Facts
+  // Facts — ticker, stock, change, type, location
   const h = b.header || {};
-  const facts = [
-    {l:'Location', v:(b.city||'')+(b.state?', '+b.state:'')},
-    {l:'Employees', v:h.employees||'N/A'},
-    {l:'Domain', v:h.domain||'N/A'},
-    {l:'Industry', v:h.industry||'N/A'},
-    {l:'HR Products', v:h.hr_products||'N/A'},
-    {l:'HR Rev %', v:h.hr_revenue_pct||'N/A'},
-  ];
-  document.getElementById('zaFacts').innerHTML = facts.map(f =>
-    '<span class="fact"><span class="fact-val">'+f.v+'</span></span>'
-  ).join(' <span style="color:#30363d">|</span> ');
+  let factsHtml = '';
+
+  // Ticker badge
+  if (b.ticker) {
+    factsHtml += '<span style="background:#1f2937;border:1px solid #374151;color:#9ca3af;font-weight:700;font-size:11px;padding:2px 8px;border-radius:4px;white-space:nowrap;">' + b.ticker + '</span>';
+    factsHtml += ' <span style="color:#30363d">|</span> ';
+  }
+
+  // Stock price
+  if (b.stock_price) {
+    factsHtml += '<span class="fact-val" style="font-size:13px;font-weight:700;color:#f0f6fc;">' + b.stock_price + '</span>';
+    factsHtml += ' <span style="color:#30363d">|</span> ';
+  }
+
+  // 24mo change
+  if (b.price_change_24mo !== undefined && b.price_change_24mo !== null && b.price_change_24mo !== '') {
+    const val = parseFloat(b.price_change_24mo);
+    const positive = val >= 0;
+    const arrow = positive ? '▲' : '▼';
+    const color = positive ? '#3fb950' : '#f85149';
+    const display = (positive ? '+' : '') + b.price_change_24mo + '%';
+    factsHtml += '<span style="color:' + color + ';font-weight:600;font-size:12px;">' + arrow + ' ' + display + '</span>';
+    factsHtml += ' <span style="color:#30363d">|</span> ';
+  }
+
+  // Type
+  if (b.buyer_type) {
+    factsHtml += '<span class="fact"><span class="fact-val">' + b.buyer_type + '</span></span>';
+    factsHtml += ' <span style="color:#30363d">|</span> ';
+  }
+
+  // Location
+  const loc = [b.buyer_city, b.buyer_state].filter(Boolean).join(', ');
+  if (loc) {
+    factsHtml += '<span class="fact"><span class="fact-val">' + loc + '</span></span>';
+  }
+
+  document.getElementById('zaFacts').innerHTML = factsHtml;
 }
 
 // ══════════════════════════════════════════
@@ -960,10 +980,10 @@ function pollSwarmResult(queueId, slug, name, key) {
       if (item?.status === 'done') {
         clearInterval(interval);
         statusEl.textContent = 'Complete! Reloading data...';
-        // Reload JSON and re-render section
-        const freshData = await fetch('/data/debbie-buyer-research.json?t='+Date.now()).then(r=>r.json());
-        if (freshData.buyers[slug]) {
-          BUYERS[slug] = freshData.buyers[slug];
+        // Reload per-buyer JSON and re-render section
+        const freshData = await fetch('/data/debbie-research-'+slug+'.json?t='+Date.now()).then(r=>r.json());
+        if (freshData) {
+          BUYERS[slug] = freshData;
           const sectionEl = document.getElementById('section-'+slug+'-'+key);
           if (sectionEl) {
             const content = getSectionContent(BUYERS[slug], key);
@@ -1081,7 +1101,7 @@ function setupObservers() {
         }
       }
     });
-  }, {threshold:0.3, rootMargin:'-'+Math.round(window.innerHeight*0.15+37)+'px 0px 0px 0px'});
+  }, {threshold:0.3, rootMargin:'-'+Math.round(window.innerHeight*0.15+29)+'px 0px 0px 0px'});
 
   document.querySelectorAll('.research-section').forEach(el => observer.observe(el));
 
@@ -1100,7 +1120,7 @@ function setupObservers() {
         }
       }
     });
-  }, {threshold:0.1, rootMargin:'-'+Math.round(window.innerHeight*0.15+37)+'px 0px -50% 0px'});
+  }, {threshold:0.1, rootMargin:'-'+Math.round(window.innerHeight*0.15+29)+'px 0px -50% 0px'});
 
   document.querySelectorAll('.buyer-section').forEach(el => buyerObserver.observe(el));
 }
@@ -1180,50 +1200,48 @@ function updateRollup() {
 // INIT
 // ══════════════════════════════════════════
 async function init() {
+  // Read ?buyer= from URL
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('buyer');
+
+  if (!slug) {
+    window.location.replace('debbie-review-index.html');
+    return;
+  }
+
   // Load feedback first
   await loadAllFeedback();
 
-  // Load buyer data
-  let data;
+  // Load per-buyer data
+  let buyer;
   try {
-    const r = await fetch('/data/debbie-buyer-research.json');
-    data = await r.json();
+    const r = await fetch('/data/debbie-research-' + slug + '.json');
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    buyer = await r.json();
   } catch(e) {
     document.getElementById('contentCol').innerHTML = '<div style="padding:40px;text-align:center;color:#f85149;">'+
-      '<h2>Research data not found</h2><p>Run: python3 scripts/debbie_buyer_research.py</p></div>';
+      '<h2>Research data not found for: ' + slug + '</h2><p>Run: python3 scripts/debbie_buyer_research.py</p></div>';
     return;
   }
 
-  BUYERS = data.buyers || {};
-  // Sort by fit_score descending
-  BUYER_ORDER = Object.keys(BUYERS).sort((a,b) => (BUYERS[b].fit_score||0)-(BUYERS[a].fit_score||0));
+  // Single-buyer mode — no BUYER_ORDER needed
+  BUYERS[slug] = buyer;
+  BUYER_ORDER = [slug];
 
-  if (!BUYER_ORDER.length) {
-    document.getElementById('contentCol').innerHTML = '<div style="padding:40px;text-align:center;color:#8b949e;">No buyers found in research data.</div>';
-    return;
-  }
-
-  // Render tab bar
-  renderTabBar();
-
-  // Render all buyer sections
-  let contentHtml = '';
-  BUYER_ORDER.forEach((slug, i) => {
-    contentHtml += '<section class="buyer-section" id="buyer-'+slug+'">';
-    contentHtml += renderBuyerContent(slug);
-    if (i < BUYER_ORDER.length - 1) contentHtml += '<hr class="buyer-divider">';
-    contentHtml += '</section>';
-  });
+  // Render single buyer section
+  let contentHtml = '<section class="buyer-section" id="buyer-' + slug + '">';
+  contentHtml += renderBuyerContent(slug);
+  contentHtml += '</section>';
   document.getElementById('contentCol').innerHTML = contentHtml;
 
-  // Initialize Zone A with first buyer
-  updateZoneA(BUYER_ORDER[0]);
+  // Initialize Zone A
+  updateZoneA(slug);
 
-  // Render feedback for first buyer
-  document.getElementById('feedbackCol').innerHTML = renderFeedbackColumn(BUYER_ORDER[0]);
+  // Render feedback column
+  document.getElementById('feedbackCol').innerHTML = renderFeedbackColumn(slug);
 
-  // Render nuggets for first buyer
-  renderNuggets(BUYER_ORDER[0]);
+  // Render nuggets
+  renderNuggets(slug);
 
   // Setup scroll observers
   setupObservers();

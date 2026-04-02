@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Paychex",
+    "slug": "paychex",
+    "fit_score": 8,
+    "buyer_type": "Strategic",
+    "buyer_city": "Rochester",
+    "buyer_state": "NY",
+    "logo_domain": "paychex.com",
+    "ticker": "PAYX"
+  },
+  {
+    "name": "SAP SuccessFactors",
+    "slug": "sap-successfactors",
+    "fit_score": 8,
+    "buyer_type": "Strategic",
+    "buyer_city": "Newtown Square",
+    "buyer_state": "PA",
+    "logo_domain": "sap.com",
+    "ticker": "SAP"
+  },
+  {
+    "name": "Workday",
+    "slug": "workday",
+    "fit_score": 8,
+    "buyer_type": "Strategic",
+    "buyer_city": "Pleasanton",
+    "buyer_state": "CA",
+    "logo_domain": "workday.com",
+    "ticker": "WDAY"
+  }
+]

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buyer Research — HR.com Ltd</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; background:#0d1117; color:#c9d1d9; line-height:1.5; font-size:13px; min-height:100vh; }
+
+.header { background:#161b22; border-bottom:1px solid #30363d; padding:20px 32px; }
+.header-inner { max-width:1200px; margin:0 auto; }
+.header h1 { font-size:20px; font-weight:700; color:#f0f6fc; margin-bottom:4px; }
+.header .subtitle { font-size:13px; color:#8b949e; }
+
+.main { max-width:1200px; margin:0 auto; padding:32px; }
+
+.card-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; }
+
+@media (max-width:900px) { .card-grid { grid-template-columns:1fr; } }
+
+.buyer-card {
+  background:#161b22;
+  border:1px solid #30363d;
+  border-radius:10px;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  transition:border-color .2s;
+}
+.buyer-card:hover { border-color:#58a6ff; }
+
+.card-top { display:flex; align-items:center; gap:14px; }
+.card-logo { width:60px; height:60px; border-radius:10px; object-fit:contain; background:#21262d; display:block; flex-shrink:0; }
+.card-logo-fallback {
+  width:60px; height:60px; border-radius:10px; background:#1f3d5c;
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px; font-weight:800; color:#58a6ff; flex-shrink:0;
+}
+.card-info { flex:1; min-width:0; }
+.card-name { font-size:16px; font-weight:700; color:#f0f6fc; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.card-type { font-size:11px; color:#8b949e; margin-top:2px; }
+.card-location { font-size:11px; color:#8b949e; }
+
+.fit-badge {
+  width:40px; height:40px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:15px; font-weight:800; color:#fff; flex-shrink:0;
+}
+.score-high { background:#1a4731; border:2px solid #2ea043; }
+.score-med  { background:#3d2f00; border:2px solid #d29922; }
+.score-low  { background:#3d0c0c; border:2px solid #da3633; }
+
+.review-link {
+  display:inline-block;
+  padding:8px 16px;
+  background:#1f3d5c;
+  border:1px solid #58a6ff;
+  border-radius:6px;
+  color:#58a6ff;
+  font-size:12px;
+  font-weight:600;
+  text-decoration:none;
+  align-self:flex-start;
+  transition:background .2s;
+}
+.review-link:hover { background:#2a5080; }
+
+.loading { text-align:center; padding:60px; color:#8b949e; font-size:14px; }
+.error { text-align:center; padding:60px; color:#f85149; font-size:14px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <h1>HR.com Ltd Buyer Review Dashboard</h1>
+    <div class="subtitle" id="subtitle">Loading buyers...</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="card-grid" id="cardGrid">
+    <div class="loading">Loading buyer manifest...</div>
+  </div>
+</div>
+
+<script src="/supabase-config.js"></script>
+<script>
+(function() {
+'use strict';
+
+function scoreClass(s) {
+  return s >= 8 ? 'score-high' : s >= 6 ? 'score-med' : 'score-low';
+}
+
+function renderCard(buyer) {
+  const imgId = 'logo-' + buyer.slug;
+  const fallbackId = 'fallback-' + buyer.slug;
+  const firstLetter = (buyer.name || '?')[0].toUpperCase();
+
+  return `<div class="buyer-card">
+    <div class="card-top">
+      <img
+        class="card-logo"
+        id="${imgId}"
+        src="https://logo.clearbit.com/${buyer.logo_domain}"
+        alt="${buyer.name} logo"
+        onerror="document.getElementById('${imgId}').style.display='none';document.getElementById('${fallbackId}').style.display='flex';"
+      >
+      <div class="card-logo-fallback" id="${fallbackId}" style="display:none;">${firstLetter}</div>
+      <div class="card-info">
+        <div class="card-name">${buyer.name}</div>
+        <div class="card-type">${buyer.buyer_type || ''}</div>
+        <div class="card-location">${[buyer.buyer_city, buyer.buyer_state].filter(Boolean).join(', ')}</div>
+      </div>
+      <div class="fit-badge ${scoreClass(buyer.fit_score)}">${buyer.fit_score}</div>
+    </div>
+    <a class="review-link" href="debbie-buyer-review.html?buyer=${buyer.slug}">Review &rarr;</a>
+  </div>`;
+}
+
+async function init() {
+  try {
+    const r = await fetch('data/debbie-buyers-manifest.json');
+    const buyers = await r.json();
+
+    document.getElementById('subtitle').textContent =
+      buyers.length + ' buyer' + (buyers.length === 1 ? '' : 's') + ' ready for review';
+
+    document.getElementById('cardGrid').innerHTML =
+      buyers.map(renderCard).join('');
+  } catch(e) {
+    document.getElementById('cardGrid').innerHTML =
+      '<div class="error">Failed to load buyer manifest: ' + e.message + '</div>';
+  }
+}
+
+init();
+})();
+</script>
+<script src="/comment-widget.js"></script>
+<script src="/notification-bell.js"></script>
+<script src="/version-widget.js"></script>
+</body>
+</html>

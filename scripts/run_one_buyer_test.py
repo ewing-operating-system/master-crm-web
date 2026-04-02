@@ -331,6 +331,35 @@ def research_market_reputation(exa, buyer_name, buyer_city):
     return llm_structure_reviews(buyer_name, combined)
 
 
+# ── Stock data fetcher ────────────────────────────────────────────────────────
+
+def fetch_stock_data(exa, buyer_name, ticker):
+    """Use Exa + Claude to get current stock price and 24mo performance."""
+    if not ticker:
+        return {}
+    log(f"  Fetching stock data for {ticker}...")
+    try:
+        resp = exa.raw_search(query=f"{ticker} stock price 2024 2025 2026 performance",
+                               search_type="auto", num_results=5, max_characters=2000,
+                               content_mode="text", use_autoprompt=True)
+        combined = "\n".join(r.get("text", "")[:500] for r in resp.get("results", []))
+        output = llm(f"""Extract stock data for {buyer_name} (ticker: {ticker}).
+Return ONLY JSON: {{"stock_price": 142.30, "price_change_24mo": 18.2, "market_cap": "$54B"}}
+Use most recent price. 24mo change = % change from ~early 2024. Return ONLY JSON.
+DATA: {combined[:4000]}""", timeout=60)
+        if not output:
+            return {}
+        s, e = output.find('{'), output.rfind('}') + 1
+        data = json.loads(output[s:e])
+        if data.get("stock_price") and not str(data["stock_price"]).startswith("$"):
+            data["stock_price"] = f"${data['stock_price']}"
+        log(f"    → ${data.get('stock_price')} | {data.get('price_change_24mo')}% | {data.get('market_cap')}")
+        return data
+    except Exception as ex:
+        log(f"    → Stock fetch failed: {ex}")
+        return {}
+
+
 # ── JSON writer (correct format for page) ────────────────────────────────────
 
 def load_json():
@@ -412,6 +441,8 @@ def main():
     parser.add_argument('--state', required=True, help='Buyer HQ state/country')
     parser.add_argument('--type', default='Strategic', help='Buyer type (default: Strategic)')
     parser.add_argument('--score', type=int, default=8, help='Fit score (default: 8)')
+    parser.add_argument('--ticker', default='', help='Stock ticker symbol (e.g. PAYX, SAP, WDAY)')
+    parser.add_argument('--domain', default='', help='Company domain for logo (e.g. paychex.com)')
     parser.add_argument('--skip-deploy', action='store_true', help='Skip git commit+push+deploy')
     args = parser.parse_args()
 
@@ -475,7 +506,12 @@ def main():
     else:
         log(f"  → No structured reviews extracted")
 
-    # ── Write to JSON ─────────────────────────────────────────────────────────
+    # ── Fetch stock data ────────────────────────────────────────────────────────
+    log(f"\n{'─' * 50}")
+    log(f"STOCK DATA...")
+    stock = fetch_stock_data(exa, buyer_name, args.ticker)
+
+    # ── Write to combined JSON (backward compat) ─────────────────────────────
     log(f"\n{'─' * 50}")
     log(f"WRITING JSON...")
     data = load_json()
@@ -483,15 +519,45 @@ def main():
         data, buyer_slug, buyer_name, args.type, buyer_city, buyer_state, args.score,
         section_results, nuggets, market_rep
     )
+    # Add stock/logo fields to combined JSON
+    buyer_obj = data["buyers"][buyer_slug]
+    buyer_obj["logo_domain"] = args.domain
+    buyer_obj["ticker"] = args.ticker
+    buyer_obj.update(stock)
     save_json(data)
-    log(f"  → {RESEARCH_JSON_PATH} ({os.path.getsize(RESEARCH_JSON_PATH)} bytes)")
+    log(f"  → {RESEARCH_JSON_PATH}")
+
+    # ── Write per-buyer JSON ─────────────────────────────────────────────────
+    per_buyer_path = os.path.join(PUBLIC_DATA_DIR, f"debbie-research-{buyer_slug}.json")
+    with open(per_buyer_path, 'w') as f:
+        json.dump(buyer_obj, f, indent=2, default=str)
+    log(f"  → {per_buyer_path}")
+
+    # ── Update manifest ──────────────────────────────────────────────────────
+    manifest_path = os.path.join(PUBLIC_DATA_DIR, "debbie-buyers-manifest.json")
+    try:
+        with open(manifest_path) as f:
+            manifest = json.load(f)
+    except Exception:
+        manifest = []
+    # Remove existing entry for this slug
+    manifest = [m for m in manifest if m.get("slug") != buyer_slug]
+    manifest.append({
+        "name": buyer_name, "slug": buyer_slug, "fit_score": args.score,
+        "buyer_type": args.type, "buyer_city": buyer_city, "buyer_state": buyer_state,
+        "logo_domain": args.domain, "ticker": args.ticker,
+    })
+    manifest.sort(key=lambda m: (-m.get("fit_score", 0), m.get("name", "")))
+    with open(manifest_path, 'w') as f:
+        json.dump(manifest, f, indent=2)
+    log(f"  → {manifest_path} ({len(manifest)} buyers)")
 
     # ── Deploy ────────────────────────────────────────────────────────────────
     if not args.skip_deploy:
         log(f"\n{'─' * 50}")
         log(f"DEPLOYING...")
         cmds = [
-            ["git", "-C", REPO_ROOT, "add", "public/data/debbie-buyer-research.json"],
+            ["git", "-C", REPO_ROOT, "add", "public/data/"],
             ["git", "-C", REPO_ROOT, "commit", "-m", f"[auto] Add {buyer_name} buyer research"],
             ["git", "-C", REPO_ROOT, "push"],
         ]
@@ -521,7 +587,10 @@ def main():
     for key, html, urls in section_results:
         has = bool(html) and "No data found" not in html
         log(f"  {key:<25} {'✓' if has else '✗'} {len(urls)} sources")
-    log(f"\nView: https://master-crm-web-eight.vercel.app/debbie-buyer-review.html")
+    if stock:
+        log(f"Stock: {args.ticker} {stock.get('stock_price','')} ({stock.get('price_change_24mo','')}% 24mo) cap={stock.get('market_cap','')}")
+    log(f"\nView: https://master-crm-web-eight.vercel.app/debbie-buyer-review.html?buyer={buyer_slug}")
+    log(f"Index: https://master-crm-web-eight.vercel.app/debbie-review-index.html")
 
 
 if __name__ == '__main__':
