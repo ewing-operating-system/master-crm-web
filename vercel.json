@@ -9,6 +9,10 @@
       ]
     }
   ],
+  "rewrites": [
+    { "source": "/meetings", "destination": "/meetings/index.html" },
+    { "source": "/meetings/", "destination": "/meetings/index.html" }
+  ],
   "functions": {
     "api/**/*.js": {
       "maxDuration": 30
