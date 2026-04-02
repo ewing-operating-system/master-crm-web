@@ -171,3 +171,5 @@ before any widget scripts. Widgets read `window.__SUPABASE_URL` and `window.__SU
 - `docs/LETTER-TEMPLATE-ENGINE-EXECUTION.md` — Letter scoring and generation algorithm
 - `docs/MEETING-PAGE-V2-SPEC.md` — Interactive meeting prep pages
 - `docs/CURRENT-BUILD-STATE.md` — Recent feature completions
+- `docs/DEBBIE-REVIEW-SYSTEM.md` — Buyer review pages: data contract, CLI usage, critical rules
+- `docs/ENGAGEMENT-BUYERS-MIGRATION-BRIEF.md` — engagement_buyers 58-column audit, 32 downstream files
