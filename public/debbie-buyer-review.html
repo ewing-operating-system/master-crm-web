@@ -535,6 +535,92 @@ function renderFeedbackCard(slug, cfg) {
   return html;
 }
 
+// Strip code fences and apply red/green color coding to narrative HTML
+function colorizeNarrative(html) {
+  if (!html) return html;
+  // Strip ```html fences and trailing ```
+  let t = html.replace(/```html\n?/g, '').replace(/\n?```\s*/g, '').replace(/^Here[\s\S]*?:\n\n/,'');
+  // Strip trailing "Key features:" boilerplate if present
+  t = t.replace(/\n\nKey features:[\s\S]*$/, '');
+
+  // GREEN: bridges, synergies, HR.com assets connecting to buyer
+  const greenPhrases = [
+    /(\d[\d.,]* million HR professionals)/gi,
+    /(2M\+? (?:HR )?professional[s]?(?: network)?)/gi,
+    /(extensive (?:media and learning|content|user base|library|reach)[\w\s,]*(?:capabilities|offerings|tools|library|resources)?)/gi,
+    /(robust (?:content library|media and learning|community|platform)[\w\s,]*)/gi,
+    /(learning (?:management|and development|platform|resources|content|modules)[\w\s]*)/gi,
+    /(community[- ](?:driven|engagement|of HR)[\w\s,]*)/gi,
+    /(HR resources, certifications, and community engagement tools)/gi,
+    /(cross-selling opportunities)/gi,
+    /(First-party behavioral data)/gi,
+    /(Content distribution channels)/gi,
+    /(Community engagement tools)/gi,
+    /(engagement metrics[\w\s]*)/gi,
+    /(holistic (?:solution|approach|HR experience)[\w\s,]*)/gi,
+    /(comprehensive (?:offering|solution|HR solutions|HCM ecosystem)[\w\s,]*)/gi,
+    /(end-to-end (?:HR solutions|talent solutions|enterprise insight))/gi,
+    /(unified experience[\w\s,]*)/gi,
+    /(seamless(?:ly)? integrat(?:e|ion|ing)[\w\s]*)/gi,
+    /(customer retention and satisfaction)/gi,
+    /(AI-driven (?:learning|talent|growth|hiring|tools)[\w\s]*)/gi,
+    /(cloud-first strategy)/gi,
+    /(deeper market penetration[\w\s]*)/gi,
+    /(professional development[\w\s]*)/gi,
+    /(curated learning resources)/gi,
+    /(experience intelligence)/gi,
+    /(talent (?:management|intelligence|acquisition|mobility)[\w\s]*)/gi,
+    /(workforce (?:development|analytics|data)[\w\s]*)/gi,
+    /(employee (?:engagement|experience)[\w\s]*)/gi,
+    /(skills mapping[\w\s]*)/gi,
+  ];
+  // RED: pain, risk, competitive threats, red flags
+  const redPhrases = [
+    /(integration complex(?:ity|ities))/gi,
+    /(complex and costly)/gi,
+    /(technical (?:and operational )?complex(?:ity|ities))/gi,
+    /(operational inefficiencies)/gi,
+    /(may (?:not align|conflict|divert|limit|complicate|slow|raise|pose|require)[\w\s,]*)/gi,
+    /(unlikely to overpay)/gi,
+    /(cautious (?:about|approach)[\w\s]*)/gi,
+    /(disciplined (?:approach|financial|acquisition)[\w\s]*)/gi,
+    /(cultural integration challenges)/gi,
+    /(revenue model[\w\s]* conflict)/gi,
+    /(media[\w\/]* revenue model[\w\s]*conflict[\w\s]*)/gi,
+    /(advertising revenue[\w\s]*not align)/gi,
+    /(niche focus[\w\s,]*limit[\w\s]*)/gi,
+    /(risk to revenue predictability)/gi,
+    /(34% decline in software licenses revenue)/gi,
+    /(divestiture of Qualtrics[\w\s]*)/gi,
+    /(deprioritizing HR tech)/gi,
+    /(guidance reduction[\w\s]*signal[\w\s]*)/gi,
+    /(less likely unless[\w\s]*)/gi,
+    /(billing surprises)/gi,
+    /(pricing pressure[\w\s]*)/gi,
+    /(regulatory scrutiny[\w\s]*)/gi,
+  ];
+
+  // Apply green — skip if already inside a style= tag or span
+  greenPhrases.forEach(rx => {
+    t = t.replace(rx, (m) => {
+      return '<span style="color:#3fb950;font-weight:600;">'+m+'</span>';
+    });
+  });
+  // Apply red
+  redPhrases.forEach(rx => {
+    t = t.replace(rx, (m) => {
+      return '<span style="color:#f85149;font-weight:600;">'+m+'</span>';
+    });
+  });
+
+  // Color-code section labels
+  t = t.replace(/<strong>(Deal Rationale:)<\/strong>/g, '<strong style="color:#3fb950;">$1</strong>');
+  t = t.replace(/<strong>(Integration Synergies:)<\/strong>/g, '<strong style="color:#3fb950;">$1</strong>');
+  t = t.replace(/<strong>(Red Flags?:)<\/strong>/g, '<strong style="color:#f85149;">$1</strong>');
+
+  return t;
+}
+
 function renderContentCard(slug, cfg) {
   const b = BUYERS[slug];
   const content = getSectionContent(b, cfg.key);
@@ -545,7 +631,7 @@ function renderContentCard(slug, cfg) {
   } else if (cfg.key === 'market_reputation') {
     html += renderMarketReputation(b);
   } else {
-    html += '<div class="narrative-box">'+content+'</div>';
+    html += '<div class="narrative-box">'+colorizeNarrative(content)+'</div>';
   }
   html += '</div>';
   return html;
