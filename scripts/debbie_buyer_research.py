@@ -65,6 +65,71 @@ def slugify(s):
     return s.strip('-')[:60]
 
 
+# ── Review Category Normalization ─────────────────────
+# Canonical set of 10 review pain categories understood by the frontend.
+# LLMs frequently drift to synonyms; this dict maps them back.
+CATEGORY_ALIASES = {
+    # UX
+    "usability": "ux", "navigation": "ux", "interface": "ux",
+    "ui": "ux", "design": "ux", "accessibility": "ux",
+    # Capabilities
+    "features": "capabilities", "reporting": "capabilities",
+    "analytics": "capabilities", "functionality": "capabilities",
+    "customization": "capabilities", "flexibility": "capabilities",
+    # Outcomes
+    "pricing": "outcomes", "billing": "outcomes", "cost": "outcomes",
+    "value": "outcomes", "roi": "outcomes", "return": "outcomes",
+    # Workflow
+    "onboarding": "workflow", "setup": "workflow",
+    "implementation": "workflow", "configuration": "workflow",
+    "deployment": "workflow", "adoption": "workflow",
+    # Reliability
+    "bugs": "reliability", "crashes": "reliability",
+    "performance": "reliability", "stability": "reliability",
+    "downtime": "reliability", "errors": "reliability",
+    # Efficiency
+    "automation": "efficiency", "speed": "efficiency",
+    "productivity": "efficiency", "time-saving": "efficiency",
+    # Integration
+    "api": "integration", "connectivity": "integration",
+    "interoperability": "integration", "compatibility": "integration",
+    # Support
+    "customer service": "support", "helpdesk": "support",
+    "documentation": "support", "training": "support",
+    # Data Integrity
+    "data quality": "data_integrity", "accuracy": "data_integrity",
+    "sync": "data_integrity", "migration": "data_integrity",
+    # Compliance
+    "security": "compliance", "gdpr": "compliance",
+    "audit": "compliance", "regulations": "compliance",
+}
+
+CANONICAL_CATEGORIES = {
+    "outcomes", "capabilities", "efficiency", "data_integrity",
+    "workflow", "ux", "support", "reliability", "compliance", "integration",
+}
+
+
+def normalize_category(raw: str) -> str:
+    """Map any LLM-returned category synonym to one of the 10 canonical categories."""
+    if not raw:
+        return "capabilities"
+    normalized = raw.strip().lower().replace(" ", "_")
+    if normalized in CANONICAL_CATEGORIES:
+        return normalized
+    # Try exact alias match (spaces → underscores)
+    alias_key = normalized.replace("_", " ")
+    if alias_key in CATEGORY_ALIASES:
+        return CATEGORY_ALIASES[alias_key]
+    if normalized in CATEGORY_ALIASES:
+        return CATEGORY_ALIASES[normalized]
+    # Partial match: if any canonical category appears in the raw string
+    for canon in CANONICAL_CATEGORIES:
+        if canon in normalized:
+            return canon
+    return "capabilities"  # safe default
+
+
 # ── LLM Calls ─────────────────────────────────────────
 def call_claude_cli(prompt, timeout=120):
     try:
@@ -359,24 +424,32 @@ SCORING:
 - specificity (1-10): references exact features, screens, scenarios? Not generic "it's good/bad"
 - polarity (1-10): how strong is the opinion? Extreme outcomes = 10, mild = 4, neutral = 1
 - verdict: "positive" or "negative" or "neutral"
-- category: one of: outcomes, capabilities, efficiency, data_integrity, workflow, ux, support, reliability, compliance, integration
+- category: MUST be exactly one of these 10 values (no other values allowed):
+    outcomes | capabilities | efficiency | data_integrity | workflow | ux | support | reliability | compliance | integration
 
-LOOK FOR reviews about:
-- Outcomes: ROI, cost savings, revenue impact, measurable results
-- Capabilities: what it can/can't do, feature gaps, integrations
-- Efficiency: time savings, automation, workflow speed
-- Data integrity: data loss, sync failures, migration problems, accuracy
-- Workflow: process design, approval chains, ease of setup
-- UX: interface design, navigation, mobile experience, learning curve
-- Support: customer service, implementation help, responsiveness
-- Reliability: uptime, bugs, crashes, performance under load
-- Compliance: regulatory, audit trails, certifications
-- Integration: API quality, third-party connections, data portability
+CATEGORY DEFINITIONS (use ONLY the exact keys above):
+- outcomes: ROI, cost savings, revenue impact, measurable business results, pricing concerns
+- capabilities: what it can/can't do, feature gaps, missing functionality, reporting, analytics
+- efficiency: time savings, automation, workflow speed, productivity gains or losses
+- data_integrity: data loss, sync failures, migration problems, accuracy issues
+- workflow: process design, approval chains, ease of setup, onboarding, implementation
+- ux: interface design, navigation, mobile experience, learning curve, usability
+- support: customer service, implementation help, responsiveness, documentation, training
+- reliability: uptime, bugs, crashes, performance under load, stability
+- compliance: regulatory requirements, audit trails, certifications, security, GDPR
+- integration: API quality, third-party connections, data portability, connectivity
+
+ALIAS RULES — map these to the canonical category:
+- "usability" or "interface" → ux
+- "pricing" or "billing" or "cost" → outcomes
+- "onboarding" or "setup" or "implementation" → workflow
+- "reporting" or "analytics" or "features" → capabilities
+- "bugs" or "crashes" or "performance" → reliability
 
 Reviews:
 {reviews_text}
 
-Return ONLY the JSON array."""
+Return ONLY the JSON array. The "category" field MUST be one of the 10 exact values listed above."""
 
         raw = call_llm(prompt, timeout=90)
         scores = extract_json(raw)
@@ -390,7 +463,7 @@ Return ONLY the JSON array."""
                         "polarity": score.get("polarity", 0),
                     }
                     review["verdict"] = score.get("verdict", "neutral")
-                    review["category"] = score.get("category", "capabilities")
+                    review["category"] = normalize_category(score.get("category", "capabilities"))
                     review["product"] = product_name
                     scored.append(review)
 
@@ -633,6 +706,20 @@ def process_buyer(buyer, exa, skip_reviews=False):
 
     # Phase 5: Existing Dossier
     dossier = extract_dossier_data(name)
+
+    # Phase 6: Pain/Gain Analysis (cross-section, evidence-backed)
+    try:
+        from pain_gain_engine import generate_pain_gain_analysis
+        # Temporarily write a partial JSON so the engine can read section data.
+        # The engine reads per-buyer JSON; we pass the slug and it loads the file.
+        # If the per-buyer file exists from a previous run, the engine will update it.
+        generate_pain_gain_analysis(
+            buyer_slug=slug,
+            entity="next_chapter",
+            target_company="HR.com Ltd",
+        )
+    except Exception as e:
+        log(f"  [Phase 6] Pain/Gain analysis skipped (non-fatal): {e}")
 
     return {
         "buyer_name": name,

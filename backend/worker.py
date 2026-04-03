@@ -7,11 +7,6 @@ Routes to the correct agent module based on agent_name.
 import json, os, time, sys, subprocess, psycopg2, urllib.request, ssl
 from datetime import datetime
 
-try:
-    from lib._config_bridge import DEFAULT_ENTITY as _DEFAULT_ENTITY
-except ImportError:
-    _DEFAULT_ENTITY = "next_chapter"
-
 # Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 DB_CONN = os.environ.get("DATABASE_URL", "")
 OPENROUTER_KEY = os.environ.get("OPENROUTER_API_KEY", "")
@@ -221,7 +216,7 @@ ONLY JSON."""
         # Log to agent_runs
         cur.execute("""INSERT INTO agent_runs (agent_name, entity, target_id, status, output_summary)
                        VALUES ('certifier', %s, %s, 'complete', %s)""",
-                    (item.get("entity", _DEFAULT_ENTITY), item["record_id"], json.dumps(cert, default=str)))
+                    (item.get("entity", "next_chapter"), item["record_id"], json.dumps(cert, default=str)))
         return "done", None
     return "failed", "Certification LLM failed"
 
@@ -240,6 +235,27 @@ def agent_swarm_enrichment(conn, item):
     from lib.swarm_enrichment import agent_swarm_enrichment as _run
     return _run(conn, item)
 
+def agent_pain_gain_analysis(conn, item):
+    """Regenerate Pain/Gain analysis for a buyer (cross-section, evidence-backed)."""
+    from lib.pain_gain_engine import generate_pain_gain_analysis
+    payload = item.get("payload", {})
+    buyer_slug = payload.get("buyer_slug", "")
+    entity = payload.get("entity", "next_chapter")
+    target_company = payload.get("target_company", "HR.com Ltd")
+    if not buyer_slug:
+        return "failed", "Missing buyer_slug in payload"
+    try:
+        result = generate_pain_gain_analysis(
+            buyer_slug=buyer_slug,
+            entity=entity,
+            target_company=target_company,
+        )
+        if result:
+            return "done", None
+        return "failed", "pain_gain_engine returned no analysis"
+    except Exception as e:
+        return "failed", str(e)
+
 # ─── Agent Router ────────────────────────────────────────────────────────────
 
 AGENTS = {
@@ -248,6 +264,7 @@ AGENTS = {
     "nurturer": agent_nurturer,
     "researcher": agent_researcher,
     "swarm_enrichment": agent_swarm_enrichment,
+    "pain_gain_analysis": agent_pain_gain_analysis,
 }
 
 def process_item(conn, item):
