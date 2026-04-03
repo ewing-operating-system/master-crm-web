@@ -1,5 +1,15 @@
 [
   {
+    "name": "Accenture",
+    "slug": "accenture",
+    "fit_score": 8,
+    "buyer_type": "Strategic",
+    "buyer_city": "New York",
+    "buyer_state": "NY",
+    "logo_domain": "accenture.com",
+    "ticker": "ACN"
+  },
+  {
     "name": "Paychex",
     "slug": "paychex",
     "fit_score": 8,
