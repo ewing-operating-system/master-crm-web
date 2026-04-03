@@ -31,12 +31,46 @@
 // Credentials: all keys come from env vars. See .env.example for names.
 // Vercel injects these at runtime. Local dev: copy .env.example to .env
 
+const path = require('path');
+const fs = require('fs');
+
 // ---------------------------------------------------------------------------
-// Inline engine — mirrors /public/letter-template.js exactly so there is one
-// source of truth for the algorithm. Keep the two files in sync.
+// Config-driven valuation multiples — loaded from vertical config JSON
+// Single source of truth: lib/config/verticals/home_services.json
 // ---------------------------------------------------------------------------
 
-const VERTICAL_MULTIPLES = {
+function loadMultiplesFromConfig() {
+  try {
+    const configPath = path.resolve(__dirname, '../../lib/config/verticals/home_services.json');
+    const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+    const base = config.valuation_fields || {};
+    const subs = config.sub_verticals || {};
+    const multiples = {};
+
+    // Build from sub-verticals
+    for (const [slug, sv] of Object.entries(subs)) {
+      const svVf = sv.valuation_fields || {};
+      multiples[slug] = {
+        floor:   svVf.multiple_floor   || base.multiple_floor   || 4.0,
+        ceiling: svVf.multiple_ceiling  || base.multiple_ceiling || 7.0,
+        median:  svVf.multiple_median   || base.multiple_median  || 5.5,
+      };
+    }
+    // Base/default
+    multiples.default = {
+      floor:   base.multiple_floor   || 4.0,
+      ceiling: base.multiple_ceiling || 7.0,
+      median:  base.multiple_median  || 5.5,
+    };
+    return multiples;
+  } catch (e) {
+    // Fallback if config file not available (e.g. during build)
+    return null;
+  }
+}
+
+// Legacy fallback — used only when vertical config is unavailable
+const LEGACY_MULTIPLES = {
   water_treatment:  { floor: 4.0, ceiling: 8.0,  median: 5.5  },
   hvac:             { floor: 4.5, ceiling: 8.5,  median: 6.0  },
   plumbing:         { floor: 4.0, ceiling: 7.5,  median: 5.5  },
@@ -46,6 +80,18 @@ const VERTICAL_MULTIPLES = {
   flooring:         { floor: 3.5, ceiling: 6.5,  median: 4.75 },
   default:          { floor: 4.0, ceiling: 7.0,  median: 5.5  },
 };
+
+const VERTICAL_MULTIPLES = loadMultiplesFromConfig() || LEGACY_MULTIPLES;
+
+// Valuation metric label — from config primary_metric
+const VALUATION_METRIC = (() => {
+  try {
+    const configPath = path.resolve(__dirname, '../../lib/config/verticals/home_services.json');
+    const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+    const metric = (config.valuation_fields || {}).primary_metric || 'ebitda';
+    return { ebitda: 'EBITDA', revenue: 'revenue', arr: 'ARR', sde: 'SDE' }[metric] || 'EBITDA';
+  } catch (e) { return 'EBITDA'; }
+})();
 
 const SCORE_THRESHOLDS = { production: 0.80, good: 0.60 };
 
@@ -279,7 +325,7 @@ function buildParagraph3(meetingData, companyName, buyerName, buyerResearch, val
   if (valuation.low && valuation.high) {
     const low  = formatDollar(valuation.low);
     const high = formatDollar(valuation.high);
-    const mult = `${valuation.multiple_floor}x–${valuation.multiple_ceiling}x EBITDA`;
+    const mult = `${valuation.multiple_floor}x–${valuation.multiple_ceiling}x ${VALUATION_METRIC}`;
     parts.push(`Based on current market comps in your vertical, a business like ${companyName} is realistically positioned in the ${low}–${high} range at ${mult}.`);
     if (valuation.recurring_premium) {
       parts.push(`Your recurring revenue base is a real premium driver — buyers underwrite that cash flow at the top of the multiple range.`);

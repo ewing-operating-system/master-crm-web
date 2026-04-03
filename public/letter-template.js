@@ -18,14 +18,23 @@
  */
 
 class LetterTemplateEngine {
-  constructor() {
+  /**
+   * @param {Object} [opts]
+   * @param {Object} [opts.verticalMultiples] — Override multiples from config
+   * @param {string} [opts.valuationMetric]   — "EBITDA", "revenue", "ARR" etc.
+   */
+  constructor(opts = {}) {
     this.SCORE_THRESHOLDS = {
       production: 0.80,
       good: 0.60,
     };
 
-    // EBITDA multiple ranges by vertical (mirrors letter_engine.py)
-    this.VERTICAL_MULTIPLES = {
+    // Valuation metric label (from config primary_metric)
+    this.VALUATION_METRIC = opts.valuationMetric || 'EBITDA';
+
+    // Multiple ranges by vertical — config-driven when available
+    // Legacy fallback mirrors letter_engine.py VERTICAL_DATA
+    this.VERTICAL_MULTIPLES = opts.verticalMultiples || {
       water_treatment:  { floor: 4.0, ceiling: 8.0, median: 5.5 },
       hvac:             { floor: 4.5, ceiling: 8.5, median: 6.0 },
       plumbing:         { floor: 4.0, ceiling: 7.5, median: 5.5 },
@@ -35,6 +44,35 @@ class LetterTemplateEngine {
       flooring:         { floor: 3.5, ceiling: 6.5, median: 4.75 },
       default:          { floor: 4.0, ceiling: 7.0, median: 5.5 },
     };
+  }
+
+  /**
+   * Create an engine from a vertical config JSON object (e.g. home_services.json).
+   * Builds multiples from config.valuation_fields + config.sub_verticals.
+   */
+  static fromConfig(config) {
+    const base = config.valuation_fields || {};
+    const subs = config.sub_verticals || {};
+    const multiples = {};
+
+    for (const [slug, sv] of Object.entries(subs)) {
+      const svVf = sv.valuation_fields || {};
+      multiples[slug] = {
+        floor:   svVf.multiple_floor   || base.multiple_floor   || 4.0,
+        ceiling: svVf.multiple_ceiling  || base.multiple_ceiling || 7.0,
+        median:  svVf.multiple_median   || base.multiple_median  || 5.5,
+      };
+    }
+    multiples.default = {
+      floor:   base.multiple_floor   || 4.0,
+      ceiling: base.multiple_ceiling || 7.0,
+      median:  base.multiple_median  || 5.5,
+    };
+
+    const metricMap = { ebitda: 'EBITDA', revenue: 'revenue', arr: 'ARR', sde: 'SDE' };
+    const metric = metricMap[base.primary_metric || 'ebitda'] || 'EBITDA';
+
+    return new LetterTemplateEngine({ verticalMultiples: multiples, valuationMetric: metric });
   }
 
   // ---------------------------------------------------------------------------
@@ -367,7 +405,7 @@ class LetterTemplateEngine {
     if (valuation.low && valuation.high) {
       const low  = this._formatDollar(valuation.low);
       const high = this._formatDollar(valuation.high);
-      const mult = `${valuation.multiple_floor}x–${valuation.multiple_ceiling}x EBITDA`;
+      const mult = `${valuation.multiple_floor}x–${valuation.multiple_ceiling}x ${this.VALUATION_METRIC}`;
       parts.push(`Based on current market comps in your vertical, a business like ${companyName} is realistically positioned in the ${low}–${high} range at ${mult}.`);
       if (valuation.recurring_premium) {
         parts.push(`Your recurring revenue base is a real premium driver — buyers underwrite that cash flow at the top of the multiple range.`);

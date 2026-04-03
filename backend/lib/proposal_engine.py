@@ -26,6 +26,11 @@ Falls back to OpenRouter if Claude CLI fails.
 
 import json, os, sys, subprocess, time, urllib.request, ssl, psycopg2
 
+try:
+    from lib._config_bridge import load_vertical as _load_vertical
+except ImportError:
+    _load_vertical = None
+
 # ─── Config ──────────────────────────────────────────────────────────────────
 # Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 
@@ -280,8 +285,46 @@ def enrich_with_exa(data):
 
     return data
 
+def _multiples_from_config(vertical):
+    """
+    Try to load multiples from vertical config (single source of truth).
+
+    Returns dict with ebitda_low/med/high keys, or None if config unavailable.
+    Scans sub_verticals for a match, then falls back to base valuation_fields.
+    """
+    if not _load_vertical:
+        return None
+    try:
+        vcfg = _load_vertical("home_services")
+    except Exception:
+        return None
+
+    vf = vcfg.get("valuation_fields", {})
+
+    # Check sub-verticals for a match
+    for sv_slug, sv in vcfg.get("sub_verticals", {}).items():
+        if sv_slug == vertical or sv_slug in vertical.lower().replace(" ", "_"):
+            sv_vf = sv.get("valuation_fields", {})
+            return {
+                "ebitda_low": sv_vf.get("multiple_floor", vf.get("multiple_floor", 3.0)),
+                "ebitda_med": sv_vf.get("multiple_median", vf.get("multiple_median", 4.5)),
+                "ebitda_high": sv_vf.get("multiple_ceiling", vf.get("multiple_ceiling", 6.5)),
+            }
+
+    # Base level
+    return {
+        "ebitda_low": vf.get("multiple_floor", 3.0),
+        "ebitda_med": vf.get("multiple_median", 4.5),
+        "ebitda_high": vf.get("multiple_ceiling", 6.5),
+    }
+
+
 def get_market_multiples(vertical):
-    """Load market multiples for this vertical."""
+    """Load market multiples for this vertical.
+
+    Priority: 1) market_multiples.json file, 2) vertical config, 3) legacy defaults.
+    """
+    # 1. External multiples file (highest priority — real market data)
     if os.path.exists(MULTIPLES_FILE):
         with open(MULTIPLES_FILE) as f:
             multiples = json.load(f)
@@ -289,7 +332,12 @@ def get_market_multiples(vertical):
             if vertical.lower() in v.get("vertical", "").lower():
                 return v
 
-    # Default multiples if file not ready yet
+    # 2. Vertical config (single source of truth for defaults)
+    config_result = _multiples_from_config(vertical)
+    if config_result:
+        return config_result
+
+    # 3. Legacy hardcoded fallback (kept for safety if config unavailable)
     defaults = {
         "hvac": {"ebitda_low": 3.5, "ebitda_med": 5.0, "ebitda_high": 7.0},
         "plumbing": {"ebitda_low": 3.0, "ebitda_med": 4.5, "ebitda_high": 6.5},
