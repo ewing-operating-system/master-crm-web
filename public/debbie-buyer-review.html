@@ -31,17 +31,18 @@ body { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; backgrou
 .zone-a-right textarea { font-size:10px; padding:4px 6px; background:#161b22; border:1px solid #30363d; border-radius:4px; color:#c9d1d9; resize:none; font-family:inherit; width:100%; }
 .zone-a-right textarea:focus { outline:none; border-color:#58a6ff; }
 
-/* ── 3-COLUMN BODY ──────────────────────── */
-.body-grid { display:grid; grid-template-columns:20% 1fr; margin-top:calc(29px + 15vh); transition:margin-right .3s; }
+/* ── BODY LAYOUT ───────────────────────── */
+.body-grid { margin-top:calc(29px + 15vh); transition:margin-right .3s; padding:12px 16px; }
 .body-grid.nuggets-open { margin-right:25%; }
 .body-grid.nuggets-closed { margin-right:40px; }
 
-/* ── LEFT: FEEDBACK PANEL ───────────────── */
-.feedback-col { padding:12px 24px 12px 12px; overflow:visible; }
-.feedback-sticky { position:sticky; top:calc(29px + 15vh + 8px); max-height:calc(100vh - 29px - 15vh - 16px); overflow-y:auto; overflow-x:visible; padding-right:18px; }
-.feedback-sticky::-webkit-scrollbar { width:3px; }
-.feedback-sticky::-webkit-scrollbar-thumb { background:#30363d; border-radius:2px; }
-.fb-card { background:#161b22; border:1px solid #30363d; border-radius:8px; padding:12px; margin-bottom:8px; border-left:3px solid #30363d; transition:all .2s; position:relative; }
+/* ── SECTION ROW: feedback + content side by side ── */
+.section-row { display:grid; grid-template-columns:22% 8px 1fr; align-items:stretch; margin-bottom:16px; }
+.section-row .arrow-col { display:flex; align-items:center; justify-content:center; }
+.section-row .arrow-col .fb-arrow { font-size:20px; opacity:0.9; line-height:1; filter:drop-shadow(0 0 4px currentColor); }
+
+/* ── FEEDBACK CARDS ────────────────────── */
+.fb-card { background:#161b22; border:1px solid #30363d; border-radius:8px; padding:12px; border-left:3px solid #30363d; transition:all .2s; display:flex; flex-direction:column; }
 .fb-card.active { box-shadow:0 0 8px rgba(88,166,255,0.15); }
 .fb-card-label { font-size:14px; font-weight:800; text-transform:uppercase; letter-spacing:.8px; margin-bottom:8px; }
 .fb-radios { display:flex; flex-direction:column; gap:2px; margin-bottom:8px; }
@@ -49,12 +50,8 @@ body { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; backgrou
 .fb-radio:hover { background:rgba(255,255,255,0.04); }
 .fb-radio input { width:16px; height:16px; flex-shrink:0; }
 .fb-radio.selected { color:#f0f6fc; font-weight:600; }
-.fb-comment { font-size:12px; padding:8px 10px; background:#0d1117; border:1px solid #21262d; border-radius:4px; color:#c9d1d9; resize:vertical; font-family:inherit; width:100%; min-height:80px; }
+.fb-comment { font-size:12px; padding:8px 10px; background:#0d1117; border:1px solid #21262d; border-radius:4px; color:#c9d1d9; resize:vertical; font-family:inherit; width:100%; flex:1; min-height:60px; }
 .fb-comment:focus { outline:none; border-color:#58a6ff; }
-/* Arrow connector on every feedback card */
-.fb-arrow { position:absolute; right:-20px; top:50%; transform:translateY(-50%); font-size:20px; opacity:0.9; pointer-events:none; line-height:1; filter:drop-shadow(0 0 4px currentColor); }
-
-/* Section border colors — now driven by JS inline styles via SECTION_CONFIG.color */
 
 /* ── CENTER: CONTENT ────────────────────── */
 .content-col { padding:12px 16px; }
@@ -208,8 +205,9 @@ body { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; backgrou
 }
 @media (max-width:900px) {
   .zone-a { grid-template-columns:1fr; max-height:none; padding:8px; }
-  .body-grid { grid-template-columns:1fr; margin-right:0 !important; }
-  .feedback-col { display:none; }
+  .body-grid { margin-right:0 !important; }
+  .section-row { grid-template-columns:1fr; }
+  .section-row .fb-card, .section-row .arrow-col { display:none; }
   .nuggets-panel { display:none; }
 }
 </style>
@@ -239,14 +237,9 @@ body { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; backgrou
   </div>
 </div>
 
-<!-- 3-COLUMN BODY -->
+<!-- BODY: LINKED ROWS (feedback + arrow + content per section) -->
 <div class="body-grid nuggets-open" id="bodyGrid">
-  <!-- LEFT: FEEDBACK -->
-  <div class="feedback-col">
-    <div class="feedback-sticky" id="feedbackCol"></div>
-  </div>
-  <!-- CENTER: CONTENT -->
-  <div class="content-col" id="contentCol"></div>
+  <div id="sectionRows"></div>
 </div>
 
 <!-- RIGHT: GOLDEN NUGGETS -->
@@ -521,33 +514,71 @@ const SECTION_CONFIG = [
 // Assign rotating color to each section
 SECTION_CONFIG.forEach((cfg, i) => { cfg.color = ROTATE_COLORS[i % ROTATE_COLORS.length]; });
 
-function renderBuyerContent(slug) {
+function renderFeedbackCard(slug, cfg) {
+  const b = BUYERS[slug];
+  const fb = FEEDBACK_CACHE[slug+'__'+cfg.key] || {};
+  const c = cfg.color;
+  const fbLabel = (cfg.key==='hr_media_business' && b.buyer_name) ? cfg.title+' \u2014 '+b.buyer_name : cfg.title;
+  let html = '<div class="fb-card" data-section-key="'+cfg.key+'" data-buyer-slug="'+slug+'" id="fb-'+slug+'-'+cfg.key+'" style="border-left:3px solid '+c+'">';
+  html += '<div class="fb-card-label" style="color:'+c+'">'+fbLabel+'</div>';
+  html += '<div class="fb-radios">';
+  [{val:'accurate_relevant_valuable',label:'Accurate, relevant, valuable'},
+   {val:'accurate_not_relevant',label:'Accurate, not relevant'},
+   {val:'remove_altogether',label:'Remove this content'}].forEach(opt => {
+    const checked = fb.section_verdict===opt.val ? ' checked' : '';
+    const selClass = fb.section_verdict===opt.val ? ' selected' : '';
+    html += '<label class="fb-radio'+selClass+'"><input type="radio" name="fb-'+slug+'-'+cfg.key+'" value="'+opt.val+'"'+checked+' onchange="sectionVerdictChange(\''+slug+'\',\''+b.buyer_name+'\',\''+cfg.key+'\',this.value)" style="accent-color:'+c+'"> '+opt.label+'</label>';
+  });
+  html += '</div>';
+  html += '<textarea class="fb-comment" placeholder="Comments..." onblur="sectionCommentBlur(\''+slug+'\',\''+b.buyer_name+'\',\''+cfg.key+'\',this.value)">'+(fb.section_comment||'')+'</textarea>';
+  html += '</div>';
+  return html;
+}
+
+function renderContentCard(slug, cfg) {
+  const b = BUYERS[slug];
+  const content = getSectionContent(b, cfg.key);
+  let html = '<div class="card research-section" data-section-key="'+cfg.key+'" data-buyer-slug="'+slug+'" id="section-'+slug+'-'+cfg.key+'" style="border-left:3px solid '+cfg.color+'">';
+  html += '<h3 style="color:'+cfg.color+'">'+cfg.title+(b.buyer_name?' \u2014 '+b.buyer_name:'')+'</h3>';
+  if (content === null) {
+    html += renderSwarmButton(slug, b.buyer_name, cfg.key);
+  } else if (cfg.key === 'market_reputation') {
+    html += renderMarketReputation(b);
+  } else {
+    html += '<div class="narrative-box">'+content+'</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function renderSectionRows(slug) {
   const b = BUYERS[slug];
   let html = '';
 
   SECTION_CONFIG.forEach(cfg => {
-    // pain_gain_match is injected manually after market_reputation — skip it here
-    if (cfg.key === 'pain_gain_match') return;
+    if (cfg.key === 'pain_gain_match') return; // injected after market_reputation
     const content = getSectionContent(b, cfg.key);
     const alwaysShow = ['hr_media_business','hr_domain_name','market_reputation','strategic_fit',
       'recent_news','employee_sentiment','technology_architecture','pricing_model'];
     if (content === null && !alwaysShow.includes(cfg.key)) return;
 
-    html += '<div class="card research-section" data-section-key="'+cfg.key+'" data-buyer-slug="'+slug+'" id="section-'+slug+'-'+cfg.key+'" style="border-left:3px solid '+cfg.color+'">';
-    html += '<h3 style="color:'+cfg.color+'">'+cfg.title+(b.buyer_name?' — '+b.buyer_name:'')+'</h3>';
-
-    if (content === null) {
-      html += renderSwarmButton(slug, b.buyer_name, cfg.key);
-    } else if (cfg.key === 'market_reputation') {
-      html += renderMarketReputation(b);
-    } else {
-      html += '<div class="narrative-box">'+content+'</div>';
-    }
+    // Row: feedback card | arrow | content card
+    html += '<div class="section-row">';
+    html += renderFeedbackCard(slug, cfg);
+    html += '<div class="arrow-col"><span class="fb-arrow" style="color:'+cfg.color+'">&#9654;</span></div>';
+    html += renderContentCard(slug, cfg);
     html += '</div>';
 
-    // Inject Pain/Gain Match immediately after Market Reputation
+    // Inject Pain/Gain Match row after Market Reputation
     if (cfg.key === 'market_reputation') {
-      html += renderPainGainMatch(b);
+      const pgCfg = SECTION_CONFIG.find(c => c.key === 'pain_gain_match');
+      if (pgCfg) {
+        html += '<div class="section-row">';
+        html += renderFeedbackCard(slug, pgCfg);
+        html += '<div class="arrow-col"><span class="fb-arrow" style="color:'+pgCfg.color+'">&#9654;</span></div>';
+        html += renderPainGainMatch(b);
+        html += '</div>';
+      }
     }
   });
 
@@ -672,7 +703,8 @@ function renderPainGainMatch(buyer) {
     }
 
     if (Object.keys(painCategories).length === 0) {
-        return '<div class="card research-section" data-section-key="pain_gain_match" data-buyer-slug="'+buyer.buyer_slug+'" style="border-left: 3px solid #f85149;"><h3 style="color:#f0f6fc; margin:0 0 8px;">Pain / Gain Match</h3><p style="color:#8b949e;">No negative reviews found — run Market Reputation research first.</p></div>';
+        var pgColor = (SECTION_CONFIG.find(c=>c.key==='pain_gain_match')||{}).color||'#ff6b9d';
+        return '<div class="card research-section" data-section-key="pain_gain_match" data-buyer-slug="'+buyer.buyer_slug+'" style="border-left: 3px solid '+pgColor+';"><h3 style="color:'+pgColor+'; margin:0 0 8px;">Pain / Gain Match</h3><p style="color:#8b949e;">No negative reviews found — run Market Reputation research first.</p></div>';
     }
 
     const solutionMap = {
@@ -731,8 +763,9 @@ function renderPainGainMatch(buyer) {
     const sorted = Object.entries(painCategories).sort((a, b) => b[1].count - a[1].count);
     const strengthIcon = (s) => s === 'strong' ? '●●●' : s === 'moderate' ? '●●○' : '●○○';
 
-    let html = '<div class="card research-section" data-section-key="pain_gain_match" data-buyer-slug="'+buyer.buyer_slug+'" style="border-left: 3px solid #f85149; padding: 20px;">';
-    html += '<h3 style="color:#f0f6fc; margin:0 0 4px; border:none; padding:0; font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:1px;">Pain / Gain Match</h3>';
+    var pgColor2 = (SECTION_CONFIG.find(c=>c.key==='pain_gain_match')||{}).color||'#ff6b9d';
+    let html = '<div class="card research-section" data-section-key="pain_gain_match" data-buyer-slug="'+buyer.buyer_slug+'" id="section-'+buyer.buyer_slug+'-pain_gain_match" style="border-left: 3px solid '+pgColor2+'; padding: 20px;">';
+    html += '<h3 style="color:'+pgColor2+'; margin:0 0 4px; border:none; padding:0; font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:1px;">Pain / Gain Match</h3>';
     html += '<p style="color:#8b949e; font-size:12px; margin:0 0 16px;">Negative review themes mapped to HR.com\'s 3 offerings — how ownership solves their users\' problems</p>';
 
     html += '<table class="pain-gain-matrix">';
@@ -1025,38 +1058,7 @@ function pollSwarmResult(queueId, slug, name, key) {
   }, 5000);
 }
 
-// ── FEEDBACK COLUMN ─────────────────────
-function renderFeedbackColumn(slug) {
-  const b = BUYERS[slug];
-  let html = '';
-
-  SECTION_CONFIG.forEach(cfg => {
-    const content = getSectionContent(b, cfg.key);
-    const alwaysShowFb = ['hr_media_business','hr_domain_name','market_reputation','strategic_fit',
-      'recent_news','employee_sentiment','technology_architecture','pricing_model'];
-    if (content === null && !alwaysShowFb.includes(cfg.key)) return;
-
-    const fb = FEEDBACK_CACHE[slug+'__'+cfg.key] || {};
-    const c = cfg.color;
-    html += '<div class="fb-card" data-section-key="'+cfg.key+'" data-buyer-slug="'+slug+'" id="fb-'+slug+'-'+cfg.key+'" style="border-left:3px solid '+c+'">';
-    const fbLabel = (cfg.key==='hr_media_business' && b.buyer_name) ? cfg.title+' \u2014 '+b.buyer_name : cfg.title;
-    html += '<div class="fb-card-label" style="color:'+c+'">'+fbLabel+'</div>';
-    html += '<span class="fb-arrow" style="color:'+c+'">&#9654;</span>';
-    html += '<div class="fb-radios">';
-    [{val:'accurate_relevant_valuable',label:'Accurate, relevant, valuable'},
-     {val:'accurate_not_relevant',label:'Accurate, not relevant'},
-     {val:'remove_altogether',label:'Remove this content'}].forEach(opt => {
-      const checked = fb.section_verdict===opt.val ? ' checked' : '';
-      const selClass = fb.section_verdict===opt.val ? ' selected' : '';
-      html += '<label class="fb-radio'+selClass+'"><input type="radio" name="fb-'+slug+'-'+cfg.key+'" value="'+opt.val+'"'+checked+' onchange="sectionVerdictChange(\''+slug+'\',\''+b.buyer_name+'\',\''+cfg.key+'\',this.value)" style="accent-color:'+c+'"> '+opt.label+'</label>';
-    });
-    html += '</div>';
-    html += '<textarea class="fb-comment" placeholder="Comments..." onblur="sectionCommentBlur(\''+slug+'\',\''+b.buyer_name+'\',\''+cfg.key+'\',this.value)">'+(fb.section_comment||'')+'</textarea>';
-    html += '</div>';
-  });
-
-  return html;
-}
+// ── FEEDBACK COLUMN (legacy compat — now rendered inline via renderSectionRows) ──
 
 window.sectionVerdictChange = function(slug, name, key, val) {
   saveFeedback(slug, name, key, {section_verdict:val});
@@ -1148,8 +1150,7 @@ function setupObservers() {
         if (slug !== CURRENT_BUYER) {
           updateZoneA(slug);
           renderNuggets(slug);
-          // Update feedback column
-          document.getElementById('feedbackCol').innerHTML = renderFeedbackColumn(slug);
+          // Feedback is now inline in section rows — no separate column to update
           // Update active tab
           document.querySelectorAll('.tab-pill').forEach(p => p.classList.toggle('active', p.dataset.slug===slug));
         }
@@ -1254,7 +1255,7 @@ async function init() {
     if (!r.ok) throw new Error('HTTP ' + r.status);
     buyer = await r.json();
   } catch(e) {
-    document.getElementById('contentCol').innerHTML = '<div style="padding:40px;text-align:center;color:#f85149;">'+
+    document.getElementById('sectionRows').innerHTML = '<div style="padding:40px;text-align:center;color:#f85149;">'+
       '<h2>Research data not found for: ' + slug + '</h2><p>Run: python3 scripts/debbie_buyer_research.py</p></div>';
     return;
   }
@@ -1263,32 +1264,30 @@ async function init() {
   BUYERS[slug] = buyer;
   BUYER_ORDER = [slug];
 
-  // Render single buyer section
-  let contentHtml = '<section class="buyer-section" id="buyer-' + slug + '">';
-  contentHtml += renderBuyerContent(slug);
-  contentHtml += '</section>';
-  document.getElementById('contentCol').innerHTML = contentHtml;
+  // Render linked section rows (feedback + arrow + content per row)
+  document.getElementById('sectionRows').innerHTML = '<section class="buyer-section" id="buyer-'+slug+'">' + renderSectionRows(slug) + '</section>';
 
   // Initialize Zone A
   updateZoneA(slug);
 
-  // Render feedback column
-  document.getElementById('feedbackCol').innerHTML = renderFeedbackColumn(slug);
-
-  // Sync ALL feedback card comment heights to their matching center sections
-  SECTION_CONFIG.forEach(cfg => {
-    const centerCard = document.getElementById('section-' + slug + '-' + cfg.key);
-    const fbCard = document.getElementById('fb-' + slug + '-' + cfg.key);
-    if (centerCard && fbCard) {
+  // ResizeObserver: when any center card changes height (e.g. accordion toggle),
+  // auto-resize its paired feedback card comment box to match
+  const resizeObs = new ResizeObserver(entries => {
+    for (const entry of entries) {
+      const card = entry.target;
+      const row = card.closest('.section-row');
+      if (!row) continue;
+      const fbCard = row.querySelector('.fb-card');
+      if (!fbCard) continue;
       const commentBox = fbCard.querySelector('.fb-comment');
-      if (commentBox) {
-        const labelH = fbCard.querySelector('.fb-card-label')?.offsetHeight || 0;
-        const radiosH = fbCard.querySelector('.fb-radios')?.offsetHeight || 0;
-        const targetH = centerCard.offsetHeight - labelH - radiosH - 50;
-        commentBox.style.minHeight = Math.max(targetH, 80) + 'px';
-      }
+      if (!commentBox) continue;
+      const labelH = fbCard.querySelector('.fb-card-label')?.offsetHeight || 0;
+      const radiosH = fbCard.querySelector('.fb-radios')?.offsetHeight || 0;
+      const targetH = card.offsetHeight - labelH - radiosH - 50;
+      commentBox.style.minHeight = Math.max(targetH, 60) + 'px';
     }
   });
+  document.querySelectorAll('.research-section').forEach(el => resizeObs.observe(el));
 
   // Render nuggets
   renderNuggets(slug);
