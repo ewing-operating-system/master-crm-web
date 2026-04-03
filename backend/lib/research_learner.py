@@ -36,6 +36,11 @@ import sys
 import urllib.request
 from datetime import datetime, timezone
 
+try:
+    from lib._config_bridge import DEFAULT_ENTITY as _DEFAULT_ENTITY
+except ImportError:
+    _DEFAULT_ENTITY = "next_chapter"
+
 # ---------------------------------------------------------------------------
 # Logging
 # ---------------------------------------------------------------------------
@@ -259,7 +264,7 @@ def extract_learning(comment_id):
         "comment_id": comment_id,
         "commenter": commenter,
         "company_name": company,
-        "entity": "next_chapter",  # most dossier corrections are NC
+        "entity": _DEFAULT_ENTITY,  # most dossier corrections are primary entity
         **extracted,
     }
     log.info(

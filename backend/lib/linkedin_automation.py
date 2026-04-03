@@ -15,6 +15,11 @@ SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
 SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
 ctx = ssl.create_default_context()
 
+try:
+    from lib._config_bridge import DEFAULT_ENTITY as _DEFAULT_ENTITY
+except ImportError:
+    _DEFAULT_ENTITY = "next_chapter"
+
 DAILY_CONNECTION_LIMIT = 50
 DAILY_MESSAGE_LIMIT = 100
 
@@ -130,7 +135,7 @@ def create_sequence(contact_id, entity):
     industry = contact.get("industry", vertical)
     role_type = contact.get("role", "sales")
 
-    sequence = MESSAGE_SEQUENCES.get(entity, MESSAGE_SEQUENCES["next_chapter"])
+    sequence = MESSAGE_SEQUENCES.get(entity, MESSAGE_SEQUENCES[_DEFAULT_ENTITY])
     actions = []
 
     for step in sequence:

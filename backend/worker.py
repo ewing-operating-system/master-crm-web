@@ -7,6 +7,11 @@ Routes to the correct agent module based on agent_name.
 import json, os, time, sys, subprocess, psycopg2, urllib.request, ssl
 from datetime import datetime
 
+try:
+    from lib._config_bridge import DEFAULT_ENTITY as _DEFAULT_ENTITY
+except ImportError:
+    _DEFAULT_ENTITY = "next_chapter"
+
 # Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 DB_CONN = os.environ.get("DATABASE_URL", "")
 OPENROUTER_KEY = os.environ.get("OPENROUTER_API_KEY", "")
@@ -216,7 +221,7 @@ ONLY JSON."""
         # Log to agent_runs
         cur.execute("""INSERT INTO agent_runs (agent_name, entity, target_id, status, output_summary)
                        VALUES ('certifier', %s, %s, 'complete', %s)""",
-                    (item.get("entity", "next_chapter"), item["record_id"], json.dumps(cert, default=str)))
+                    (item.get("entity", _DEFAULT_ENTITY), item["record_id"], json.dumps(cert, default=str)))
         return "done", None
     return "failed", "Certification LLM failed"
 

@@ -24,6 +24,11 @@ Statuses:
 import json, os, sys, time, subprocess, logging, urllib.request, ssl
 from datetime import datetime, timezone
 
+try:
+    from lib._config_bridge import DEFAULT_ENTITY as _DEFAULT_ENTITY
+except ImportError:
+    _DEFAULT_ENTITY = "next_chapter"
+
 # fact_updater is in the same lib/ directory
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from fact_updater import apply_fact_correction
@@ -387,7 +392,7 @@ def fetch_section_content(company, page_type, section_id):
 def infer_entity(company_name):
     """Infer entity from company context. Default to next_chapter for dossier companies."""
     # Most dossier companies are Next Chapter targets
-    return "next_chapter"
+    return _DEFAULT_ENTITY
 
 # ---------------------------------------------------------------------------
 # Step 14: Q&A Log Append — after any comment is fully resolved

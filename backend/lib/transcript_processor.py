@@ -11,6 +11,11 @@ from datetime import datetime
 
 import urllib.request, ssl
 
+try:
+    from lib._config_bridge import DEFAULT_ENTITY as _DEFAULT_ENTITY
+except ImportError:
+    _DEFAULT_ENTITY = "next_chapter"
+
 # Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
 SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
@@ -66,11 +71,12 @@ TRANSCRIPT:
 """
 
 
-def process_transcript(transcript_text, meeting_id=None, entity="next_chapter"):
+def process_transcript(transcript_text, meeting_id=None, entity=None):
     """
     Process a transcript and extract structured action items.
     Uses Claude CLI for intelligent extraction.
     """
+    entity = entity or _DEFAULT_ENTITY
     prompt = EXTRACTION_PROMPT + transcript_text[:15000]  # Limit to ~15K chars
 
     try:
@@ -166,7 +172,7 @@ def process_fireflies_transcript(transcript_id):
     transcript = transcripts[0]
     text = transcript.get("text", transcript.get("transcript_text", ""))
     meeting_id = transcript.get("meeting_id")
-    entity = transcript.get("entity", "next_chapter")
+    entity = transcript.get("entity", _DEFAULT_ENTITY)
 
     result = process_transcript(text, meeting_id, entity)
 
@@ -191,7 +197,7 @@ if __name__ == "__main__":
     parser.add_argument("--transcript-id", help="Process Fireflies transcript by ID")
     parser.add_argument("--file", help="Process transcript from file")
     parser.add_argument("--meeting-id", help="Associated meeting ID")
-    parser.add_argument("--entity", default="next_chapter")
+    parser.add_argument("--entity", default=_DEFAULT_ENTITY)
     args = parser.parse_args()
 
     if args.transcript_id:

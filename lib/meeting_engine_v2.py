@@ -16,6 +16,7 @@ Meeting types:
     engagement       — Close meeting: timeline, fee, exclusivity, legal
 """
 
+import importlib.util
 from datetime import date as date_type
 from pathlib import Path
 from typing import Literal
@@ -25,6 +26,17 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 MeetingType = Literal["discovery", "financial_review", "engagement"]
 
 _TEMPLATE_DIR = Path(__file__).resolve().parent.parent / "templates"
+
+# ── Load default entity from vertical config ─────────────────────────────────
+_vcfg_path = Path(__file__).resolve().parent / "config" / "vertical_config_schema.py"
+try:
+    _spec = importlib.util.spec_from_file_location("vertical_config_schema", str(_vcfg_path))
+    _mod = importlib.util.module_from_spec(_spec)
+    _spec.loader.exec_module(_mod)
+    _primary_cfg = _mod.load_vertical("home_services")
+    _DEFAULT_ENTITY = _primary_cfg["entity_defaults"]["entity"]
+except Exception:
+    _DEFAULT_ENTITY = "next_chapter"
 
 # ---------------------------------------------------------------------------
 # Questions by meeting type
@@ -128,13 +140,40 @@ DEFAULT_OBJECTIVES = {
     ],
 }
 
-DEFAULT_TALKING_POINTS = [
-    "We specialize exclusively in home services and trades — we understand the language buyers speak in this space",
-    "We run a controlled, confidential process — the owner's identity stays protected behind a blind teaser until they approve disclosure",
-    "Our typical engagement targets 40–60 curated buyers: PE-backed platforms, national strategics, and family offices",
-    "We handle everything — valuation, buyer outreach, negotiations, due diligence management — so the owner can keep running their business",
-    "Businesses in this vertical are commanding strong multiples right now, and buyer appetite is high",
-]
+# Talking points keyed by entity. Add an entry for each new entity — the engine
+# falls back to "next_chapter" if the company's entity is unrecognised.
+_TALKING_POINTS_BY_ENTITY: dict[str, list[str]] = {
+    "next_chapter": [
+        "We specialize in {vertical} M&A — we understand the language buyers speak in this space",
+        "We run a controlled, confidential process — the owner's identity stays protected behind a blind teaser until they approve disclosure",
+        "Our typical engagement targets 40–60 curated buyers: PE-backed platforms, national strategics, and family offices",
+        "We handle everything — valuation, buyer outreach, negotiations, due diligence management — so the owner can keep running their business",
+        "Businesses in this vertical are commanding strong multiples right now, and buyer appetite is high",
+    ],
+    "and_capital": [
+        "AND Capital brings institutional-grade PE fund management to transactions that deserve it",
+        "Our process is disciplined: investment committee oversight, conflict management, and regulatory review at every stage",
+        "We target alignment of interests — GP co-investment, 8% preferred return, and carry only on outperformance",
+        "We handle the full capital raise lifecycle — fund structure, LP outreach, diligence, and close",
+        "Our LPs include family offices, RIAs, and institutional allocators who value governance as much as returns",
+    ],
+    "revsup": [
+        "RevsUp places revenue leaders — AEs, SDRs, BDRs, VP Sales, CROs — on a contingent basis",
+        "Flat search fee plus a percentage of salary — you only pay when we place",
+        "We run a focused, confidential search — candidates don't know who they're being considered for until you approve",
+        "Six-month success guarantee on every placement",
+        "We specialize in SaaS revenue roles — we speak the same language as your hiring manager and your candidates",
+    ],
+}
+
+def _get_talking_points(entity: str, vertical_label: str) -> list[str]:
+    """Return talking points for this entity, with {vertical} interpolated."""
+    points = _TALKING_POINTS_BY_ENTITY.get(entity) or _TALKING_POINTS_BY_ENTITY["next_chapter"]
+    label = vertical_label or "your vertical"
+    return [p.replace("{vertical}", label) for p in points]
+
+# Keep the module-level name for backwards compatibility with any external callers.
+DEFAULT_TALKING_POINTS = _TALKING_POINTS_BY_ENTITY["next_chapter"]
 
 DEFAULT_DANGER_ZONES = {
     "discovery": [
@@ -158,13 +197,37 @@ DEFAULT_DANGER_ZONES = {
     ],
 }
 
-DEFAULT_WHAT_WE_BRING = [
-    "Boutique M&A advisory focused exclusively on home services businesses — plumbing, HVAC, water treatment, roofing, and related trades",
-    "Controlled, confidential process — the owner's name and company identity stay protected until they approve disclosure to specific buyers",
-    "40–60 curated buyers per engagement across PE-backed platforms, national strategics, and family offices",
-    "We handle everything — valuation, buyer outreach, negotiations, due diligence management — so the owner can keep running their business",
-    "Deep relationships with the buyers who are most active in this space right now",
-]
+_WHAT_WE_BRING_BY_ENTITY: dict[str, list[str]] = {
+    "next_chapter": [
+        "Boutique M&A advisory focused on {vertical} — we know the buyers, the multiples, and the deal terms",
+        "Controlled, confidential process — the owner's name and company identity stay protected until they approve disclosure to specific buyers",
+        "40–60 curated buyers per engagement across PE-backed platforms, national strategics, and family offices",
+        "We handle everything — valuation, buyer outreach, negotiations, due diligence management — so the owner can keep running their business",
+        "Deep relationships with the buyers who are most active in this space right now",
+    ],
+    "and_capital": [
+        "Institutional fund management infrastructure: investment committee, compliance, and governance built in",
+        "LP relationships across family offices, RIAs, and institutional allocators in health, energy, and adjacent sectors",
+        "GP co-investment alongside LPs — our capital is aligned with yours",
+        "Regulatory review and conflict management at every stage — no surprises for LPs",
+        "Two active fund verticals: Health & Wellness Innovation and Energy Transition",
+    ],
+    "revsup": [
+        "Specialist recruiter for SaaS revenue roles — AE, SDR, BDR, VP Sales, CRO, VP CS",
+        "Contingent model — no placement, no fee",
+        "Six-month success guarantee on every placed candidate",
+        "Confidential search — candidates are pre-qualified before your company name is disclosed",
+        "Deep network in SaaS sales built over years of contingent and retained searches",
+    ],
+}
+
+def _get_what_we_bring(entity: str, vertical_label: str) -> list[str]:
+    """Return 'what we bring' bullets for this entity, with {vertical} interpolated."""
+    items = _WHAT_WE_BRING_BY_ENTITY.get(entity) or _WHAT_WE_BRING_BY_ENTITY["next_chapter"]
+    label = vertical_label or "your vertical"
+    return [i.replace("{vertical}", label) for i in items]
+
+DEFAULT_WHAT_WE_BRING = _WHAT_WE_BRING_BY_ENTITY["next_chapter"]
 
 DEFAULT_SUCCESS_CRITERIA = {
     "discovery": [
@@ -333,8 +396,10 @@ class MeetingEngineV2:
         meeting_date: str,
         meeting_type: MeetingType,
     ) -> dict:
-        owner_name  = company.get("owner_name") or company.get("contact_name") or "the owner"
-        owner_first = owner_name.split()[0] if owner_name else "there"
+        owner_name    = company.get("owner_name") or company.get("contact_name") or "the owner"
+        owner_first   = owner_name.split()[0] if owner_name else "there"
+        entity        = company.get("entity", _DEFAULT_ENTITY)
+        vertical_label = company.get("vertical_label") or company.get("vertical", "")
 
         return {
             "meeting_id":          meeting_id,
@@ -360,9 +425,9 @@ class MeetingEngineV2:
             "agenda_items":        DEFAULT_AGENDA[meeting_type],
             "objectives":          DEFAULT_OBJECTIVES[meeting_type],
             "questions":           QUESTIONS[meeting_type],
-            "talking_points":      DEFAULT_TALKING_POINTS,
+            "talking_points":      _get_talking_points(entity, vertical_label),
             "danger_zones":        DEFAULT_DANGER_ZONES[meeting_type],
-            "what_we_bring":       DEFAULT_WHAT_WE_BRING,
+            "what_we_bring":       _get_what_we_bring(entity, vertical_label),
             "success_criteria":    DEFAULT_SUCCESS_CRITERIA[meeting_type],
             "next_steps_positive": DEFAULT_NEXT_STEPS_POSITIVE,
             "next_steps_nurture":  DEFAULT_NEXT_STEPS_NURTURE,

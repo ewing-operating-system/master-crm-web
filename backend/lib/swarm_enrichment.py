@@ -33,12 +33,17 @@ if _BACKEND_DIR not in sys.path:
 
 from lib.exa_client import ExaClient
 
+try:
+    from lib._config_bridge import DEFAULT_ENTITY as _DEFAULT_ENTITY
+except ImportError:
+    _DEFAULT_ENTITY = "next_chapter"
+
 # ── Constants ─────────────────────────────────────────────────────────────────
 PUBLIC_DATA_DIR = os.path.join(
     os.path.dirname(_BACKEND_DIR), "public", "data"
 )
 RESEARCH_JSON_PATH = os.path.join(PUBLIC_DATA_DIR, "debbie-buyer-research.json")
-ENTITY = "next_chapter"
+ENTITY = _DEFAULT_ENTITY
 
 
 # ── LLM helpers ───────────────────────────────────────────────────────────────

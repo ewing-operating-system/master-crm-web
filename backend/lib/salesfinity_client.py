@@ -18,6 +18,11 @@ import urllib.parse
 from datetime import datetime, timezone
 from typing import Optional
 
+try:
+    from lib._config_bridge import DEFAULT_ENTITY as _DEFAULT_ENTITY
+except ImportError:
+    _DEFAULT_ENTITY = "next_chapter"
+
 # ── Config ────────────────────────────────────────────────────────────────────
 # Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 
@@ -462,7 +467,7 @@ def sync_outcomes_to_supabase(outcomes):
     }
 
     for outcome in outcomes:
-        entity = outcome.get("entity") or "next_chapter"
+        entity = outcome.get("entity") or _DEFAULT_ENTITY
         play_status = status_map.get(outcome.get("outcome", "no_answer"), "no_answer")
 
         # Auto-DNC detection from call notes

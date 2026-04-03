@@ -18,6 +18,11 @@ from decimal import Decimal
 from dotenv import load_dotenv
 load_dotenv(os.path.join(os.path.dirname(__file__), '.env'))
 
+try:
+    from lib._config_bridge import DEFAULT_ENTITY as _DEFAULT_ENTITY
+except ImportError:
+    _DEFAULT_ENTITY = "next_chapter"
+
 # Import Lob client (lazy — only used in POST handlers)
 import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'lib'))
@@ -1088,7 +1093,7 @@ class MasterCRMHandler(http.server.BaseHTTPRequestHandler):
                 from_address=lob_client.NC_RETURN_ADDRESS,
                 html_content=letter.get("letter_html") or letter.get("letter_text", ""),
                 description=f"NC letter to {letter.get('recipient_name', '')}",
-                metadata={"letter_id": str(letter_id), "entity": letter.get("entity", "next_chapter")}
+                metadata={"letter_id": str(letter_id), "entity": letter.get("entity", _DEFAULT_ENTITY)}
             )
         except Exception as e:
             conn.close()
@@ -1106,7 +1111,7 @@ class MasterCRMHandler(http.server.BaseHTTPRequestHandler):
         # Log cost
         cur.execute("""INSERT INTO cost_ledger (entity, cost_source, cost_amount, letter_id, company_id, description)
                       VALUES (%s, 'lob', 1.50, %s, %s, %s)""",
-                   (letter.get("entity", "next_chapter"), letter_id,
+                   (letter.get("entity", _DEFAULT_ENTITY), letter_id,
                     letter.get("company_id"), f"Letter to {letter.get('recipient_name', '')}"))
 
         conn.commit()
@@ -1181,7 +1186,7 @@ class MasterCRMHandler(http.server.BaseHTTPRequestHandler):
 
         cur.execute("""INSERT INTO intelligence_cache (company_id, entity, key, value, source_agent)
                       VALUES (%s, %s, %s, %s, 'meeting_save')""",
-                   (company['id'], body.get("entity", "next_chapter"),
+                   (company['id'], body.get("entity", _DEFAULT_ENTITY),
                     f"meeting_{body.get('meeting_date', 'latest')}",
                     json.dumps(meeting_data, default=str)))
 

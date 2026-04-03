@@ -10,7 +10,7 @@ Usage:
     from lib.letter_integration import generate_letter_for_target, batch_generate_letters
 
     result = generate_letter_for_target("some-target-id")
-    results = batch_generate_letters(entity="next_chapter", limit=5)
+    results = batch_generate_letters(limit=5)
 """
 
 import json
@@ -22,6 +22,11 @@ import urllib.parse
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
+
+try:
+    from lib._config_bridge import DEFAULT_ENTITY as _DEFAULT_ENTITY
+except ImportError:
+    _DEFAULT_ENTITY = "next_chapter"
 
 # ---------------------------------------------------------------------------
 # Supabase config (service role -- never exposed to browser)
@@ -426,7 +431,7 @@ def generate_letter_for_target(target_id: str) -> dict:
     if not rows:
         raise ValueError(f"Target not found: {target_id}")
     target     = rows[0]
-    entity     = target.get("entity", "next_chapter")
+    entity     = target.get("entity", _DEFAULT_ENTITY)
     company_id = target.get("company_id") or ""
 
     # -- Step b: Fetch research ----------------------------------------------
@@ -579,7 +584,7 @@ def generate_letter_for_target(target_id: str) -> dict:
     }
 
 
-def batch_generate_letters(entity: str = "next_chapter", limit: int = 10) -> list:
+def batch_generate_letters(entity: str = None, limit: int = 10) -> list:
     """
     Batch-generate letters for targets that don't yet have a generated_letter stored.
 
@@ -588,6 +593,7 @@ def batch_generate_letters(entity: str = "next_chapter", limit: int = 10) -> lis
 
     Returns list of result dicts from generate_letter_for_target.
     """
+    entity = entity or _DEFAULT_ENTITY
     SKIP_STATUSES = {"letter_sent", "called", "responded", "closed", "dead"}
 
     # Fetch candidates
@@ -647,7 +653,7 @@ if __name__ == "__main__":
     p_gen.add_argument("target_id", help="UUID of the target row")
 
     p_batch = sub.add_parser("batch", help="Batch-generate letters for an entity")
-    p_batch.add_argument("--entity", default="next_chapter")
+    p_batch.add_argument("--entity", default=_DEFAULT_ENTITY)
     p_batch.add_argument("--limit", default=10, type=int)
 
     args = parser.parse_args()

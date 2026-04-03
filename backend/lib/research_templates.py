@@ -33,7 +33,8 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, REPO_ROOT)
 
 # ── Load vertical config module via importlib (avoids sys.path 'lib' collision) ──
-_vcfg_path = os.path.join(REPO_ROOT, 'lib', 'config', 'vertical_config_schema.py')
+# REPO_ROOT is backend/ — go up one more level to reach the repo root
+_vcfg_path = os.path.join(os.path.dirname(REPO_ROOT), 'lib', 'config', 'vertical_config_schema.py')
 try:
     _spec = importlib.util.spec_from_file_location('vertical_config_schema', _vcfg_path)
     _vcfg_mod = importlib.util.module_from_spec(_spec)
@@ -44,6 +45,13 @@ except Exception:
     # If config module not available, all calls fall through to legacy dicts
     _load_vertical = None
     _list_verticals = lambda: []
+
+# Default entity from config (replaces hardcoded "next_chapter" fallback)
+try:
+    _primary_cfg = _load_vertical("home_services") if _load_vertical else None
+    _DEFAULT_ENTITY = _primary_cfg["entity_defaults"]["entity"] if _primary_cfg else "next_chapter"
+except Exception:
+    _DEFAULT_ENTITY = "next_chapter"
 
 # Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
@@ -616,7 +624,7 @@ def research_target(target_id):
         raise ValueError(f"Target not found: {target_id}")
 
     target = rows[0]
-    entity = target.get("entity", "next_chapter")
+    entity = target.get("entity", _DEFAULT_ENTITY)
     vertical = target.get("vertical") or target.get("primary_vertical") or "default"
     company_name = target.get("company_name") or target.get("name", "")
     city = target.get("city", "")
