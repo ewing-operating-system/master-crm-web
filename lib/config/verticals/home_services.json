@@ -152,6 +152,80 @@
     }
   },
 
+  "pipeline_prompts": {
+    "synthesis_context": "You are a senior M&A analyst at an advisory firm specializing in home services and trades. You are writing buyer intelligence about {buyer_name} — evaluating whether they are a credible acquirer for a {vertical_label} business.",
+    "nuggets_context": "You are extracting golden nuggets from RAW search results about {buyer_name} for an M&A advisor representing a home services business owner.",
+    "nuggets_focus": "Why {buyer_name} would want to acquire a home services or trades business",
+    "product_discovery_query": "{buyer_name} offers home services including HVAC, plumbing, electrical, roofing, pest control, or related trades that can be individually reviewed by customers",
+    "vertical_label": "Home Services"
+  },
+
+  "pipeline_sections": [
+    {
+      "key": "ma_appetite",
+      "title": "M&A Appetite & Deal History",
+      "exa_template_names": ["ma_history", "company_financials"],
+      "topic_template": "{buyer_name} has acquired home services, trades, or contractor businesses through roll-up or platform acquisition strategies"
+    },
+    {
+      "key": "platform_strategy",
+      "title": "Platform Strategy",
+      "exa_template_names": ["strategic_fit", "earnings_call"],
+      "topic_template": "{buyer_name} is building a multi-location or multi-trade home services platform through acquisitions of established local operators"
+    },
+    {
+      "key": "geographic_coverage",
+      "title": "Geographic Coverage & Markets",
+      "exa_template_names": ["company_search"],
+      "topic_template": "{buyer_name} operates home services or trades businesses across multiple states and metropolitan markets"
+    },
+    {
+      "key": "integration_playbook",
+      "title": "Integration Playbook",
+      "exa_template_names": ["strategic_fit"],
+      "topic_template": "{buyer_name} has a documented approach to integrating acquired home services businesses, retaining owners, and supporting technician teams"
+    },
+    {
+      "key": "ceo_vision",
+      "title": "CEO Vision & Strategy",
+      "exa_template_names": ["earnings_call"],
+      "topic_template": "{buyer_name} CEO or leadership has discussed growth through acquisition, expanding into new trades, or building a national home services platform"
+    },
+    {
+      "key": "market_reputation",
+      "title": "Market Reputation",
+      "exa_template_names": ["reviews_search"],
+      "topic_template": "{buyer_name} customer satisfaction, service quality, and market reputation in the home services and trades industry",
+      "output_format": "market_reputation"
+    },
+    {
+      "key": "strategic_fit",
+      "title": "Strategic Fit",
+      "exa_template_names": ["strategic_fit", "company_financials"],
+      "topic_template": "How {buyer_name}'s existing platform, trade capabilities, and geographic footprint would be strengthened by acquiring an established local home services operator",
+      "output_format": "direct_html"
+    },
+    {
+      "key": "approach_strategy",
+      "title": "Approach Strategy",
+      "exa_template_names": ["buyer_contacts"],
+      "topic_template": "corporate development, business development, and M&A leadership at {buyer_name} who evaluate acquisitions of home services businesses"
+    },
+    {
+      "key": "golden_nuggets",
+      "title": "Golden Nuggets",
+      "exa_template_names": ["ma_history", "earnings_call"],
+      "topic_template": "{buyer_name} executives have made statements about acquiring home services businesses, building a platform, or expanding into new trades and geographies",
+      "output_format": "golden_nuggets"
+    },
+    {
+      "key": "valuation_signals",
+      "title": "Valuation & Deal Terms",
+      "exa_template_names": ["company_financials", "ma_history"],
+      "topic_template": "{buyer_name} has paid specific EBITDA multiples for home services acquisitions or has disclosed deal terms that signal what they would pay for a new acquisition"
+    }
+  ],
+
   "sub_verticals": {
     "water_treatment": {
       "display_name": "Water Treatment",

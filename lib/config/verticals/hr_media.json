@@ -175,6 +175,106 @@
     }
   },
 
+  "pipeline_prompts": {
+    "synthesis_context": "You are a senior M&A analyst at an advisory firm. Your client is selling HR.com — a media and learning platform with 2M+ HR professionals — to potential acquirers. You are writing buyer intelligence about {buyer_name}.",
+    "nuggets_context": "You are extracting golden nuggets from RAW search results about {buyer_name} for an M&A advisor selling HR.com.",
+    "nuggets_focus": "Why {buyer_name} would want to acquire an HR media and learning platform",
+    "product_discovery_query": "{buyer_name} offers a suite of HR products and platforms that can be individually reviewed, including modules for recruiting, payroll, learning, and performance management",
+    "vertical_label": "HR Technology"
+  },
+
+  "pipeline_sections": [
+    {
+      "key": "hr_media_business",
+      "title": "HR.com Media Business",
+      "exa_template_names": ["company_search", "company_financials"],
+      "topic_template": "{buyer_name} operates in the HR technology space and could benefit from acquiring HR.com's media audience of 2 million HR professionals, learning marketplace, and advertising revenue",
+      "output_format": "narrative_object"
+    },
+    {
+      "key": "hr_domain_name",
+      "title": "HR.com Domain Name Value",
+      "exa_template_names": ["strategic_fit"],
+      "topic_template": "HR media, content, and domain authority that would give {buyer_name} a premium brand presence and SEO advantage in the HR technology market",
+      "output_format": "narrative_object"
+    },
+    {
+      "key": "market_reputation",
+      "title": "Market Reputation",
+      "exa_template_names": ["reviews_search"],
+      "topic_template": "{buyer_name} customer satisfaction, product reviews, and market reputation that would affect their ability to integrate an acquired HR media platform",
+      "output_format": "market_reputation"
+    },
+    {
+      "key": "strategic_fit",
+      "title": "Strategic Fit",
+      "exa_template_names": ["strategic_fit", "company_financials"],
+      "topic_template": "HR media, content, and learning businesses that would complement {buyer_name}'s existing platform and strengthen their position in the HR technology market",
+      "output_format": "direct_html"
+    },
+    {
+      "key": "ceo_vision",
+      "title": "CEO Vision & Strategy",
+      "exa_template_names": ["earnings_call"],
+      "topic_template": "{buyer_name} CEO has signaled interest in acquiring content, media, or learning platforms to expand their HR technology ecosystem"
+    },
+    {
+      "key": "ma_appetite",
+      "title": "M&A Appetite",
+      "exa_template_names": ["ma_history"],
+      "topic_template": "{buyer_name} has a pattern of acquiring companies in adjacent HR technology markets and would be a natural buyer for an HR media and learning platform"
+    },
+    {
+      "key": "competitive_moat",
+      "title": "Competitive Moat",
+      "exa_template_names": ["strategic_fit"],
+      "topic_template": "competitive advantages in HR technology that would be strengthened by acquiring a media and content platform with millions of HR professionals"
+    },
+    {
+      "key": "earnings_quotes",
+      "title": "Key Earnings Quotes",
+      "exa_template_names": ["earnings_call"],
+      "topic_template": "{buyer_name} CEO and CFO have discussed acquisition strategy, growth through M&A, and investment in content or media during recent earnings calls"
+    },
+    {
+      "key": "approach_strategy",
+      "title": "Approach Strategy",
+      "exa_template_names": ["buyer_contacts"],
+      "topic_template": "corporate development and M&A leadership at {buyer_name} who would evaluate an acquisition of an HR media company"
+    },
+    {
+      "key": "golden_nuggets",
+      "title": "Golden Nuggets",
+      "exa_template_names": ["ma_history", "earnings_call"],
+      "topic_template": "{buyer_name} executives have made surprising statements about acquiring media businesses, content platforms, or expanding into HR learning and community",
+      "output_format": "golden_nuggets"
+    },
+    {
+      "key": "recent_news",
+      "title": "Recent News & Developments",
+      "exa_template_names": ["ma_history"],
+      "topic_template": "{buyer_name} has recently announced leadership changes, restructuring, new product launches, or strategic partnerships that would affect their interest in acquiring an HR media company"
+    },
+    {
+      "key": "employee_sentiment",
+      "title": "Employee Sentiment",
+      "exa_template_names": ["reviews_search"],
+      "topic_template": "{buyer_name} employees describe their experience working at the company, including culture, leadership, and whether the company is growing or cutting back"
+    },
+    {
+      "key": "technology_architecture",
+      "title": "Technology Architecture",
+      "exa_template_names": ["strategic_fit"],
+      "topic_template": "{buyer_name} technology platform, API capabilities, and integration architecture that would determine how easily they could integrate an acquired HR media and learning platform"
+    },
+    {
+      "key": "pricing_model",
+      "title": "Pricing Model & Revenue Mix",
+      "exa_template_names": ["company_financials"],
+      "topic_template": "{buyer_name} pricing strategy, subscription model, and revenue breakdown by segment showing how recurring revenue and customer retention drive their business"
+    }
+  ],
+
   "deal_specific": {
     "_comment": "This section captures HR.com-specific deal structure that does not exist in home_services. It demonstrates where the schema may need extension for non-standard deal types.",
     "asset_structure": [
