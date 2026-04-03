@@ -10,6 +10,16 @@
     "ticker": "ACN"
   },
   {
+    "name": "Oracle",
+    "slug": "oracle",
+    "fit_score": 8,
+    "buyer_type": "Strategic",
+    "buyer_city": "Austin",
+    "buyer_state": "TX",
+    "logo_domain": "oracle.com",
+    "ticker": "ORCL"
+  },
+  {
     "name": "Paychex",
     "slug": "paychex",
     "fit_score": 8,
