@@ -235,6 +235,27 @@ def agent_swarm_enrichment(conn, item):
     from lib.swarm_enrichment import agent_swarm_enrichment as _run
     return _run(conn, item)
 
+def agent_pain_gain_analysis(conn, item):
+    """Regenerate Pain/Gain analysis for a buyer (cross-section, evidence-backed)."""
+    from lib.pain_gain_engine import generate_pain_gain_analysis
+    payload = item.get("payload", {})
+    buyer_slug = payload.get("buyer_slug", "")
+    entity = payload.get("entity", "next_chapter")
+    target_company = payload.get("target_company", "HR.com Ltd")
+    if not buyer_slug:
+        return "failed", "Missing buyer_slug in payload"
+    try:
+        result = generate_pain_gain_analysis(
+            buyer_slug=buyer_slug,
+            entity=entity,
+            target_company=target_company,
+        )
+        if result:
+            return "done", None
+        return "failed", "pain_gain_engine returned no analysis"
+    except Exception as e:
+        return "failed", str(e)
+
 # ─── Agent Router ────────────────────────────────────────────────────────────
 
 AGENTS = {
@@ -243,6 +264,7 @@ AGENTS = {
     "nurturer": agent_nurturer,
     "researcher": agent_researcher,
     "swarm_enrichment": agent_swarm_enrichment,
+    "pain_gain_analysis": agent_pain_gain_analysis,
 }
 
 def process_item(conn, item):

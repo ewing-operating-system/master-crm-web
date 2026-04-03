@@ -659,11 +659,18 @@ function renderSectionRows(slug) {
     if (cfg.key === 'market_reputation') {
       const pgCfg = SECTION_CONFIG.find(c => c.key === 'pain_gain_match');
       if (pgCfg) {
+        // renderPainGainMatch is async: inject placeholder now, it self-replaces via DOM
+        const pgColor = pgCfg.color || '#ff6b9d';
+        const pgPlaceholder = '<div class="card research-section" data-section-key="pain_gain_match" data-buyer-slug="'+slug+'" id="section-'+slug+'-pain_gain_match" style="border-left:3px solid '+pgColor+';padding:20px;">'
+          + '<h3 style="color:'+pgColor+';margin:0 0 4px;border:none;padding:0;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">Pain / Gain Match</h3>'
+          + '<p style="color:#8b949e;font-size:12px">Loading Pain / Gain data…</p></div>';
         html += '<div class="section-row">';
         html += renderFeedbackCard(slug, pgCfg);
-        html += '<div class="arrow-col"><span class="fb-arrow" style="color:'+pgCfg.color+'">&#9654;</span></div>';
-        html += renderPainGainMatch(b);
+        html += '<div class="arrow-col"><span class="fb-arrow" style="color:'+pgColor+'">&#9654;</span></div>';
+        html += pgPlaceholder;
         html += '</div>';
+        // Kick off async load — replaces the placeholder in DOM once ready
+        renderPainGainMatch(b);
       }
     }
   });
@@ -773,109 +780,289 @@ function renderMarketReputation(b) {
 }
 
 // ── PAIN / GAIN MATCH ───────────────────
-function renderPainGainMatch(buyer) {
+// ── Pain/Gain asset cache (fetched once per page load) ──────────────────────
+let _pgAssetsCache = null;   // null = not fetched, [] = fetched but empty
+let _pgAssetsFetching = null; // Promise while in flight
+
+async function _fetchEntityAssets(entity, targetCompany) {
+    if (_pgAssetsCache !== null) return _pgAssetsCache;
+    if (_pgAssetsFetching) return _pgAssetsFetching;
+
+    _pgAssetsFetching = (async () => {
+        try {
+            const enc = encodeURIComponent(targetCompany);
+            const url = SB_URL + '/rest/v1/entity_value_propositions'
+                + '?entity=eq.' + encodeURIComponent(entity)
+                + '&target_company=eq.' + enc
+                + '&order=sort_order'
+                + '&select=asset_key,asset_label,asset_subtitle';
+            const ctrl = new AbortController();
+            const timer = setTimeout(() => ctrl.abort(), 3000);
+            const resp = await fetch(url, { headers: SB_HEADERS, signal: ctrl.signal });
+            clearTimeout(timer);
+            if (!resp.ok) throw new Error('HTTP ' + resp.status);
+            const rows = await resp.json();
+            _pgAssetsCache = Array.isArray(rows) ? rows : [];
+        } catch (e) {
+            console.warn('[pain_gain] Supabase asset fetch failed, will use fallback solutionMap:', e.message || e);
+            _pgAssetsCache = [];
+        }
+        _pgAssetsFetching = null;
+        return _pgAssetsCache;
+    })();
+
+    return _pgAssetsFetching;
+}
+
+// Hardcoded fallback — used when Supabase is unreachable or analysis is missing
+const FALLBACK_SOLUTION_MAP = {
+    outcomes: {
+        media: { strength: 'strong', text: 'HR.com events & webcasts drive measurable pipeline — 2M practitioners = direct lead gen channel' },
+        domain: { strength: 'moderate', text: 'hr.com traffic (#87 global) captures high-intent HR buyers searching for solutions' },
+        community: { strength: 'strong', text: 'MyPeople.ai behavioral data shows which solutions practitioners actually adopt' }
+    },
+    capabilities: {
+        media: { strength: 'strong', text: 'Content library (5000+ webcasts) fills product education gaps their tools lack' },
+        domain: { strength: 'weak', text: 'Domain authority lends credibility but doesn\'t directly add capabilities' },
+        community: { strength: 'strong', text: 'Practitioner feedback loop identifies feature gaps before competitors do' }
+    },
+    efficiency: {
+        media: { strength: 'moderate', text: 'Pre-built content & certification programs reduce customer onboarding time' },
+        domain: { strength: 'weak', text: 'SEO traffic reduces customer acquisition cost but doesn\'t improve product efficiency' },
+        community: { strength: 'strong', text: 'Community-sourced workflows and templates accelerate user adoption' }
+    },
+    data_integrity: {
+        media: { strength: 'moderate', text: 'Educational content on compliance & data handling reduces user error' },
+        domain: { strength: 'weak', text: 'Limited direct impact on data integrity' },
+        community: { strength: 'strong', text: '2M practitioners reporting data issues = early warning system for bugs at scale' }
+    },
+    workflow: {
+        media: { strength: 'strong', text: 'Best-practice workflow templates from conferences & research reduce friction' },
+        domain: { strength: 'weak', text: 'Domain doesn\'t directly address workflow issues' },
+        community: { strength: 'strong', text: 'Peer-validated workflows from practitioners who solved the same problems' }
+    },
+    ux: {
+        media: { strength: 'moderate', text: 'UX research & benchmarking content informs better product design decisions' },
+        domain: { strength: 'weak', text: 'Domain prestige doesn\'t fix UX' },
+        community: { strength: 'strong', text: 'Direct user feedback channel — practitioners describe exactly what\'s broken' }
+    },
+    support: {
+        media: { strength: 'strong', text: 'Self-service knowledge base from 5000+ webcasts deflects support tickets' },
+        domain: { strength: 'moderate', text: 'hr.com as support portal increases discoverability of help resources' },
+        community: { strength: 'strong', text: 'Peer support network — practitioners help each other, reducing vendor support load' }
+    },
+    reliability: {
+        media: { strength: 'weak', text: 'Content doesn\'t directly improve uptime' },
+        domain: { strength: 'weak', text: 'Domain doesn\'t affect reliability' },
+        community: { strength: 'moderate', text: 'Community reports outages faster than monitoring — crowdsourced incident detection' }
+    },
+    compliance: {
+        media: { strength: 'strong', text: 'Certification programs & compliance content keep practitioners audit-ready' },
+        domain: { strength: 'moderate', text: 'hr.com brand authority adds trust signal for compliance-sensitive buyers' },
+        community: { strength: 'strong', text: 'Regulatory change alerts propagate through practitioner network in real-time' }
+    },
+    integration: {
+        media: { strength: 'moderate', text: 'Integration guides & vendor comparison content reduces evaluation time' },
+        domain: { strength: 'weak', text: 'Limited direct impact on integrations' },
+        community: { strength: 'strong', text: 'Practitioners share real integration experiences — which combos work, which don\'t' }
+    }
+};
+
+const FALLBACK_ASSETS = [
+    { asset_key: 'media',     asset_label: 'HR.com Media',     asset_subtitle: '2M members · 5K webcasts · certs' },
+    { asset_key: 'domain',    asset_label: 'HR.com Domain',    asset_subtitle: '#87 global · SEO authority · traffic' },
+    { asset_key: 'community', asset_label: 'HR.com Community', asset_subtitle: 'MyPeople.ai · engagement data' },
+];
+
+function _renderPainGainFallback(buyer, pgColor) {
+    // Original logic: build pain categories from raw reviews, render with solutionMap
+    console.warn('[pain_gain] Using fallback solutionMap render for', buyer.buyer_slug);
     const painCategories = {};
     const reviews = buyer.market_reputation?.product_reviews || {};
-
-    for (const [product, data] of Object.entries(reviews)) {
-        for (const review of (data.negative || [])) {
-            const cat = review.category || 'other';
-            if (!painCategories[cat]) painCategories[cat] = { count: 0, examples: [] };
+    for (const [, data] of Object.entries(reviews)) {
+        for (const rev of (data.negative || [])) {
+            const cat = rev.category || 'other';
+            if (!painCategories[cat]) painCategories[cat] = { count: 0 };
             painCategories[cat].count++;
-            if (painCategories[cat].examples.length < 2) {
-                painCategories[cat].examples.push(review.text || '');
-            }
         }
     }
+    const assets = FALLBACK_ASSETS;
+    const strengthIcon = (s) => s === 'strong' ? '●●●' : s === 'moderate' ? '●●○' : '●○○';
+    const colW = Math.floor(75 / assets.length) + '%';
 
-    if (Object.keys(painCategories).length === 0) {
-        var pgColor = (SECTION_CONFIG.find(c=>c.key==='pain_gain_match')||{}).color||'#ff6b9d';
-        return '<div class="card research-section" data-section-key="pain_gain_match" data-buyer-slug="'+buyer.buyer_slug+'" style="border-left: 3px solid '+pgColor+';"><h3 style="color:'+pgColor+'; margin:0 0 8px;">Pain / Gain Match</h3><p style="color:#8b949e;">No negative reviews found — run Market Reputation research first.</p></div>';
+    let html = _pgWrapOpen(buyer.buyer_slug, pgColor);
+    html += '<p style="color:#8b949e;font-size:11px;margin:0 0 12px;font-style:italic">Fallback view — run Agent Swarm to generate cross-section analysis</p>';
+    html += '<table class="pain-gain-matrix"><thead><tr>';
+    html += '<th style="width:15%">Pain Category</th><th style="width:5%;text-align:center">#</th>';
+    for (const a of assets) {
+        html += '<th style="width:'+colW+'">'+a.asset_label+'<br><span style="font-weight:400;opacity:0.6">'+a.asset_subtitle+'</span></th>';
     }
-
-    const solutionMap = {
-        outcomes: {
-            media: { strength: 'strong', text: 'HR.com events & webcasts drive measurable pipeline — 2M practitioners = direct lead gen channel' },
-            domain: { strength: 'moderate', text: 'hr.com traffic (#87 global) captures high-intent HR buyers searching for solutions' },
-            community: { strength: 'strong', text: 'MyPeople.ai behavioral data shows which solutions practitioners actually adopt' }
-        },
-        capabilities: {
-            media: { strength: 'strong', text: 'Content library (5000+ webcasts) fills product education gaps their tools lack' },
-            domain: { strength: 'weak', text: 'Domain authority lends credibility but doesn\'t directly add capabilities' },
-            community: { strength: 'strong', text: 'Practitioner feedback loop identifies feature gaps before competitors do' }
-        },
-        efficiency: {
-            media: { strength: 'moderate', text: 'Pre-built content & certification programs reduce customer onboarding time' },
-            domain: { strength: 'weak', text: 'SEO traffic reduces customer acquisition cost but doesn\'t improve product efficiency' },
-            community: { strength: 'strong', text: 'Community-sourced workflows and templates accelerate user adoption' }
-        },
-        data_integrity: {
-            media: { strength: 'moderate', text: 'Educational content on compliance & data handling reduces user error' },
-            domain: { strength: 'weak', text: 'Limited direct impact on data integrity' },
-            community: { strength: 'strong', text: '2M practitioners reporting data issues = early warning system for bugs at scale' }
-        },
-        workflow: {
-            media: { strength: 'strong', text: 'Best-practice workflow templates from conferences & research reduce friction' },
-            domain: { strength: 'weak', text: 'Domain doesn\'t directly address workflow issues' },
-            community: { strength: 'strong', text: 'Peer-validated workflows from practitioners who solved the same problems' }
-        },
-        ux: {
-            media: { strength: 'moderate', text: 'UX research & benchmarking content informs better product design decisions' },
-            domain: { strength: 'weak', text: 'Domain prestige doesn\'t fix UX' },
-            community: { strength: 'strong', text: 'Direct user feedback channel — practitioners describe exactly what\'s broken' }
-        },
-        support: {
-            media: { strength: 'strong', text: 'Self-service knowledge base from 5000+ webcasts deflects support tickets' },
-            domain: { strength: 'moderate', text: 'hr.com as support portal increases discoverability of help resources' },
-            community: { strength: 'strong', text: 'Peer support network — practitioners help each other, reducing vendor support load' }
-        },
-        reliability: {
-            media: { strength: 'weak', text: 'Content doesn\'t directly improve uptime' },
-            domain: { strength: 'weak', text: 'Domain doesn\'t affect reliability' },
-            community: { strength: 'moderate', text: 'Community reports outages faster than monitoring — crowdsourced incident detection' }
-        },
-        compliance: {
-            media: { strength: 'strong', text: 'Certification programs & compliance content keep practitioners audit-ready' },
-            domain: { strength: 'moderate', text: 'hr.com brand authority adds trust signal for compliance-sensitive buyers' },
-            community: { strength: 'strong', text: 'Regulatory change alerts propagate through practitioner network in real-time' }
-        },
-        integration: {
-            media: { strength: 'moderate', text: 'Integration guides & vendor comparison content reduces evaluation time' },
-            domain: { strength: 'weak', text: 'Limited direct impact on integrations' },
-            community: { strength: 'strong', text: 'Practitioners share real integration experiences — which combos work, which don\'t' }
+    html += '</tr></thead><tbody>';
+    const sorted = Object.entries(painCategories).sort((a, b) => b[1].count - a[1].count);
+    for (const [cat, data] of sorted) {
+        const map = FALLBACK_SOLUTION_MAP[cat] || {};
+        html += '<tr>';
+        html += '<td><span class="pain-category-badge" style="background:#21262d;color:#f85149">'+cat.replace(/_/g,' ')+'</span></td>';
+        html += '<td style="text-align:center;color:#f85149;font-weight:600">'+data.count+'</td>';
+        for (const a of assets) {
+            const cell = (map[a.asset_key]) || { strength: 'weak', text: 'Requires analysis' };
+            html += '<td><span class="fit-'+cell.strength+'">'+strengthIcon(cell.strength)+'</span> <span style="color:#c9d1d9;font-size:11px">'+cell.text+'</span></td>';
         }
+        html += '</tr>';
+    }
+    html += '</tbody></table></div>';
+    return html;
+}
+
+function _pgWrapOpen(buyerSlug, pgColor) {
+    return '<div class="card research-section" data-section-key="pain_gain_match" data-buyer-slug="'+buyerSlug+'" id="section-'+buyerSlug+'-pain_gain_match" style="border-left:3px solid '+pgColor+';padding:20px;">'
+        + '<h3 style="color:'+pgColor+';margin:0 0 4px;border:none;padding:0;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">Pain / Gain Match</h3>';
+}
+
+function _renderPainGainDynamic(buyer, pgColor, assets, analysis) {
+    // Dynamic render: columns from Supabase assets, rows from pain_gain_analysis
+    const strengthIcon = (s) => s === 'strong' ? '●●●' : s === 'moderate' ? '●●○' : s === 'none' ? '○○○' : '●○○';
+    const severityColor = (s) => s === 'high' ? '#f85149' : s === 'medium' ? '#d29922' : '#8b949e';
+
+    const SOURCE_LABELS = {
+        market_reputation: 'Reviews',
+        ceo_vision: 'CEO Vision',
+        ma_appetite: 'M&A',
+        competitive_moat: 'Competitive',
+        earnings_quotes: 'Earnings',
+        recent_news: 'News',
+        strategic_fit: 'Strategic Fit',
     };
 
-    const sorted = Object.entries(painCategories).sort((a, b) => b[1].count - a[1].count);
-    const strengthIcon = (s) => s === 'strong' ? '●●●' : s === 'moderate' ? '●●○' : '●○○';
+    const painCats = analysis.pain_categories || [];
+    const mappings = analysis.asset_mappings || [];
 
-    var pgColor2 = (SECTION_CONFIG.find(c=>c.key==='pain_gain_match')||{}).color||'#ff6b9d';
-    let html = '<div class="card research-section" data-section-key="pain_gain_match" data-buyer-slug="'+buyer.buyer_slug+'" id="section-'+buyer.buyer_slug+'-pain_gain_match" style="border-left: 3px solid '+pgColor2+'; padding: 20px;">';
-    html += '<h3 style="color:'+pgColor2+'; margin:0 0 4px; border:none; padding:0; font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:1px;">Pain / Gain Match</h3>';
-    html += '<p style="color:#8b949e; font-size:12px; margin:0 0 16px;">Negative review themes mapped to HR.com\'s 3 offerings — how ownership solves their users\' problems</p>';
+    // Index mappings: {category: {asset_key: {strength, rationale}}}
+    const mappingIdx = {};
+    for (const m of mappings) {
+        const cat = m.pain_category;
+        if (!mappingIdx[cat]) mappingIdx[cat] = {};
+        mappingIdx[cat][m.asset_key] = { strength: m.strength, rationale: m.rationale || '' };
+    }
 
-    html += '<table class="pain-gain-matrix">';
-    html += '<thead><tr>';
+    const colW = Math.floor(75 / assets.length) + '%';
+    const subtitle = analysis.generated_at
+        ? 'Cross-section analysis · Generated ' + analysis.generated_at.slice(0,10)
+        : 'Cross-section analysis — reviews + CEO vision + M&A + competitive + earnings';
+
+    let html = _pgWrapOpen(buyer.buyer_slug, pgColor);
+    html += '<p style="color:#8b949e;font-size:12px;margin:0 0 16px;">'+subtitle+'</p>';
+    html += '<table class="pain-gain-matrix"><thead><tr>';
     html += '<th style="width:15%">Pain Category</th>';
-    html += '<th style="width:5%; text-align:center">#</th>';
-    html += '<th style="width:26%">HR.com Media<br><span style="font-weight:400;opacity:0.6">2M members · 5K webcasts · certs</span></th>';
-    html += '<th style="width:26%">HR.com Domain<br><span style="font-weight:400;opacity:0.6">#87 global · SEO authority · traffic</span></th>';
-    html += '<th style="width:26%">HR.com Community<br><span style="font-weight:400;opacity:0.6">MyPeople.ai · engagement data</span></th>';
+    html += '<th style="width:5%;text-align:center">Sev</th>';
+    for (const a of assets) {
+        html += '<th style="width:'+colW+'">'+a.asset_label+'<br><span style="font-weight:400;opacity:0.6">'+a.asset_subtitle+'</span></th>';
+    }
+    html += '<th style="width:8%">Sources</th>';
     html += '</tr></thead><tbody>';
 
-    for (const [cat, data] of sorted) {
-        const map = solutionMap[cat] || { media: { strength: 'weak', text: 'Requires analysis' }, domain: { strength: 'weak', text: 'Requires analysis' }, community: { strength: 'weak', text: 'Requires analysis' } };
+    // Sort by severity: high → medium → low
+    const sevOrder = { high: 0, medium: 1, low: 2 };
+    const sorted = [...painCats].sort((a, b) => (sevOrder[a.severity]||2) - (sevOrder[b.severity]||2));
+
+    for (const pc of sorted) {
+        const cat = pc.category;
+        const sevCol = severityColor(pc.severity);
+        const catMaps = mappingIdx[cat] || {};
+
+        // Source badges
+        const badges = (pc.sources || [])
+            .map(s => '<span style="background:#21262d;color:#8b949e;font-size:9px;padding:1px 4px;border-radius:3px;display:inline-block;margin:1px">'+(SOURCE_LABELS[s]||s)+'</span>')
+            .join('');
+
         html += '<tr>';
-        html += '<td><span class="pain-category-badge" style="background:#21262d;color:#f85149">'+cat.replace('_', ' ')+'</span></td>';
-        html += '<td style="text-align:center;color:#f85149;font-weight:600">'+data.count+'</td>';
-        html += '<td><span class="fit-'+map.media.strength+'">'+strengthIcon(map.media.strength)+'</span> <span style="color:#c9d1d9;font-size:11px">'+map.media.text+'</span></td>';
-        html += '<td><span class="fit-'+map.domain.strength+'">'+strengthIcon(map.domain.strength)+'</span> <span style="color:#c9d1d9;font-size:11px">'+map.domain.text+'</span></td>';
-        html += '<td><span class="fit-'+map.community.strength+'">'+strengthIcon(map.community.strength)+'</span> <span style="color:#c9d1d9;font-size:11px">'+map.community.text+'</span></td>';
+        html += '<td>'
+            + '<span class="pain-category-badge" style="background:#21262d;color:'+sevCol+'">'+cat.replace(/_/g,' ')+'</span>'
+            + (pc.evidence ? '<div style="color:#8b949e;font-size:10px;margin-top:3px;line-height:1.3">'+pc.evidence.slice(0,120)+(pc.evidence.length>120?'…':'')+'</div>' : '')
+            + '</td>';
+        html += '<td style="text-align:center"><span style="color:'+sevCol+';font-size:11px;font-weight:600">'+pc.severity.toUpperCase()+'</span></td>';
+
+        for (const a of assets) {
+            const cell = catMaps[a.asset_key] || { strength: 'none', rationale: '' };
+            html += '<td>'
+                + '<span class="fit-'+(cell.strength==='none'?'weak':cell.strength)+'">'+strengthIcon(cell.strength)+'</span>'
+                + ' <span style="color:#c9d1d9;font-size:11px">'+cell.rationale.slice(0,140)+(cell.rationale.length>140?'…':'')+'</span>'
+                + '</td>';
+        }
+
+        html += '<td style="vertical-align:top">'+badges+'</td>';
         html += '</tr>';
     }
 
-    html += '</tbody></table></div>';
+    html += '</tbody></table>';
+
+    // Synthesis block (if available)
+    if (analysis.synthesis) {
+        html += '<div style="margin-top:14px;padding:10px 14px;background:#161b22;border-radius:6px;border-left:2px solid '+pgColor+'">'
+            + '<div style="color:#8b949e;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px">Synthesis</div>'
+            + '<p style="color:#c9d1d9;font-size:12px;margin:0;line-height:1.6">'+analysis.synthesis+'</p>'
+            + '</div>';
+    }
+
+    html += '</div>';
     return html;
+}
+
+async function renderPainGainMatch(buyer) {
+    const pgColor = (SECTION_CONFIG.find(c=>c.key==='pain_gain_match')||{}).color||'#ff6b9d';
+    const slug = buyer.buyer_slug;
+    const containerId = 'section-'+slug+'-pain_gain_match';
+
+    // Check if we have pre-computed analysis in the JSON
+    const analysis = buyer.pain_gain_analysis;
+    const hasAnalysis = analysis && Array.isArray(analysis.pain_categories) && analysis.pain_categories.length > 0;
+
+    // Render a placeholder immediately (non-blocking) — will be replaced async
+    const placeholder = _pgWrapOpen(slug, pgColor)
+        + '<p style="color:#8b949e;font-size:12px">Loading Pain / Gain data…</p></div>';
+
+    // Schedule async replacement
+    (async () => {
+        let html;
+        try {
+            // Fetch entity assets from Supabase (3s timeout, cached after first call)
+            const entity = window.__ENTITY || 'next_chapter';
+            const targetCompany = window.__TARGET_COMPANY || 'HR.com Ltd';
+            const assets = await _fetchEntityAssets(entity, targetCompany);
+
+            const useAssets = (assets && assets.length > 0) ? assets : null;
+
+            if (hasAnalysis && useAssets) {
+                // Best path: dynamic render with Supabase assets + pre-computed analysis
+                html = _renderPainGainDynamic(buyer, pgColor, useAssets, analysis);
+            } else if (hasAnalysis && !useAssets) {
+                // Analysis available but Supabase failed — use fallback assets with dynamic data
+                console.warn('[pain_gain] Supabase empty, using fallback assets with available analysis');
+                html = _renderPainGainDynamic(buyer, pgColor, FALLBACK_ASSETS, analysis);
+            } else {
+                // No analysis — fall back to solutionMap (original behavior)
+                console.warn('[pain_gain] No pain_gain_analysis in JSON for', slug, '— using fallback solutionMap');
+                html = _renderPainGainFallback(buyer, pgColor);
+            }
+        } catch (e) {
+            console.warn('[pain_gain] Unexpected error, using fallback:', e);
+            html = _renderPainGainFallback(buyer, pgColor);
+        }
+
+        // Replace the placeholder in the DOM
+        const el = document.getElementById(containerId);
+        if (el) {
+            el.outerHTML = html;
+        } else {
+            // Placeholder may not yet be in DOM — retry once after 200ms
+            setTimeout(() => {
+                const el2 = document.getElementById(containerId);
+                if (el2) el2.outerHTML = html;
+            }, 200);
+        }
+    })();
+
+    return placeholder;
 }
 
 // ── AGENT SWARM BUTTON ──────────────────

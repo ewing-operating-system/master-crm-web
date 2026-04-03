@@ -282,6 +282,23 @@ def agent_swarm_enrichment(conn, item):
     if not buyer_slug or not section_key:
         return "failed", "Missing buyer_slug or section_key in payload"
 
+    # ── pain_gain_match: bypass Exa search — call engine directly ────────────
+    if section_key == "pain_gain_match":
+        try:
+            from pain_gain_engine import generate_pain_gain_analysis
+            entity = payload.get("entity", "next_chapter")
+            target_company = payload.get("target_company", "HR.com Ltd")
+            analysis = generate_pain_gain_analysis(
+                buyer_slug=buyer_slug,
+                entity=entity,
+                target_company=target_company,
+            )
+            if not analysis:
+                return "failed", "pain_gain_engine returned no analysis"
+            return "done", None
+        except Exception as e:
+            return "failed", f"pain_gain_engine error: {e}"
+
     # ── 1. Check previous executions for dedup ────────────────────────────────
     previous_queries = get_previous_queries(conn, buyer_name, section_key)
 
