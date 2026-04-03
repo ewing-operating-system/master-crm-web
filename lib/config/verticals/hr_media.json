@@ -1,6 +1,7 @@
 {
   "vertical_id": "hr_media",
   "display_name": "HR Media & Technology",
+  "buyer_list_file": "hrcom_buyers.json",
 
   "entity_defaults": {
     "entity": "next_chapter",
@@ -125,6 +126,14 @@
       "score_4_description": "No acquisition history or known to be slow/bureaucratic"
     }
   ],
+
+  "valuation_multiples": {
+    "hr technology": {"floor": 5, "median": 8, "ceiling": 12},
+    "hr media": {"floor": 5, "median": 8, "ceiling": 12},
+    "staffing": {"floor": 4, "median": 6, "ceiling": 9},
+    "hr software": {"floor": 6, "median": 10, "ceiling": 15},
+    "_default": {"floor": 5, "median": 8, "ceiling": 12}
+  },
 
   "valuation_fields": {
     "primary_metric": "revenue",

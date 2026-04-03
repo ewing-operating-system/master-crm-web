@@ -21,6 +21,8 @@ import os
 
 # Compute repo root: backend/lib/_config_bridge.py → backend/lib/ → backend/ → repo root
 _REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+# ── Schema module (vertical_config_schema.py) ────────────────────────────
 _VCFG_PATH = os.path.join(_REPO_ROOT, "lib", "config", "vertical_config_schema.py")
 
 try:
@@ -36,6 +38,27 @@ except Exception:
     list_verticals = lambda: []
     load_all_verticals = lambda: {}
     validate = lambda cfg: ["Config module not available"]
+
+# ── Runtime config module (vertical_config.py) ───────────────────────────
+_VRTCFG_PATH = os.path.join(_REPO_ROOT, "lib", "config", "vertical_config.py")
+
+try:
+    _spec2 = importlib.util.spec_from_file_location("vertical_config", _VRTCFG_PATH)
+    _mod2 = importlib.util.module_from_spec(_spec2)
+    _spec2.loader.exec_module(_mod2)
+    get_market_multiples = _mod2.get_market_multiples
+    get_entity_branding = _mod2.get_entity_branding
+    load_shared_keywords = _mod2.load_shared_keywords
+    get_entity_keywords = _mod2.get_entity_keywords
+    get_all_entity_keyword_sets = _mod2.get_all_entity_keyword_sets
+    reload_configs = _mod2.reload_configs
+except Exception:
+    get_market_multiples = lambda v, f=None: None
+    get_entity_branding = lambda e=None: {}
+    load_shared_keywords = lambda: {}
+    get_entity_keywords = lambda e: set()
+    get_all_entity_keyword_sets = lambda: {}
+    reload_configs = lambda: None
 
 # Default entity: read from the primary vertical config (home_services).
 # This replaces 15+ hardcoded .get("entity", "next_chapter") fallbacks.

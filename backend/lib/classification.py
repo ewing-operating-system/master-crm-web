@@ -6,93 +6,80 @@ Priority order: Intent → Company Type → Person Role → Channel
 Fail-safe: Never force classification. No tag if confidence < 2.
 
 Entity values: next_chapter, and_capital, revsup, the_forge, biolev, sea_sweet, precision_exploration
+
+Keywords and routing rules are loaded from lib/config/ via _config_bridge.
 """
 
 import re
 
-# ─── Keyword dictionaries ────────────────────────────────────────────────────
+# ─── Load config via bridge (same pattern as 8 other backend/lib/ modules) ──
+from _config_bridge import (
+    get_all_entity_keyword_sets,
+    load_shared_keywords,
+    reload_configs as _reload_configs,
+)
 
-AND_CAPITAL_KEYWORDS = {
-    # Industry
-    "healthcare", "hospital", "wellness", "longevity", "health-tech", "bio-tech",
-    "med-tech", "medical device", "wound care", "wound prevention", "functional beverages",
-    "wellness properties", "integrated platforms", "energy", "hydrocarbons", "midstream",
-    "renewables", "energy transition", "orri", "royalty interest", "minerals",
-    "critical minerals", "gold", "brownfield", "central asia", "oil and gas", "oil & gas",
-    # Finance / LP
-    "family office", "lp", "limited partner", "fund", "institutional investor",
-    "accredited investor", "qualified purchaser", "capital raise", "subscription",
-    "allocation", "endowment", "pension", "ria", "wealth advisor",
-    # Company names in AND orbit
-    "euchee valley", "little rock heart", "fiomet", "geosense", "smartfit", "opolee",
-    "spiga capital", "andean capital",
-}
 
-NEXT_CHAPTER_KEYWORDS = {
-    # Industry
-    "home services", "plumbing", "hvac", "roofing", "pest control", "water treatment",
-    "flooring", "steel", "concrete", "precast", "trades", "contractor",
-    "electric", "electrical", "electrician", "termite", "pest", "air conditioning",
-    "heating", "cooling", "foundation", "crawl space", "environmental",
-    # Transaction
-    "sell my business", "business sale", "succession", "exit planning", "retirement",
-    "business acquisition", "business broker", "acquirer", "buyer", "seller",
-    "sde", "seller's discretionary earnings", "business valuation",
-    "main street", "lower mid-market",
-    # Company names in NC orbit
-    "springer floor", "air control", "aquascience", "hr.com", "weiser concrete",
-    "design precast", "prasab",
-}
+def _load_keyword_data():
+    """Load all keyword data from config files and return module-level names."""
+    shared = load_shared_keywords()
+    entity_kw = get_all_entity_keyword_sets()
 
-REVSUP_KEYWORDS = {
-    "saas", "software", "vc-backed", "venture-backed", "startup", "tech company",
-    "series a", "series b", "growth stage", "arr", "mrr", "recurring revenue",
-    "sales hiring", "recruiting", "headhunter", "contingent search",
-    "talent acquisition", "candidate", "placement",
-}
+    data = {
+        # Entity keyword sets (built from vertical configs)
+        "AND_CAPITAL_KEYWORDS": entity_kw.get("and_capital", set()),
+        "NEXT_CHAPTER_KEYWORDS": entity_kw.get("next_chapter", set()),
+        "REVSUP_KEYWORDS": entity_kw.get("revsup", set()),
 
-INTENT_HIRING = {
-    "hiring", "recruiting", "headcount", "open roles", "candidates", "placement",
-    "talent acquisition", "search fee", "contingent search",
-}
+        # Intent keyword sets (from shared_keywords.json)
+        "INTENT_HIRING": set(shared.get("intent_hiring", [])),
+        "INTENT_TRANSACTION": set(shared.get("intent_transaction", [])),
+        "INTENT_CAPITAL": set(shared.get("intent_capital", [])),
 
-INTENT_TRANSACTION = {
-    "sell my business", "acquisition", "buyer", "seller", "valuation", "exit",
-    "roll-up", "rollup", "succession", "sell-side", "buy-side", "m&a advisory",
-    "business sale", "business broker",
-}
+        # Person routing (from shared_keywords.json)
+        "PERSON_ENTITY_MAP": shared.get("person_entity_map", {}),
+        "PERSON_NEVER_MAP": {k: set(v) for k, v in shared.get("person_never_map", {}).items()},
 
-INTENT_CAPITAL = {
-    "investing", "capital raise", "fundraising", "fund", "lp", "limited partner",
-    "allocation", "subscription", "endowment", "pension", "ria",
-    "family office", "carried interest", "management fee", "preferred return",
-}
+        # Standalone entity keywords (from shared_keywords.json)
+        "STANDALONE_KEYWORDS": shared.get("standalone_keywords", {}),
+    }
+    return data
 
-# Person routing
-PERSON_ENTITY_MAP = {
-    "chris rex": "and_capital",      # ONLY AND Capital
-    "teruel carrasco": "and_capital",
-    "rod heard": "and_capital",
-    "denise brown": "and_capital",
-    "joe park": "and_capital",
-    "loren brink": "and_capital",
-}
 
-PERSON_NEVER_MAP = {
-    "john kelly": {"and_capital"},    # NEVER AND Capital
-    "ewing gillaspy": {"revsup"},     # NEVER RevsUp in Salesfinity
-}
+# Initialize at module load
+_kw = _load_keyword_data()
 
-# Standalone entity keywords
-STANDALONE_KEYWORDS = {
-    "boomerang": "the_forge",
-    "biolev": "biolev",
-    "sea sweet": "sea_sweet",
-    "precision exploration": "precision_exploration",
-    "nmr science": "precision_exploration",
-    # Note: "pec" removed — too many false positives (specialist, inspection, etc.)
-    # Use "precision exploration" as the keyword instead
-}
+# Module-level names — consumers can still do `from classification import AND_CAPITAL_KEYWORDS`
+AND_CAPITAL_KEYWORDS = _kw["AND_CAPITAL_KEYWORDS"]
+NEXT_CHAPTER_KEYWORDS = _kw["NEXT_CHAPTER_KEYWORDS"]
+REVSUP_KEYWORDS = _kw["REVSUP_KEYWORDS"]
+INTENT_HIRING = _kw["INTENT_HIRING"]
+INTENT_TRANSACTION = _kw["INTENT_TRANSACTION"]
+INTENT_CAPITAL = _kw["INTENT_CAPITAL"]
+PERSON_ENTITY_MAP = _kw["PERSON_ENTITY_MAP"]
+PERSON_NEVER_MAP = _kw["PERSON_NEVER_MAP"]
+STANDALONE_KEYWORDS = _kw["STANDALONE_KEYWORDS"]
+
+
+def reload_configs():
+    """Hot-reload all keyword data from config files after JSON edits."""
+    global AND_CAPITAL_KEYWORDS, NEXT_CHAPTER_KEYWORDS, REVSUP_KEYWORDS
+    global INTENT_HIRING, INTENT_TRANSACTION, INTENT_CAPITAL
+    global PERSON_ENTITY_MAP, PERSON_NEVER_MAP, STANDALONE_KEYWORDS
+    global _kw
+
+    _reload_configs()
+    _kw = _load_keyword_data()
+
+    AND_CAPITAL_KEYWORDS = _kw["AND_CAPITAL_KEYWORDS"]
+    NEXT_CHAPTER_KEYWORDS = _kw["NEXT_CHAPTER_KEYWORDS"]
+    REVSUP_KEYWORDS = _kw["REVSUP_KEYWORDS"]
+    INTENT_HIRING = _kw["INTENT_HIRING"]
+    INTENT_TRANSACTION = _kw["INTENT_TRANSACTION"]
+    INTENT_CAPITAL = _kw["INTENT_CAPITAL"]
+    PERSON_ENTITY_MAP = _kw["PERSON_ENTITY_MAP"]
+    PERSON_NEVER_MAP = _kw["PERSON_NEVER_MAP"]
+    STANDALONE_KEYWORDS = _kw["STANDALONE_KEYWORDS"]
 
 
 def _normalize(text):

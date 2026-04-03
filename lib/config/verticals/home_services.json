@@ -103,6 +103,19 @@
     }
   ],
 
+  "valuation_multiples": {
+    "hvac": {"floor": 3.5, "median": 5, "ceiling": 7},
+    "plumbing": {"floor": 3, "median": 4.5, "ceiling": 6.5},
+    "water treatment": {"floor": 4, "median": 5.5, "ceiling": 8},
+    "flooring": {"floor": 2.5, "median": 4, "ceiling": 5.5},
+    "concrete": {"floor": 3, "median": 4.5, "ceiling": 6},
+    "precast": {"floor": 3.5, "median": 5, "ceiling": 7},
+    "roofing": {"floor": 3, "median": 4.5, "ceiling": 6},
+    "pest": {"floor": 4, "median": 6, "ceiling": 9},
+    "electric": {"floor": 3, "median": 4.5, "ceiling": 6.5},
+    "_default": {"floor": 3, "median": 4.5, "ceiling": 6.5}
+  },
+
   "valuation_fields": {
     "primary_metric": "ebitda",
     "multiple_floor": 3.5,
