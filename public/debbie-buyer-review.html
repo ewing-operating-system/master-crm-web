@@ -52,9 +52,13 @@ body { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; backgrou
 .fb-comment:focus { outline:none; border-color:#58a6ff; }
 
 /* ── MEDIA FEEDBACK CARD OVERRIDES ──────── */
-.fb-card.fb-border-media .fb-card-label { font-size:13px; }
-.fb-card.fb-border-media .fb-radio { font-size:12px; }
+.fb-card.fb-border-media { position:relative; }
+.fb-card.fb-border-media .fb-card-label { font-size:14px; font-weight:800; color:#a371f7; letter-spacing:.8px; }
+.fb-card.fb-border-media .fb-radio { font-size:13px; padding:4px 0; }
+.fb-card.fb-border-media .fb-radio input { width:14px; height:14px; }
 .fb-card.fb-border-media .fb-comment { min-height:200px; font-size:12px; }
+/* Arrow connector: feedback card → center content */
+.fb-card.fb-border-media::after { content:'▶'; position:absolute; right:-16px; top:50%; transform:translateY(-50%); color:#a371f7; font-size:18px; opacity:0.7; pointer-events:none; }
 
 /* Section border colors */
 .fb-border-header { border-left-color:#58a6ff; }
@@ -1065,7 +1069,8 @@ function renderFeedbackColumn(slug) {
 
     const fb = FEEDBACK_CACHE[slug+'__'+cfg.key] || {};
     html += '<div class="fb-card '+cfg.fbBorder+'" data-section-key="'+cfg.key+'" data-buyer-slug="'+slug+'" id="fb-'+slug+'-'+cfg.key+'">';
-    html += '<div class="fb-card-label">'+cfg.title+'</div>';
+    const fbLabel = (cfg.key==='hr_media_business' && b.buyer_name) ? cfg.title+' \u2014 '+b.buyer_name : cfg.title;
+    html += '<div class="fb-card-label">'+fbLabel+'</div>';
     html += '<div class="fb-radios">';
     [{val:'accurate_relevant_valuable',label:'Accurate, relevant, valuable'},
      {val:'accurate_not_relevant',label:'Accurate, not relevant'},
