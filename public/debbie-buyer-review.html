@@ -37,30 +37,22 @@ body { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; backgrou
 .body-grid.nuggets-closed { margin-right:40px; }
 
 /* ── LEFT: FEEDBACK PANEL ───────────────── */
-.feedback-col { padding:12px 8px 12px 12px; }
-.feedback-sticky { position:sticky; top:calc(29px + 15vh + 8px); max-height:calc(100vh - 29px - 15vh - 16px); overflow-y:auto; }
+.feedback-col { padding:12px 24px 12px 12px; overflow:visible; }
+.feedback-sticky { position:sticky; top:calc(29px + 15vh + 8px); max-height:calc(100vh - 29px - 15vh - 16px); overflow-y:auto; overflow-x:visible; padding-right:18px; }
 .feedback-sticky::-webkit-scrollbar { width:3px; }
 .feedback-sticky::-webkit-scrollbar-thumb { background:#30363d; border-radius:2px; }
-.fb-card { background:#161b22; border:1px solid #30363d; border-radius:8px; padding:10px; margin-bottom:8px; border-left:3px solid #30363d; transition:all .2s; }
+.fb-card { background:#161b22; border:1px solid #30363d; border-radius:8px; padding:12px; margin-bottom:8px; border-left:3px solid #30363d; transition:all .2s; position:relative; }
 .fb-card.active { box-shadow:0 0 8px rgba(88,166,255,0.15); }
-.fb-card-label { font-size:10px; font-weight:700; color:#8b949e; text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; }
-.fb-radios { display:flex; flex-direction:column; gap:3px; margin-bottom:6px; }
-.fb-radio { display:flex; align-items:center; gap:5px; font-size:10px; color:#8b949e; cursor:pointer; }
-.fb-radio input { width:12px; height:12px; accent-color:#58a6ff; }
-.fb-radio.selected { color:#f0f6fc; }
-.fb-comment { font-size:10px; padding:4px 6px; background:#0d1117; border:1px solid #21262d; border-radius:4px; color:#c9d1d9; resize:vertical; font-family:inherit; width:100%; min-height:32px; }
+.fb-card-label { font-size:14px; font-weight:800; text-transform:uppercase; letter-spacing:.8px; margin-bottom:8px; }
+.fb-radios { display:flex; flex-direction:column; gap:2px; margin-bottom:8px; }
+.fb-radio { display:flex; align-items:center; gap:8px; font-size:15px; color:#c9d1d9; cursor:pointer; padding:6px 4px; border-radius:4px; width:100%; }
+.fb-radio:hover { background:rgba(255,255,255,0.04); }
+.fb-radio input { width:16px; height:16px; flex-shrink:0; }
+.fb-radio.selected { color:#f0f6fc; font-weight:600; }
+.fb-comment { font-size:12px; padding:8px 10px; background:#0d1117; border:1px solid #21262d; border-radius:4px; color:#c9d1d9; resize:vertical; font-family:inherit; width:100%; min-height:80px; }
 .fb-comment:focus { outline:none; border-color:#58a6ff; }
-
-/* ── FEEDBACK CARD ENHANCED STYLES ──────── */
-.fb-card { position:relative; }
-.fb-card .fb-card-label { font-size:13px; font-weight:800; letter-spacing:.8px; }
-.fb-card .fb-radio { font-size:14px; padding:5px 0; }
-.fb-card .fb-radio input { width:15px; height:15px; }
-.fb-card .fb-comment { font-size:12px; }
-/* First section gets taller comment box */
-.fb-card.fb-border-media .fb-comment { min-height:200px; }
 /* Arrow connector on every feedback card */
-.fb-card .fb-arrow { position:absolute; right:-14px; top:50%; transform:translateY(-50%); font-size:16px; opacity:0.8; pointer-events:none; line-height:1; }
+.fb-arrow { position:absolute; right:-20px; top:50%; transform:translateY(-50%); font-size:20px; opacity:0.9; pointer-events:none; line-height:1; filter:drop-shadow(0 0 4px currentColor); }
 
 /* Section border colors — now driven by JS inline styles via SECTION_CONFIG.color */
 
@@ -130,10 +122,10 @@ body { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; backgrou
 .nuggets-title { font-size:11px; font-weight:700; color:#f5a623; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; padding-bottom:6px; border-bottom:1px solid #21262d; }
 .nugget-card { background:#161b22; border:1px solid #21262d; border-left:3px solid #f5a623; border-radius:8px; padding:12px; margin-bottom:10px; }
 .nugget-header { font-size:10px; font-weight:700; color:#f5a623; margin-bottom:6px; }
-.ceo-quote { font-family:'Playfair Display',Georgia,serif; font-style:italic; font-size:12px; color:#c9d1d9; line-height:1.6; margin-bottom:8px; padding:6px 0; border-bottom:1px solid #21262d; }
-.nugget-opener { background:#0b2e1a; border:1px solid #27ae60; border-radius:6px; padding:8px; margin-bottom:6px; }
-.nugget-opener .opener-label { font-size:8px; font-weight:700; letter-spacing:1px; color:#27ae60; text-transform:uppercase; margin-bottom:3px; }
-.nugget-opener p { color:#a3e4b8; font-size:11px; line-height:1.5; margin:0; }
+.ceo-quote { font-family:'Inter',-apple-system,sans-serif; font-style:normal; font-size:12px; color:#c9d1d9; line-height:1.7; margin-bottom:8px; padding:10px 14px; border-left:3px solid; border-radius:0 6px 6px 0; background:rgba(255,255,255,0.03); }
+.nugget-opener { background:#fdf6e3; border:1px solid #d4a832; border-radius:6px; padding:10px 12px; margin-bottom:6px; }
+.nugget-opener .opener-label { font-size:8px; font-weight:700; letter-spacing:1px; color:#1a3a5c; text-transform:uppercase; margin-bottom:3px; }
+.nugget-opener p { color:#1a3a5c; font-size:11px; line-height:1.5; margin:0; font-weight:600; }
 .nugget-why { font-size:11px; color:#8b949e; line-height:1.5; }
 .no-nuggets { color:#484f58; font-size:11px; font-style:italic; padding:20px 0; text-align:center; }
 
@@ -1097,8 +1089,16 @@ function renderNuggets(slug) {
   nuggets.forEach((n, i) => {
     const nc = ROTATE_COLORS[i % ROTATE_COLORS.length];
     html += '<div class="nugget-card" style="border-left-color:'+nc+'">';
-    html += '<div class="nugget-header" style="color:'+nc+'">Nugget '+(i+1)+(n.speaker?' — '+n.speaker:'')+'</div>';
-    if (n.quote) html += '<div class="ceo-quote">&ldquo;'+n.quote+'&rdquo;</div>';
+    html += '<div class="nugget-header" style="color:'+nc+'">Nugget '+(i+1)+(n.speaker?' \u2014 '+n.speaker:'')+'</div>';
+    if (n.quote) {
+      // Color-code quote: green for bridge/synergy language, red for pain/risk
+      let q = n.quote;
+      // Green: references to HR.com's assets bridging to buyer
+      q = q.replace(/(workforce data|upskill|reskill|redeploy talent|employee experience|learning|individuali[sz]|attract and retain|HCM suite|talent)/gi, '<span style="color:#3fb950;font-weight:600;">$1</span>');
+      // Red: pain points, competitive pressure, risks
+      q = q.replace(/(pivotal moment|competitive landscape|gap|redefined|challenges)/gi, '<span style="color:#f85149;font-weight:600;">$1</span>');
+      html += '<div class="ceo-quote" style="border-left-color:'+nc+'">&ldquo;'+q+'&rdquo;</div>';
+    }
     if (n.opener) html += '<div class="nugget-opener"><div class="opener-label">OPENER</div><p>'+n.opener+'</p></div>';
     if (n.why) html += '<div class="nugget-why"><strong>Why it works:</strong> '+n.why+'</div>';
     html += '</div>';
@@ -1275,16 +1275,20 @@ async function init() {
   // Render feedback column
   document.getElementById('feedbackCol').innerHTML = renderFeedbackColumn(slug);
 
-  // Sync media feedback card comment height to center section
-  const mediaSection = document.querySelector('[data-section-key="hr_media_business"].card');
-  const mediaFbCard = document.getElementById('fb-' + slug + '-hr_media_business');
-  if (mediaSection && mediaFbCard) {
-    const commentBox = mediaFbCard.querySelector('.fb-comment');
-    if (commentBox) {
-      const targetH = mediaSection.offsetHeight - mediaFbCard.querySelector('.fb-card-label').offsetHeight - mediaFbCard.querySelector('.fb-radios').offsetHeight - 40;
-      commentBox.style.minHeight = Math.max(targetH, 200) + 'px';
+  // Sync ALL feedback card comment heights to their matching center sections
+  SECTION_CONFIG.forEach(cfg => {
+    const centerCard = document.getElementById('section-' + slug + '-' + cfg.key);
+    const fbCard = document.getElementById('fb-' + slug + '-' + cfg.key);
+    if (centerCard && fbCard) {
+      const commentBox = fbCard.querySelector('.fb-comment');
+      if (commentBox) {
+        const labelH = fbCard.querySelector('.fb-card-label')?.offsetHeight || 0;
+        const radiosH = fbCard.querySelector('.fb-radios')?.offsetHeight || 0;
+        const targetH = centerCard.offsetHeight - labelH - radiosH - 50;
+        commentBox.style.minHeight = Math.max(targetH, 80) + 'px';
+      }
     }
-  }
+  });
 
   // Render nuggets
   renderNuggets(slug);
