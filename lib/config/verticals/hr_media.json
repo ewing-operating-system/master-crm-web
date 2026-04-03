@@ -1,0 +1,234 @@
+{
+  "vertical_id": "hr_media",
+  "display_name": "HR Media & Technology",
+
+  "entity_defaults": {
+    "entity": "next_chapter",
+    "sub_type": "sell_side",
+    "campaign_prefixes": ["NC"]
+  },
+
+  "classification_keywords": {
+    "industry": [
+      "hr tech", "hcm", "human capital management", "human resources",
+      "payroll", "talent acquisition", "talent management",
+      "workforce management", "hr software", "hr saas",
+      "learning management", "lms", "hr analytics",
+      "employee engagement", "performance management",
+      "applicant tracking", "ats", "recruiting software",
+      "hr media", "hr publishing", "hr certification",
+      "hr community", "b2b media", "professional development"
+    ],
+    "transaction": [
+      "sell my business", "business sale", "succession", "exit planning",
+      "retirement", "business acquisition", "acquirer", "buyer", "seller",
+      "business valuation", "m&a advisory"
+    ],
+    "company_names": [
+      "hr.com", "debbie mcgrath"
+    ]
+  },
+
+  "research_sections": [
+    "ceo_vision",
+    "ma_appetite",
+    "competitive_moat",
+    "earnings_quotes",
+    "hr_media_business",
+    "hr_domain_name",
+    "market_reputation",
+    "pain_gain_match",
+    "strategic_fit",
+    "approach_strategy"
+  ],
+
+  "exa_templates": {
+    "base_queries": [
+      "{company_name} CEO vision strategy acquisitions HR",
+      "{company_name} M&A appetite acquisitions deal history HR tech",
+      "{company_name} competitive moat market position HR HCM",
+      "{company_name} earnings call transcript HR revenue growth",
+      "{company_name} HR media content community platform acquisition",
+      "{company_name} {contact_name} LinkedIn background M&A"
+    ],
+    "vertical_queries": [
+      "{company_name} HR tech acquisition deal 2024 2025",
+      "{company_name} HCM cloud platform market share",
+      "{company_name} HR community content learning certification",
+      "HR tech M&A consolidation {company_name} buyer strategic"
+    ],
+    "content_mode": "text",
+    "num_results": 8
+  },
+
+  "synthesis_prompts": {
+    "research_goals": [
+      "CEO vision: stated strategic direction, platform ambitions, content/community strategy",
+      "M&A appetite: confirmed acquisitions in HR/HCM space (name the deals, dates, amounts)",
+      "Competitive moat: market share, product differentiation, customer lock-in",
+      "Earnings quotes: executive statements on growth, HR segment performance, acquisition rationale",
+      "Media business fit: how would this buyer benefit from owning a 27-year HR media platform with 1.8M+ professionals?",
+      "Domain value: strategic value of a premium 2-letter .com in the HR namespace",
+      "Market reputation: product reviews (G2, Capterra, Trustpilot), NPS signals, customer sentiment",
+      "Strategic fit: why this buyer specifically — synergies, gaps filled, competitive positioning"
+    ],
+    "additional_goals": [
+      "HR product portfolio: which HCM modules does this buyer offer (recruiting, payroll, learning, performance, workforce planning)?",
+      "Content strategy: does this buyer already invest in content marketing, events, certifications, or community?",
+      "First-party data appetite: does this buyer value audience data, intent signals, engagement data?",
+      "Revenue from HR segment: what percentage of total revenue comes from HR/HCM products?"
+    ],
+    "story_hooks": [
+      "The HR technology market is consolidating at historic speed — and the companies winning aren't just buying software, they're buying audiences.",
+      "A 27-year-old media platform with 1.8 million engaged HR professionals isn't a content business — it's a distribution moat that no amount of ad spend can replicate.",
+      "The acquirers paying the highest prices in HR tech right now share one thesis: owning the conversation with HR buyers is more valuable than owning another feature."
+    ],
+    "market_context": "HR tech M&A is at a cyclical peak — Paychex acquired Paycor for $4.1B, Thoma Bravo took Dayforce private for $12.3B, SAP acquired SmartRecruiters, and Workday completed three acquisitions in 2025 alone. Strategic buyers are paying premium prices for assets that deliver audience, data, and distribution alongside product.",
+    "buyer_appetite": "Strategic acquirers (Paychex, Workday, SAP, ADP) and PE platforms (Thoma Bravo, HG Capital) are actively acquiring in the HR tech ecosystem. The convergence of AI, content, and community is creating a new class of valuable assets beyond pure SaaS.",
+    "premium_driver": "The assets commanding premium multiples in HR tech today combine three things: a large, engaged professional audience (distribution), proprietary first-party data (intent and engagement signals), and trusted content that drives purchasing decisions. Standalone software trades at revenue multiples; software plus audience trades at a structural premium."
+  },
+
+  "buyer_scoring_criteria": [
+    {
+      "criterion": "Prior acquisition in HR tech/media",
+      "weight": 0.30,
+      "score_8_description": "Confirmed acquisition in HR tech, HR media, or B2B professional community (must name the deal)",
+      "score_6_description": "Operates in HR/HCM space, no confirmed media or community acquisition",
+      "score_4_description": "No HR tech presence, pure financial buyer with no sector thesis"
+    },
+    {
+      "criterion": "Audience and distribution gap",
+      "weight": 0.25,
+      "score_8_description": "Buyer has strong product but weak content/community/audience — HR.com fills a documented strategic gap",
+      "score_6_description": "Buyer has some content presence but limited compared to HR.com's 1.8M audience",
+      "score_4_description": "Buyer already owns comparable audience or has no distribution strategy"
+    },
+    {
+      "criterion": "First-party data strategy alignment",
+      "weight": 0.20,
+      "score_8_description": "Buyer has publicly stated intent-data or audience-data monetization strategy",
+      "score_6_description": "Buyer collects product usage data but no content/intent layer",
+      "score_4_description": "No evidence of data monetization strategy"
+    },
+    {
+      "criterion": "Deal size and financial capacity",
+      "weight": 0.15,
+      "score_8_description": "Buyer's confirmed deal range covers $15M-$35M; balance sheet or fund supports it",
+      "score_6_description": "Buyer could stretch to this range but it would be at the edge of typical deal size",
+      "score_4_description": "Significant mismatch — buyer does $100M+ deals or sub-$5M deals"
+    },
+    {
+      "criterion": "Execution speed and M&A maturity",
+      "weight": 0.10,
+      "score_8_description": "Buyer has dedicated corp dev team and completed 2+ deals in past 24 months",
+      "score_6_description": "Buyer has done acquisitions but infrequently or without dedicated team",
+      "score_4_description": "No acquisition history or known to be slow/bureaucratic"
+    }
+  ],
+
+  "valuation_fields": {
+    "primary_metric": "revenue",
+    "_comment_primary_metric": "TODO: HR media businesses trade on revenue multiples, not EBITDA. Confirm with Ewing whether the three-asset structure (domain + media + My People) should use separate valuation methods.",
+    "multiple_floor": 1.2,
+    "multiple_ceiling": 1.5,
+    "multiple_median": 1.35,
+    "_comment_multiples": "TODO: These are media business multiples only (1.2-1.5x revenue at ~20% EBITDA margins). Domain valued separately at $15-20M via broker comps. My People platform valued separately at $250K-$5M depending on traction. Need domain knowledge: what are current B2B media M&A comps? HubSpot/Hustle, Informa acquisitions, etc.",
+    "industry_margin_benchmark": 0.20,
+    "_comment_margin": "~20% EBITDA margins per meeting notes. TODO: Confirm whether this is trailing or normalized."
+  },
+
+  "growth_levers": [
+    {
+      "lever": "First-party audience data monetization",
+      "description": "1.8M engaged HR professionals generating intent signals (content consumption, cert paths, event attendance) — packageable for HR tech vendors as lead-gen and market intelligence."
+    },
+    {
+      "lever": "AI-enhanced content and research",
+      "description": "30+ research institutes producing original HR research. AI integration can personalize content delivery, automate insights, and scale production without proportional cost increase."
+    },
+    {
+      "lever": "Certification and professional development expansion",
+      "description": "HR certification prep programs create recurring revenue and deep engagement. Expanding cert offerings (SHRM, HRCI, specialty certs) increases LTV per professional."
+    },
+    {
+      "lever": "Enterprise event scaling",
+      "description": "5,000+ annual webcasts and 200+ virtual events. Converting virtual attendees to premium in-person experiences (HR West conference model) increases per-event revenue."
+    },
+    {
+      "lever": "Community platform spin-out (My People)",
+      "description": "B2B community tech rebuilt 2023, live June 2025. 35 HR tech clients interested, 7 going live. White-label community platform is a separate growth asset with its own revenue trajectory."
+    },
+    {
+      "lever": "Premium domain as strategic asset",
+      "description": "hr.com is one of only 676 two-letter .com domains globally. Ranked #87 for traffic. Domain alone valued at $15-20M and can be sold separately or retained as brand equity."
+    }
+  ],
+
+  "letter_config": {
+    "variants": ["initial", "followup", "final"],
+    "certifications_to_mention": [],
+    "_comment_certs": "TODO: Not applicable in the traditional sense. The relevant credibility markers are: 27 years in operation, 1.8M professionals, 5,000+ annual webcasts, 30+ research institutes. These should replace certification mentions in letter templates.",
+    "fee_structure": {
+      "engagement_fee_range": "TODO: Confirm fee structure with Ewing — home services fees ($5K-$25K) unlikely to apply to a $22-35M three-asset deal",
+      "monthly_retainer_range": "TODO: Likely higher retainer given deal complexity (three assets, domain broker coordination, potential separate sales)",
+      "success_fee_description": "TODO: Success fee structure needs to account for three-asset packaging — single fee on bundled sale vs. separate fees per asset"
+    }
+  },
+
+  "deal_specific": {
+    "_comment": "This section captures HR.com-specific deal structure that does not exist in home_services. It demonstrates where the schema may need extension for non-standard deal types.",
+    "asset_structure": [
+      {
+        "asset": "hr.com domain",
+        "valuation_low": 15000000,
+        "valuation_high": 20000000,
+        "valuation_method": "broker_comp",
+        "notes": "Premium 2-letter .com. Domain broker engaged at 10% commission. Can be sold separately; business rebrandable to HR West, HR Certification, or Human Resource Research Institute."
+      },
+      {
+        "asset": "HR.com media business",
+        "valuation_low": 7000000,
+        "valuation_high": 10000000,
+        "valuation_method": "revenue_multiple",
+        "notes": "1.2-1.5x revenue. 27 years profitable. ~20% EBITDA. Revenue declining last 3 years (My People focus). 2022 process: 8 offers ($9M-$45M range)."
+      },
+      {
+        "asset": "My People (community platform)",
+        "valuation_low": 250000,
+        "valuation_high": 5000000,
+        "valuation_method": "early_stage",
+        "notes": "Currently funded at $250K/year by HR.com. Rebuilt 2023, live June 2025. 35 clients interested, 7 going live in 45 days. Needs CEO. TypeScript/Node.js/React, API-first, native AI."
+      }
+    ],
+    "prior_process": {
+      "year": 2022,
+      "offers_received": 8,
+      "range_low": 9000000,
+      "range_high": 45000000,
+      "outcome": "Selected offer fell through"
+    },
+    "key_relationships": [
+      "Glenn (Daddy Shark) — Ewing's former boss, Debbie's ski buddy 30+ years",
+      "Bill Philip (Delancey and Partners) — brought previous Forge CEO",
+      "Doug Merritt — mutual contact with John Kelly, Splunk connection"
+    ]
+  },
+
+  "review_pipeline": {
+    "_comment": "HR.com uses a specialized 5-phase buyer research pipeline (debbie_buyer_research.py) that differs from the home_services traced pipeline. These sections define what the Debbie review system produces per buyer.",
+    "review_categories": [
+      "outcomes", "capabilities", "efficiency", "data_integrity",
+      "workflow", "ux", "support", "reliability", "compliance", "integration"
+    ],
+    "review_scoring": {
+      "informativeness_threshold": 5,
+      "specificity_threshold": 5,
+      "polarity_threshold": 5,
+      "passing_rule": "All three scores must be >= threshold"
+    },
+    "review_sources": [
+      "g2.com", "capterra.com", "getapp.com", "trustradius.com",
+      "reddit.com", "trustpilot.com", "glassdoor.com"
+    ]
+  }
+}
