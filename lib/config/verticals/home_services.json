@@ -1,0 +1,477 @@
+{
+  "vertical_id": "home_services",
+  "display_name": "Home Services",
+
+  "entity_defaults": {
+    "entity": "next_chapter",
+    "sub_type": "sell_side",
+    "campaign_prefixes": ["NC"]
+  },
+
+  "classification_keywords": {
+    "industry": [
+      "home services", "plumbing", "hvac", "roofing", "pest control",
+      "water treatment", "flooring", "steel", "concrete", "precast",
+      "trades", "contractor", "electric", "electrical", "electrician",
+      "termite", "pest", "air conditioning", "heating", "cooling",
+      "foundation", "crawl space", "environmental"
+    ],
+    "transaction": [
+      "sell my business", "business sale", "succession", "exit planning",
+      "retirement", "business acquisition", "business broker", "acquirer",
+      "buyer", "seller", "sde", "seller's discretionary earnings",
+      "business valuation", "main street", "lower mid-market"
+    ],
+    "company_names": [
+      "springer floor", "air control", "aquascience", "hr.com",
+      "weiser concrete", "design precast", "prasab"
+    ]
+  },
+
+  "research_sections": [
+    "owner_story",
+    "revenue_signal",
+    "recurring_revenue",
+    "owner_dependency",
+    "local_reputation",
+    "exit_readiness",
+    "certifications_and_licenses"
+  ],
+
+  "exa_templates": {
+    "base_queries": [
+      "{company_name} {city} {state} owner founder history",
+      "{company_name} {city} employees technicians fleet size",
+      "{company_name} reviews BBB rating Google 4 5 stars",
+      "{company_name} service agreement maintenance contract recurring",
+      "{company_name} {owner_name} LinkedIn background",
+      "{vertical} company {city} {state} acquisition sale sold 2024 2025"
+    ],
+    "vertical_queries": [],
+    "content_mode": "highlights",
+    "num_results": 6
+  },
+
+  "synthesis_prompts": {
+    "research_goals": [
+      "Owner story: years in business, how they started, family involvement",
+      "Revenue signal: size indicators from reviews, truck fleet, employee count",
+      "Recurring revenue: service agreements, maintenance contracts, subscriptions",
+      "Owner dependency: is the owner the business, or does it run without them?",
+      "Local reputation: BBB rating, Google reviews, community ties",
+      "Exit readiness: any mentions of retirement, succession, sale, or transition",
+      "Certifications and licenses: state licenses, manufacturer certs, NATE, EPA"
+    ],
+    "additional_goals": [],
+    "story_hooks": [
+      "The business you've built in {city} over {years_in_business} years is exactly the kind of asset the market is paying well for right now.",
+      "Owner-operators who built their company without outside capital often find themselves with more options — and more leverage — than they expected when they decide to explore a sale."
+    ],
+    "market_context": "Home services M&A activity is at historic highs — PE-backed platforms, national strategics, and family-office consolidators are actively competing for established operators across every trade vertical.",
+    "buyer_appetite": "Acquirers are paying premium multiples for home services businesses with documented recurring revenue, tenured crews, and strong local reputations.",
+    "premium_driver": "The businesses commanding the strongest multiples in home services share one trait: recurring revenue from service agreements, maintenance contracts, and subscription programs. That recurring base is what separates a floor outcome from a ceiling outcome."
+  },
+
+  "buyer_scoring_criteria": [
+    {
+      "criterion": "Prior acquisition in seller's vertical",
+      "weight": 0.35,
+      "score_8_description": "Confirmed prior acquisition in the exact vertical (must name the deal)",
+      "score_6_description": "Operates in adjacent home-services space, no confirmed acquisition",
+      "score_4_description": "Wrong vertical, pure VC, advisory, or too small"
+    },
+    {
+      "criterion": "Recurring revenue model alignment",
+      "weight": 0.25,
+      "score_8_description": "Buyer explicitly values and acquires for recurring service agreements",
+      "score_6_description": "Buyer has service revenue but not the primary thesis",
+      "score_4_description": "Buyer focuses on project-based or one-time revenue models"
+    },
+    {
+      "criterion": "Geographic and market fit",
+      "weight": 0.20,
+      "score_8_description": "Buyer actively acquiring in seller's metro or state, confirmed platform",
+      "score_6_description": "Buyer operates in region but no confirmed local acquisitions",
+      "score_4_description": "No geographic overlap or presence"
+    },
+    {
+      "criterion": "Deal size alignment",
+      "weight": 0.20,
+      "score_8_description": "Buyer's confirmed deal range matches seller's estimated enterprise value",
+      "score_6_description": "Buyer's range overlaps at the edges",
+      "score_4_description": "Significant mismatch in deal size expectations"
+    }
+  ],
+
+  "valuation_fields": {
+    "primary_metric": "ebitda",
+    "multiple_floor": 3.5,
+    "multiple_ceiling": 10.0,
+    "multiple_median": 5.5,
+    "industry_margin_benchmark": 0.22
+  },
+
+  "growth_levers": [
+    {
+      "lever": "Service agreement attach rate",
+      "description": "Recurring maintenance contracts convert one-time customers into annuities that acquirers underwrite at premium multiples."
+    },
+    {
+      "lever": "Commercial account concentration",
+      "description": "Commercial contracts provide higher ticket values, repeat revenue, and multi-year relationships that reduce customer acquisition cost."
+    },
+    {
+      "lever": "Technician bench depth and tenure",
+      "description": "Certified, tenured crews are the scarcest asset in the trades. Licensed technicians with NATE, master plumber, or state certifications command premium valuations."
+    },
+    {
+      "lever": "Route density and geographic coverage",
+      "description": "Dense service territories reduce drive time, increase stops per day, and create defensible local market positions."
+    },
+    {
+      "lever": "Brand and local reputation",
+      "description": "BBB ratings, Google review counts, and community presence create organic lead generation that buyers cannot replicate quickly."
+    },
+    {
+      "lever": "Multi-trade capability",
+      "description": "Operators offering HVAC + plumbing + electrical under one roof create cross-sell revenue that single-trade competitors cannot match."
+    }
+  ],
+
+  "letter_config": {
+    "variants": ["initial", "followup", "final"],
+    "certifications_to_mention": [
+      "NATE", "EPA Section 608", "state plumbing license",
+      "state electrical license", "GAF certified installer",
+      "NSF/ANSI", "NPCA plant certification", "state pesticide applicator"
+    ],
+    "fee_structure": {
+      "engagement_fee_range": "$5,000 – $25,000",
+      "monthly_retainer_range": "$2,500 – $7,500",
+      "success_fee_description": "5–10% of transaction value for sub-$5M deals, scaled for larger transactions"
+    }
+  },
+
+  "sub_verticals": {
+    "water_treatment": {
+      "display_name": "Water Treatment",
+      "valuation_fields": {
+        "multiple_floor": 4.0,
+        "multiple_ceiling": 8.0,
+        "multiple_median": 5.5
+      },
+      "growth_levers": [
+        {
+          "lever": "Recurring filter and salt delivery revenue",
+          "description": "Consumable delivery routes create monthly touchpoints and sticky recurring revenue."
+        },
+        {
+          "lever": "Rental equipment portfolios with monthly income",
+          "description": "Equipment-as-a-service models generate predictable cash flow acquirers underwrite at premium multiples."
+        },
+        {
+          "lever": "Water testing and analysis capability",
+          "description": "Testing services create upsell opportunities and regulatory compliance value."
+        }
+      ],
+      "exa_templates": {
+        "vertical_queries": [
+          "{company_name} water softener RO filtration residential commercial",
+          "{company_name} NSF certified water treatment",
+          "water treatment company {city} {state} sold acquired roll-up 2024 2025"
+        ]
+      },
+      "synthesis_prompts": {
+        "additional_goals": [
+          "NSF/ANSI certifications (42, 44, 53, 58)",
+          "Commercial vs residential split",
+          "Recurring filter replacement / salt delivery routes",
+          "Equipment: RO systems, water softeners, whole-home filtration",
+          "Regulatory compliance: state water quality board"
+        ],
+        "story_hooks": [
+          "The water treatment business you built solves a problem every family in {city} faces — clean, safe water. That kind of essential service attracts serious buyers.",
+          "A recurring revenue base of filter replacements and service agreements is exactly what today's acquirers pay a premium for in water treatment.",
+          "Regional operators who built their routes from scratch are becoming the most sought-after acquisition targets in the water space right now."
+        ],
+        "market_context": "Water treatment sits at the intersection of aging infrastructure, tightening EPA mandates around PFAS and lead, and essential-service recession resistance — a combination that has put this vertical at the top of every serious acquirer's target list.",
+        "buyer_appetite": "Culligan, Pentair, Kinetico, and a growing list of family-office platforms are actively acquiring established water treatment operators. They are paying 5x to 8x EBITDA for businesses with strong recurring revenue — and competing hard for the ones that have it.",
+        "premium_driver": "The businesses commanding premium multiples in water treatment today share one thing: recurring revenue from rentals, service agreements, and consumable delivery routes. That recurring base is what separates a 4x outcome from an 8x outcome on the same EBITDA dollar."
+      }
+    },
+    "hvac": {
+      "display_name": "HVAC",
+      "valuation_fields": {
+        "multiple_floor": 4.5,
+        "multiple_ceiling": 8.5,
+        "multiple_median": 6.0
+      },
+      "growth_levers": [
+        {
+          "lever": "Service agreement attach rate",
+          "description": "Service agreements turn one-time replacement customers into annuities — buyers underwrite those annuities at a significant premium."
+        },
+        {
+          "lever": "Recurring maintenance contract revenue",
+          "description": "Maintenance contracts create predictable monthly revenue independent of weather and seasonality."
+        },
+        {
+          "lever": "Commercial vs. residential mix",
+          "description": "Commercial HVAC contracts are longer-term, higher-margin, and more defensible than residential project work."
+        }
+      ],
+      "exa_templates": {
+        "vertical_queries": [
+          "{company_name} NATE certified HVAC technicians",
+          "{company_name} Carrier Trane Lennox authorized dealer",
+          "HVAC company {city} {state} acquisition sold PE roll-up 2024 2025"
+        ]
+      },
+      "synthesis_prompts": {
+        "additional_goals": [
+          "NATE-certified technician count",
+          "Service area radius (miles from base)",
+          "Equipment brands carried: Carrier, Trane, Lennox, Daikin",
+          "Commercial vs residential mix",
+          "Seasonal revenue patterns and off-season revenue"
+        ],
+        "story_hooks": [
+          "HVAC businesses with strong maintenance agreement books are trading at the highest multiples in the trades right now — because buyers see the recurring revenue.",
+          "The HVAC market in {state} is consolidating fast. Owner-operators who know their territory are exactly what PE-backed platforms are paying premium prices to acquire.",
+          "After {years_in_business} years building a reputation in {city}, your customer list is an asset that strategic buyers are willing to pay for."
+        ],
+        "market_context": "HVAC consolidation is running at full speed — PE-backed platforms and national strategics are competing for established operators in every major metro market.",
+        "buyer_appetite": "Apex Service Partners, Redwood Services, and a dozen other PE-backed platforms are writing checks weekly for HVAC businesses with strong service agreement programs and tenured technician teams.",
+        "premium_driver": "The spread between a 4.5x and an 8x outcome in HVAC almost always comes down to recurring revenue. Service agreements turn one-time replacement customers into annuities — and buyers underwrite those annuities at a significant premium."
+      }
+    },
+    "plumbing": {
+      "display_name": "Plumbing",
+      "valuation_fields": {
+        "multiple_floor": 4.0,
+        "multiple_ceiling": 7.5,
+        "multiple_median": 5.5
+      },
+      "growth_levers": [
+        {
+          "lever": "Service agreement and maintenance plan revenue",
+          "description": "Plumbing maintenance plans create recurring touchpoints and predictable cash flow."
+        },
+        {
+          "lever": "Commercial account concentration",
+          "description": "Commercial plumbing contracts are higher margin and longer duration than residential."
+        },
+        {
+          "lever": "Drain jetting and hydro-excavation capability",
+          "description": "Specialty services command premium pricing and create competitive moats."
+        }
+      ],
+      "exa_templates": {
+        "vertical_queries": [
+          "{company_name} master plumber licensed {state}",
+          "{company_name} commercial residential plumbing",
+          "plumbing company {city} {state} acquisition sold 2024 2025"
+        ]
+      },
+      "synthesis_prompts": {
+        "additional_goals": [
+          "Master plumber license status",
+          "Emergency/24-hour service capacity",
+          "Commercial plumbing vs residential split",
+          "Specialty work: hydro-jetting, trenchless, backflow"
+        ],
+        "story_hooks": [
+          "Plumbing businesses with trained crews and commercial relationships are in high demand from buyers who want to add a trade alongside their HVAC platform.",
+          "The consolidation happening in plumbing right now is creating real exits for owners who spent decades building route density and licensed crews.",
+          "A licensed plumbing business in {state} with a book of commercial clients is a different asset than most buyers encounter — and they pay accordingly."
+        ],
+        "market_context": "Plumbing is one of the most recession-resistant verticals in home services, and acquirers have taken notice. The combination of essential-service demand, aging housing stock, and growing commercial construction activity is driving sustained M&A interest.",
+        "buyer_appetite": "National platforms and regional consolidators are actively acquiring plumbing businesses with strong commercial relationships and a documented recurring revenue base.",
+        "premium_driver": "Plumbing businesses with commercial contract revenue and service agreements consistently trade at the top of the multiple range. Buyers value predictable call volume and repeat customer relationships above almost everything else in this vertical."
+      }
+    },
+    "roofing": {
+      "display_name": "Roofing",
+      "valuation_fields": {
+        "multiple_floor": 3.5,
+        "multiple_ceiling": 7.0,
+        "multiple_median": 5.0
+      },
+      "growth_levers": [
+        {
+          "lever": "Storm-restoration revenue diversification",
+          "description": "Insurance-backed restoration revenue demonstrates surge capacity and scalability."
+        },
+        {
+          "lever": "Commercial roofing contract concentration",
+          "description": "Commercial contracts provide multi-year recurring revenue from maintenance and inspections."
+        },
+        {
+          "lever": "Maintenance and inspection program revenue",
+          "description": "Recurring inspection programs create the closest equivalent to service agreements in roofing."
+        }
+      ],
+      "exa_templates": {
+        "vertical_queries": [
+          "{company_name} GAF certified roofing installer",
+          "{company_name} storm restoration insurance claims",
+          "roofing company {city} {state} acquisition sold PE 2024 2025"
+        ]
+      },
+      "synthesis_prompts": {
+        "additional_goals": [
+          "GAF/CertainTeed/Owens Corning certified installer status",
+          "Storm restoration vs replacement revenue mix",
+          "Insurance claim work percentage",
+          "Crew size and subcontractor use"
+        ],
+        "story_hooks": [
+          "Storm restoration revenue is attractive to buyers because it's proven your team can scale fast — exactly the capability PE platforms want.",
+          "Certified installer status with a major manufacturer is a durable competitive advantage that sophisticated buyers factor into their offers.",
+          "Roofing businesses with strong insurance claim relationships in {state} are some of the most-approached companies in the trades M&A market."
+        ],
+        "market_context": "Roofing M&A has accelerated sharply as institutional buyers recognize the combination of essential-service demand, insurance-backed revenue, and the scalability of a well-run roofing operation.",
+        "buyer_appetite": "Roofing platforms backed by institutional capital are actively seeking established operators with commercial relationships, storm-restoration track records, and tenured estimating teams.",
+        "premium_driver": "Roofing businesses with commercial contract revenue and diversified revenue streams — new construction, re-roof, storm, maintenance — command the strongest multiples. Single-channel operators carry weather and seasonality risk that buyers discount."
+      }
+    },
+    "pest_control": {
+      "display_name": "Pest Control",
+      "valuation_fields": {
+        "multiple_floor": 5.0,
+        "multiple_ceiling": 10.0,
+        "multiple_median": 7.0
+      },
+      "growth_levers": [
+        {
+          "lever": "Recurring subscription revenue percentage",
+          "description": "Subscription models create the most predictable cash flow in all of home services — buyers underwrite recurring pest revenue at the highest multiples in the trades."
+        },
+        {
+          "lever": "Route density and stops-per-hour efficiency",
+          "description": "Dense residential routes maximize technician productivity and gross margin per stop."
+        },
+        {
+          "lever": "Commercial account contract value",
+          "description": "Commercial pest contracts are larger, multi-year, and provide steady base revenue."
+        }
+      ],
+      "exa_templates": {
+        "vertical_queries": [
+          "{company_name} termite warranty quarterly pest control",
+          "{company_name} pest control routes recurring contracts",
+          "pest control company {city} {state} acquisition sold Rollins Rentokil 2024 2025"
+        ]
+      },
+      "synthesis_prompts": {
+        "additional_goals": [
+          "State pesticide applicator license",
+          "Recurring contract base: quarterly/monthly customers",
+          "Termite warranty portfolio value",
+          "Route density (stops per day per tech)",
+          "Specialty: termite, rodent, bed bug, wildlife"
+        ],
+        "story_hooks": [
+          "A recurring quarterly pest control book is one of the most predictable revenue streams in all of home services — buyers know it and price it accordingly.",
+          "The termite warranty portfolio you've built represents years of customer trust that rolls into a new owner at closing.",
+          "Pest control businesses with route density in suburban markets like {city} are actively sought by national roll-ups right now."
+        ],
+        "market_context": "Pest control trades at some of the highest multiples in all of home services — driven almost entirely by the subscription model that creates predictable, recurring cash flow buyers can underwrite at premium multiples.",
+        "buyer_appetite": "Rollins, Rentokil, and a growing number of PE-backed regional platforms are aggressively acquiring pest control operators, particularly those with high recurring revenue ratios and dense residential routes.",
+        "premium_driver": "Recurring subscription revenue is the single most powerful value driver in pest control. Businesses with 80%+ recurring revenue routinely trade at 8x to 10x EBITDA — nearly double what a primarily one-time-service operator achieves."
+      }
+    },
+    "concrete_precast": {
+      "display_name": "Concrete & Precast",
+      "valuation_fields": {
+        "multiple_floor": 4.0,
+        "multiple_ceiling": 7.5,
+        "multiple_median": 5.5
+      },
+      "growth_levers": [
+        {
+          "lever": "DOT and municipal contract portfolio",
+          "description": "Government contracts provide multi-year revenue visibility and high barriers to entry for competitors."
+        },
+        {
+          "lever": "Precast product line diversification",
+          "description": "Broad product mix across pipe, box culvert, manholes, and structural precast reduces customer concentration risk."
+        },
+        {
+          "lever": "Aggregate reserve assets",
+          "description": "Owned aggregate reserves and permitted plant locations are irreplaceable assets that acquirers value highly."
+        }
+      ],
+      "exa_templates": {
+        "vertical_queries": [
+          "{company_name} NPCA certified precast concrete plant",
+          "{company_name} DOT municipal precast pipe culvert",
+          "precast concrete company {state} acquisition sold 2024 2025"
+        ]
+      },
+      "synthesis_prompts": {
+        "additional_goals": [
+          "NPCA plant certification status",
+          "Product mix: pipe, box culvert, manholes, architectural, structural",
+          "Geographic delivery radius",
+          "DOT/municipal contract history",
+          "Plant capacity vs current utilization"
+        ],
+        "story_hooks": [
+          "NPCA-certified precast plants with established DOT relationships are rare assets — buyers in the infrastructure space know it.",
+          "The capital equipment and plant certifications you've accumulated over {years_in_business} years represent a barrier to entry that acquirers value highly.",
+          "Precast concrete businesses serving municipal markets command strong multiples because the contracts are long-term and the relationships are sticky."
+        ],
+        "market_context": "The Infrastructure Investment and Jobs Act's $550 billion in new federal spending — concentrated in concrete-intensive highways, bridges, and water systems — has given serious demand visibility to well-positioned concrete operators and drawn increased M&A attention.",
+        "buyer_appetite": "Summit Materials, Knife River, and regional platforms are building geographic networks of concrete and precast operations. Well-located plants with strong DOT relationships and tenured ACI-certified workforces are commanding premium attention.",
+        "premium_driver": "The businesses trading at the top of the concrete multiple range share two things: irreplaceable permitted plant locations and long-term government contract relationships that create visible, multi-year revenue. Those combinations are genuinely scarce."
+      }
+    },
+    "flooring": {
+      "display_name": "Flooring",
+      "valuation_fields": {
+        "multiple_floor": 3.5,
+        "multiple_ceiling": 6.5,
+        "multiple_median": 4.75
+      },
+      "growth_levers": [
+        {
+          "lever": "Commercial contract revenue concentration",
+          "description": "Repeat commercial accounts from multi-family, hospitality, and property management create the recurring revenue equivalent in a project-driven business."
+        },
+        {
+          "lever": "Multi-family and property management relationships",
+          "description": "Institutional property managers provide steady project flow and predictable annual spend."
+        },
+        {
+          "lever": "Installation crew depth and tenure",
+          "description": "Experienced, W-2 installation crews are scarce — tenured teams reduce rework and subcontractor dependency."
+        }
+      ],
+      "exa_templates": {
+        "vertical_queries": [
+          "{company_name} commercial residential flooring installation",
+          "{company_name} flooring builder contractor relationships",
+          "flooring company {city} {state} acquisition sold 2024 2025"
+        ]
+      },
+      "synthesis_prompts": {
+        "additional_goals": [
+          "Commercial vs residential split",
+          "Floor types carried: hardwood, LVP, tile, carpet, epoxy",
+          "Installation crew count vs subcontract",
+          "Builder/GC relationships",
+          "Recurring commercial maintenance contracts"
+        ],
+        "story_hooks": [
+          "A commercial flooring business with builder relationships is a platform asset — buyers see the recurring project flow as a core part of the value.",
+          "The installation crew you've built and the commercial accounts you've maintained make your business the kind of asset that commands strategic interest.",
+          "Flooring businesses with a mix of commercial and residential revenue in growth markets like {city} are attracting attention from national services companies."
+        ],
+        "market_context": "Flooring consolidation is in early innings, with platforms building regional operations by acquiring established local dealers and installation businesses with commercial track records.",
+        "buyer_appetite": "Regional platforms and national floor covering chains are acquiring flooring businesses with strong commercial accounts, property management relationships, and experienced installation crews.",
+        "premium_driver": "Commercial flooring relationships — multi-family, hospitality, healthcare, property management — drive premium multiples in this vertical. Repeat institutional customers represent the recurring revenue equivalent in an otherwise project-driven business."
+      }
+    }
+  }
+}
