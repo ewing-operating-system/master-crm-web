@@ -1,18 +1,27 @@
 #!/usr/bin/env python3
 """
-Pain/Gain Analysis Engine
-=========================
-Cross-section, evidence-backed Pain/Gain analysis for buyer review pages.
+Pain/Gain Match Engine
+======================
+Cross-references buyer pain signals against entity value propositions.
+Final phase (Phase 2F) of the Buyer Intelligence Pipeline.
 
 Given a buyer slug + entity + target_company:
   1. Load the per-buyer JSON (public/data/debbie-research-{slug}.json)
-  2. Extract pain signals from 6 sections (reviews + 5 narrative sections)
-  3. Load entity_value_propositions from Supabase
-  4. Call LLM with structured prompt (enforced JSON schema)
-  5. Write to pain_gain_analyses table (upsert)
+  2. Extract pain signals from 6 sections:
+       - market_reputation (direct user reviews)
+       - ceo_vision, ma_appetite, competitive_moat, earnings_quotes, recent_news
+  3. Load entity value propositions from Supabase (entity_value_propositions table)
+  4. Call LLM with structured prompt — enforces JSON schema with source attribution
+  5. Write results to pain_gain_analyses table (upsert, keyed on entity+company+slug)
   6. Update per-buyer JSON with pain_gain_analysis key
 
-Usage (standalone test):
+Called by:
+  - scripts/debbie_buyer_research.py Phase 2F (auto, every full pipeline run)
+  - scripts/debbie_buyer_research.py --pain-gain-only (standalone re-run)
+  - backend/lib/swarm_enrichment.py when section_key == "pain_gain_match"
+  - backend/worker.py agent_pain_gain_analysis (queue-based)
+
+Usage (standalone):
     python3 backend/lib/pain_gain_engine.py \
         --buyer sap-successfactors \
         --entity next_chapter \
@@ -316,7 +325,8 @@ def _supabase_upsert(table: str, row: dict) -> bool:
     key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
     if not base_url or not key:
         raise ValueError("SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY not set")
-    url = f"{base_url}/rest/v1/{table}"
+    # Specify conflict columns so PostgREST uses ON CONFLICT (...) DO UPDATE
+    url = f"{base_url}/rest/v1/{table}?on_conflict=entity,target_company,buyer_slug"
     payload = json.dumps(row, default=str).encode()
     req = urllib.request.Request(
         url,
