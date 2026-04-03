@@ -51,32 +51,18 @@ body { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; backgrou
 .fb-comment { font-size:10px; padding:4px 6px; background:#0d1117; border:1px solid #21262d; border-radius:4px; color:#c9d1d9; resize:vertical; font-family:inherit; width:100%; min-height:32px; }
 .fb-comment:focus { outline:none; border-color:#58a6ff; }
 
-/* ── MEDIA FEEDBACK CARD OVERRIDES ──────── */
-.fb-card.fb-border-media { position:relative; }
-.fb-card.fb-border-media .fb-card-label { font-size:14px; font-weight:800; color:#a371f7; letter-spacing:.8px; }
-.fb-card.fb-border-media .fb-radio { font-size:13px; padding:4px 0; }
-.fb-card.fb-border-media .fb-radio input { width:14px; height:14px; }
-.fb-card.fb-border-media .fb-comment { min-height:200px; font-size:12px; }
-/* Arrow connector: feedback card → center content */
-.fb-card.fb-border-media::after { content:'▶'; position:absolute; right:-16px; top:50%; transform:translateY(-50%); color:#a371f7; font-size:18px; opacity:0.7; pointer-events:none; }
+/* ── FEEDBACK CARD ENHANCED STYLES ──────── */
+.fb-card { position:relative; }
+.fb-card .fb-card-label { font-size:13px; font-weight:800; letter-spacing:.8px; }
+.fb-card .fb-radio { font-size:14px; padding:5px 0; }
+.fb-card .fb-radio input { width:15px; height:15px; }
+.fb-card .fb-comment { font-size:12px; }
+/* First section gets taller comment box */
+.fb-card.fb-border-media .fb-comment { min-height:200px; }
+/* Arrow connector on every feedback card */
+.fb-card .fb-arrow { position:absolute; right:-14px; top:50%; transform:translateY(-50%); font-size:16px; opacity:0.8; pointer-events:none; line-height:1; }
 
-/* Section border colors */
-.fb-border-header { border-left-color:#58a6ff; }
-.fb-border-media { border-left-color:#a371f7; }
-.fb-border-domain { border-left-color:#f5a623; }
-.fb-border-reputation { border-left-color:#e74c3c; }
-.fb-border-strategic { border-left-color:#3fb950; }
-.fb-border-ceo { border-left-color:#79b8ff; }
-.fb-border-ma { border-left-color:#f39c12; }
-.fb-border-earnings { border-left-color:#8b949e; }
-.fb-border-approach { border-left-color:#d2a8ff; }
-.fb-border-moat { border-left-color:#56d364; }
-.fb-border-challenges { border-left-color:#ff7b72; }
-.fb-border-pain-gain { border-left-color:#f85149; }
-.fb-border-news { border-left-color:#ff9f43; }
-.fb-border-sentiment { border-left-color:#ee5a24; }
-.fb-border-tech { border-left-color:#0abde3; }
-.fb-border-pricing { border-left-color:#10ac84; }
+/* Section border colors — now driven by JS inline styles via SECTION_CONFIG.color */
 
 /* ── CENTER: CONTENT ────────────────────── */
 .content-col { padding:12px 16px; }
@@ -88,20 +74,7 @@ body { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; backgrou
 .card p { margin-bottom:8px; font-size:13px; line-height:1.7; }
 .card p:last-child { margin-bottom:0; }
 
-/* Section border accents */
-.section-media { border-left:3px solid #a371f7; }
-.section-domain { border-left:3px solid #f5a623; }
-.section-reputation { border-left:3px solid #e74c3c; }
-.section-strategic { border-left:3px solid #3fb950; }
-.section-ceo { border-left:3px solid #79b8ff; }
-.section-ma { border-left:3px solid #f39c12; }
-.section-earnings { border-left:3px solid #8b949e; }
-.section-approach { border-left:3px solid #d2a8ff; }
-.section-moat { border-left:3px solid #56d364; }
-.section-news { border-left:3px solid #ff9f43; }
-.section-sentiment { border-left:3px solid #ee5a24; }
-.section-tech { border-left:3px solid #0abde3; }
-.section-pricing { border-left:3px solid #10ac84; }
+/* Section border accents — now driven by JS inline styles via SECTION_CONFIG.color */
 
 .narrative-box { background:#0d1117; border:1px solid #21262d; border-radius:8px; padding:14px 16px; }
 .narrative-box p { font-size:13px; line-height:1.75; }
@@ -535,6 +508,8 @@ function updateZoneA(slug) {
 // ══════════════════════════════════════════
 // RENDER SECTIONS
 // ══════════════════════════════════════════
+// 3 rotating section colors: Cyan, Violet, Coral
+const ROTATE_COLORS = ['#00d4ff','#a371f7','#ff6b9d'];
 const SECTION_CONFIG = [
   {key:'hr_media_business', title:'HR.com Media Business', border:'media', fbBorder:'fb-border-media'},
   {key:'hr_domain_name', title:'HR.com Domain Name (#87 Global)', border:'domain', fbBorder:'fb-border-domain'},
@@ -551,6 +526,8 @@ const SECTION_CONFIG = [
   {key:'technology_architecture', title:'Technology Architecture', border:'tech', fbBorder:'fb-border-tech'},
   {key:'pricing_model', title:'Pricing Model & Revenue Mix', border:'pricing', fbBorder:'fb-border-pricing'},
 ];
+// Assign rotating color to each section
+SECTION_CONFIG.forEach((cfg, i) => { cfg.color = ROTATE_COLORS[i % ROTATE_COLORS.length]; });
 
 function renderBuyerContent(slug) {
   const b = BUYERS[slug];
@@ -564,8 +541,8 @@ function renderBuyerContent(slug) {
       'recent_news','employee_sentiment','technology_architecture','pricing_model'];
     if (content === null && !alwaysShow.includes(cfg.key)) return;
 
-    html += '<div class="card section-'+cfg.border+' research-section" data-section-key="'+cfg.key+'" data-buyer-slug="'+slug+'" id="section-'+slug+'-'+cfg.key+'">';
-    html += '<h3>'+cfg.title+(b.buyer_name?' — '+b.buyer_name:'')+'</h3>';
+    html += '<div class="card research-section" data-section-key="'+cfg.key+'" data-buyer-slug="'+slug+'" id="section-'+slug+'-'+cfg.key+'" style="border-left:3px solid '+cfg.color+'">';
+    html += '<h3 style="color:'+cfg.color+'">'+cfg.title+(b.buyer_name?' — '+b.buyer_name:'')+'</h3>';
 
     if (content === null) {
       html += renderSwarmButton(slug, b.buyer_name, cfg.key);
@@ -1068,16 +1045,18 @@ function renderFeedbackColumn(slug) {
     if (content === null && !alwaysShowFb.includes(cfg.key)) return;
 
     const fb = FEEDBACK_CACHE[slug+'__'+cfg.key] || {};
-    html += '<div class="fb-card '+cfg.fbBorder+'" data-section-key="'+cfg.key+'" data-buyer-slug="'+slug+'" id="fb-'+slug+'-'+cfg.key+'">';
+    const c = cfg.color;
+    html += '<div class="fb-card" data-section-key="'+cfg.key+'" data-buyer-slug="'+slug+'" id="fb-'+slug+'-'+cfg.key+'" style="border-left:3px solid '+c+'">';
     const fbLabel = (cfg.key==='hr_media_business' && b.buyer_name) ? cfg.title+' \u2014 '+b.buyer_name : cfg.title;
-    html += '<div class="fb-card-label">'+fbLabel+'</div>';
+    html += '<div class="fb-card-label" style="color:'+c+'">'+fbLabel+'</div>';
+    html += '<span class="fb-arrow" style="color:'+c+'">&#9654;</span>';
     html += '<div class="fb-radios">';
     [{val:'accurate_relevant_valuable',label:'Accurate, relevant, valuable'},
      {val:'accurate_not_relevant',label:'Accurate, not relevant'},
      {val:'remove_altogether',label:'Remove this content'}].forEach(opt => {
       const checked = fb.section_verdict===opt.val ? ' checked' : '';
       const selClass = fb.section_verdict===opt.val ? ' selected' : '';
-      html += '<label class="fb-radio'+selClass+'"><input type="radio" name="fb-'+slug+'-'+cfg.key+'" value="'+opt.val+'"'+checked+' onchange="sectionVerdictChange(\''+slug+'\',\''+b.buyer_name+'\',\''+cfg.key+'\',this.value)"> '+opt.label+'</label>';
+      html += '<label class="fb-radio'+selClass+'"><input type="radio" name="fb-'+slug+'-'+cfg.key+'" value="'+opt.val+'"'+checked+' onchange="sectionVerdictChange(\''+slug+'\',\''+b.buyer_name+'\',\''+cfg.key+'\',this.value)" style="accent-color:'+c+'"> '+opt.label+'</label>';
     });
     html += '</div>';
     html += '<textarea class="fb-comment" placeholder="Comments..." onblur="sectionCommentBlur(\''+slug+'\',\''+b.buyer_name+'\',\''+cfg.key+'\',this.value)">'+(fb.section_comment||'')+'</textarea>';
@@ -1116,8 +1095,9 @@ function renderNuggets(slug) {
 
   let html = '';
   nuggets.forEach((n, i) => {
-    html += '<div class="nugget-card">';
-    html += '<div class="nugget-header">Nugget '+(i+1)+(n.speaker?' — '+n.speaker:'')+'</div>';
+    const nc = ROTATE_COLORS[i % ROTATE_COLORS.length];
+    html += '<div class="nugget-card" style="border-left-color:'+nc+'">';
+    html += '<div class="nugget-header" style="color:'+nc+'">Nugget '+(i+1)+(n.speaker?' — '+n.speaker:'')+'</div>';
     if (n.quote) html += '<div class="ceo-quote">&ldquo;'+n.quote+'&rdquo;</div>';
     if (n.opener) html += '<div class="nugget-opener"><div class="opener-label">OPENER</div><p>'+n.opener+'</p></div>';
     if (n.why) html += '<div class="nugget-why"><strong>Why it works:</strong> '+n.why+'</div>';
