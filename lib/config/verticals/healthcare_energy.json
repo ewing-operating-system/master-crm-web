@@ -1,0 +1,223 @@
+{
+  "vertical_id": "healthcare_energy",
+  "display_name": "Healthcare & Energy",
+
+  "entity_defaults": {
+    "entity": "and_capital",
+    "sub_type": "investment",
+    "campaign_prefixes": ["AND"]
+  },
+
+  "classification_keywords": {
+    "industry": [
+      "healthcare", "hospital", "wellness", "longevity", "health-tech", "bio-tech",
+      "med-tech", "medical device", "wound care", "wound prevention",
+      "functional beverages", "wellness properties", "integrated platforms",
+      "energy", "hydrocarbons", "midstream", "renewables", "energy transition",
+      "orri", "royalty interest", "minerals", "critical minerals", "gold",
+      "brownfield", "central asia", "oil and gas", "oil & gas"
+    ],
+    "lp_keywords": [
+      "family office", "lp", "limited partner", "fund", "institutional investor",
+      "accredited investor", "qualified purchaser", "endowment", "pension",
+      "ria", "wealth advisor"
+    ],
+    "company_names": [
+      "euchee valley", "little rock heart", "fiomet", "geosense",
+      "smartfit", "opolee", "spiga capital", "andean capital"
+    ]
+  },
+
+  "valuation_multiples": {
+    "healthcare": {"floor": 6, "median": 9, "ceiling": 14},
+    "medical device": {"floor": 8, "median": 12, "ceiling": 18},
+    "energy": {"floor": 4, "median": 6, "ceiling": 9},
+    "midstream": {"floor": 6, "median": 8, "ceiling": 11},
+    "renewables": {"floor": 8, "median": 12, "ceiling": 18},
+    "minerals": {"floor": 3, "median": 5, "ceiling": 8},
+    "_default": {"floor": 5, "median": 8, "ceiling": 12}
+  },
+
+  "research_sections": [
+    "owner_story",
+    "revenue_signal",
+    "competitive_moat",
+    "regulatory_landscape",
+    "exit_readiness",
+    "intellectual_property",
+    "clinical_pipeline"
+  ],
+
+  "exa_templates": {
+    "base_queries": [
+      "{company_name} {city} {state} owner founder history",
+      "{company_name} revenue growth employees market share",
+      "{company_name} {owner_name} LinkedIn background",
+      "{company_name} acquisition sale sold 2024 2025"
+    ],
+    "vertical_queries": [
+      "{company_name} FDA clearance clinical trial medical device",
+      "{company_name} energy production reserves midstream pipeline",
+      "{company_name} healthcare platform technology patent",
+      "{vertical} company {city} {state} acquisition PE roll-up 2024 2025"
+    ],
+    "content_mode": "highlights",
+    "num_results": 6
+  },
+
+  "synthesis_prompts": {
+    "research_goals": [
+      "Owner story: years in business, founding thesis, technical background",
+      "Revenue signal: size indicators from employee count, facility footprint, contracts",
+      "Competitive moat: IP, patents, regulatory approvals, proprietary technology",
+      "Regulatory landscape: FDA clearances, EPA permits, state licenses, compliance history",
+      "Exit readiness: any mentions of fundraising, strategic review, or sale",
+      "Intellectual property: patents filed, trade secrets, proprietary processes",
+      "Clinical pipeline: products in development, trials, regulatory milestones"
+    ],
+    "additional_goals": [],
+    "story_hooks": [
+      "Healthcare and energy assets with defensible IP and regulatory moats are commanding premium valuations from institutional investors.",
+      "The convergence of technology and healthcare is creating acquisition opportunities that strategic buyers and PE platforms are competing for aggressively."
+    ],
+    "market_context": "Healthcare and energy M&A activity is driven by secular tailwinds — aging populations, energy transition mandates, and technology convergence — that have attracted record institutional capital to both sectors.",
+    "buyer_appetite": "Family offices, PE platforms, and strategic acquirers are actively deploying capital into healthcare technology, medical devices, energy infrastructure, and critical minerals — paying premium multiples for assets with regulatory moats and recurring revenue.",
+    "premium_driver": "The assets commanding the strongest multiples in healthcare and energy share defensible competitive positions: FDA clearances, permitted reserves, long-term contracts, and proprietary technology that create barriers to entry no amount of capital can quickly replicate."
+  },
+
+  "buyer_scoring_criteria": [
+    {
+      "criterion": "Prior acquisition in seller's sector",
+      "weight": 0.35,
+      "score_8_description": "Confirmed prior acquisition in healthcare or energy (must name the deal)",
+      "score_6_description": "Operates in adjacent sector, no confirmed acquisition",
+      "score_4_description": "Wrong sector, no thesis alignment"
+    },
+    {
+      "criterion": "Regulatory and IP alignment",
+      "weight": 0.25,
+      "score_8_description": "Buyer has regulatory expertise and values IP-protected assets",
+      "score_6_description": "Buyer operates in regulated industries but different domain",
+      "score_4_description": "No regulatory experience or IP strategy"
+    },
+    {
+      "criterion": "Geographic and market fit",
+      "weight": 0.20,
+      "score_8_description": "Buyer actively investing in seller's geographic market or subsector",
+      "score_6_description": "Buyer operates in region but different focus",
+      "score_4_description": "No geographic or market overlap"
+    },
+    {
+      "criterion": "Deal size alignment",
+      "weight": 0.20,
+      "score_8_description": "Buyer's confirmed deal range matches seller's estimated enterprise value",
+      "score_6_description": "Buyer's range overlaps at the edges",
+      "score_4_description": "Significant mismatch in deal size expectations"
+    }
+  ],
+
+  "valuation_fields": {
+    "primary_metric": "ebitda",
+    "multiple_floor": 5.0,
+    "multiple_ceiling": 14.0,
+    "multiple_median": 8.0,
+    "industry_margin_benchmark": 0.18
+  },
+
+  "growth_levers": [
+    {
+      "lever": "Regulatory moat depth",
+      "description": "FDA clearances, EPA permits, and state licenses create multi-year barriers to entry that acquirers value as durable competitive advantages."
+    },
+    {
+      "lever": "Recurring contract revenue",
+      "description": "Long-term supply agreements, maintenance contracts, and managed services create predictable cash flow that institutional investors underwrite at premium multiples."
+    },
+    {
+      "lever": "Intellectual property portfolio",
+      "description": "Patents, proprietary processes, and trade secrets create defensible market positions that command acquisition premiums."
+    },
+    {
+      "lever": "Clinical or resource pipeline",
+      "description": "Products in development, permitted reserves, and regulatory milestones create optionality value beyond current earnings."
+    },
+    {
+      "lever": "Technology integration capability",
+      "description": "AI, IoT, and data analytics capabilities applied to healthcare delivery or energy operations create platform value beyond the core business."
+    }
+  ],
+
+  "letter_config": {
+    "variants": ["initial", "followup", "final"],
+    "certifications_to_mention": [
+      "FDA 510(k)", "ISO 13485", "EPA permits", "state medical device license",
+      "GMP certification", "OSHA compliance", "API certification"
+    ],
+    "fee_structure": {
+      "engagement_fee_range": "$10,000 – $50,000",
+      "monthly_retainer_range": "$5,000 – $15,000",
+      "success_fee_description": "3–7% of transaction value, scaled for deal complexity"
+    }
+  },
+
+  "pipeline_prompts": {
+    "synthesis_context": "You are a senior investment analyst evaluating {buyer_name} as a potential acquirer or co-investor for a healthcare or energy asset. You are writing buyer intelligence for an investment memorandum.",
+    "nuggets_context": "You are extracting golden nuggets from RAW search results about {buyer_name} for an investment advisory team representing a healthcare or energy company.",
+    "nuggets_focus": "Why {buyer_name} would want to acquire or invest in a healthcare or energy asset",
+    "product_discovery_query": "{buyer_name} operates healthcare, medical device, energy, or natural resource businesses that demonstrate strategic acquisition appetite",
+    "vertical_label": "Healthcare & Energy"
+  },
+
+  "pipeline_sections": [
+    {
+      "key": "ma_appetite",
+      "title": "M&A Appetite & Deal History",
+      "exa_template_names": ["ma_history", "company_financials"],
+      "topic_template": "{buyer_name} has acquired healthcare, medical device, or energy businesses through strategic acquisition or platform build strategies"
+    },
+    {
+      "key": "platform_strategy",
+      "title": "Platform Strategy",
+      "exa_template_names": ["strategic_fit", "earnings_call"],
+      "topic_template": "{buyer_name} is building a healthcare or energy platform through acquisitions of companies with regulatory moats and proprietary technology"
+    },
+    {
+      "key": "regulatory_expertise",
+      "title": "Regulatory & Compliance Expertise",
+      "exa_template_names": ["strategic_fit"],
+      "topic_template": "{buyer_name} has demonstrated expertise navigating FDA, EPA, or state regulatory frameworks in healthcare or energy"
+    },
+    {
+      "key": "ceo_vision",
+      "title": "CEO Vision & Strategy",
+      "exa_template_names": ["earnings_call"],
+      "topic_template": "{buyer_name} CEO or leadership has discussed growth through acquisition in healthcare, energy, or related sectors"
+    },
+    {
+      "key": "strategic_fit",
+      "title": "Strategic Fit",
+      "exa_template_names": ["strategic_fit", "company_financials"],
+      "topic_template": "How {buyer_name}'s existing platform would be strengthened by acquiring a healthcare or energy asset with regulatory moats",
+      "output_format": "direct_html"
+    },
+    {
+      "key": "approach_strategy",
+      "title": "Approach Strategy",
+      "exa_template_names": ["buyer_contacts"],
+      "topic_template": "corporate development and investment leadership at {buyer_name} who evaluate acquisitions in healthcare or energy"
+    },
+    {
+      "key": "golden_nuggets",
+      "title": "Golden Nuggets",
+      "exa_template_names": ["ma_history", "earnings_call"],
+      "topic_template": "{buyer_name} executives have made statements about acquiring healthcare or energy businesses, building platforms, or expanding into new sectors",
+      "output_format": "golden_nuggets"
+    },
+    {
+      "key": "valuation_signals",
+      "title": "Valuation & Deal Terms",
+      "exa_template_names": ["company_financials", "ma_history"],
+      "topic_template": "{buyer_name} has paid specific multiples for healthcare or energy acquisitions or has disclosed deal terms"
+    }
+  ]
+}

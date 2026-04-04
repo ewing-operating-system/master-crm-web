@@ -5,8 +5,19 @@ research_templates.py — Entity-specific research prompt templates for Master C
 Provides Exa query prompts and narrative story hooks tuned per entity and vertical.
 Used by the researcher agent and executor to produce personalized dossiers and letters.
 
+Config-driven: When a vertical config file exists (lib/config/verticals/{vertical}.json),
+templates are assembled from config. Falls back to legacy hardcoded dicts for entities
+without vertical configs (and_capital, revsup).
+
 Usage:
     from lib.research_templates import get_research_template, get_story_hooks, research_target
+
+    # Config-driven (preferred):
+    vcfg = load_vertical("home_services")
+    template = get_research_template("next_chapter", "hvac", vcfg=vcfg)
+
+    # Legacy (backward-compatible):
+    template = get_research_template("next_chapter", "hvac")
 """
 
 import json
@@ -15,10 +26,32 @@ import sys
 import urllib.request
 import urllib.parse
 import ssl
+import importlib.util
 from datetime import datetime, timezone
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, REPO_ROOT)
+
+# ── Load vertical config module via importlib (avoids sys.path 'lib' collision) ──
+# REPO_ROOT is backend/ — go up one more level to reach the repo root
+_vcfg_path = os.path.join(os.path.dirname(REPO_ROOT), 'lib', 'config', 'vertical_config_schema.py')
+try:
+    _spec = importlib.util.spec_from_file_location('vertical_config_schema', _vcfg_path)
+    _vcfg_mod = importlib.util.module_from_spec(_spec)
+    _spec.loader.exec_module(_vcfg_mod)
+    _load_vertical = _vcfg_mod.load_vertical
+    _list_verticals = _vcfg_mod.list_verticals
+except Exception:
+    # If config module not available, all calls fall through to legacy dicts
+    _load_vertical = None
+    _list_verticals = lambda: []
+
+# Default entity from config (replaces hardcoded "next_chapter" fallback)
+try:
+    _primary_cfg = _load_vertical("home_services") if _load_vertical else None
+    _DEFAULT_ENTITY = _primary_cfg["entity_defaults"]["entity"] if _primary_cfg else "next_chapter"
+except Exception:
+    _DEFAULT_ENTITY = "next_chapter"
 
 # Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
@@ -376,19 +409,59 @@ STORY_HOOKS = {
 # PUBLIC API
 # ══════════════════════════════════════════════════════════════════════════════
 
-def get_research_template(entity, vertical=None):
+def _template_from_config(vcfg, vertical=None):
+    """Build a research template dict from a vertical config.
+
+    Assembles the same shape that get_research_template() returns,
+    reading from vcfg instead of hardcoded dicts.
+    """
+    sp = vcfg.get("synthesis_prompts", {})
+    et = vcfg.get("exa_templates", {})
+
+    template = {
+        "description": f"{vcfg['display_name']} — research template",
+        "research_goals": list(sp.get("research_goals", [])),
+        "exa_queries": list(et.get("base_queries", [])),
+        "content_mode": et.get("content_mode", "highlights"),
+        "num_results": et.get("num_results", 6),
+        "additional_goals": list(sp.get("additional_goals", [])),
+        "extra_queries": list(et.get("vertical_queries", [])),
+        "vertical": vertical or "general",
+    }
+
+    # If a sub-vertical matches, merge its overrides
+    sub_verticals = vcfg.get("sub_verticals", {})
+    if vertical and vertical in sub_verticals:
+        sv = sub_verticals[vertical]
+        sv_sp = sv.get("synthesis_prompts", {})
+        sv_et = sv.get("exa_templates", {})
+        template["additional_goals"] = list(sv_sp.get("additional_goals", []))
+        template["extra_queries"] = list(sv_et.get("vertical_queries", []))
+        template["vertical"] = vertical
+
+    return template
+
+
+def get_research_template(entity, vertical=None, vcfg=None):
     """
     Return the research template dict for a given entity and vertical.
 
     Args:
         entity:   'next_chapter', 'and_capital', or 'revsup'
         vertical: vertical string (optional). Falls back to base template if no override.
+        vcfg:     vertical config dict (optional). When provided, templates are
+                  assembled from config instead of hardcoded dicts.
 
     Returns:
         dict with keys:
           description, research_goals, exa_queries, content_mode, num_results,
           additional_goals (if vertical override), extra_queries (if vertical override)
     """
+    # ── Config-driven path ────────────────────────────────────────────────
+    if vcfg is not None:
+        return _template_from_config(vcfg, vertical)
+
+    # ── Legacy hardcoded path (backward-compatible) ───────────────────────
     entity_map = {
         "next_chapter": (NEXT_CHAPTER_BASE, NEXT_CHAPTER_VERTICAL_OVERRIDES),
         "and_capital": (AND_CAPITAL_BASE, AND_CAPITAL_VERTICAL_OVERRIDES),
@@ -414,17 +487,35 @@ def get_research_template(entity, vertical=None):
     return template
 
 
-def get_story_hooks(entity, vertical=None):
+def get_story_hooks(entity, vertical=None, vcfg=None):
     """
     Return narrative story hooks for letter generation.
 
     Args:
         entity:   'next_chapter', 'and_capital', or 'revsup'
         vertical: vertical string. Falls back to 'default' hooks.
+        vcfg:     vertical config dict (optional). When provided, hooks are
+                  read from config instead of hardcoded STORY_HOOKS dict.
 
     Returns:
         list of hook strings (with {placeholder} variables for formatting)
     """
+    # ── Config-driven path ────────────────────────────────────────────────
+    if vcfg is not None:
+        # Check sub-vertical hooks first
+        sub_verticals = vcfg.get("sub_verticals", {})
+        if vertical and vertical in sub_verticals:
+            sv_hooks = sub_verticals[vertical].get("synthesis_prompts", {}).get("story_hooks", [])
+            if sv_hooks:
+                return sv_hooks
+        # Fall back to vertical-level hooks
+        sp = vcfg.get("synthesis_prompts", {})
+        hooks = sp.get("story_hooks", [])
+        if hooks:
+            return hooks
+        return ["The business you've built represents years of focused execution — that has real market value today."]
+
+    # ── Legacy hardcoded path ─────────────────────────────────────────────
     entity_hooks = STORY_HOOKS.get(entity, {})
     if vertical and vertical in entity_hooks:
         return entity_hooks[vertical]
@@ -433,7 +524,7 @@ def get_story_hooks(entity, vertical=None):
     ])
 
 
-def build_exa_queries(entity, vertical, context):
+def build_exa_queries(entity, vertical, context, vcfg=None):
     """
     Build formatted Exa query strings from template + context variables.
 
@@ -442,11 +533,13 @@ def build_exa_queries(entity, vertical, context):
         vertical: vertical string
         context:  dict with variables: company_name, city, state, owner_name,
                   contact_name, years_in_business, etc.
+        vcfg:     vertical config dict (optional). When provided, queries are
+                  assembled from config.
 
     Returns:
         list of formatted query strings
     """
-    template = get_research_template(entity, vertical)
+    template = get_research_template(entity, vertical, vcfg=vcfg)
     all_queries = template.get("exa_queries", []) + template.get("extra_queries", [])
 
     formatted = []
@@ -463,6 +556,48 @@ class _SafeDict(dict):
     """Format dict that returns '{key}' for missing keys instead of raising."""
     def __missing__(self, key):
         return f"{{{key}}}"
+
+
+# ── Vertical-to-config mapping ────────────────────────────────────────────────
+# Maps Supabase vertical slugs to config file IDs. Verticals in home_services
+# sub_verticals resolve to the home_services config; other verticals resolve
+# to their own config (e.g. hr_media). Unknown verticals return None (legacy).
+
+def _try_load_vertical_config(vertical, entity=None):
+    """Attempt to load the vertical config for a given vertical/entity pair.
+
+    Returns the config dict if found, None if no config exists (legacy fallback).
+    """
+    if _load_vertical is None:
+        return None
+
+    # Direct match: try loading vertical as a config ID
+    try:
+        return _load_vertical(vertical)
+    except (FileNotFoundError, ValueError):
+        pass
+
+    # Sub-vertical match: check if vertical is a sub-vertical in any config
+    for vid in _list_verticals():
+        try:
+            cfg = _load_vertical(vid)
+            if vertical in cfg.get("sub_verticals", {}):
+                return cfg
+        except Exception:
+            continue
+
+    # Entity-based fallback: map entity to its default vertical config
+    _entity_vertical_map = {
+        "next_chapter": "home_services",
+    }
+    fallback_vid = _entity_vertical_map.get(entity)
+    if fallback_vid:
+        try:
+            return _load_vertical(fallback_vid)
+        except (FileNotFoundError, ValueError):
+            pass
+
+    return None
 
 
 def research_target(target_id):
@@ -489,7 +624,7 @@ def research_target(target_id):
         raise ValueError(f"Target not found: {target_id}")
 
     target = rows[0]
-    entity = target.get("entity", "next_chapter")
+    entity = target.get("entity", _DEFAULT_ENTITY)
     vertical = target.get("vertical") or target.get("primary_vertical") or "default"
     company_name = target.get("company_name") or target.get("name", "")
     city = target.get("city", "")
@@ -506,10 +641,13 @@ def research_target(target_id):
         "years_in_business": target.get("years_in_business", ""),
     }
 
+    # Try to load vertical config; fall back to legacy hardcoded dicts
+    vcfg = _try_load_vertical_config(vertical, entity)
+
     # Build queries
-    template = get_research_template(entity, vertical)
-    queries = build_exa_queries(entity, vertical, context)
-    hooks = get_story_hooks(entity, vertical)
+    template = get_research_template(entity, vertical, vcfg=vcfg)
+    queries = build_exa_queries(entity, vertical, context, vcfg=vcfg)
+    hooks = get_story_hooks(entity, vertical, vcfg=vcfg)
 
     result = {
         "target_id": target_id,
@@ -556,14 +694,49 @@ def research_target(target_id):
 
 
 def list_templates():
-    """Return a summary of all available entity/vertical combinations."""
+    """Return a summary of all available entity/vertical combinations.
+
+    Includes both config-driven verticals and legacy hardcoded ones.
+    """
     summary = []
-    combos = [
-        ("next_chapter", list(NEXT_CHAPTER_VERTICAL_OVERRIDES.keys()) + ["default"]),
+
+    # Config-driven verticals
+    for vid in _list_verticals():
+        try:
+            cfg = _load_vertical(vid)
+            entity = cfg.get("entity_defaults", {}).get("entity", "unknown")
+            # Base template
+            t = get_research_template(entity, None, vcfg=cfg)
+            summary.append({
+                "entity": entity,
+                "vertical": vid,
+                "description": t.get("description", ""),
+                "goal_count": len(t.get("research_goals", [])) + len(t.get("additional_goals", [])),
+                "query_count": len(t.get("exa_queries", [])) + len(t.get("extra_queries", [])),
+                "hook_count": len(get_story_hooks(entity, None, vcfg=cfg)),
+                "source": "config",
+            })
+            # Sub-verticals
+            for sv_name in cfg.get("sub_verticals", {}):
+                t = get_research_template(entity, sv_name, vcfg=cfg)
+                summary.append({
+                    "entity": entity,
+                    "vertical": sv_name,
+                    "description": t.get("description", ""),
+                    "goal_count": len(t.get("research_goals", [])) + len(t.get("additional_goals", [])),
+                    "query_count": len(t.get("exa_queries", [])) + len(t.get("extra_queries", [])),
+                    "hook_count": len(get_story_hooks(entity, sv_name, vcfg=cfg)),
+                    "source": "config",
+                })
+        except Exception:
+            continue
+
+    # Legacy hardcoded verticals (and_capital, revsup — no config yet)
+    legacy_combos = [
         ("and_capital", list(AND_CAPITAL_VERTICAL_OVERRIDES.keys()) + ["default"]),
         ("revsup", list(REVSUP_VERTICAL_OVERRIDES.keys()) + ["default"]),
     ]
-    for entity, verticals in combos:
+    for entity, verticals in legacy_combos:
         for vertical in verticals:
             t = get_research_template(entity, vertical if vertical != "default" else None)
             summary.append({
@@ -573,6 +746,7 @@ def list_templates():
                 "goal_count": len(t.get("research_goals", [])) + len(t.get("additional_goals", [])),
                 "query_count": len(t.get("exa_queries", [])) + len(t.get("extra_queries", [])),
                 "hook_count": len(get_story_hooks(entity, vertical if vertical != "default" else None)),
+                "source": "legacy",
             })
     return summary
 

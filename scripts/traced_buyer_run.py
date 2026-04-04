@@ -13,21 +13,36 @@ Produces a Markdown trace document showing:
 
 Usage:
   python3 scripts/traced_buyer_run.py --buyer "SAP SuccessFactors" --city "Newtown Square" --state PA --ticker SAP --domain sap.com
+
+
+  --vertical: which config to load (default: home_services).
+              Loads lib/config/verticals/{vertical}.json for sections, prompts, and valuation.
 """
 
 import argparse, json, os, re, subprocess, sys, time, requests
 from datetime import datetime, timezone
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'backend'))
+REPO_ROOT = os.path.join(os.path.dirname(__file__), '..')
+
+# Import exa_client from backend/lib/ (original import path)
+sys.path.insert(0, os.path.join(REPO_ROOT, 'backend'))
 from lib.exa_client import ExaClient, TEMPLATES
+
+# Import vertical config via importlib to avoid sys.path 'lib' collision
+# (both REPO_ROOT/lib/ and backend/lib/ exist — sys.path can't disambiguate)
+import importlib.util
+_vcfg_path = os.path.join(REPO_ROOT, 'lib', 'config', 'vertical_config_schema.py')
+_spec = importlib.util.spec_from_file_location('vertical_config_schema', _vcfg_path)
+_vcfg_mod = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_vcfg_mod)
+load_vertical = _vcfg_mod.load_vertical
+list_verticals = _vcfg_mod.list_verticals
 
 # ── Config ────────────────────────────────────────────────────────────────────
 SUPABASE_URL = os.environ.get('SUPABASE_URL', '')
 SUPABASE_KEY = os.environ.get('SUPABASE_SERVICE_ROLE_KEY', '')
 SB_HEADERS = {'apikey': SUPABASE_KEY, 'Authorization': f'Bearer {SUPABASE_KEY}', 'Content-Type': 'application/json'}
-ENTITY = "next_chapter"
 PUBLIC_DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'public', 'data')
-REPO_ROOT = os.path.join(os.path.dirname(__file__), '..')
 
 # ── Trace log ─────────────────────────────────────────────────────────────────
 TRACE = []  # list of trace entries
@@ -278,53 +293,30 @@ def traced_supabase_write(table, data, label):
         trace("SUPABASE", f"{label} FAILED", {"table": table, "error": str(e)[:200]})
         return False
 
-# ── Section configs ───────────────────────────────────────────────────────────
+# ── Section configs (loaded from vertical config) ────────────────────────────
 
-def build_sections(name):
-    return [
-        {"key": "hr_media_business", "title": "HR.com Media Business",
-         "templates": ["company_search", "company_financials"],
-         "topic": f"{name} operates in the HR technology space and could benefit from acquiring HR.com's media audience of 2 million HR professionals, learning marketplace, and advertising revenue"},
-        {"key": "hr_domain_name", "title": "HR.com Domain Name Value",
-         "templates": ["strategic_fit"],
-         "topic": f"HR media, content, and domain authority that would give {name} a premium brand presence and SEO advantage in the HR technology market"},
-        {"key": "market_reputation", "title": "Market Reputation",
-         "templates": ["reviews_search"],
-         "topic": f"{name} customer satisfaction, product reviews, and market reputation that would affect their ability to integrate an acquired HR media platform"},
-        {"key": "strategic_fit", "title": "Strategic Fit",
-         "templates": ["strategic_fit", "company_financials"],
-         "topic": f"HR media, content, and learning businesses that would complement {name}'s existing platform and strengthen their position in the HR technology market"},
-        {"key": "ceo_vision", "title": "CEO Vision & Strategy",
-         "templates": ["earnings_call"],
-         "topic": f"{name} CEO has signaled interest in acquiring content, media, or learning platforms to expand their HR technology ecosystem"},
-        {"key": "ma_appetite", "title": "M&A Appetite",
-         "templates": ["ma_history"],
-         "topic": f"{name} has a pattern of acquiring companies in adjacent HR technology markets and would be a natural buyer for an HR media and learning platform"},
-        {"key": "competitive_moat", "title": "Competitive Moat",
-         "templates": ["strategic_fit"],
-         "topic": f"competitive advantages in HR technology that would be strengthened by acquiring a media and content platform with millions of HR professionals"},
-        {"key": "earnings_quotes", "title": "Key Earnings Quotes",
-         "templates": ["earnings_call"],
-         "topic": f"{name} CEO and CFO have discussed acquisition strategy, growth through M&A, and investment in content or media during recent earnings calls"},
-        {"key": "approach_strategy", "title": "Approach Strategy",
-         "templates": ["buyer_contacts"],
-         "topic": f"corporate development and M&A leadership at {name} who would evaluate an acquisition of an HR media company"},
-        {"key": "golden_nuggets", "title": "Golden Nuggets",
-         "templates": ["ma_history", "earnings_call"],
-         "topic": f"{name} executives have made surprising statements about acquiring media businesses, content platforms, or expanding into HR learning and community"},
-        {"key": "recent_news", "title": "Recent News & Developments",
-         "templates": ["ma_history"],
-         "topic": f"{name} has recently announced leadership changes, restructuring, new product launches, or strategic partnerships that would affect their interest in acquiring an HR media company"},
-        {"key": "employee_sentiment", "title": "Employee Sentiment",
-         "templates": ["reviews_search"],
-         "topic": f"{name} employees describe their experience working at the company, including culture, leadership, and whether the company is growing or cutting back"},
-        {"key": "technology_architecture", "title": "Technology Architecture",
-         "templates": ["strategic_fit"],
-         "topic": f"{name} technology platform, API capabilities, and integration architecture that would determine how easily they could integrate an acquired HR media and learning platform"},
-        {"key": "pricing_model", "title": "Pricing Model & Revenue Mix",
-         "templates": ["company_financials"],
-         "topic": f"{name} pricing strategy, subscription model, and revenue breakdown by segment showing how recurring revenue and customer retention drive their business"},
-    ]
+def build_sections(buyer_name, vertical_config):
+    """Build section definitions from vertical config's pipeline_sections.
+
+    Each section in the config has:
+      key, title, exa_template_names, topic_template (with {buyer_name} placeholder)
+
+    Returns list of dicts matching the shape the rest of the pipeline expects:
+      [{"key": ..., "title": ..., "templates": [...], "topic": ...}, ...]
+    """
+    pipeline_sections = vertical_config.get("pipeline_sections", [])
+    if not pipeline_sections:
+        raise ValueError(f"Vertical config '{vertical_config['vertical_id']}' has no pipeline_sections defined")
+
+    sections = []
+    for s in pipeline_sections:
+        sections.append({
+            "key": s["key"],
+            "title": s["title"],
+            "templates": s["exa_template_names"],
+            "topic": s["topic_template"].format(buyer_name=buyer_name),
+        })
+    return sections
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 
@@ -337,7 +329,16 @@ def main():
     parser.add_argument('--domain', default='')
     parser.add_argument('--type', default='Strategic')
     parser.add_argument('--score', type=int, default=8)
+    parser.add_argument('--vertical', default='home_services',
+                        help=f'Vertical config to load. Available: {", ".join(list_verticals())}')
     args = parser.parse_args()
+
+    # ── Load vertical config ─────────────────────────────────────────────
+    vcfg = load_vertical(args.vertical)
+    ENTITY = vcfg["entity_defaults"]["entity"]
+    prompts = vcfg.get("pipeline_prompts", {})
+    vertical_label = prompts.get("vertical_label", vcfg["display_name"])
+    valuation = vcfg.get("valuation_fields", {})
 
     buyer_name = args.buyer
     buyer_slug = slugify(buyer_name)
@@ -346,10 +347,18 @@ def main():
     trace("SYSTEM", "PIPELINE START", {
         "buyer": buyer_name, "slug": buyer_slug, "city": args.city, "state": args.state,
         "ticker": args.ticker, "domain": args.domain, "score": args.score, "type": args.type,
+        "vertical": args.vertical, "entity": ENTITY, "vertical_label": vertical_label,
+        "valuation_metric": valuation.get("primary_metric", "ebitda"),
     })
 
     exa = ExaClient()
-    sections = build_sections(buyer_name)
+    sections = build_sections(buyer_name, vcfg)
+
+    # Build output_format lookup from config (used in Phase 1 trace + Phase 5 assembly)
+    section_output_formats = {}
+    for s in vcfg.get("pipeline_sections", []):
+        section_output_formats[s["key"]] = s.get("output_format", "section")
+
     section_results = []
     golden_nuggets_raw = ""
     golden_nuggets_raw_exa = ""  # Raw Exa results for nugget extraction (not synthesized)
@@ -372,7 +381,7 @@ def main():
             # These templates already embed {company_name} via the topic text, so we pass
             # company_name separately only for templates that need it independently
             kwargs = {"company_name": buyer_name, "topic": section["topic"],
-                      "city": args.city, "state": args.state, "vertical": "HR Technology", "owner_name": ""}
+                      "city": args.city, "state": args.state, "vertical": vertical_label, "owner_name": ""}
 
             text, urls, cost = traced_exa_search(exa, tmpl_name, f"search:{key}:{tmpl_name}", **kwargs)
             total_cost += cost
@@ -389,12 +398,15 @@ def main():
         if combined:
             # Select highest-value content instead of hard truncation
             best_content = select_best_content(section_texts, max_chars=12000)
-            html = llm(f"""You are a senior M&A analyst at an advisory firm. Your client is selling HR.com — a media and learning platform with 2M+ HR professionals — to potential acquirers. You are writing buyer intelligence about {buyer_name}.
+            synthesis_ctx = prompts.get("synthesis_context",
+                "You are a senior M&A analyst writing buyer intelligence about {buyer_name}.").format(
+                buyer_name=buyer_name, vertical_label=vertical_label)
+            html = llm(f"""{synthesis_ctx}
 
 Section: {key} | Goal: {section['title']}
 
 Write 2-4 paragraphs of clean HTML (<p> tags, <strong> for key quotes, exact numbers). Focus on:
-- Deal rationale: Why would {buyer_name} want to acquire HR.com?
+- Deal rationale: Why would {buyer_name} want to acquire this business?
 - Integration synergies: What capabilities would they gain?
 - Negotiation leverage: What makes this buyer motivated or desperate?
 - Red flags: Anything that would make this deal harder or less likely?
@@ -411,12 +423,21 @@ RAW RESEARCH:\n{best_content}\nReturn ONLY HTML.""", label=f"synthesize:{key}")
             golden_nuggets_raw = html
             golden_nuggets_raw_exa = combined  # Keep raw Exa text for nugget extraction
 
+        fmt = section_output_formats.get(key, "section")
+        if fmt == "narrative_object":
+            stored_label = f"{key}.narrative"
+        elif fmt == "direct_html":
+            stored_label = f"{key} (direct string)"
+        elif fmt == "golden_nuggets":
+            stored_label = "golden_nuggets (raw, will restructure)"
+        elif fmt == "market_reputation":
+            stored_label = "market_reputation (raw, will restructure)"
+        else:
+            stored_label = f"sections.{key}"
+
         trace("SECTION", f"DONE: {section['title']}", {
             "key": key, "html_chars": len(html), "source_count": len(unique_urls),
-            "stored_as": "hr_media_business.narrative" if key in ("hr_media_business","hr_domain_name")
-                         else "strategic_fit (direct string)" if key == "strategic_fit"
-                         else "golden_nuggets (raw, will restructure)" if key == "golden_nuggets"
-                         else f"sections.{key}",
+            "stored_as": stored_label,
         })
 
     # ══════════════════════════════════════════════════════════════════════════
@@ -426,16 +447,22 @@ RAW RESEARCH:\n{best_content}\nReturn ONLY HTML.""", label=f"synthesize:{key}")
 
     # Use raw Exa search results (not synthesized HTML) so we get actual quotes with attribution
     nugget_source = golden_nuggets_raw_exa if golden_nuggets_raw_exa else golden_nuggets_raw
-    nuggets_output = llm(f"""You are extracting golden nuggets from RAW search results about {buyer_name} for an M&A advisor selling HR.com.
+    nuggets_ctx = prompts.get("nuggets_context",
+        "You are extracting golden nuggets from RAW search results about {buyer_name}.").format(
+        buyer_name=buyer_name)
+    nuggets_focus = prompts.get("nuggets_focus",
+        "Why {buyer_name} would want to acquire this business").format(
+        buyer_name=buyer_name)
+    nuggets_output = llm(f"""{nuggets_ctx}
 
 Find 3-5 surprising, specific, quotable statements from executives or analysts that reveal:
-- Why {buyer_name} would want to acquire an HR media and learning platform
+- {nuggets_focus}
 - Their appetite for acquisitions in adjacent markets
 - Specific pain points or gaps in their product portfolio
 - Bold strategic commitments from leadership
 
 Return a JSON array. Each nugget MUST have an exact quote from the source material:
-{{"quote": "exact verbatim quote from the text", "speaker": "Full Name, Title at Company", "opener": "conversation starter connecting this quote to why they should acquire HR.com", "why": "how this signals M&A interest or strategic fit"}}
+{{"quote": "exact verbatim quote from the text", "speaker": "Full Name, Title at Company", "opener": "conversation starter connecting this quote to the acquisition thesis", "why": "how this signals M&A interest or strategic fit"}}
 
 ONLY valid JSON array. 3-5 nuggets.
 RAW SEARCH RESULTS:\n{nugget_source[:12000]}""", label="extract_nuggets")
@@ -459,8 +486,10 @@ RAW SEARCH RESULTS:\n{nugget_source[:12000]}""", label="extract_nuggets")
     trace("PHASE", "MARKET REPUTATION — PRODUCT DISCOVERY", {})
 
     # Step 3a: Discover products
-    prod_texts, prod_cost = traced_exa_raw(exa, f"{buyer_name} offers a suite of HR products and platforms that can be individually reviewed, including modules for recruiting, payroll, learning, and performance management",
-                                            "auto", "product_discovery")
+    product_query_template = prompts.get("product_discovery_query",
+        "{buyer_name} offers products and services that can be individually reviewed by customers")
+    product_query = product_query_template.format(buyer_name=buyer_name)
+    prod_texts, prod_cost = traced_exa_raw(exa, product_query, "auto", "product_discovery")
     total_cost += prod_cost
 
     prod_combined = "\n".join(t[:800] for t in prod_texts)
@@ -552,17 +581,22 @@ DATA: {combined[:4000]}""", timeout=60, label="extract_stock")
         "buyer_name": buyer_name, "buyer_slug": buyer_slug,
         "buyer_type": args.type, "buyer_city": args.city, "buyer_state": args.state,
         "fit_score": args.score, "logo_domain": args.domain, "ticker": args.ticker,
+        "vertical": args.vertical, "entity": ENTITY,
+        "valuation_metric": valuation.get("primary_metric", "ebitda"),
+        "multiple_floor": valuation.get("multiple_floor"),
+        "multiple_ceiling": valuation.get("multiple_ceiling"),
         "sections": {}, "source_urls": {},
     }
     buyer_obj.update(stock)
 
     for key, html, urls in section_results:
-        if key in ("hr_media_business", "hr_domain_name"):
+        fmt = section_output_formats.get(key, "section")
+        if fmt == "narrative_object":
             buyer_obj[key] = {"narrative": html}
-        elif key == "strategic_fit":
+        elif fmt == "direct_html":
             buyer_obj[key] = html
-        elif key in ("golden_nuggets", "market_reputation"):
-            pass
+        elif fmt in ("golden_nuggets", "market_reputation"):
+            pass  # handled separately below
         else:
             buyer_obj["sections"][key] = html
         buyer_obj["source_urls"][key] = urls

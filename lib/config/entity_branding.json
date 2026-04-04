@@ -1,0 +1,38 @@
+{
+  "next_chapter": {
+    "display_name": "Next Chapter M&A Advisory",
+    "short_name": "Next Chapter",
+    "tagline": "Confidential Advisory Assessment",
+    "contact_name": "Mark DeChant, Managing Director",
+    "contact_phone": "818-747-9668",
+    "contact_email": "ewing@chapter.guide",
+    "website": "https://nextchapteradvisory.com",
+    "proposal_type": "sell-side M&A proposal",
+    "cta_text": "Let's Get Started"
+  },
+
+  "and_capital": {
+    "display_name": "AND Capital",
+    "short_name": "AND Capital",
+    "tagline": "Investment Memorandum",
+    "contact_name": "Chris Rex, Managing Partner"
+  },
+
+  "revsup": {
+    "display_name": "RevsUp",
+    "short_name": "RevsUp",
+    "tagline": "Recruiting & Sales Intelligence"
+  },
+
+  "_default": {
+    "display_name": "Next Chapter M&A Advisory",
+    "short_name": "Next Chapter",
+    "tagline": "Confidential Advisory Assessment",
+    "contact_name": "Mark DeChant, Managing Director",
+    "contact_phone": "818-747-9668",
+    "contact_email": "ewing@chapter.guide",
+    "website": "https://nextchapteradvisory.com",
+    "proposal_type": "sell-side M&A proposal",
+    "cta_text": "Let's Get Started"
+  }
+}

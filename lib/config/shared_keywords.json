@@ -1,0 +1,40 @@
+{
+  "intent_hiring": [
+    "hiring", "recruiting", "headcount", "open roles", "candidates", "placement",
+    "talent acquisition", "search fee", "contingent search"
+  ],
+
+  "intent_transaction": [
+    "sell my business", "acquisition", "buyer", "seller", "valuation", "exit",
+    "roll-up", "rollup", "succession", "sell-side", "buy-side", "m&a advisory",
+    "business sale", "business broker"
+  ],
+
+  "intent_capital": [
+    "investing", "capital raise", "fundraising", "fund", "lp", "limited partner",
+    "allocation", "subscription", "endowment", "pension", "ria",
+    "family office", "carried interest", "management fee", "preferred return"
+  ],
+
+  "person_entity_map": {
+    "chris rex": "and_capital",
+    "teruel carrasco": "and_capital",
+    "rod heard": "and_capital",
+    "denise brown": "and_capital",
+    "joe park": "and_capital",
+    "loren brink": "and_capital"
+  },
+
+  "person_never_map": {
+    "john kelly": ["and_capital"],
+    "ewing gillaspy": ["revsup"]
+  },
+
+  "standalone_keywords": {
+    "boomerang": "the_forge",
+    "biolev": "biolev",
+    "sea sweet": "sea_sweet",
+    "precision exploration": "precision_exploration",
+    "nmr science": "precision_exploration"
+  }
+}

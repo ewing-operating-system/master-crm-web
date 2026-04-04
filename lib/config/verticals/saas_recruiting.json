@@ -1,0 +1,195 @@
+{
+  "vertical_id": "saas_recruiting",
+  "display_name": "SaaS & Recruiting",
+
+  "entity_defaults": {
+    "entity": "revsup",
+    "sub_type": "recruiting",
+    "campaign_prefixes": ["RU", "REV"]
+  },
+
+  "classification_keywords": {
+    "industry": [
+      "saas", "software", "vc-backed", "venture-backed", "startup", "tech company",
+      "series a", "series b", "growth stage", "arr", "mrr", "recurring revenue",
+      "sales hiring", "recruiting", "headhunter", "contingent search",
+      "talent acquisition", "candidate", "placement"
+    ],
+    "company_names": []
+  },
+
+  "valuation_multiples": {
+    "saas": {"floor": 8, "median": 12, "ceiling": 20},
+    "software": {"floor": 6, "median": 10, "ceiling": 16},
+    "recruiting": {"floor": 3, "median": 5, "ceiling": 8},
+    "staffing": {"floor": 3, "median": 5, "ceiling": 7},
+    "_default": {"floor": 5, "median": 8, "ceiling": 12}
+  },
+
+  "research_sections": [
+    "company_overview",
+    "revenue_signal",
+    "growth_trajectory",
+    "hiring_needs",
+    "competitive_landscape",
+    "funding_history",
+    "team_composition"
+  ],
+
+  "exa_templates": {
+    "base_queries": [
+      "{company_name} {city} {state} founder CEO background",
+      "{company_name} revenue ARR MRR growth customers",
+      "{company_name} hiring sales team open roles",
+      "{company_name} funding round series investors"
+    ],
+    "vertical_queries": [
+      "{company_name} SaaS metrics churn retention NRR",
+      "{company_name} sales team hiring VP AE SDR",
+      "{company_name} competitors market share positioning",
+      "{vertical} company {city} {state} hiring sales growth 2024 2025"
+    ],
+    "content_mode": "highlights",
+    "num_results": 6
+  },
+
+  "synthesis_prompts": {
+    "research_goals": [
+      "Company overview: founding story, product, target market, stage",
+      "Revenue signal: ARR, MRR, customer count, growth rate indicators",
+      "Growth trajectory: funding rounds, expansion plans, new markets",
+      "Hiring needs: open sales roles, team size, hiring velocity",
+      "Competitive landscape: key competitors, market positioning, differentiation",
+      "Funding history: investors, round sizes, valuation signals",
+      "Team composition: sales team size, leadership hires, org structure"
+    ],
+    "additional_goals": [],
+    "story_hooks": [
+      "Growth-stage SaaS companies that nail their sales hiring in the first 90 days outperform their cohort by 2x on ARR growth.",
+      "The difference between a good quarter and a breakout quarter at your stage almost always comes down to having the right salespeople in seats — not more features."
+    ],
+    "market_context": "SaaS companies at growth stage are competing fiercely for experienced sales talent — AEs, SDRs, and VP Sales candidates who have sold into enterprise at similar price points and deal cycles.",
+    "buyer_appetite": "VC-backed SaaS companies with $5M-$50M ARR are the most active buyers of sales recruiting services, driven by board pressure to hit growth targets and the scarcity of proven enterprise sales talent.",
+    "premium_driver": "The recruiting firms commanding premium fees and retainers in SaaS share one advantage: a proprietary network of proven closers with verifiable quota attainment — not just resumes, but performance data that de-risks the hire."
+  },
+
+  "buyer_scoring_criteria": [
+    {
+      "criterion": "Active sales hiring need",
+      "weight": 0.35,
+      "score_8_description": "Multiple open sales roles posted, confirmed hiring plan from leadership",
+      "score_6_description": "Some hiring signals but no confirmed plan",
+      "score_4_description": "No evidence of active sales hiring"
+    },
+    {
+      "criterion": "Stage and funding alignment",
+      "weight": 0.25,
+      "score_8_description": "Series A-C with recent funding, board mandate to scale sales",
+      "score_6_description": "Funded but unclear sales scaling timeline",
+      "score_4_description": "Pre-revenue, bootstrapped, or late-stage with stable team"
+    },
+    {
+      "criterion": "Sales model fit",
+      "weight": 0.20,
+      "score_8_description": "Enterprise or mid-market SaaS with AE-driven sales motion",
+      "score_6_description": "Product-led growth with emerging sales team",
+      "score_4_description": "Self-serve only, no outbound sales motion"
+    },
+    {
+      "criterion": "Geographic and compensation alignment",
+      "weight": 0.20,
+      "score_8_description": "Hiring in markets where RevsUp has deep candidate networks",
+      "score_6_description": "Remote-first but willing to consider RevsUp's candidate pool",
+      "score_4_description": "Hiring in markets with no RevsUp coverage"
+    }
+  ],
+
+  "valuation_fields": {
+    "primary_metric": "arr",
+    "multiple_floor": 5.0,
+    "multiple_ceiling": 20.0,
+    "multiple_median": 10.0,
+    "industry_margin_benchmark": 0.15
+  },
+
+  "growth_levers": [
+    {
+      "lever": "Net revenue retention",
+      "description": "NRR above 120% signals product-market fit and expansion revenue that drives premium ARR multiples."
+    },
+    {
+      "lever": "Sales team productivity",
+      "description": "Quota attainment, ramp time, and AE productivity metrics determine how efficiently growth capital converts to ARR."
+    },
+    {
+      "lever": "Pipeline velocity",
+      "description": "Deal cycle compression and conversion rates from SDR-sourced pipeline are the leading indicators of scalable revenue."
+    },
+    {
+      "lever": "Market category position",
+      "description": "Category leaders or creators command 2-3x the multiples of fast-followers in the same market."
+    },
+    {
+      "lever": "Customer concentration risk",
+      "description": "Diversified customer bases with no single customer above 10% of ARR reduce risk premiums and increase acquirer confidence."
+    }
+  ],
+
+  "letter_config": {
+    "variants": ["initial", "followup"],
+    "certifications_to_mention": [],
+    "fee_structure": {
+      "engagement_fee_range": "$0 (contingent model)",
+      "monthly_retainer_range": "$5,000 – $10,000 (retained search)",
+      "success_fee_description": "20-25% of first-year OTE for contingent placements"
+    }
+  },
+
+  "pipeline_prompts": {
+    "synthesis_context": "You are a sales recruiting specialist evaluating {buyer_name} as a potential client for RevsUp's sales talent placement services. You are writing intelligence about their hiring needs and sales team structure.",
+    "nuggets_context": "You are extracting hiring intelligence from RAW search results about {buyer_name} for a sales recruiting firm.",
+    "nuggets_focus": "Why {buyer_name} needs to hire sales talent and what kind of candidates they need",
+    "product_discovery_query": "{buyer_name} is a SaaS or technology company actively hiring sales representatives, account executives, or sales leadership",
+    "vertical_label": "SaaS & Recruiting"
+  },
+
+  "pipeline_sections": [
+    {
+      "key": "hiring_needs",
+      "title": "Active Hiring Needs",
+      "exa_template_names": ["company_search"],
+      "topic_template": "{buyer_name} has open sales positions including account executives, SDRs, sales managers, or VP Sales roles"
+    },
+    {
+      "key": "growth_stage",
+      "title": "Growth Stage & Funding",
+      "exa_template_names": ["company_financials"],
+      "topic_template": "{buyer_name} has raised venture funding and is scaling their go-to-market team to hit growth targets"
+    },
+    {
+      "key": "sales_model",
+      "title": "Sales Model & Team Structure",
+      "exa_template_names": ["strategic_fit"],
+      "topic_template": "{buyer_name} uses an enterprise or mid-market sales model with dedicated AEs, SDRs, and sales leadership"
+    },
+    {
+      "key": "ceo_vision",
+      "title": "CEO Vision & Growth Plans",
+      "exa_template_names": ["earnings_call"],
+      "topic_template": "{buyer_name} CEO or leadership has discussed plans to scale sales, expand into new markets, or accelerate revenue growth"
+    },
+    {
+      "key": "approach_strategy",
+      "title": "Approach Strategy",
+      "exa_template_names": ["buyer_contacts"],
+      "topic_template": "VP Sales, Head of Talent, or hiring managers at {buyer_name} who make recruiting vendor decisions"
+    },
+    {
+      "key": "golden_nuggets",
+      "title": "Golden Nuggets",
+      "exa_template_names": ["company_search", "earnings_call"],
+      "topic_template": "{buyer_name} leadership has made statements about sales hiring challenges, team scaling, or the importance of recruiting in their growth strategy",
+      "output_format": "golden_nuggets"
+    }
+  ]
+}

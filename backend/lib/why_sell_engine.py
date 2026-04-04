@@ -18,7 +18,7 @@ Components:
   5. Risk of Waiting   — market cycles, regulatory changes, key-person risk
 
 Primary functions:
-  generate_why_sell(company_id, entity='next_chapter')
+  generate_why_sell(company_id, entity=None)
       — generates all 5 components for a selling company
   generate_buyer_pitch(company_id, buyer_id)
       — generates "why sell to THIS buyer" narrative
@@ -37,6 +37,11 @@ import urllib.request
 import urllib.parse
 import ssl
 from datetime import datetime
+
+try:
+    from lib._config_bridge import DEFAULT_ENTITY as _DEFAULT_ENTITY
+except ImportError:
+    _DEFAULT_ENTITY = "next_chapter"
 
 # ─── Config ──────────────────────────────────────────────────────────────────
 # Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
@@ -374,7 +379,7 @@ Cover:
 # ─── Core Generation Functions ────────────────────────────────────────────────
 
 
-def generate_why_sell(company_id, entity="next_chapter"):
+def generate_why_sell(company_id, entity=None):
     """
     Generate all 5 'Why Sell NOW' narrative components for a selling company.
 
@@ -383,6 +388,7 @@ def generate_why_sell(company_id, entity="next_chapter"):
 
     Returns: dict with all 5 narrative strings + metadata
     """
+    entity = entity or _DEFAULT_ENTITY
     log(f"\n{'='*60}")
     log(f"GENERATE WHY SELL: company_id={company_id}, entity={entity}")
     log(f"{'='*60}")
@@ -449,12 +455,13 @@ def generate_why_sell(company_id, entity="next_chapter"):
     return record
 
 
-def generate_buyer_pitch(company_id, buyer_id, entity="next_chapter"):
+def generate_buyer_pitch(company_id, buyer_id, entity=None):
     """
     Generate "why sell to THIS buyer" narrative for a specific seller/buyer pair.
 
     Returns: dict with buyer_pitch narrative + metadata
     """
+    entity = entity or _DEFAULT_ENTITY
     log(f"\n{'='*60}")
     log(f"GENERATE BUYER PITCH: company_id={company_id}, buyer_id={buyer_id}")
     log(f"{'='*60}")
@@ -507,7 +514,7 @@ def generate_buyer_pitch(company_id, buyer_id, entity="next_chapter"):
     return record
 
 
-def batch_generate(proposal_id, entity="next_chapter"):
+def batch_generate(proposal_id, entity=None):
     """
     Generate why-sell narratives for all buyers in a proposal.
 
@@ -517,6 +524,7 @@ def batch_generate(proposal_id, entity="next_chapter"):
     3. Generate per-buyer pitches for all buyers (up to 20)
     4. Return summary dict
     """
+    entity = entity or _DEFAULT_ENTITY
     log(f"\n{'='*60}")
     log(f"BATCH GENERATE: proposal_id={proposal_id}")
     log(f"{'='*60}")
@@ -631,7 +639,7 @@ if __name__ == "__main__":
 
     if cmd == "why_sell":
         company_id = sys.argv[2]
-        entity = sys.argv[3] if len(sys.argv) > 3 else "next_chapter"
+        entity = sys.argv[3] if len(sys.argv) > 3 else _DEFAULT_ENTITY
         result = generate_why_sell(company_id, entity=entity)
         if result:
             print("\n=== GENERATED NARRATIVES ===")

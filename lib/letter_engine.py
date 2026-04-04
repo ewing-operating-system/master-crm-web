@@ -1,18 +1,31 @@
 """
 letter_engine.py — Next Chapter M&A Advisory
-Renders physical letter HTML from Supabase company profiles + EBITDA lever data.
+Renders physical letter HTML from Supabase company profiles + valuation lever data.
 Output is ready for direct submission to the Lob API (print-and-mail).
 
+Config-driven: When a vertical config (vcfg) is provided, letter data is assembled
+from the config file instead of the hardcoded VERTICAL_DATA dict. Falls back to legacy
+dicts when vcfg is None (backward-compatible).
+
 Usage:
+    # Config-driven (preferred):
+    from lib.config.vertical_config_schema import load_vertical
+    vcfg = load_vertical("home_services")
+    engine = LetterEngine(supabase_client, vcfg=vcfg)
+    html = engine.render(company_id="aquascience", variant="initial")
+
+    # Legacy (backward-compatible):
     engine = LetterEngine(supabase_client)
     html = engine.render(company_id="aquascience", variant="initial")
 
 Variants:
-    initial   — First outreach. Story hook, EBITDA benchmarks, CTA.
+    initial   — First outreach. Story hook, valuation benchmarks, CTA.
     followup  — Two-week follow-up. References first letter, reinforces timing.
     final     — Four-week final touch. Low-pressure, personal, door stays open.
 """
 
+import importlib.util
+import os
 from datetime import date
 from pathlib import Path
 from typing import Literal
@@ -24,9 +37,106 @@ LetterVariant = Literal["initial", "followup", "final"]
 # Path resolution — works regardless of working directory
 _TEMPLATE_DIR = Path(__file__).resolve().parent.parent / "templates"
 
+# ── Load vertical config module via importlib (avoids sys.path 'lib' collision) ──
+_REPO_ROOT = Path(__file__).resolve().parent.parent
+_vcfg_path = _REPO_ROOT / "lib" / "config" / "vertical_config_schema.py"
+try:
+    _spec = importlib.util.spec_from_file_location("vertical_config_schema", str(_vcfg_path))
+    _vcfg_mod = importlib.util.module_from_spec(_spec)
+    _spec.loader.exec_module(_vcfg_mod)
+    _load_vertical = _vcfg_mod.load_vertical
+    _list_verticals = _vcfg_mod.list_verticals
+except Exception:
+    _load_vertical = None
+    _list_verticals = lambda: []
+
+
+# ── Metric display names ─────────────────────────────────────────────────
+_METRIC_DISPLAY = {
+    "ebitda": "EBITDA",
+    "revenue": "revenue",
+    "arr": "ARR",
+    "sde": "SDE",
+}
+
 
 # ---------------------------------------------------------------------------
-# Vertical EBITDA data — sourced from the ebitda-levers pages
+# Config-driven vertical data builder
+# ---------------------------------------------------------------------------
+
+def _lowercase_lever(lever: str) -> str:
+    """Lowercase a lever name, preserving acronyms like DOT, NPCA, EPA."""
+    if not lever:
+        return ""
+    first_word = lever.split()[0] if lever.split() else ""
+    # If the first word is all-caps (acronym), keep it as-is
+    if first_word.isupper() and len(first_word) > 1:
+        return lever
+    return lever[0].lower() + lever[1:]
+
+
+def _vertical_data_from_config(vcfg: dict, sub_vertical: "str | None" = None) -> dict:
+    """
+    Build a VERTICAL_DATA-shaped dict from a vertical config.
+
+    Reads valuation_fields, growth_levers, and synthesis_prompts from the
+    sub_vertical (if present) or the base config level. Produces the same
+    shape that the legacy VERTICAL_DATA entries provide.
+    """
+    # Start with base-level config
+    vf = dict(vcfg.get("valuation_fields", {}))
+    gl = list(vcfg.get("growth_levers", []))
+    sp = dict(vcfg.get("synthesis_prompts", {}))
+    display_name = vcfg.get("display_name", "")
+
+    # If a sub-vertical matches, merge its overrides
+    sub_verticals = vcfg.get("sub_verticals", {})
+    if sub_vertical and sub_vertical in sub_verticals:
+        sv = sub_verticals[sub_vertical]
+        display_name = sv.get("display_name", display_name)
+
+        # Valuation: sub overrides base
+        sv_vf = sv.get("valuation_fields", {})
+        vf.update(sv_vf)
+
+        # Growth levers: sub replaces base entirely if present
+        sv_gl = sv.get("growth_levers")
+        if sv_gl:
+            gl = sv_gl
+
+        # Synthesis prompts: sub overrides base per-key
+        sv_sp = sv.get("synthesis_prompts", {})
+        sp.update(sv_sp)
+
+    # Derive vertical_short from display_name
+    # "Concrete & Precast" → "concrete and precast", "HVAC" → "HVAC"
+    vertical_short = display_name.replace("&", "and")
+    # Only lowercase if it's not an acronym (all-caps and short)
+    if not (len(vertical_short.replace(" ", "")) <= 5 and vertical_short.replace(" ", "").isupper()):
+        vertical_short = vertical_short.lower()
+
+    # Format multiples as "X.Yx" strings
+    floor = vf.get("multiple_floor", 4.0)
+    ceiling = vf.get("multiple_ceiling", 7.0)
+    median = vf.get("multiple_median", 5.5)
+
+    return {
+        "vertical_short": vertical_short,
+        "multiple_floor": f"{floor}x",
+        "multiple_ceiling": f"{ceiling}x",
+        "multiple_median": f"{median}x",
+        "primary_metric": _METRIC_DISPLAY.get(
+            vf.get("primary_metric", "ebitda"), "EBITDA"
+        ),
+        "top_levers": [_lowercase_lever(g.get("lever", "")) for g in gl][:3],
+        "market_context": sp.get("market_context", ""),
+        "buyer_appetite": sp.get("buyer_appetite", ""),
+        "premium_driver": sp.get("premium_driver", ""),
+    }
+
+
+# ---------------------------------------------------------------------------
+# Legacy: Vertical EBITDA data — sourced from the ebitda-levers pages
 # Keyed by vertical slug matching Supabase companies.vertical field
 # ---------------------------------------------------------------------------
 VERTICAL_DATA: dict[str, dict] = {
@@ -314,10 +424,13 @@ class LetterEngine:
     Args:
         supabase: An initialized supabase-py client instance.
         template_dir: Override the default templates/ directory path.
+        vcfg: Vertical config dict (from load_vertical). When provided,
+              letter data is assembled from config instead of VERTICAL_DATA.
     """
 
-    def __init__(self, supabase, template_dir: "Path | None" = None):
+    def __init__(self, supabase, template_dir: "Path | None" = None, vcfg: "dict | None" = None):
         self.supabase = supabase
+        self.vcfg = vcfg
         tdir = template_dir or _TEMPLATE_DIR
         self.jinja = Environment(
             loader=FileSystemLoader(str(tdir)),
@@ -330,9 +443,14 @@ class LetterEngine:
     # Public API
     # ------------------------------------------------------------------
 
-    def render(self, company_id: str, variant: str = "initial") -> str:
+    def render(self, company_id: str, variant: str = "initial", vcfg: "dict | None" = None) -> str:
         """
         Render a letter for the given company_id and variant.
+
+        Args:
+            company_id: Supabase company ID.
+            variant: Letter variant (initial, followup, final).
+            vcfg: Optional per-call config override. Falls back to self.vcfg.
 
         Returns:
             Rendered HTML string, ready for Lob API submission.
@@ -343,9 +461,17 @@ class LetterEngine:
         if variant not in VARIANT_PARAGRAPHS:
             raise ValueError(f"Invalid variant '{variant}'. Must be: initial, followup, final.")
 
+        cfg = vcfg or self.vcfg
         company = self._fetch_company(company_id)
         owner = self._fetch_owner(company_id)
-        vertical_info = VERTICAL_DATA.get(company.get("vertical", ""), _DEFAULT_VERTICAL)
+
+        # Config-driven path: build vertical_info from config
+        if cfg:
+            sub_vertical = company.get("vertical", "")
+            vertical_info = _vertical_data_from_config(cfg, sub_vertical)
+        else:
+            # Legacy path: use hardcoded VERTICAL_DATA
+            vertical_info = VERTICAL_DATA.get(company.get("vertical", ""), _DEFAULT_VERTICAL)
 
         context = self._build_context(company, owner, vertical_info, variant)
         template = self.jinja.get_template("master-letter.html")
@@ -493,10 +619,11 @@ class LetterEngine:
         ceiling = vertical_info["multiple_ceiling"]
         median = vertical_info["multiple_median"]
         premium_driver = vertical_info["premium_driver"]
+        metric = vertical_info.get("primary_metric", "EBITDA")
 
         return (
             f"Businesses in {vertical_info['vertical_short']} are currently trading at "
-            f"{floor} to {ceiling} EBITDA, with well-positioned operators achieving {median} "
+            f"{floor} to {ceiling} {metric}, with well-positioned operators achieving {median} "
             f"or better when the right factors are in place. {premium_driver}"
         )
 

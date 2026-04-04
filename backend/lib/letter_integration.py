@@ -10,7 +10,7 @@ Usage:
     from lib.letter_integration import generate_letter_for_target, batch_generate_letters
 
     result = generate_letter_for_target("some-target-id")
-    results = batch_generate_letters(entity="next_chapter", limit=5)
+    results = batch_generate_letters(limit=5)
 """
 
 import json
@@ -22,6 +22,42 @@ import urllib.parse
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
+
+try:
+    from lib._config_bridge import DEFAULT_ENTITY as _DEFAULT_ENTITY, load_vertical as _load_vertical
+except ImportError:
+    _DEFAULT_ENTITY = "next_chapter"
+    _load_vertical = None
+
+# ── Config-driven valuation multiples ────────────────────────────────────────
+_METRIC_DISPLAY = {"ebitda": "EBITDA", "revenue": "revenue", "arr": "ARR", "sde": "SDE"}
+
+
+def _get_multiples_from_config(vertical: str) -> "tuple[float, float, str]":
+    """
+    Look up (mult_low, mult_high, metric_label) for a vertical slug from config.
+
+    Checks sub_verticals first, falls back to base valuation_fields.
+    Returns (4.0, 7.0, "EBITDA") as last resort.
+    """
+    if not _load_vertical:
+        return VERTICAL_MULTIPLES.get(vertical, (4.0, 7.0)) + ("EBITDA",)
+
+    try:
+        vcfg = _load_vertical("home_services")
+    except Exception:
+        return VERTICAL_MULTIPLES.get(vertical, (4.0, 7.0)) + ("EBITDA",)
+
+    vf = vcfg.get("valuation_fields", {})
+    metric = _METRIC_DISPLAY.get(vf.get("primary_metric", "ebitda"), "EBITDA")
+
+    # Check sub-verticals for overrides
+    sv = vcfg.get("sub_verticals", {}).get(vertical, {})
+    sv_vf = sv.get("valuation_fields", {})
+
+    floor = sv_vf.get("multiple_floor", vf.get("multiple_floor", 4.0))
+    ceiling = sv_vf.get("multiple_ceiling", vf.get("multiple_ceiling", 7.0))
+    return (floor, ceiling, metric)
 
 # ---------------------------------------------------------------------------
 # Supabase config (service role -- never exposed to browser)
@@ -198,6 +234,7 @@ def score_personalization(research: dict, company: dict) -> dict:
 # Pure Python implementation of the letter formula from LetterTemplateEngine (JS)
 # ---------------------------------------------------------------------------
 
+# Legacy fallback — used only when vertical config is unavailable
 VERTICAL_MULTIPLES = {
     "water_treatment":  (4.0, 8.0),
     "hvac":             (4.5, 8.5),
@@ -274,7 +311,7 @@ def build_letter_text(research: dict, company: dict) -> str:
     ebitda   = company.get("estimated_ebitda")
     val_low  = research.get("valuation_low")
     val_high = research.get("valuation_high")
-    mult_low, mult_high = VERTICAL_MULTIPLES.get(vertical, (4.0, 7.0))
+    mult_low, mult_high, _metric_label = _get_multiples_from_config(vertical)
 
     tone = _infer_tone(flags)
 
@@ -341,7 +378,7 @@ def build_letter_text(research: dict, company: dict) -> str:
         low_val  = _format_dollar(float(ebitda) * mult_low)
         high_val = _format_dollar(float(ebitda) * mult_high)
         p3_parts.append(
-            f"Based on current {vertical.replace('_', ' ')} market multiples ({mult_low}x-{mult_high}x EBITDA), "
+            f"Based on current {vertical.replace('_', ' ')} market multiples ({mult_low}x-{mult_high}x {_metric_label}), "
             f"a business like {company_name} is realistically positioned in the {low_val}-{high_val} range."
         )
 
@@ -426,7 +463,7 @@ def generate_letter_for_target(target_id: str) -> dict:
     if not rows:
         raise ValueError(f"Target not found: {target_id}")
     target     = rows[0]
-    entity     = target.get("entity", "next_chapter")
+    entity     = target.get("entity", _DEFAULT_ENTITY)
     company_id = target.get("company_id") or ""
 
     # -- Step b: Fetch research ----------------------------------------------
@@ -579,7 +616,7 @@ def generate_letter_for_target(target_id: str) -> dict:
     }
 
 
-def batch_generate_letters(entity: str = "next_chapter", limit: int = 10) -> list:
+def batch_generate_letters(entity: str = None, limit: int = 10) -> list:
     """
     Batch-generate letters for targets that don't yet have a generated_letter stored.
 
@@ -588,6 +625,7 @@ def batch_generate_letters(entity: str = "next_chapter", limit: int = 10) -> lis
 
     Returns list of result dicts from generate_letter_for_target.
     """
+    entity = entity or _DEFAULT_ENTITY
     SKIP_STATUSES = {"letter_sent", "called", "responded", "closed", "dead"}
 
     # Fetch candidates
@@ -647,7 +685,7 @@ if __name__ == "__main__":
     p_gen.add_argument("target_id", help="UUID of the target row")
 
     p_batch = sub.add_parser("batch", help="Batch-generate letters for an entity")
-    p_batch.add_argument("--entity", default="next_chapter")
+    p_batch.add_argument("--entity", default=_DEFAULT_ENTITY)
     p_batch.add_argument("--limit", default=10, type=int)
 
     args = parser.parse_args()

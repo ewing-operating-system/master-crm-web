@@ -37,6 +37,11 @@ sys.path.insert(0, REPO_ROOT)
 from lib import supabase as db
 from lib.salesfinity_client import get_active_lists, get_call_outcomes
 
+try:
+    from lib._config_bridge import DEFAULT_ENTITY as _DEFAULT_ENTITY
+except ImportError:
+    _DEFAULT_ENTITY = "next_chapter"
+
 # ── Config ────────────────────────────────────────────────────────────────────
 # Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 
@@ -311,7 +316,7 @@ def scan_salesfinity(since_iso):
                 if any(p in notes_lower for p in ("do not call", "dnc", "remove")):
                     signal_type = "dnc_request"
 
-                entity = outcome.get("entity") or "next_chapter"
+                entity = outcome.get("entity") or _DEFAULT_ENTITY
                 urgency = _score_urgency(signal_type, outcome.get("notes"))
 
                 signals.append({
@@ -423,7 +428,7 @@ def scan_gmail(since_iso):
                 signals.append({
                     "channel": "gmail",
                     "signal_type": signal_type,
-                    "entity": "next_chapter",  # Gmail is NC inbox
+                    "entity": _DEFAULT_ENTITY,  # Primary entity inbox
                     "urgency_score": urgency,
                     "company_name": "",
                     "first_name": "",
@@ -492,7 +497,7 @@ def scan_lob(since_iso):
             signals.append({
                 "channel": "lob",
                 "signal_type": signal_type,
-                "entity": meta.get("entity", "next_chapter"),
+                "entity": meta.get("entity", _DEFAULT_ENTITY),
                 "urgency_score": urgency,
                 "company_name": meta.get("company_name", ""),
                 "first_name": "",
@@ -570,7 +575,7 @@ def scan_calendar(since_iso):
             signals.append({
                 "channel": "calendar",
                 "signal_type": signal_type,
-                "entity": "next_chapter",
+                "entity": _DEFAULT_ENTITY,
                 "urgency_score": urgency,
                 "company_name": "",
                 "first_name": "",
@@ -663,7 +668,7 @@ def scan_slack(since_iso):
             signals.append({
                 "channel": "slack",
                 "signal_type": signal_type,
-                "entity": "next_chapter",
+                "entity": _DEFAULT_ENTITY,
                 "urgency_score": urgency,
                 "company_name": "",
                 "first_name": "",
@@ -698,7 +703,7 @@ def process_signal(signal):
     6. STAGE    — create DRAFT play record
     7. NOTIFY   — Telegram for urgency >= 7
     """
-    entity = signal.get("entity", "next_chapter")
+    entity = signal.get("entity", _DEFAULT_ENTITY)
     signal_type = signal.get("signal_type", "unknown")
     urgency = signal.get("urgency_score", 3)
 

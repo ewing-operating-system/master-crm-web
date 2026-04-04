@@ -13,6 +13,11 @@ from datetime import datetime, timedelta
 from pathlib import Path
 import urllib.request, ssl
 
+try:
+    from lib._config_bridge import DEFAULT_ENTITY as _DEFAULT_ENTITY
+except ImportError:
+    _DEFAULT_ENTITY = "next_chapter"
+
 # Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
 SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
@@ -252,7 +257,7 @@ def turbocharge_buyer(buyer_id):
         # Log cost
         try:
             _sb_post("cost_log", {
-                "entity": buyers[0].get("entity", "next_chapter"),
+                "entity": buyers[0].get("entity", _DEFAULT_ENTITY),
                 "service": "exa",
                 "operation": f"sap_{section}",
                 "cost": 0.01,
