@@ -19,6 +19,11 @@
 
 'use strict';
 
+const VALID_ENTITIES = new Set([
+  'next_chapter', 'and_capital', 'revsup', 'the_forge',
+  'biolev', 'sea_sweet', 'precision_exploration', 'system',
+]);
+
 function supabaseHeaders() {
   return {
     'apikey':        process.env.SUPABASE_SERVICE_ROLE_KEY,
@@ -65,6 +70,11 @@ async function writeToTarget(learning) {
   // Only write if all target fields are specified
   if (!target_table || !target_column || !target_value || !entity) {
     return { written: false, reason: 'Missing target fields' };
+  }
+
+  // Safety: validate entity against known set
+  if (!VALID_ENTITIES.has(entity)) {
+    return { written: false, reason: `Invalid entity: ${entity}` };
   }
 
   // Safety: only allow writing to known tables

@@ -203,7 +203,7 @@ def store_meeting_in_cache(company_name, meeting_data, transcript_id, meeting_da
     }
 
     cur.execute("""INSERT INTO intelligence_cache (company_id, entity, key, value, source_agent)
-        SELECT c.id, 'next_chapter', %s, %s, 'meeting_processor'
+        SELECT c.id, c.entity, %s, %s, 'meeting_processor'
         FROM companies c WHERE c.company_name ILIKE %s LIMIT 1""",
         (f"meeting_{meeting_date}", json.dumps(cache_data, default=str), f"%{company_name}%"))
 

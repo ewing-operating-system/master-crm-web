@@ -192,7 +192,7 @@ ONLY JSON."""
 
     # Store engagement plan in intelligence_cache
     cur.execute("""INSERT INTO intelligence_cache (company_id, entity, key, value, source_agent)
-        SELECT c.id, 'next_chapter', 'engagement_plan', %s, 'engagement_engine'
+        SELECT c.id, c.entity, 'engagement_plan', %s, 'engagement_engine'
         FROM companies c WHERE c.company_name ILIKE %s LIMIT 1""",
         (json.dumps(admin_data, default=str), f"%{company}%"))
 

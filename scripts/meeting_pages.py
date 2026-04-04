@@ -284,20 +284,22 @@ Do NOT truncate the URLs. Include the complete query string. No markdown, no pro
 
 # ── Entity detection ─────────────────────────────────────────────────────────
 KNOWN_ENTITIES = {
-    "hr.com": "hrcom",
-    "aquascience.com": "aquascience",
-    "springerfloor.com": "springer",
+    "hr.com": "next_chapter",
+    "aquascience.com": "next_chapter",
+    "springerfloor.com": "next_chapter",
     "theforge.com": "the_forge",
     "biolev.com": "biolev",
     "seasweet.com": "sea_sweet",
 }
+
+_VALID_ENTITIES = frozenset({"next_chapter", "and_capital", "revsup", "the_forge", "biolev", "sea_sweet", "precision_exploration", "system"})
 
 # Internal team domains — always tag next_chapter (the advisor), not the entity
 INTERNAL_DOMAINS = {"revsup.com": "next_chapter", "nextchapteradvisory.com": "next_chapter", "andcapital.com": "and_capital"}
 
 # Known people → entity mapping (for participant name matching)
 KNOWN_PEOPLE = {
-    "debbie mcgrath": "hrcom",
+    "debbie mcgrath": "next_chapter",
     "ewing gillaspy": "next_chapter",
     "mark dechant": "next_chapter",
     "john kelly": "next_chapter",
@@ -332,8 +334,8 @@ def detect_entities(transcript: dict) -> list[str]:
     # Also check title for entity keywords
     title = (transcript.get("title") or "").lower()
     title_entity_map = {
-        "hr.com": "hrcom", "hrcom": "hrcom", "debbie": "hrcom",
-        "aquascience": "aquascience", "springer": "springer",
+        "hr.com": "next_chapter", "hrcom": "next_chapter", "debbie": "next_chapter",
+        "aquascience": "next_chapter", "springer": "next_chapter",
         "revsup": "revsup", "and capital": "and_capital",
         "next chapter": "next_chapter", "the forge": "the_forge",
         "biolev": "biolev", "sea sweet": "sea_sweet",
@@ -420,7 +422,14 @@ No markdown, no prose. ONLY the JSON array."""
 
     try:
         learnings = json.loads(m.group(1))
-        return learnings if isinstance(learnings, list) else []
+        if not isinstance(learnings, list):
+            return []
+        # Validate entity slugs returned by LLM
+        fallback_entity = entities[0] if entities else "next_chapter"
+        for l in learnings:
+            if l.get("entity") not in _VALID_ENTITIES:
+                l["entity"] = fallback_entity
+        return learnings
     except json.JSONDecodeError as e:
         log.warning("Learnings JSON parse error: %s", e)
         return []
@@ -1173,7 +1182,7 @@ def process_transcript(transcript: dict, skip_existing: bool = True) -> Optional
     for l in learnings:
         lr = supa_post("meeting_learnings", {
             "transcript_id": transcript_uuid,
-            "entity": l.get("entity", entities[0] if entities else "unknown"),
+            "entity": l.get("entity") if l.get("entity") in _VALID_ENTITIES else (entities[0] if entities else "next_chapter"),
             "category": l.get("category", "general"),
             "learning": l.get("learning", ""),
             "confidence": l.get("confidence", 0.5),

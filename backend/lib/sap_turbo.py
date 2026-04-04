@@ -18,6 +18,8 @@ try:
 except ImportError:
     _DEFAULT_ENTITY = "next_chapter"
 
+_VALID_ENTITIES = frozenset({"next_chapter", "and_capital", "revsup", "the_forge", "biolev", "sea_sweet", "precision_exploration", "system"})
+
 # Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
 SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
@@ -257,7 +259,7 @@ def turbocharge_buyer(buyer_id):
         # Log cost
         try:
             _sb_post("cost_log", {
-                "entity": buyers[0].get("entity", _DEFAULT_ENTITY),
+                "entity": buyers[0].get("entity", _DEFAULT_ENTITY) if buyers[0].get("entity", _DEFAULT_ENTITY) in _VALID_ENTITIES else _DEFAULT_ENTITY,
                 "service": "exa",
                 "operation": f"sap_{section}",
                 "cost": 0.01,

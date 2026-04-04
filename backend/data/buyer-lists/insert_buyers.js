@@ -66,7 +66,7 @@ async function main() {
           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
         `, [
           proposalId,
-          companyName,
+          'next_chapter',
           buyer.buyer_name,
           buyer.contact_name || null,
           buyer.contact_title || null,
