@@ -19,6 +19,9 @@ Usage:
               Loads lib/config/verticals/{vertical}.json for sections, prompts, and valuation.
 """
 
+from dotenv import load_dotenv
+load_dotenv()
+
 import argparse, json, os, re, subprocess, sys, time, requests
 from datetime import datetime, timezone
 
@@ -27,6 +30,21 @@ REPO_ROOT = os.path.join(os.path.dirname(__file__), '..')
 # Import exa_client from backend/lib/ (original import path)
 sys.path.insert(0, os.path.join(REPO_ROOT, 'backend'))
 from lib.exa_client import ExaClient, TEMPLATES
+from lib.pain_gain_engine import generate_pain_gain_analysis
+
+# Deal context for Pain/Gain engine — loaded from meetings JSON
+MEETINGS_JSON = os.path.join(REPO_ROOT, 'backend', 'data', 'meetings', 'hrcom-debbie-mcgrath-2026-03-23.json')
+_deal_context = None
+def _load_deal_context():
+    global _deal_context
+    if _deal_context is None:
+        try:
+            with open(MEETINGS_JSON) as f:
+                _deal_context = json.load(f)
+        except Exception as e:
+            print(f"[pain_gain] WARNING: Could not load deal context from {MEETINGS_JSON}: {e}")
+            _deal_context = {}
+    return _deal_context
 
 # Import vertical config via importlib to avoid sys.path 'lib' collision
 # (both REPO_ROOT/lib/ and backend/lib/ exist — sys.path can't disambiguate)
@@ -274,21 +292,48 @@ def traced_write(path, data, label):
 
 # ── Supabase write with tracing ──────────────────────────────────────────────
 
-def traced_supabase_write(table, data, label):
+def traced_supabase_write(table, data, label, upsert=False, upsert_key=None):
+    """Write a row to Supabase. If upsert=True, check for existing row by upsert_key
+    (a dict of {column: value}) and PATCH if found, POST if not."""
     try:
-        r = requests.post(
-            f'{SUPABASE_URL}/rest/v1/{table}',
-            headers={**SB_HEADERS, 'Prefer': 'return=minimal'},
-            json=data
-        )
+        op = "INSERT"
+        if upsert and upsert_key:
+            # Build filter query string
+            filter_qs = "&".join(f"{k}=eq.{v}" for k, v in upsert_key.items())
+            check = requests.get(
+                f'{SUPABASE_URL}/rest/v1/{table}?{filter_qs}&select=id',
+                headers={**SB_HEADERS},
+            )
+            existing = check.json() if check.status_code == 200 else []
+            if existing:
+                row_id = existing[0]["id"]
+                r = requests.patch(
+                    f'{SUPABASE_URL}/rest/v1/{table}?id=eq.{row_id}',
+                    headers={**SB_HEADERS, 'Prefer': 'return=minimal'},
+                    json=data,
+                )
+                op = "UPDATE"
+            else:
+                r = requests.post(
+                    f'{SUPABASE_URL}/rest/v1/{table}',
+                    headers={**SB_HEADERS, 'Prefer': 'return=minimal'},
+                    json=data,
+                )
+        else:
+            r = requests.post(
+                f'{SUPABASE_URL}/rest/v1/{table}',
+                headers={**SB_HEADERS, 'Prefer': 'return=minimal'},
+                json=data,
+            )
         trace("SUPABASE", label, {
             "table": table,
             "columns": list(data.keys()),
             "status": r.status_code,
-            "success": r.status_code in (200, 201),
-            "error": r.text[:200] if r.status_code not in (200, 201) else None,
+            "success": r.status_code in (200, 201, 204),
+            "operation": op,
+            "error": r.text[:200] if r.status_code not in (200, 201, 204) else None,
         })
-        return r.status_code in (200, 201)
+        return r.status_code in (200, 201, 204)
     except Exception as e:
         trace("SUPABASE", f"{label} FAILED", {"table": table, "error": str(e)[:200]})
         return False
@@ -323,15 +368,68 @@ def build_sections(buyer_name, vertical_config):
 def main():
     parser = argparse.ArgumentParser(description='Traced buyer research run')
     parser.add_argument('--buyer', required=True)
-    parser.add_argument('--city', required=True)
-    parser.add_argument('--state', required=True)
+    parser.add_argument('--city', default='')
+    parser.add_argument('--state', default='')
     parser.add_argument('--ticker', default='')
     parser.add_argument('--domain', default='')
     parser.add_argument('--type', default='Strategic')
     parser.add_argument('--score', type=int, default=8)
     parser.add_argument('--vertical', default='home_services',
                         help=f'Vertical config to load. Available: {", ".join(list_verticals())}')
+    parser.add_argument('--pain-gain-only', action='store_true',
+                        help='Skip all research phases; re-run only the Pain/Gain engine for an existing buyer JSON')
     args = parser.parse_args()
+
+    # ── --pain-gain-only: backfill Pain/Gain for an existing buyer JSON ──────
+    if args.pain_gain_only:
+        buyer_slug = slugify(args.buyer)
+        deal = _load_deal_context()
+        entity = deal.get('entity', 'next_chapter')
+        target_company = deal.get('company_name', 'HR.com Ltd')
+
+        # Load vertical to get entity if present
+        try:
+            vcfg = load_vertical(args.vertical)
+            entity = vcfg.get('entity_defaults', {}).get('entity', entity)
+        except Exception:
+            pass
+
+        trace("SYSTEM", "PAIN_GAIN_ONLY MODE", {
+            "buyer": args.buyer, "slug": buyer_slug,
+            "entity": entity, "target_company": target_company,
+        })
+
+        t0 = time.time()
+        analysis = generate_pain_gain_analysis(
+            buyer_slug=buyer_slug,
+            entity=entity,
+            target_company=target_company,
+        )
+        elapsed_ms = int((time.time() - t0) * 1000)
+
+        if analysis:
+            trace("PAIN_GAIN", "ANALYSIS COMPLETE", {
+                "buyer_slug": buyer_slug,
+                "pain_categories": len(analysis.get("pain_categories", [])),
+                "asset_mappings": len(analysis.get("asset_mappings", [])),
+                "synthesis_chars": len(analysis.get("synthesis", "")),
+                "generated_at": analysis.get("generated_at", ""),
+                "duration_ms": elapsed_ms,
+                "stored_in": f"public/data/debbie-research-{buyer_slug}.json → pain_gain_analysis",
+                "supabase_table": "pain_gain_analyses",
+            })
+            print(f"\n[pain_gain] Backfill complete for {buyer_slug}")
+        else:
+            trace("PAIN_GAIN", "ANALYSIS FAILED", {
+                "buyer_slug": buyer_slug, "duration_ms": elapsed_ms,
+            })
+            print(f"\n[pain_gain] Backfill FAILED for {buyer_slug} — see errors above")
+            sys.exit(1)
+        return
+
+    # Validate required args for full pipeline
+    if not args.city or not args.state:
+        parser.error("--city and --state are required for a full pipeline run (omit them only with --pain-gain-only)")
 
     # ── Load vertical config ─────────────────────────────────────────────
     vcfg = load_vertical(args.vertical)
@@ -390,9 +488,9 @@ def main():
             section_urls.extend(urls)
             time.sleep(0.5)
 
-        # Synthesize — dedup URLs across all sections
+        # Synthesize — dedup URLs within this section only (no cross-section filtering)
         combined = "\n\n---\n\n".join(section_texts)
-        unique_urls = [u for u in dict.fromkeys(section_urls) if u not in seen_urls]
+        unique_urls = list(dict.fromkeys(section_urls))
         seen_urls.update(unique_urls)
 
         if combined:
@@ -557,8 +655,23 @@ Each review: {{"text": "1-3 sentences", "category": "billing|support|usability|f
         total_cost += cost
         combined = "\n".join(t[:500] for t in texts)
         output = llm(f"""Extract stock data for {buyer_name} (ticker: {args.ticker}).
-Return ONLY JSON: {{"stock_price": 142.30, "price_change_24mo": 18.2, "market_cap": "$54B"}}
+Return ONLY JSON with ALL of these fields. If a field is not available in the provided data, return null for that field. Always return all fields.
+{{
+  "stock_price": 142.30,
+  "price_change_24mo": 18.2,
+  "market_cap": "$54B",
+  "day_high": 143.50,
+  "day_low": 140.10,
+  "52_week_high": 200.00,
+  "52_week_low": 110.00,
+  "volume": 1234567,
+  "pe_ratio": 25.4
+}}
 DATA: {combined[:4000]}""", timeout=60, label="extract_stock")
+        # Canonical set of stock fields — always present, default null
+        STOCK_FIELDS = ["stock_price", "price_change_24mo", "market_cap",
+                        "day_high", "day_low", "52_week_high", "52_week_low",
+                        "volume", "pe_ratio"]
         if output:
             try:
                 s, e = output.find('{'), output.rfind('}') + 1
@@ -568,9 +681,16 @@ DATA: {combined[:4000]}""", timeout=60, label="extract_stock")
                 trace("TRANSFORM", "STOCK EXTRACTED", {
                     "price": stock.get("stock_price"), "change_24mo": stock.get("price_change_24mo"),
                     "market_cap": stock.get("market_cap"),
-                    "stored_as": "stock_price, price_change_24mo, market_cap (root fields)",
+                    "day_high": stock.get("day_high"), "day_low": stock.get("day_low"),
+                    "52_week_high": stock.get("52_week_high"), "52_week_low": stock.get("52_week_low"),
+                    "volume": stock.get("volume"), "pe_ratio": stock.get("pe_ratio"),
+                    "stored_as": "root fields",
                 })
             except: pass
+        # Normalize: ensure all canonical fields exist in stock dict (null if missing)
+        for f in STOCK_FIELDS:
+            if f not in stock:
+                stock[f] = None
 
     # ══════════════════════════════════════════════════════════════════════════
     # PHASE 5: ASSEMBLE & WRITE
@@ -633,51 +753,77 @@ DATA: {combined[:4000]}""", timeout=60, label="extract_stock")
         "field_inventory": all_fields,
     })
 
-    # Write per-buyer JSON
+    # Write per-buyer JSON (initial write — Pain/Gain will update it in place)
     per_buyer_path = os.path.join(PUBLIC_DATA_DIR, f"debbie-research-{buyer_slug}.json")
     os.makedirs(PUBLIC_DATA_DIR, exist_ok=True)
     traced_write(per_buyer_path, buyer_obj, f"per-buyer JSON: {buyer_slug}")
 
-    # Write combined JSON
-    combined_path = os.path.join(PUBLIC_DATA_DIR, "debbie-buyer-research.json")
-    try:
-        with open(combined_path) as f:
-            combined_data = json.load(f)
-        if "buyers" not in combined_data:
-            combined_data = {"buyers": combined_data}
-    except: combined_data = {"buyers": {}}
-    combined_data["buyers"][buyer_slug] = buyer_obj
-    traced_write(combined_path, combined_data, "combined JSON (all buyers)")
-
-    # Update manifest
-    manifest_path = os.path.join(PUBLIC_DATA_DIR, "debbie-buyers-manifest.json")
-    try:
-        with open(manifest_path) as f:
-            manifest = json.load(f)
-    except: manifest = []
-    manifest = [m for m in manifest if m.get("slug") != buyer_slug]
-    manifest.append({"name": buyer_name, "slug": buyer_slug, "fit_score": args.score,
-                      "buyer_type": args.type, "buyer_city": args.city, "buyer_state": args.state,
-                      "logo_domain": args.domain, "ticker": args.ticker})
-    manifest.sort(key=lambda m: (-m.get("fit_score",0), m.get("name","")))
-    traced_write(manifest_path, manifest, "manifest (buyer index)")
+    # Upsert into engagement_buyers — check-then-patch-or-insert on (buyer_company_name, entity)
+    traced_supabase_write(
+        "engagement_buyers",
+        {
+            "buyer_company_name": buyer_name,
+            "entity": ENTITY,
+            "fit_score": args.score,
+            "buyer_city": args.city,
+            "buyer_state": args.state,
+            "buyer_type": args.type,
+            "research_date": datetime.now(timezone.utc).isoformat(),
+            "status": "identified",
+        },
+        f"upsert engagement_buyers: {buyer_slug}",
+        upsert=True,
+        upsert_key={"buyer_company_name": buyer_name, "entity": ENTITY},
+    )
 
     # ══════════════════════════════════════════════════════════════════════════
-    # PHASE 6: GIT + DEPLOY
+    # PHASE 6 (STEP 15): PAIN/GAIN MATCH ENGINE
+    # Cross-section analysis using completed research + deal context
     # ══════════════════════════════════════════════════════════════════════════
-    trace("PHASE", "GIT COMMIT + DEPLOY", {})
-    for cmd_label, cmd in [
-        ("git add", ["git", "-C", REPO_ROOT, "add", "public/data/"]),
-        ("git commit", ["git", "-C", REPO_ROOT, "commit", "-m", f"[auto][traced] Add {buyer_name} buyer research"]),
-        ("deploy", ["bash", os.path.join(REPO_ROOT, "scripts", "deploy.sh"), "--skip-commit"]),
-    ]:
-        r = subprocess.run(cmd, capture_output=True, text=True, timeout=180)
-        trace("GIT", cmd_label, {
-            "command": " ".join(cmd[-3:]),
-            "returncode": r.returncode,
-            "stdout_preview": r.stdout.strip()[:100],
-            "stderr_preview": r.stderr.strip()[:100] if r.returncode != 0 else None,
+    trace("PHASE", "PAIN/GAIN MATCH ENGINE", {"step": 15})
+
+    deal = _load_deal_context()
+    pg_entity = ENTITY
+    pg_target_company = deal.get("company_name", "HR.com Ltd")
+
+    trace("PAIN_GAIN", "STARTING ANALYSIS", {
+        "buyer_slug": buyer_slug,
+        "entity": pg_entity,
+        "target_company": pg_target_company,
+        "sections_available": list(buyer_obj.get("sections", {}).keys()),
+        "has_market_reputation": bool(buyer_obj.get("market_reputation", {}).get("product_reviews")),
+        "deal_context_source": MEETINGS_JSON,
+    })
+
+    t0_pg = time.time()
+    pg_analysis = generate_pain_gain_analysis(
+        buyer_slug=buyer_slug,
+        entity=pg_entity,
+        target_company=pg_target_company,
+    )
+    elapsed_pg_ms = int((time.time() - t0_pg) * 1000)
+
+    if pg_analysis:
+        # Store in buyer object so callers have it in memory
+        buyer_obj["pain_gain_analysis"] = pg_analysis
+        trace("PAIN_GAIN", "ANALYSIS COMPLETE", {
+            "buyer_slug": buyer_slug,
+            "pain_categories": len(pg_analysis.get("pain_categories", [])),
+            "asset_mappings": len(pg_analysis.get("asset_mappings", [])),
+            "synthesis_chars": len(pg_analysis.get("synthesis", "")),
+            "generated_at": pg_analysis.get("generated_at", ""),
+            "duration_ms": elapsed_pg_ms,
+            "stored_in": f"public/data/debbie-research-{buyer_slug}.json → pain_gain_analysis",
+            "supabase_table": "pain_gain_analyses",
         })
+        # engine already wrote the JSON; no second traced_write needed
+    else:
+        trace("PAIN_GAIN", "ANALYSIS FAILED — continuing without pain/gain data", {
+            "buyer_slug": buyer_slug,
+            "duration_ms": elapsed_pg_ms,
+        })
+
+    # Manifest build and deploy handled by scripts/build_debbie_manifest.py after batch completes
 
     # ══════════════════════════════════════════════════════════════════════════
     # PHASE 7: GENERATE TRACE DOCUMENT

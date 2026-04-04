@@ -231,6 +231,7 @@ body { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; backgrou
     </div>
   </div>
   <div class="zone-a-center" id="zaFacts"></div>
+  <div class="zone-a-center" id="zaStockDetail" style="font-size:11px;color:#6e7681;margin-top:2px;display:none;"></div>
   <div class="zone-a-right">
     <textarea id="zaComment" rows="2" placeholder="Overall comments for this buyer..."></textarea>
     <input type="text" class="verdict-other-input" id="zaOtherLabel" placeholder="Custom label...">
@@ -488,6 +489,24 @@ function updateZoneA(slug) {
   }
 
   document.getElementById('zaFacts').innerHTML = factsHtml;
+
+  // Extended stock detail row (day range, 52w range, volume, P/E)
+  const fv = (v) => (v !== null && v !== undefined) ? v : 'N/A';
+  const hasExtended = b.ticker && (b.day_high !== undefined || b.day_low !== undefined ||
+    b['52_week_high'] !== undefined || b['52_week_low'] !== undefined ||
+    b.volume !== undefined || b.pe_ratio !== undefined);
+  if (hasExtended) {
+    const parts = [];
+    parts.push('Day: ' + fv(b.day_low) + ' – ' + fv(b.day_high));
+    parts.push('52w: ' + fv(b['52_week_low']) + ' – ' + fv(b['52_week_high']));
+    if (b.volume !== undefined) parts.push('Vol: ' + fv(b.volume));
+    if (b.pe_ratio !== undefined) parts.push('P/E: ' + fv(b.pe_ratio));
+    const el = document.getElementById('zaStockDetail');
+    el.textContent = parts.join('  ·  ');
+    el.style.display = '';
+  } else {
+    document.getElementById('zaStockDetail').style.display = 'none';
+  }
 }
 
 // ══════════════════════════════════════════
@@ -891,7 +910,7 @@ function _renderPainGainFallback(buyer, pgColor) {
     const colW = Math.floor(75 / assets.length) + '%';
 
     let html = _pgWrapOpen(buyer.buyer_slug, pgColor);
-    html += '<p style="color:#8b949e;font-size:11px;margin:0 0 12px;font-style:italic">Fallback view — run Agent Swarm to generate cross-section analysis</p>';
+    html += '<p style="color:#8b949e;font-size:11px;margin:0 0 12px;font-style:italic">Fallback view — run pipeline with <code style="background:#21262d;padding:1px 4px;border-radius:3px">--pain-gain-only</code> to generate cross-section analysis</p>';
     html += '<table class="pain-gain-matrix"><thead><tr>';
     html += '<th style="width:15%">Pain Category</th><th style="width:5%;text-align:center">#</th>';
     for (const a of assets) {

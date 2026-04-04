@@ -98,6 +98,18 @@ When in doubt, score 6. Never use floats or scores above 8.
 - **John Kelly:** Next Chapter + RevsUp ONLY. NEVER AND Capital.
 - **Chris Rex:** AND Capital ONLY. Separate stack, invisible to this workspace.
 
+## Shell Environment
+
+Claude Code's Bash tool creates a fresh shell for every command. Environment variables from ~/.zshrc are NOT available unless explicitly loaded.
+
+**All Python scripts in this repo use python-dotenv to load .env at startup.** You do not need to source ~/.zshrc or inline export commands. Just ensure .env exists at the repo root with:
+- EXA_API_KEY
+- SUPABASE_URL
+- SUPABASE_SERVICE_ROLE_KEY
+- OPENROUTER_API_KEY
+
+**Do NOT run multiple buyer research commands in parallel that write to the same git branch.** Each buyer writes its own JSON file, but the git commit/push step will conflict. Run the manifest builder (scripts/build_debbie_manifest.py) once after all buyers complete.
+
 ## RELATED DOCS
 
 - `docs/CLAUDE-backend.md` — Backend agents, campaigns, entity classification

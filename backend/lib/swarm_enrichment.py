@@ -282,22 +282,29 @@ def agent_swarm_enrichment(conn, item):
     if not buyer_slug or not section_key:
         return "failed", "Missing buyer_slug or section_key in payload"
 
-    # ── pain_gain_match: bypass Exa search — call engine directly ────────────
+    # ── Pain/Gain Match: bypass Exa search — call engine directly ───────────
+    # entity and target_company come from the queue payload (not hardcoded).
+    # The frontend Swarm button must include these in the payload for
+    # cross-entity support. Falls back to next_chapter / HR.com Ltd if absent.
     if section_key == "pain_gain_match":
+        entity = payload.get("entity", "next_chapter")
+        target_company = payload.get("target_company", "HR.com Ltd")
+        if not entity or not target_company:
+            return "failed", "Pain/Gain Match requires entity and target_company in payload"
         try:
             from pain_gain_engine import generate_pain_gain_analysis
-            entity = payload.get("entity", "next_chapter")
-            target_company = payload.get("target_company", "HR.com Ltd")
             analysis = generate_pain_gain_analysis(
                 buyer_slug=buyer_slug,
                 entity=entity,
                 target_company=target_company,
             )
             if not analysis:
-                return "failed", "pain_gain_engine returned no analysis"
-            return "done", None
+                return "failed", "Pain/Gain Match engine returned no analysis"
+            n_cats = len(analysis.get("pain_categories", []))
+            n_maps = len(analysis.get("asset_mappings", []))
+            return "done", f"Pain/Gain Match complete: {n_cats} pain categories, {n_maps} mappings"
         except Exception as e:
-            return "failed", f"pain_gain_engine error: {e}"
+            return "failed", f"Pain/Gain Match engine error: {e}"
 
     # ── 1. Check previous executions for dedup ────────────────────────────────
     previous_queries = get_previous_queries(conn, buyer_name, section_key)

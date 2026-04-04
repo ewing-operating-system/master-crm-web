@@ -267,7 +267,7 @@
     {
       "key": "employee_sentiment",
       "title": "Employee Sentiment",
-      "exa_template_names": ["reviews_search"],
+      "exa_template_names": ["employee_sentiment"],
       "topic_template": "{buyer_name} employees describe their experience working at the company, including culture, leadership, and whether the company is growing or cutting back"
     },
     {
