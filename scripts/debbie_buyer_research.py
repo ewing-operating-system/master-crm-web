@@ -1,21 +1,30 @@
 #!/usr/bin/env python3
 """
-Debbie Buyer Research Pipeline
-==============================
-Enriches HR.com buyer data for the Debbie Review page:
-1. Company profile (employees, domain, industry, HR products, HR revenue %)
-2. Per-product review scraping (Reddit, G2, Trustpilot, Capterra)
-3. LLM-scored review quality filter (informativeness, specificity, polarity)
-4. LLM-generated narratives (media business, domain name)
-5. Existing dossier extraction (golden nuggets, CEO vision, etc.)
+Buyer Intelligence Pipeline
+============================
+End-to-end buyer research and enrichment for the Debbie Buyer Review page.
+Evaluates potential acquirers of the seller entity defined in PIPELINE_CONFIG.
+
+Phases:
+  Phase 1:   Company profile (employees, domain, industry, HR products, HR revenue %)
+  Phase 2+3: Product discovery + review scraping (Reddit, G2, Trustpilot, Capterra)
+  Phase 2C:  LLM-scored review quality filter (informativeness, specificity, polarity)
+             Category normalization via normalize_category() prevents LLM drift.
+  Phase 4:   LLM-generated narratives (media business, domain name)
+  Phase 5:   Existing dossier extraction (golden nuggets, CEO vision, etc.)
+  Phase 2F:  Pain/Gain Match — cross-references buyer pain signals against
+             entity value propositions (see backend/lib/pain_gain_engine.py)
 
 Output: public/data/debbie-buyer-research.json
+        public/data/debbie-research-{slug}.json  (per-buyer, updated by Phase 2F)
 
 Usage:
-    python3 scripts/debbie_buyer_research.py                  # all 10 buyers
-    python3 scripts/debbie_buyer_research.py --buyer Paychex   # single buyer
-    python3 scripts/debbie_buyer_research.py --skip-reviews    # skip expensive review scrape
-    python3 scripts/debbie_buyer_research.py --dry-run         # show what would run
+    python3 scripts/debbie_buyer_research.py                        # all buyers
+    python3 scripts/debbie_buyer_research.py --buyer Paychex        # single buyer
+    python3 scripts/debbie_buyer_research.py --skip-reviews         # skip review scrape
+    python3 scripts/debbie_buyer_research.py --dry-run              # show what would run
+    python3 scripts/debbie_buyer_research.py --buyer Paychex --pain-gain-only
+        # skip Phases 1-2E; re-run Pain/Gain Match only for an existing buyer
 """
 
 import json
@@ -46,6 +55,15 @@ LOG_FILE = PROJECT_ROOT / "logs" / "debbie_research.log"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 os.makedirs(LOG_FILE.parent, exist_ok=True)
 
+# ── Pipeline config (seller identity for Pain/Gain Match) ──────────────────
+# These identify who is being sold in this pipeline run.
+# Phase 2F (Pain/Gain Match) reads entity value propositions from Supabase
+# using these values. Change here if running for a different seller entity.
+PIPELINE_CONFIG = {
+    "entity": "next_chapter",
+    "target_company": "HR.com Ltd",
+}
+
 
 # ── Logging ────────────────────────────────────────────
 def log(msg):
@@ -63,6 +81,71 @@ def slugify(s):
     s = s.replace("&", "and").replace("/", "-")
     s = re.sub(r'[^a-z0-9]+', '-', s)
     return s.strip('-')[:60]
+
+
+# ── Review Category Normalization ─────────────────────
+# Canonical set of 10 review pain categories understood by the frontend.
+# LLMs frequently drift to synonyms; this dict maps them back.
+CATEGORY_ALIASES = {
+    # UX
+    "usability": "ux", "navigation": "ux", "interface": "ux",
+    "ui": "ux", "design": "ux", "accessibility": "ux",
+    # Capabilities
+    "features": "capabilities", "reporting": "capabilities",
+    "analytics": "capabilities", "functionality": "capabilities",
+    "customization": "capabilities", "flexibility": "capabilities",
+    # Outcomes
+    "pricing": "outcomes", "billing": "outcomes", "cost": "outcomes",
+    "value": "outcomes", "roi": "outcomes", "return": "outcomes",
+    # Workflow
+    "onboarding": "workflow", "setup": "workflow",
+    "implementation": "workflow", "configuration": "workflow",
+    "deployment": "workflow", "adoption": "workflow",
+    # Reliability
+    "bugs": "reliability", "crashes": "reliability",
+    "performance": "reliability", "stability": "reliability",
+    "downtime": "reliability", "errors": "reliability",
+    # Efficiency
+    "automation": "efficiency", "speed": "efficiency",
+    "productivity": "efficiency", "time-saving": "efficiency",
+    # Integration
+    "api": "integration", "connectivity": "integration",
+    "interoperability": "integration", "compatibility": "integration",
+    # Support
+    "customer service": "support", "helpdesk": "support",
+    "documentation": "support", "training": "support",
+    # Data Integrity
+    "data quality": "data_integrity", "accuracy": "data_integrity",
+    "sync": "data_integrity", "migration": "data_integrity",
+    # Compliance
+    "security": "compliance", "gdpr": "compliance",
+    "audit": "compliance", "regulations": "compliance",
+}
+
+CANONICAL_CATEGORIES = {
+    "outcomes", "capabilities", "efficiency", "data_integrity",
+    "workflow", "ux", "support", "reliability", "compliance", "integration",
+}
+
+
+def normalize_category(raw: str) -> str:
+    """Map any LLM-returned category synonym to one of the 10 canonical categories."""
+    if not raw:
+        return "capabilities"
+    normalized = raw.strip().lower().replace(" ", "_")
+    if normalized in CANONICAL_CATEGORIES:
+        return normalized
+    # Try exact alias match (spaces → underscores)
+    alias_key = normalized.replace("_", " ")
+    if alias_key in CATEGORY_ALIASES:
+        return CATEGORY_ALIASES[alias_key]
+    if normalized in CATEGORY_ALIASES:
+        return CATEGORY_ALIASES[normalized]
+    # Partial match: if any canonical category appears in the raw string
+    for canon in CANONICAL_CATEGORIES:
+        if canon in normalized:
+            return canon
+    return "capabilities"  # safe default
 
 
 # ── LLM Calls ─────────────────────────────────────────
@@ -359,24 +442,32 @@ SCORING:
 - specificity (1-10): references exact features, screens, scenarios? Not generic "it's good/bad"
 - polarity (1-10): how strong is the opinion? Extreme outcomes = 10, mild = 4, neutral = 1
 - verdict: "positive" or "negative" or "neutral"
-- category: one of: outcomes, capabilities, efficiency, data_integrity, workflow, ux, support, reliability, compliance, integration
+- category: MUST be exactly one of these 10 values (no other values allowed):
+    outcomes | capabilities | efficiency | data_integrity | workflow | ux | support | reliability | compliance | integration
 
-LOOK FOR reviews about:
-- Outcomes: ROI, cost savings, revenue impact, measurable results
-- Capabilities: what it can/can't do, feature gaps, integrations
-- Efficiency: time savings, automation, workflow speed
-- Data integrity: data loss, sync failures, migration problems, accuracy
-- Workflow: process design, approval chains, ease of setup
-- UX: interface design, navigation, mobile experience, learning curve
-- Support: customer service, implementation help, responsiveness
-- Reliability: uptime, bugs, crashes, performance under load
-- Compliance: regulatory, audit trails, certifications
-- Integration: API quality, third-party connections, data portability
+CATEGORY DEFINITIONS (use ONLY the exact keys above):
+- outcomes: ROI, cost savings, revenue impact, measurable business results, pricing concerns
+- capabilities: what it can/can't do, feature gaps, missing functionality, reporting, analytics
+- efficiency: time savings, automation, workflow speed, productivity gains or losses
+- data_integrity: data loss, sync failures, migration problems, accuracy issues
+- workflow: process design, approval chains, ease of setup, onboarding, implementation
+- ux: interface design, navigation, mobile experience, learning curve, usability
+- support: customer service, implementation help, responsiveness, documentation, training
+- reliability: uptime, bugs, crashes, performance under load, stability
+- compliance: regulatory requirements, audit trails, certifications, security, GDPR
+- integration: API quality, third-party connections, data portability, connectivity
+
+ALIAS RULES — map these to the canonical category:
+- "usability" or "interface" → ux
+- "pricing" or "billing" or "cost" → outcomes
+- "onboarding" or "setup" or "implementation" → workflow
+- "reporting" or "analytics" or "features" → capabilities
+- "bugs" or "crashes" or "performance" → reliability
 
 Reviews:
 {reviews_text}
 
-Return ONLY the JSON array."""
+Return ONLY the JSON array. The "category" field MUST be one of the 10 exact values listed above."""
 
         raw = call_llm(prompt, timeout=90)
         scores = extract_json(raw)
@@ -390,7 +481,7 @@ Return ONLY the JSON array."""
                         "polarity": score.get("polarity", 0),
                     }
                     review["verdict"] = score.get("verdict", "neutral")
-                    review["category"] = score.get("category", "capabilities")
+                    review["category"] = normalize_category(score.get("category", "capabilities"))
                     review["product"] = product_name
                     scored.append(review)
 
@@ -634,6 +725,25 @@ def process_buyer(buyer, exa, skip_reviews=False):
     # Phase 5: Existing Dossier
     dossier = extract_dossier_data(name)
 
+    # Phase 2F: Pain/Gain Match (cross-section, evidence-backed)
+    # Reads entity value propositions from Supabase + all 6 research sections,
+    # generates structured pain/gain mapping, writes to per-buyer JSON + Supabase.
+    _pg_entity = PIPELINE_CONFIG.get("entity", "")
+    _pg_company = PIPELINE_CONFIG.get("target_company", "")
+    if not _pg_entity or not _pg_company:
+        log(f"  [Phase 2F] Pain/Gain Match skipped for {name}: "
+            f"PIPELINE_CONFIG missing entity or target_company")
+    else:
+        try:
+            from pain_gain_engine import generate_pain_gain_analysis
+            generate_pain_gain_analysis(
+                buyer_slug=slug,
+                entity=_pg_entity,
+                target_company=_pg_company,
+            )
+        except Exception as e:
+            log(f"  [Phase 2F] Pain/Gain Match skipped for {name} (non-fatal): {e}")
+
     return {
         "buyer_name": name,
         "buyer_slug": slug,
@@ -656,14 +766,18 @@ def process_buyer(buyer, exa, skip_reviews=False):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Debbie Buyer Research Pipeline")
+    parser = argparse.ArgumentParser(description="Buyer Intelligence Pipeline — end-to-end buyer research and enrichment")
     parser.add_argument("--buyer", type=str, help="Process a single buyer by name")
     parser.add_argument("--skip-reviews", action="store_true", help="Skip review scraping")
     parser.add_argument("--dry-run", action="store_true", help="Show what would run")
+    parser.add_argument(
+        "--pain-gain-only", action="store_true",
+        help="Skip Phases 1-2E; re-run Pain/Gain Match only using existing per-buyer JSON"
+    )
     args = parser.parse_args()
 
     log(f"\n{'#'*60}")
-    log(f"# Debbie Buyer Research Pipeline — {datetime.datetime.now().isoformat()}")
+    log(f"# Buyer Intelligence Pipeline — {datetime.datetime.now().isoformat()}")
     log(f"{'#'*60}")
 
     # Load buyers
@@ -682,6 +796,39 @@ def main():
     if args.dry_run:
         for b in buyers:
             log(f"  Would process: {b['buyer_name']} (score: {b['fit_score']})")
+        return
+
+    # ── Pain/Gain Match only — skip Phases 1-2E ───────────────────────────────
+    if args.pain_gain_only:
+        entity = PIPELINE_CONFIG.get("entity", "")
+        target_company = PIPELINE_CONFIG.get("target_company", "")
+        if not entity or not target_company:
+            log("ERROR: PIPELINE_CONFIG missing entity or target_company — cannot run Pain/Gain Match")
+            return
+        from pain_gain_engine import generate_pain_gain_analysis
+        log(f"Pain/Gain Match only — skipping Phases 1-2E for {len(buyers)} buyer(s)")
+        for buyer in buyers:
+            name = buyer["buyer_name"]
+            slug = slugify(name)
+            per_buyer_path = OUTPUT_DIR / f"debbie-research-{slug}.json"
+            if not per_buyer_path.exists():
+                log(f"  SKIP {name}: per-buyer JSON not found at {per_buyer_path.name} — run full pipeline first")
+                continue
+            log(f"  Running Pain/Gain Match for {name}...")
+            try:
+                result = generate_pain_gain_analysis(
+                    buyer_slug=slug,
+                    entity=entity,
+                    target_company=target_company,
+                )
+                if result:
+                    n_cats = len(result.get("pain_categories", []))
+                    n_maps = len(result.get("asset_mappings", []))
+                    log(f"  Done: {name} — {n_cats} pain categories, {n_maps} mappings")
+                else:
+                    log(f"  FAILED: {name} — engine returned no analysis")
+            except Exception as e:
+                log(f"  ERROR: {name} — {e}")
         return
 
     exa = get_exa_client()
