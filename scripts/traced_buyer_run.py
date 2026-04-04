@@ -292,21 +292,48 @@ def traced_write(path, data, label):
 
 # ── Supabase write with tracing ──────────────────────────────────────────────
 
-def traced_supabase_write(table, data, label):
+def traced_supabase_write(table, data, label, upsert=False, upsert_key=None):
+    """Write a row to Supabase. If upsert=True, check for existing row by upsert_key
+    (a dict of {column: value}) and PATCH if found, POST if not."""
     try:
-        r = requests.post(
-            f'{SUPABASE_URL}/rest/v1/{table}',
-            headers={**SB_HEADERS, 'Prefer': 'return=minimal'},
-            json=data
-        )
+        op = "INSERT"
+        if upsert and upsert_key:
+            # Build filter query string
+            filter_qs = "&".join(f"{k}=eq.{v}" for k, v in upsert_key.items())
+            check = requests.get(
+                f'{SUPABASE_URL}/rest/v1/{table}?{filter_qs}&select=id',
+                headers={**SB_HEADERS},
+            )
+            existing = check.json() if check.status_code == 200 else []
+            if existing:
+                row_id = existing[0]["id"]
+                r = requests.patch(
+                    f'{SUPABASE_URL}/rest/v1/{table}?id=eq.{row_id}',
+                    headers={**SB_HEADERS, 'Prefer': 'return=minimal'},
+                    json=data,
+                )
+                op = "UPDATE"
+            else:
+                r = requests.post(
+                    f'{SUPABASE_URL}/rest/v1/{table}',
+                    headers={**SB_HEADERS, 'Prefer': 'return=minimal'},
+                    json=data,
+                )
+        else:
+            r = requests.post(
+                f'{SUPABASE_URL}/rest/v1/{table}',
+                headers={**SB_HEADERS, 'Prefer': 'return=minimal'},
+                json=data,
+            )
         trace("SUPABASE", label, {
             "table": table,
             "columns": list(data.keys()),
             "status": r.status_code,
-            "success": r.status_code in (200, 201),
-            "error": r.text[:200] if r.status_code not in (200, 201) else None,
+            "success": r.status_code in (200, 201, 204),
+            "operation": op,
+            "error": r.text[:200] if r.status_code not in (200, 201, 204) else None,
         })
-        return r.status_code in (200, 201)
+        return r.status_code in (200, 201, 204)
     except Exception as e:
         trace("SUPABASE", f"{label} FAILED", {"table": table, "error": str(e)[:200]})
         return False
@@ -730,6 +757,24 @@ DATA: {combined[:4000]}""", timeout=60, label="extract_stock")
     per_buyer_path = os.path.join(PUBLIC_DATA_DIR, f"debbie-research-{buyer_slug}.json")
     os.makedirs(PUBLIC_DATA_DIR, exist_ok=True)
     traced_write(per_buyer_path, buyer_obj, f"per-buyer JSON: {buyer_slug}")
+
+    # Upsert into engagement_buyers — check-then-patch-or-insert on (buyer_company_name, entity)
+    traced_supabase_write(
+        "engagement_buyers",
+        {
+            "buyer_company_name": buyer_name,
+            "entity": ENTITY,
+            "fit_score": args.score,
+            "buyer_city": args.city,
+            "buyer_state": args.state,
+            "buyer_type": args.type,
+            "research_date": datetime.now(timezone.utc).isoformat(),
+            "status": "identified",
+        },
+        f"upsert engagement_buyers: {buyer_slug}",
+        upsert=True,
+        upsert_key={"buyer_company_name": buyer_name, "entity": ENTITY},
+    )
 
     # ══════════════════════════════════════════════════════════════════════════
     # PHASE 6 (STEP 15): PAIN/GAIN MATCH ENGINE
