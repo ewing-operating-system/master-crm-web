@@ -1,7 +1,7 @@
 """
 exa_client_v2.py — Optimized Exa.ai client for Next Chapter M&A Advisory
 Uses curl subprocess (urllib blocked by Exa WAF/Cloudflare).
-All 12 search templates pre-configured with per-template optimizations.
+All 13 search templates pre-configured with per-template optimizations.
 
 Drop-in replacement for lib/exa_client.py
 
@@ -222,7 +222,22 @@ TEMPLATES = {
         "include_text": None,
     },
 
-    # ── Template 12: Contact Enrichment ───────────────────
+    # ── Template 12: Employee Sentiment (buy-side: culture, layoffs, morale) ─
+    "employee_sentiment": {
+        "query": "{company_name} employee reviews culture leadership layoffs morale Glassdoor Indeed working at",
+        "type": "auto",
+        "category": "news",
+        "num_results": 8,
+        "content_mode": "text",
+        "max_characters": 5000,
+        "use_autoprompt": False,
+        "exclude_domains": SEO_EXCLUDE,
+        "include_domains": ["glassdoor.com", "indeed.com", "comparably.com", "levels.fyi", "blind.app", "teamblind.com"],
+        "max_age_hours": None,
+        "include_text": None,
+    },
+
+    # ── Template 13: Contact Enrichment ───────────────────
     "contact_enrichment": {
         "query": "{owner_name} is the owner of {company_name} in {city}, {state} and can be reached by phone, email, or LinkedIn",
         "type": "auto",
