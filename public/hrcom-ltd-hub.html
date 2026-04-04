@@ -7,6 +7,7 @@
 <meta name="company-name" content="HR.com Ltd">
 <meta name="page-type" content="hub">
 <meta name="deal-side" content="sell_side">
+<script src="/supabase-config.js"></script>
 <style>
   /* === RESET === */
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -369,7 +370,7 @@
 <a href="#your-company-story" class="sidebar-link">Your Company Story</a>
 <a href="#contacts" class="sidebar-link">Contacts</a>
 <a href="#buyer-outreach-strategy" class="sidebar-link">Buyer Outreach Strategy</a>
-<a href="#potential-acquirers-68" class="sidebar-link">Potential Acquirers (68)</a>
+<a href="#buyers" class="sidebar-link">Potential Acquirers</a>
 <a href="#outreach-scripts" class="sidebar-link">Outreach Scripts</a>
 <a href="#plays-amp-emails-sent" class="sidebar-link">Plays &amp; Emails Sent</a>
 <a href="#documents-amp-files" class="sidebar-link">Documents &amp; Files</a>
@@ -422,9 +423,22 @@
     </div>
 
     <div class="card" id="buyers">
-        <h2>Potential Acquirers (68)</h2>
-        <table>
-            <tr><th>Company</th><th>Type</th><th>Location</th><th>Fit</th><th>DNC</th><th>Script</th><th>Status</th></tr>
+        <h2>Potential Acquirers <span id="buyers-count" style="color:#8b949e;font-weight:400;font-size:16px"></span></h2>
+
+        <!-- Dynamic buyer table — loaded from Supabase engagement_buyers -->
+        <div id="buyers-loading" style="padding:24px 0;text-align:center;color:#8b949e;font-size:13px">
+            Loading buyers&hellip;
+        </div>
+        <div id="buyers-empty" style="display:none;padding:24px 0;text-align:center;color:#8b949e;font-size:13px">
+            No buyers found.
+        </div>
+        <table id="buyers-table" style="display:none">
+            <tr><th>Company</th><th>Type</th><th>Location</th><th>Fit</th><th>Status</th></tr>
+            <tbody id="buyers-tbody"></tbody>
+        </table>
+
+        <!-- Old static rows replaced by dynamic Supabase query -->
+        <!--
             <tr>
             <td>Informa</td>
             <td>Platform</td>
@@ -433,401 +447,123 @@
             <td><span class="badge red" style="font-size:10px">DNC</span></td>
             <td><span class="badge blue" style="font-size:10px">Ready</span></td>
             <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>RELX (Reed Elsevier)</td>
-            <td>Platform</td>
-            <td>London, UK</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Francisco Partners</td>
-            <td>Platform</td>
-            <td>San Francisco, CA</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>TechTarget</td>
-            <td>Platform</td>
-            <td>Newton, MA</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Accenture</td>
-            <td>Platform</td>
-            <td>Dublin, Ireland</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Workday</td>
-            <td>Platform</td>
-            <td>Pleasanton, CA</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr><tr>
-            <td>Paychex</td>
-            <td>Platform</td>
-            <td>Rochester, NY</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr><tr>
-            <td>Manpower (ManpowerGroup)</td>
-            <td>Platform</td>
-            <td>Milwaukee, WI</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Industry Dive</td>
-            <td>Platform</td>
-            <td>Washington, DC</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Ceridian (Dayforce)</td>
-            <td>Platform</td>
-            <td>Minneapolis, MN</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Paylocity</td>
-            <td>Platform</td>
-            <td>Schaumburg, IL</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Vista Equity Partners</td>
-            <td>Platform</td>
-            <td>Austin, TX</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>ADP</td>
-            <td>Platform</td>
-            <td>Roseland, NJ</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr><tr>
-            <td>HG Capital</td>
-            <td>PE Roll-up</td>
-            <td>London, UK</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr><tr>
-            <td>Randstad / Randstad Digital</td>
-            <td>Strategic Acquirer</td>
-            <td>Diemen, Netherlands (US: Atlanta, GA)</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr><tr>
-            <td>PWC</td>
-            <td>Platform</td>
-            <td>New York, NY</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Thoma Bravo</td>
-            <td>Platform</td>
-            <td>San Francisco, CA</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr><tr>
-            <td>Deloitte</td>
-            <td>Platform</td>
-            <td>New York, NY</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>SAP SuccessFactors</td>
-            <td>Platform</td>
-            <td>Walldorf, Germany (US: Newtown Square, PA)</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr><tr>
-            <td>Wiley</td>
-            <td>Platform</td>
-            <td>Hoboken, NJ</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Alight</td>
-            <td>Platform</td>
-            <td>Lincolnshire, IL</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Wolters Kluwer</td>
-            <td>Platform</td>
-            <td>Alphen aan den Rijn, Netherlands</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>EY</td>
-            <td>Platform</td>
-            <td>New York, NY</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>IBM</td>
-            <td>Platform</td>
-            <td>Armonk, NY</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Hellman &amp; Friedman</td>
-            <td>Platform</td>
-            <td>San Francisco, CA</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Oracle HCM</td>
-            <td>Platform</td>
-            <td>Austin, TX</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>UKG (Ultimate Kronos)</td>
-            <td>Platform</td>
-            <td>Weston, FL</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Microsoft</td>
-            <td>Platform</td>
-            <td>Redmond, WA</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Deel</td>
-            <td>Platform</td>
-            <td>San Francisco, CA</td>
-            <td>8</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">scripted</span></td>
-        </tr><tr>
-            <td>G2</td>
-            <td>Platform</td>
-            <td>Chicago, IL</td>
-            <td>6</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Thomson Reuters</td>
-            <td>Platform</td>
-            <td>Toronto, Canada</td>
-            <td>6</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Indeed</td>
-            <td>Platform</td>
-            <td>Austin, TX</td>
-            <td>6</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Khoros</td>
-            <td>Platform</td>
-            <td>Austin, TX</td>
-            <td>6</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Clearlake Capital</td>
-            <td>Platform</td>
-            <td>Santa Monica, CA</td>
-            <td>6</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>SHRM</td>
-            <td>Platform</td>
-            <td>Alexandria, VA</td>
-            <td>6</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Paycom</td>
-            <td>Platform</td>
-            <td>Oklahoma City, OK</td>
-            <td>6</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>KKR</td>
-            <td>Platform</td>
-            <td>New York, NY</td>
-            <td>6</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Remote</td>
-            <td>Platform</td>
-            <td>San Francisco, CA</td>
-            <td>6</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>WorldatWork</td>
-            <td>Platform</td>
-            <td>Scottsdale, AZ</td>
-            <td>6</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Greenhouse</td>
-            <td>Platform</td>
-            <td>New York, NY</td>
-            <td>6</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Amazon (AWS)</td>
-            <td>Platform</td>
-            <td>Seattle, WA</td>
-            <td>6</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Lattice</td>
-            <td>Platform</td>
-            <td>San Francisco, CA</td>
-            <td>6</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Google</td>
-            <td>Platform</td>
-            <td>Mountain View, CA</td>
-            <td>6</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Rippling</td>
-            <td>Platform</td>
-            <td>San Francisco, CA</td>
-            <td>6</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>ATD</td>
-            <td>Platform</td>
-            <td>Alexandria, VA</td>
-            <td>6</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Culture Amp</td>
-            <td>Platform</td>
-            <td>San Francisco, CA</td>
-            <td>6</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>BambooHR</td>
-            <td>Platform</td>
-            <td>Lindon, UT</td>
-            <td>6</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Dotdash Meredith</td>
-            <td>Platform</td>
-            <td>New York, NY</td>
-            <td>6</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>ZoomInfo</td>
-            <td>Platform</td>
-            <td>Vancouver, WA</td>
-            <td>6</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr><tr>
-            <td>Silver Lake</td>
-            <td>Platform</td>
-            <td>Menlo Park, CA</td>
-            <td>6</td>
-            <td><span class="badge red" style="font-size:10px">DNC</span></td>
-            <td><span class="badge blue" style="font-size:10px">Ready</span></td>
-            <td><span class="badge gray" style="font-size:10px">imported</span></td>
-        </tr>
-        </table>
+            </tr>
+            ... (68 static rows removed — see git history)
+        -->
     </div>
+
+<script>
+(function() {
+    var SB_URL = window.__SUPABASE_URL || 'https://dwrnfpjcvydhmhnvyzov.supabase.co';
+    var SB_KEY = window.__SUPABASE_ANON_KEY;
+
+    function escHtml(s) {
+        if (!s) return '';
+        return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function makeSlug(name) {
+        return (name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    }
+
+    function fitBadgeColor(score) {
+        var n = parseFloat(score);
+        if (n >= 8) return '#3fb950';
+        if (n >= 6) return '#d29922';
+        return '#8b949e';
+    }
+
+    function statusBadge(status) {
+        if (!status) return '<span class="badge gray" style="font-size:10px">—</span>';
+        var color = status === 'scripted' ? 'blue' : status === 'contacted' ? 'green' : 'gray';
+        return '<span class="badge ' + color + '" style="font-size:10px">' + escHtml(status) + '</span>';
+    }
+
+    function renderBuyers(buyers) {
+        var tbody = document.getElementById('buyers-tbody');
+        var table = document.getElementById('buyers-table');
+        var loading = document.getElementById('buyers-loading');
+        var empty = document.getElementById('buyers-empty');
+        var countEl = document.getElementById('buyers-count');
+
+        loading.style.display = 'none';
+
+        if (!buyers || buyers.length === 0) {
+            empty.style.display = 'block';
+            return;
+        }
+
+        countEl.textContent = '(' + buyers.length + ')';
+        table.style.display = '';
+
+        buyers.forEach(function(b) {
+            var name = b.buyer_company_name || b.company_name || b.buyer_name || '';
+            var slug = b.slug || makeSlug(name);
+            var location = [b.buyer_city, b.buyer_state].filter(Boolean).join(', ') || b.location || '—';
+            var type = b.buyer_type || '—';
+            var fit = b.fit_score != null ? b.fit_score : '—';
+            var status = b.outreach_status || b.status || '';
+            var reviewUrl = slug ? '/debbie-buyer-review.html?buyer=' + encodeURIComponent(slug) : null;
+
+            var nameCell = reviewUrl
+                ? '<a href="' + reviewUrl + '" style="color:#58a6ff;text-decoration:none">' + escHtml(name) + '</a>'
+                : escHtml(name);
+
+            var fitColor = fitBadgeColor(fit);
+            var fitCell = fit !== '—'
+                ? '<span style="color:' + fitColor + ';font-weight:600">' + fit + '</span>'
+                : '—';
+
+            var tr = document.createElement('tr');
+            tr.innerHTML =
+                '<td>' + nameCell + '</td>' +
+                '<td>' + escHtml(type) + '</td>' +
+                '<td>' + escHtml(location) + '</td>' +
+                '<td>' + fitCell + '</td>' +
+                '<td>' + statusBadge(status) + '</td>';
+            tbody.appendChild(tr);
+        });
+    }
+
+    function loadBuyers() {
+        if (!SB_KEY) {
+            document.getElementById('buyers-loading').textContent = 'Supabase key not loaded — include supabase-config.js before this script.';
+            return;
+        }
+
+        var url = SB_URL + '/rest/v1/engagement_buyers' +
+            '?entity=eq.next_chapter' +
+            '&order=fit_score.desc.nullslast' +
+            '&select=buyer_company_name,buyer_type,buyer_city,buyer_state,fit_score,outreach_status,slug,entity';
+
+        fetch(url, {
+            headers: {
+                'apikey': SB_KEY,
+                'Authorization': 'Bearer ' + SB_KEY
+            }
+        })
+        .then(function(res) {
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.json();
+        })
+        .then(function(data) {
+            renderBuyers(data);
+        })
+        .catch(function(err) {
+            var loading = document.getElementById('buyers-loading');
+            loading.textContent = 'Failed to load buyers: ' + err.message;
+            console.error('engagement_buyers fetch error:', err);
+        });
+    }
+
+    // Run after DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', loadBuyers);
+    } else {
+        loadBuyers();
+    }
+})();
+</script>
 
     <div class="card" id="scripts">
         <h2>Outreach Scripts</h2>
