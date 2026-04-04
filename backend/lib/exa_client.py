@@ -18,6 +18,8 @@ import os
 import re
 import time
 from typing import Optional, Dict, Any, List
+from dotenv import load_dotenv
+load_dotenv()
 
 # ── API Key ──────────────────────────────────────────────
 # Credentials: all keys come from env vars. See .env.example for names, ~/.zshrc for values.

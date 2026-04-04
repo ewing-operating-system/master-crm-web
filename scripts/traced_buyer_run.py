@@ -19,6 +19,9 @@ Usage:
               Loads lib/config/verticals/{vertical}.json for sections, prompts, and valuation.
 """
 
+from dotenv import load_dotenv
+load_dotenv()
+
 import argparse, json, os, re, subprocess, sys, time, requests
 from datetime import datetime, timezone
 
@@ -638,46 +641,7 @@ DATA: {combined[:4000]}""", timeout=60, label="extract_stock")
     os.makedirs(PUBLIC_DATA_DIR, exist_ok=True)
     traced_write(per_buyer_path, buyer_obj, f"per-buyer JSON: {buyer_slug}")
 
-    # Write combined JSON
-    combined_path = os.path.join(PUBLIC_DATA_DIR, "debbie-buyer-research.json")
-    try:
-        with open(combined_path) as f:
-            combined_data = json.load(f)
-        if "buyers" not in combined_data:
-            combined_data = {"buyers": combined_data}
-    except: combined_data = {"buyers": {}}
-    combined_data["buyers"][buyer_slug] = buyer_obj
-    traced_write(combined_path, combined_data, "combined JSON (all buyers)")
-
-    # Update manifest
-    manifest_path = os.path.join(PUBLIC_DATA_DIR, "debbie-buyers-manifest.json")
-    try:
-        with open(manifest_path) as f:
-            manifest = json.load(f)
-    except: manifest = []
-    manifest = [m for m in manifest if m.get("slug") != buyer_slug]
-    manifest.append({"name": buyer_name, "slug": buyer_slug, "fit_score": args.score,
-                      "buyer_type": args.type, "buyer_city": args.city, "buyer_state": args.state,
-                      "logo_domain": args.domain, "ticker": args.ticker})
-    manifest.sort(key=lambda m: (-m.get("fit_score",0), m.get("name","")))
-    traced_write(manifest_path, manifest, "manifest (buyer index)")
-
-    # ══════════════════════════════════════════════════════════════════════════
-    # PHASE 6: GIT + DEPLOY
-    # ══════════════════════════════════════════════════════════════════════════
-    trace("PHASE", "GIT COMMIT + DEPLOY", {})
-    for cmd_label, cmd in [
-        ("git add", ["git", "-C", REPO_ROOT, "add", "public/data/"]),
-        ("git commit", ["git", "-C", REPO_ROOT, "commit", "-m", f"[auto][traced] Add {buyer_name} buyer research"]),
-        ("deploy", ["bash", os.path.join(REPO_ROOT, "scripts", "deploy.sh"), "--skip-commit"]),
-    ]:
-        r = subprocess.run(cmd, capture_output=True, text=True, timeout=180)
-        trace("GIT", cmd_label, {
-            "command": " ".join(cmd[-3:]),
-            "returncode": r.returncode,
-            "stdout_preview": r.stdout.strip()[:100],
-            "stderr_preview": r.stderr.strip()[:100] if r.returncode != 0 else None,
-        })
+    # Manifest build and deploy handled by scripts/build_debbie_manifest.py after batch completes
 
     # ══════════════════════════════════════════════════════════════════════════
     # PHASE 7: GENERATE TRACE DOCUMENT

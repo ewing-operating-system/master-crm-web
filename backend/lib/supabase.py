@@ -4,6 +4,8 @@ Every write MUST include an entity tag. Every read CAN filter by entity.
 """
 
 import json, os, urllib.request, ssl
+from dotenv import load_dotenv
+load_dotenv()
 
 ctx = ssl.create_default_context()
 
