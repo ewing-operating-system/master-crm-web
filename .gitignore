@@ -12,3 +12,4 @@ docs/TRACE-*
 **/"Icon\r"
 *.log
 __pycache__/
+.claude/

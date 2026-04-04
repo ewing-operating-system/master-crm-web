@@ -371,12 +371,9 @@ function generateProposal(dbData, cd, buyers) {
   const employeeNum = parseInt(String(employees).replace(/[^0-9]/g,'')) || 0;
   const yearsNum = yearsInBusiness ? (yearsInBusiness > 1900 ? 2026 - yearsInBusiness : yearsInBusiness) : 0;
 
-  // Get real buyers for this company
-  const companyBuyers = buyers.filter(b =>
-    b.entity === companyName ||
-    b.entity === companyName + ' LLC' ||
-    b.entity === cd.slug
-  );
+  // Get real buyers for this company (match by proposal_id, not entity name)
+  const proposalId = dbData.id;
+  const companyBuyers = buyers.filter(b => b.proposal_id === proposalId);
 
   const strategicBuyersList = cd.strategicBuyers.map(b => `<li>${esc(b)}</li>`).join('\n                    ');
   const pePlatformsList = cd.pePlatforms.map(b => `<li>${esc(b.name)} <span style="color:var(--text-secondary)">(backed by ${esc(b.fund)})</span></li>`).join('\n                    ');
@@ -1735,7 +1732,7 @@ async function main() {
   console.log('Fetching proposals from Supabase...');
 
   const proposals = await supabaseGet('proposals?select=*&company_name=in.(AquaScience,Air%20Control,Springer%20Floor,HR.com%20Ltd)');
-  const buyers = await supabaseGet('engagement_buyers?select=entity,buyer_company_name,buyer_type,buyer_city,buyer_state,fit_score');
+  const buyers = await supabaseGet('engagement_buyers?select=proposal_id,entity,buyer_company_name,buyer_type,buyer_city,buyer_state,fit_score');
 
   console.log(`Found ${proposals.length} proposals and ${buyers.length} buyers`);
 

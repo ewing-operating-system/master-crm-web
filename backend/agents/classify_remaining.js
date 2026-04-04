@@ -3,10 +3,34 @@
 // Vercel injects these at runtime. Local dev: copy .env.example to .env
 
 const { createClient } = require('@supabase/supabase-js');
+const path = require('path');
+const fs = require('fs');
 require('dotenv').config({ path: '/Users/clawdbot/.openclaw/workspace/.env' });
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+// Config-driven classification keywords from vertical configs
+const configDir = path.resolve(__dirname, '../../lib/config/verticals');
+function loadJson(p) { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch (e) { return null; } }
+
+const verticalConfigs = [
+  { config: loadJson(path.join(configDir, 'home_services.json')), entity: null },
+  { config: loadJson(path.join(configDir, 'healthcare_energy.json')), entity: null },
+  { config: loadJson(path.join(configDir, 'saas_recruiting.json')), entity: null },
+].filter(v => v.config);
+
+// Build entity lookup from vertical configs: keyword → entity
+function classifyByVerticalKeywords(verticalStr) {
+  const v = verticalStr.toLowerCase();
+  for (const { config } of verticalConfigs) {
+    const keywords = config.classification_keywords?.industry || [];
+    if (keywords.some(kw => v.includes(kw))) {
+      return config.entity_defaults?.entity || 'unknown';
+    }
+  }
+  return 'unknown';
+}
 
 if (!supabaseUrl || !supabaseServiceKey) {
   console.error('Missing Supabase credentials');
@@ -41,14 +65,7 @@ async function classifyRemaining() {
   // Simple classification logic
   for (const target of targets) {
     const vertical = target.vertical?.toLowerCase() || '';
-    let entity = 'unknown';
-    
-    if (vertical.includes('hvac') || vertical.includes('plumbing') || 
-        vertical.includes('pest') || vertical.includes('construction')) {
-      entity = 'next_chapter';
-    } else if (vertical.includes('electrical')) {
-      entity = 'and_capital';
-    }
+    let entity = classifyByVerticalKeywords(vertical);
     
     const newNotes = `${target.notes || ''}\nCLASSIFIED ${new Date().toISOString().split('T')[0]}: Entity=${entity}`;
     
