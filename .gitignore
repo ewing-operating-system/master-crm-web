@@ -11,3 +11,4 @@ docs/TRACE-*
 **/node_modules/
 **/"Icon\r"
 *.log
+__pycache__/
