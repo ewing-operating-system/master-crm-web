@@ -14,7 +14,8 @@ CREATE TYPE entity_type AS ENUM (
     'biolev',
     'sea_sweet',
     'precision_exploration',
-    'system'
+    'system',
+    'unknown'
 );
 
 CREATE TYPE lead_stage AS ENUM (
@@ -695,3 +696,26 @@ INSERT INTO campaigns (campaign_id, entity, name, audience, channel, purpose) VA
 ('BIOLEV-SALE', 'biolev', 'BioLev Sale Process', 'Potential BioLev acquirers/partners', 'meeting', 'BioLev sale — static assets'),
 ('SEASWEET-ROOFING', 'sea_sweet', 'Sea Sweet Roofing Rollup', 'Roofing companies for acquisition', 'cold_call', 'Roofing rollup acquisitions'),
 ('PEC-FRAUD', 'precision_exploration', 'PEC Fraud Case Management', 'Internal fraud case tracking', 'meeting', 'MANUAL ONLY — never automate');
+
+-- ─── PHASE C MIGRATION (2026-04-03) ──────────────────────────
+-- Converted 31 TEXT entity columns to entity_type enum.
+-- Dropped+recreated views: pending_reviews, disagreement_summary.
+-- Pre-fixes: deleted pain_gain_analyses id=8 (entity='hr_media', duplicate row).
+-- Data fixes: 30 meeting_learnings rows ('hrcom'→'next_chapter'),
+--             50 engagement_buyers rows (company names→'next_chapter'),
+--             21 intelligence_cache rows (company names→'next_chapter').
+-- NOT NULL added: engagement_buyers, research_executions,
+--                 why_sell_buyer_pitches, why_sell_narratives, meeting_notes.
+-- DEFAULT 'next_chapter'::entity_type on: campaign_batches,
+--   debbie_buyer_review_feedback, debbie_review_exports, engagement_buyers,
+--   page_templates, research_executions, why_sell_buyer_pitches, why_sell_narratives.
+-- Tables converted (Tier 1, 28): agent_queue, agent_runs, cost_budget,
+--   debbie_buyer_review_feedback, entity_value_propositions, pain_gain_analyses,
+--   play_executions, play_templates, proposals, research_executions,
+--   situation_library, campaign_batches, cost_ledger, debbie_review_exports,
+--   estimate_accuracy, feedback_log, guardrail_log, human_review_queue,
+--   letter_approvals, letter_campaigns, meeting_notes, nurture_schedule,
+--   page_templates, response_log, step_log, verification_pairs,
+--   why_sell_buyer_pitches, why_sell_narratives.
+-- Tables converted (Tier 2): meeting_learnings, engagement_buyers,
+--   intelligence_cache.
