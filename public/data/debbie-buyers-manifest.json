@@ -20,6 +20,16 @@
     "ticker": "ACN"
   },
   {
+    "name": "Ceridian",
+    "slug": "ceridian",
+    "fit_score": 8,
+    "buyer_type": "Strategic",
+    "buyer_city": "Minneapolis",
+    "buyer_state": "MN",
+    "logo_domain": "dayforce.com",
+    "ticker": "CDAY"
+  },
+  {
     "name": "IBM",
     "slug": "ibm",
     "fit_score": 8,
@@ -80,6 +90,26 @@
     "ticker": "WDAY"
   },
   {
+    "name": "BambooHR",
+    "slug": "bamboohr",
+    "fit_score": 6,
+    "buyer_type": "Strategic",
+    "buyer_city": "Lindon",
+    "buyer_state": "UT",
+    "logo_domain": "bamboohr.com",
+    "ticker": ""
+  },
+  {
+    "name": "Cornerstone OnDemand",
+    "slug": "cornerstone-ondemand",
+    "fit_score": 6,
+    "buyer_type": "Strategic",
+    "buyer_city": "Santa Monica",
+    "buyer_state": "CA",
+    "logo_domain": "cornerstoneondemand.com",
+    "ticker": ""
+  },
+  {
     "name": "Deel",
     "slug": "deel",
     "fit_score": 6,
@@ -97,6 +127,16 @@
     "buyer_city": "San Francisco",
     "buyer_state": "CA",
     "logo_domain": "gusto.com",
+    "ticker": ""
+  },
+  {
+    "name": "HiBob",
+    "slug": "hibob",
+    "fit_score": 6,
+    "buyer_type": "Strategic",
+    "buyer_city": "New York",
+    "buyer_state": "NY",
+    "logo_domain": "hibob.com",
     "ticker": ""
   },
   {
