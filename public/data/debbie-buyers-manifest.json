@@ -1,5 +1,15 @@
 [
   {
+    "name": "ADP",
+    "slug": "adp",
+    "fit_score": 8,
+    "buyer_type": "Strategic",
+    "buyer_city": "Roseland",
+    "buyer_state": "NJ",
+    "logo_domain": "adp.com",
+    "ticker": "ADP"
+  },
+  {
     "name": "Accenture",
     "slug": "accenture",
     "fit_score": 8,
@@ -8,6 +18,16 @@
     "buyer_state": "NY",
     "logo_domain": "accenture.com",
     "ticker": "ACN"
+  },
+  {
+    "name": "IBM",
+    "slug": "ibm",
+    "fit_score": 8,
+    "buyer_type": "Strategic",
+    "buyer_city": "Armonk",
+    "buyer_state": "NY",
+    "logo_domain": "ibm.com",
+    "ticker": "IBM"
   },
   {
     "name": "Oracle",
@@ -40,6 +60,16 @@
     "ticker": "SAP"
   },
   {
+    "name": "UKG",
+    "slug": "ukg",
+    "fit_score": 8,
+    "buyer_type": "Strategic",
+    "buyer_city": "Weston",
+    "buyer_state": "FL",
+    "logo_domain": "ukg.com",
+    "ticker": ""
+  },
+  {
     "name": "Workday",
     "slug": "workday",
     "fit_score": 8,
@@ -48,5 +78,25 @@
     "buyer_state": "CA",
     "logo_domain": "workday.com",
     "ticker": "WDAY"
+  },
+  {
+    "name": "Paylocity",
+    "slug": "paylocity",
+    "fit_score": 6,
+    "buyer_type": "Strategic",
+    "buyer_city": "Schaumburg",
+    "buyer_state": "IL",
+    "logo_domain": "paylocity.com",
+    "ticker": "PCTY"
+  },
+  {
+    "name": "TriNet",
+    "slug": "trinet",
+    "fit_score": 6,
+    "buyer_type": "Strategic",
+    "buyer_city": "Dublin",
+    "buyer_state": "CA",
+    "logo_domain": "trinet.com",
+    "ticker": "TNET"
   }
 ]
