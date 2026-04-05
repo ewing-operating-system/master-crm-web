@@ -80,6 +80,26 @@
     "ticker": "WDAY"
   },
   {
+    "name": "Deel",
+    "slug": "deel",
+    "fit_score": 6,
+    "buyer_type": "Strategic",
+    "buyer_city": "San Francisco",
+    "buyer_state": "CA",
+    "logo_domain": "deel.com",
+    "ticker": ""
+  },
+  {
+    "name": "Gusto",
+    "slug": "gusto",
+    "fit_score": 6,
+    "buyer_type": "Strategic",
+    "buyer_city": "San Francisco",
+    "buyer_state": "CA",
+    "logo_domain": "gusto.com",
+    "ticker": ""
+  },
+  {
     "name": "Paylocity",
     "slug": "paylocity",
     "fit_score": 6,
@@ -88,6 +108,16 @@
     "buyer_state": "IL",
     "logo_domain": "paylocity.com",
     "ticker": "PCTY"
+  },
+  {
+    "name": "Rippling",
+    "slug": "rippling",
+    "fit_score": 6,
+    "buyer_type": "Strategic",
+    "buyer_city": "San Francisco",
+    "buyer_state": "CA",
+    "logo_domain": "rippling.com",
+    "ticker": ""
   },
   {
     "name": "TriNet",
